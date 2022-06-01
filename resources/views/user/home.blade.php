@@ -34,7 +34,7 @@
 			        background: url({{ $user->banner }}) no-repeat center center fixed;
 			        background-size: cover;
 				}
-			@elseif($user->banner == null & $user->background_color != null)	
+			@elseif($user->banner == null & $user->background_color != null)
 				body {
 					background-color: {{$user->background_color}};
 				}
@@ -57,7 +57,7 @@
             <div class="container-fluid">
                 <a class="navbar-brand" href="{{ route('editProfileForm', ['id' => Auth::user()->id]) }}">
                     <img src="https://i.ibb.co/x7FjC42/menu.png" class="img-fluid mb-4" style="width:27px">
-                </a>   
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" style="border: 0">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -78,20 +78,20 @@
                                 <li class="nav-item">
                                     <form method="POST" action="{{ route('logout') }}">
                                         @csrf
-                                        <button class="nav-link text-muted" style="font-family: 'Overpass Mono', monospace; border: 0; outline: none; background-color:white;">Выйти</button>   
+                                        <button class="nav-link text-muted" style="font-family: 'Overpass Mono', monospace; border: 0; outline: none; background-color:white;">Выйти</button>
                                     </form>
                                 </li>
-                            @else 
+                            @else
                                 <li class="nav-item">
                                     <a class="nav-link text-muted" aria-current="page" href="{{ route('login') }}" style="font-family: 'Overpass Mono', monospace;">Войти</a>
-                                </li>   
+                                </li>
                                 @if (Route::has('register'))
                                     <li class="nav-item">
                                         <a class="nav-link text-muted" aria-current="page" href="{{ route('register') }}" style="font-family: 'Overpass Mono', monospace;">Регистрация</a>
-                                    </li> 
+                                    </li>
                                 @endif
                             @endauth
-                        @endif                
+                        @endif
                     </ul>
                 </div>
             </div>
@@ -109,21 +109,21 @@
 			        	{{ $user->name }}
 			        	@if($user->verify == 1)
 			        		<i class="bi bi-patch-check-fill" style="color: {{$user->verify_color}}"></i>
-			        	@endif	
+			        	@endif
 			        </h2>
 			        @if($user->description)
 			        	<p style="font-family: 'Rubik', sans-serif; font-size: 0.9rem; @if($user->description_color) color: {{$user->description_color}}; @endif">{{ $user->description }}</p>
-			        @endif	
+			        @endif
 		      	</div><!-- /.col-lg-4 -->
 	    	</div>
-	    </div>	
+	    </div>
 
 	    <!-- Links -->
 	    @foreach($links as $link)
 	  		<div class="container" style="padding-left:8px; padding-right:8px">
 
 			  	<a href="{{$link->link}}" style="text-decoration:none">
-			  		<div class="row ms-1 me-1 card rounded-3 mt-2" style="background-color:{{$link->background_color}}; border: 2px solid {{$link->background_color}};">
+			  		<div class="row ms-1 me-1 card rounded-3 mt-2 {{$link->shadow}}" style="background-color:{{$link->background_color}}; border: 2px solid {{$link->background_color}};">
 			  			<div class="d-flex align-items-center justify-content-start mt-1 mb-1" style="padding-left: 4px; padding-right: 4px;">
 			  				<div class="col-1">
 			  					<img class="rounded-3" src="{{$link->photo}}" style="width:50px;">
@@ -134,9 +134,9 @@
 			  					</div>
 			  				</div>
 			  				<div class="col-1">
-			  					
+
 			  				</div>
-			  			</div>			  		
+			  			</div>
 				  	</div>
 			  	</a>
 
@@ -181,11 +181,11 @@
 						        			<div class="mb-3">
 										    	<label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Заголовок</label>
 										    	<input type="text" class="form-control" name="title" placeholder="Моя красивая ссылка" value="{{$link->title}}">
-										    </div>	
+										    </div>
 										    <div class="mb-3">
 										    	<label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Вставьте ссылку</label>
 										    	<input type="text" class="form-control" name="link" placeholder="http://..." value="{{$link->link}}">
-										    </div>	
+										    </div>
 										    <div class="mb-3">
 											    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">* Цвет заголовка</label>
 											    <select class="form-select" aria-label="Default select example" name="title_color">
@@ -202,7 +202,7 @@
 											  		<option value="#0473f9" style="font-family: 'Rubik', sans-serif; background-color: #0473f9; color: white">Синий</option>
 												</select>
 											</div>
-											<div class="mb-3">	
+											<div class="mb-3">
 										    	<label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">* Фоновый цвет</label>
 										    	<select class="form-select" aria-label="Default select example" name="background_color">
 											  		<option style="font-family: 'Rubik', sans-serif;">Выберите один из цветов</option>
@@ -217,13 +217,13 @@
 											  		<option value="#6c757c" style="font-family: 'Rubik', sans-serif; background-color: #6c757c; color: white;">Серый</option>
 											  		<option value="#0473f9" style="font-family: 'Rubik', sans-serif; background-color: #0473f9; color: white">Синий</option>
 												</select>
-										    </div>	
-										    <div class="mb-3">	
+										    </div>
+										    <div class="mb-3">
 										    	<label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">* Фото</label>
 										    	<input type="file" class="form-control" id="inputGroupFile02" name="photo">
-										    </div>	
+										    </div>
 
-										    <div class="mb-3">	
+										    <div class="mb-3">
 										    	<label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">* - Поля не обязательны для заполнения</label>
 										    </div>
 										    <button type="submit" class="btn btn-primary">Submit</button>
@@ -233,7 +233,7 @@
 						    </div>
 				  		</div>
 					</div>
-				@endif	
+				@endif
 			@endauth
 		@endforeach
 
@@ -254,8 +254,8 @@
 		  				<div class="me-3 col-9 text-center">
 		  					<h4 class="mt-2" style="font-family: 'Rubik', sans-serif; font-size: 1rem; margin: 0; color: {{$link->title_color}}">{{$link->title}}</h4>
 		  				</div>
-		  			</div>		  		  		
+		  			</div>
 			  	</div>
-			</div>	 --}}	
+			</div>	 --}}
 
 			{{-- align-items-center --}}

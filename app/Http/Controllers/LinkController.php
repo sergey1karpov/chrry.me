@@ -24,6 +24,7 @@ class LinkController extends Controller
                 'title_color' => $request->title_color,
                 'background_color' => $request->background_color,
                 'photo' => isset($request->photo) ? $this->addPhotos($request->photo) : null,
+                'shadow' => $request->shadow,
             ]);
 
             $user->links()->save($link);
@@ -43,12 +44,14 @@ class LinkController extends Controller
             'title_color' => 'nullable',
             'background_color' => 'nullable',
             'photo' => 'nullable|mimes:jpeg,png,jpg,gif|max:3000',
+            'shadow' => 'nullable',
         ]);
 
         Link::where('id', $link)
             ->update([
                 'title' => $request->title,
                 'link' => $request->link,
+                'shadow' => $request->shadow,
             ]);
 
         if($request->title_color != 'Выберите один из цветов') {
@@ -57,15 +60,15 @@ class LinkController extends Controller
         } else {
             Link::where('id', $link)
                 ->update(['title_color' => $actualLink->title_color]);
-        }  
-        
+        }
+
         if($request->background_color != 'Выберите один из цветов') {
             Link::where('id', $link)
                 ->update(['background_color' => $request->background_color]);
         } else {
             Link::where('id', $link)
                 ->update(['background_color' => $actualLink->background_color]);
-        }  
+        }
 
         if($request->photo) {
             Link::where('id', $link)
@@ -92,19 +95,19 @@ class LinkController extends Controller
     }
 
     public function addPhotos($img) {
-        $mime = $img->getClientOriginalExtension(); 
+        $mime = $img->getClientOriginalExtension();
 
         if($mime == 'gif') {
-            $path = Storage::putFile('public/' . Auth::user()->id . '/links', $img); 
+            $path = Storage::putFile('public/' . Auth::user()->id . '/links', $img);
             $strpos = strpos($path, '/');
             $mb_substr = mb_substr($path, $strpos);
             $url = '../storage/app/public'.$mb_substr;
             return $url;
         }
 
-        $path = Storage::putFile('public/' . Auth::user()->id . '/links', $img); 
+        $path = Storage::putFile('public/' . Auth::user()->id . '/links', $img);
         $strrpos = strrpos($path, '/');
-        $mb_substr = mb_substr($path, $strrpos); 
+        $mb_substr = mb_substr($path, $strrpos);
 
         $name = $mb_substr;
         $img = Image::make($img->getRealPath())->resize(100, null, function ($constraint) {

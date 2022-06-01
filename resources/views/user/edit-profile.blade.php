@@ -26,7 +26,7 @@
 			    font-size:15px;
 			}
 			a{
-			  text-decoration:none; 
+			  text-decoration:none;
 			  color: #0062cc;
 			  border-bottom:2px solid #0062cc;
 			}
@@ -88,32 +88,32 @@
 							<div class="d-flex justify-content-center">
                                 <div class="img" style="background-image: url({{$user->avatar}});"></div>
                             </div>
-	                        {{-- <img class="mb-1 rounded-circle" src="{{ $user->avatar }}"> --}}	                        
+	                        {{-- <img class="mb-1 rounded-circle" src="{{ $user->avatar }}"> --}}
 							<div class="title">
 								<h4 class="mt-2" style="font-family: 'Rubik', sans-serif; color: black; ">Посмотреть профиль</h4>
-							</div>	
+							</div>
 							<div class="text mb-1">
 							<span style="font-family: 'Rubik', sans-serif; font-size: 75%; line-height: 16px; display:block; color: black">Вы можете посмотреть как выглядит ваш профиль после его кастомизации и добавления ссылок</span>
-						</div>                        	                                              
+						</div>
 						</div>
 					</div>
-				</a>		
+				</a>
 			</div>
 
 			<!-- Редактировать профиль -->
 			<div class="row" style="margin-top: 12px">
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-bs-toggle="modal" data-bs-target="#exampleModal">
 					<div class="box-part text-center rounded-3" style="margin: 0">
-                        {{-- <img src="https://i.ibb.co/tx0Bgz9/1111.png" class="img-fluid mb-2" width="40px">	 --}}                        
+                        {{-- <img src="https://i.ibb.co/tx0Bgz9/1111.png" class="img-fluid mb-2" width="40px">	 --}}
 						<div class="title">
 							{{-- <h4 class="mt-2" style="font-family: 'Rubik', sans-serif;">Настройки</h4> --}}
 							<h4 class="mt-2" style="font-family: 'Rubik', sans-serif;">Настройки</h4>
-						</div>	                        
+						</div>
 						<div class="text mb-1">
 							<span style="font-family: 'Rubik', sans-serif; font-size: 75%; line-height: 16px; display:block">Здесь вы можете редактировать свой профиль. Изменить имя, адрес, описание страницы. Так же загрузить ааватар и фоновое изображение</span>
-						</div>	                                              
+						</div>
 					</div>
-				</div>		
+				</div>
 			</div>
 			<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		  		<div class="modal-dialog">
@@ -234,13 +234,13 @@
 			<div class="row" style="margin-top: 12px">
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-bs-toggle="modal" data-bs-target="#exampleModalLink">
 					<div class="box-part text-center rounded-3" style="margin: 0">
-                        {{-- <img src="https://i.ibb.co/74YMCMB/333.png" class="img-fluid mb-2" width="40px"> --}}	                        
+                        {{-- <img src="https://i.ibb.co/74YMCMB/333.png" class="img-fluid mb-2" width="40px"> --}}
 						<div class="title">
 							<h4 class="mt-2" style="font-family: 'Rubik', sans-serif;">Добавить ссылку</h4>
-						</div>	                        
+						</div>
 						<div class="text mb-1">
 							<span style="font-family: 'Rubik', sans-serif; font-size: 75%; line-height: 16px; display:block">Вы можете разместить до 15 ссылок на своей странице. Прикрепить им изображение, добавить описание и цвет</span>
-						</div>	                                              
+						</div>
 					</div>
 				</div>
 			</div>
@@ -258,12 +258,12 @@
 						    	<label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Заголовок</label>
 						    	<input type="text" class="form-control" name="title" placeholder="Моя красивая ссылка" maxlength="150">
 						    	<span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Заголовок может содержать от 3 букв до 150 символов</span>
-						    </div>	
+						    </div>
 						    <div class="mb-3">
 						    	<label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Вставьте ссылку</label>
 						    	<input type="text" class="form-control" name="link">
 						    	<span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Сюда вставьте хорошую ссылку</span>
-						    </div>	
+						    </div>
 
 						    <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Цвет заголовка</label>
 						  	<div class="mb-3 text-center d-flex justify-content-center">
@@ -276,13 +276,33 @@
 								<input type="color" class="form-control " id="exampleColorInput" value="#ECECE2" title="Choose your color" name="background_color" style="height: 40px;">
 								<span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Белый по умолчанию</span>
 						  	</div>
-						    
-						    <div class="mb-3">	
+
+                            <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Добавить тень</label>
+						  	<div class="mb-3 text-center d-flex justify-content-center">
+								<div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="shadow" id="inlineRadio1" value="shadow-none">
+                                    <label class="form-check-label" for="inlineRadio1">none</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="shadow" id="inlineRadio2" value="shadow-sm">
+                                    <label class="form-check-label" for="inlineRadio2">sm</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="shadow" id="inlineRadio3" value="shadow">
+                                    <label class="form-check-label" for="inlineRadio3">md</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="shadow" id="inlineRadio3" value="shadow-lg">
+                                    <label class="form-check-label" for="inlineRadio3">lg</label>
+                                </div>
+						  	</div>
+
+						    <div class="mb-3">
 						    	<label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Фото</label>
 						    	<input type="file" class="form-control" id="inputGroupFile02" name="photo">
 						    	<span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Мы принимаем картинки jpeg, jpg, png, gif формата, размерои до 3мб. Хотя можете обойтись и без изображения, но зачем если можно?</span>
-						    </div>	
-						    
+						    </div>
+
 						    <button type="submit" class="btn btn-primary">Добавить</button>
 							</div>
 				        </form>
@@ -293,10 +313,10 @@
 		  	<!-- Управление ссылками -->
 		  	<div class="row mb-3" style="margin-top: 12px;">
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-					<div class="box-part text-center rounded-3" style="margin: 0">	                        
+					<div class="box-part text-center rounded-3" style="margin: 0">
 						<div class="title">
 							<h4 class="mt-2" style="font-family: 'Rubik', sans-serif;">Управление ссылками</h4>
-						</div>	                        
+						</div>
 						<div class="text mb-3">
 							<span style="font-family: 'Rubik', sans-serif; font-size: 75%; line-height: 16px; display:block">Изменить или удалить вашу ссылку</span>
 						</div>
@@ -314,7 +334,7 @@
 					  				<div class="col-1">
 					  					<!-- Говно -->
 					  				</div>
-					  			</div>	
+					  			</div>
 					  			<div class="d-flex justify-content-between border-bottom rounded-bottom rounded-3" style="padding: 0;">
 							  		<div class="col-6" style="background-color: #f0eeef; box-shadow: 5px 0px 0px black;" data-bs-toggle="modal" data-bs-target="#exampleModalEdit{{$link->id}}">
 							  			<button class="btn-sm" style="background-color: #f0eeef; border: 0;">
@@ -329,7 +349,7 @@
 							  				</button>
 							  			</form>
 							  		</div>
-							  	</div>		  		
+							  	</div>
 						  	</div>
 						  	<div class="modal fade" id="exampleModalEdit{{$link->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 						  		<div class="modal-dialog">
@@ -364,35 +384,48 @@
 												    	<label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Заголовок</label>
 												    	<input type="text" class="form-control" name="title" placeholder="Моя красивая ссылка" maxlength="150" value="{{$link->title}}">
 												    	<span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Заголовок может содержать от 3 букв до 150 символов</span>
-												    </div>	
+												    </div>
 												    <div class="mb-3">
 												    	<label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Вставьте ссылку</label>
 												    	<input type="text" class="form-control" name="link" placeholder="http://..." value="{{$link->link}}">
 												    	<span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Измените хорошую ссылку</span>
-												    </div>	
+												    </div>
 												    <div class="mb-3">
-
 												    	<label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Текущий цвет заголовка</label>
 													  	<div class="mb-3 text-center d-flex justify-content-center">
 															<input type="color" class="form-control " id="exampleColorInput" value="{{$link->title_color}}" title="Choose your color" name="title_color" style="height: 40px;">
 													  	</div>
-
-													    
 													</div>
-													<div class="mb-3">	
-
+													<div class="mb-3">
 														<label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Текущий фоновый цвет</label>
 													  	<div class="mb-3 text-center d-flex justify-content-center">
 															<input type="color" class="form-control " id="exampleColorInput" value="{{$link->background_color}}" title="Choose your color" name="background_color" style="height: 40px;">
 													  	</div>
-
-												    </div>	
-												    <div class="mb-3">	
+												    </div>
+                                                    <div class="mb-3">
+                                                        <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Добавить тень</label><br>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="shadow" id="inlineRadio1" value="shadow-none" @if($link->shadow == 'shadow-none') checked @endif>
+                                                            <label class="form-check-label" for="inlineRadio1">none</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="shadow" id="inlineRadio2" value="shadow-sm" @if($link->shadow == 'shadow-sm') checked @endif>
+                                                            <label class="form-check-label" for="inlineRadio2">sm</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="shadow" id="inlineRadio3" value="shadow" @if($link->shadow == 'shadow') checked @endif>
+                                                            <label class="form-check-label" for="inlineRadio3">md</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="shadow" id="inlineRadio3" value="shadow-lg" @if($link->shadow == 'shadow-lg') checked @endif>
+                                                            <label class="form-check-label" for="inlineRadio3">lg</label>
+                                                        </div>
+                                                    </div>
+												    <div class="mb-3">
 												    	<label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Фото</label>
 												    	<input type="file" class="form-control" id="inputGroupFile02" name="photo">
 												    	<span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Мы принимаем картинки jpeg, jpg, png, gif формата, размерои до 3мб. Хотя можете обойтись и без изображения, но зачем если можно?</span>
-												    </div>	
-
+												    </div>
 												    <button type="submit" class="btn btn-primary">Изменить</button>
 				  								</div>
 								        	</form>
@@ -400,7 +433,7 @@
 								    </div>
 						  		</div>
 							</div>
-						@endforeach	                                             
+						@endforeach
 					</div>
 				</div>
 			</div>
@@ -419,12 +452,12 @@
 	                        @csrf
 	                        <button class="nav-link text-muted" style="padding:  0; border: 0; outline: none; background-color:#f5f5f5;">
 	                        	<h4 style="font-family: 'Rubik', sans-serif; font-size: 1rem">Выход</h4>
-	                        </button>   
+	                        </button>
 	                    </form>
 		      		</div>
-		      	</div>	
+		      	</div>
 		    </footer>
-    	</div>	
+    	</div>
     </body>
 </html>
 
