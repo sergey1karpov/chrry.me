@@ -81,7 +81,7 @@
 			<x-auth-validation-errors class="mb-4" :errors="$errors" />
 
 			<!-- Ссылка на профиль -->
-			<div class="row" >
+			<div class="row" style="margin-top: 12px">
 				<a class="" href="{{ route('userHomePage',  ['slug' => Auth::user()->slug]) }}" style="text-decoration: none; border: 0; ">
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="box-part text-center rounded-3" style="margin: 0;">

@@ -107,7 +107,7 @@ class LinkController extends Controller
         $mb_substr = mb_substr($path, $strrpos); 
 
         $name = $mb_substr;
-        $img = Image::make($img->getRealPath())->resize(48, null, function ($constraint) {
+        $img = Image::make($img->getRealPath())->resize(100, null, function ($constraint) {
             $constraint->aspectRatio();
         });
         $img->save('../storage/app/public/'. Auth::user()->id. '/links'. $name);

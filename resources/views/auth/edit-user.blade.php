@@ -68,74 +68,78 @@
 			}
         </style>
     </head>
-    <body class="antialiased align-items-center">
-        <div class="container-fluid justify-content-center align-items-center text-center">
-        	<x-guest-layout>
-	            <x-auth-card>
-	                <x-slot name="logo">
-	                    <a href="/">
-	                        <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-	                    </a>
-	                </x-slot>
+    <body class="antialiased ">
+        <div class="container">
+        	<div class="d-flex align-items-center justify-content-center text-center" >
+        		<div class="col-11">
+        			<x-guest-layout>
+		            <x-auth-card>
+		                <x-slot name="logo">
+		                    <a href="/">
+		                        {{-- <x-application-logo class="w-20 h-20 fill-current text-gray-500" /> --}}
+		                    </a>
+		                </x-slot>
 
-	                <!-- Validation Errors -->
-	                <x-auth-validation-errors class="mb-5" :errors="$errors" />
+		                <!-- Validation Errors -->
+		                <x-auth-validation-errors class="mb-5" :errors="$errors" />
 
-	                <h1 class="mb-4" style="font-family: 'Rubik', sans-serif; font-size: 1.3rem;">Регистрация</h1>
+		                <h1 class="mb-5" style="font-family: 'Rubik', sans-serif; font-size: 1.3rem;">Регистрация</h1>
 
-	                <form method="POST" action="{{ route('editNewUser', ['utag' => $user->utag]) }}" class="text-center">
-	                    @csrf @method('PATCH')
+		                <form method="POST" action="{{ route('editNewUser', ['utag' => $user->utag]) }}" class="text-center">
+		                    @csrf @method('PATCH')
 
-	                    <!-- Name -->
-	                    <div>
-	                        <x-label for="name" :value="__('Имя профиля')" style="font-family: 'Rubik', sans-serif;"/>
+		                    <!-- Name -->
+		                    <div>
+		                        <x-label for="name" :value="__('Имя профиля')" style="font-family: 'Rubik', sans-serif;"/>
 
-	                        <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
-	                    </div>
+		                        <x-input id="name" class="form-control" type="text" name="name" :value="old('name')" required style="border-radius: 0px; border-top: 0; border-left: 0; border-right: 0;" />
+		                    </div>
 
-	                    <div class="mt-4">
-	                        <x-label for="name" :value="__('Адрес страницы')" style="font-family: 'Rubik', sans-serif;"/>
-							<div class="input-group mb-3">
-  								<span class="input-group-text" id="basic-addon3">bord.link/</span>
-  								<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="slug" :value="old('slug')" required autofocus>
-							</div>
-	                    </div>
+		                    <div class="mt-4">
+		                        <x-label for="name" :value="__('Адрес страницы')" style="font-family: 'Rubik', sans-serif;"/>
+								<div class="input-group mb-3">
+	  								<span class="input-group-text" id="basic-addon3" style="border-radius: 0px; border-top: 0; border-left: 0; border-right: 0; background-color: white;">chrry.me/</span>
+	  								<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="slug" :value="old('slug')" required style="border-radius: 0px; border-top: 0; border-left: 0; border-right: 0;">
+								</div>
+		                    </div>
 
-	                    <!-- Email Address -->
-	                    <div class="mt-4">
-	                        <x-label for="email" :value="__('Ваша почта')" style="font-family: 'Rubik', sans-serif;"/>
+		                    <!-- Email Address -->
+		                    <div class="mt-4">
+		                        <x-label for="email" :value="__('Ваша почта')" style="font-family: 'Rubik', sans-serif;"/>
 
-	                        <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
-	                    </div>
+		                        <x-input id="email" class="form-control" type="email" name="email" :value="old('email')" required style="border-radius: 0px; border-top: 0; border-left: 0; border-right: 0;"/>
+		                    </div>
 
-	                    <!-- Password -->
-	                    <div class="mt-4">
-	                        <x-label for="password" :value="__('Пароль')" style="font-family: 'Rubik', sans-serif;"/>
+		                    <!-- Password -->
+		                    <div class="mt-4">
+		                        <x-label for="password" :value="__('Пароль')" style="font-family: 'Rubik', sans-serif;"/>
 
-	                        <x-input id="password" class="block mt-1 w-full"
-	                                        type="password"
-	                                        name="password"
-	                                        required autocomplete="new-password" />
-	                    </div>
+		                        <x-input id="password" class="form-control"
+		                                        type="password"
+		                                        name="password"
+		                                        required autocomplete="new-password" style="border-radius: 0px; border-top: 0; border-left: 0; border-right: 0;"/>
+		                    </div>
 
-	                    <!-- Confirm Password -->
-	                    <div class="mt-4">
-	                        <x-label for="password_confirmation" :value="__('Повторите пароль')" style="font-family: 'Rubik', sans-serif;"/>
+		                    <!-- Confirm Password -->
+		                    <div class="mt-4">
+		                        <x-label for="password_confirmation" :value="__('Повторите пароль')" style="font-family: 'Rubik', sans-serif;"/>
 
-	                        <x-input id="password_confirmation" class="block mt-1 w-full"
-	                                        type="password"
-	                                        name="password_confirmation" required />
-	                    </div>
+		                        <x-input id="password_confirmation" class="form-control"
+		                                        type="password"
+		                                        name="password_confirmation" required style="border-radius: 0px; border-top: 0; border-left: 0; border-right: 0;"/>
+		                    </div>
 
-	                    <div class="flex items-center justify-content-center mt-4">
+		                    <div class="flex items-center justify-content-center mt-4">
 
-	                        <x-button class="ml-4" style="font-family: 'Rubik', sans-serif;">
-	                            {{ __('Register') }}
-	                        </x-button>
-	                    </div>
-	                </form>
-	            </x-auth-card>
-	        </x-guest-layout>
+		                        <x-button class="btn" style="font-family: 'Rubik', sans-serif; border: 0; margin-left: 14px; background-color: #f41b5a; color: white;">
+		                            {{ __('Регистрация') }}
+		                        </x-button>
+		                    </div>
+		                </form>
+		            </x-auth-card>
+		        </x-guest-layout>
+        		</div>
+        	</div>
         </div>
     </body>
 </html>

@@ -9,6 +9,7 @@ return [
     |
     | This value is the name of laravel-admin, This setting is displayed on the
     | login page.
+    | Password: Rusrappro-averro-hiphop-niggers-penis
     |
     */
     'name' => 'Laravel-admin',
@@ -58,7 +59,7 @@ return [
     */
     'route' => [
 
-        'prefix' => env('ADMIN_ROUTE_PREFIX', 'admin/admin'),
+        'prefix' => env('ADMIN_ROUTE_PREFIX', 'admin/rap-govno'),
 
         'namespace' => 'App\\Admin\\Controllers',
 
