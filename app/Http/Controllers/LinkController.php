@@ -25,6 +25,7 @@ class LinkController extends Controller
                 'background_color' => $request->background_color,
                 'photo' => isset($request->photo) ? $this->addPhotos($request->photo) : null,
                 'shadow' => $request->shadow,
+                'rounded' => $request->rounded,
             ]);
 
             $user->links()->save($link);
@@ -45,6 +46,7 @@ class LinkController extends Controller
             'background_color' => 'nullable',
             'photo' => 'nullable|mimes:jpeg,png,jpg,gif|max:3000',
             'shadow' => 'nullable',
+            'rounded' => 'nullable',
         ]);
 
         Link::where('id', $link)
@@ -52,6 +54,7 @@ class LinkController extends Controller
                 'title' => $request->title,
                 'link' => $request->link,
                 'shadow' => $request->shadow,
+                'rounded' => $request->rounded,
             ]);
 
         if($request->title_color != 'Выберите один из цветов') {

@@ -297,6 +297,26 @@
                                 </div>
 						  	</div>
 
+                            <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Округление углов карточки и фото</label>
+						  	<div class="mb-3 text-center d-flex justify-content-center">
+								<div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="rounded" id="inlineRadio1" value="rounded-0">
+                                    <label class="form-check-label" for="inlineRadio1">none</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="rounded" id="inlineRadio2" value="rounded-1">
+                                    <label class="form-check-label" for="inlineRadio2">sm</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="rounded" id="inlineRadio3" value="rounded-2">
+                                    <label class="form-check-label" for="inlineRadio3">md</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="rounded" id="inlineRadio3" value="rounded-3">
+                                    <label class="form-check-label" for="inlineRadio3">lg</label>
+                                </div>
+						  	</div>
+
 						    <div class="mb-3">
 						    	<label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Фото</label>
 						    	<input type="file" class="form-control" id="inputGroupFile02" name="photo">
@@ -321,10 +341,10 @@
 							<span style="font-family: 'Rubik', sans-serif; font-size: 75%; line-height: 16px; display:block">Изменить или удалить вашу ссылку</span>
 						</div>
 						@foreach($links as $link)
-					    	<div class="row card rounded-3 box-part2" style="background-color:{{$link->background_color}}; border: 2px solid {{$link->background_color}}; opacity: 0.9;">
+					    	<div class="row card {{$link->rounded}} box-part2" style="background-color:{{$link->background_color}}; border: 2px solid {{$link->background_color}}; opacity: 0.9;">
 					  			<div class="d-flex align-items-center justify-content-start mt-2 mb-2" style="padding-left: 4px; padding-right: 4px;">
 					  				<div class="col-1">
-					  					<img class="rounded-3" src="{{$link->photo}}" style="width:50px;">
+					  					<img class="{{$link->rounded}}" src="{{$link->photo}}" style="width:50px;">
 					  				</div>
 					  				<div class=" col-10 text-center">
 					  					<div class="me-4 ms-4">
@@ -418,6 +438,25 @@
                                                         </div>
                                                         <div class="form-check form-check-inline">
                                                             <input class="form-check-input" type="radio" name="shadow" id="inlineRadio3" value="shadow-lg" @if($link->shadow == 'shadow-lg') checked @endif>
+                                                            <label class="form-check-label" for="inlineRadio3">lg</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Округление углов блоков и фото</label><br>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="rounded" id="inlineRadio1" value="rounded-0" @if($link->rounded == 'rounded-0') checked @endif>
+                                                            <label class="form-check-label" for="inlineRadio1">none</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="rounded" id="inlineRadio2" value="rounded-1" @if($link->rounded == 'rounded-1') checked @endif>
+                                                            <label class="form-check-label" for="inlineRadio2">sm</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="rounded" id="inlineRadio3" value="rounded-2" @if($link->rounded == 'rounded-2') checked @endif>
+                                                            <label class="form-check-label" for="inlineRadio3">md</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="rounded" id="inlineRadio3" value="rounded-3" @if($link->rounded == 'rounded-3') checked @endif>
                                                             <label class="form-check-label" for="inlineRadio3">lg</label>
                                                         </div>
                                                     </div>

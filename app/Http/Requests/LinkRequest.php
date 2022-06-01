@@ -30,6 +30,7 @@ class LinkRequest extends FormRequest
             'background_color' => 'nullable',
             'photo' => 'nullable|mimes:jpeg,png,jpg,gif|max:3000',
             'shadow' => 'nullable',
+            'rounded' => 'nullable',
         ];
     }
 }

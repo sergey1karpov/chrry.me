@@ -112,7 +112,7 @@
 			        	@endif
 			        </h2>
 			        @if($user->description)
-			        	<p style="font-family: 'Rubik', sans-serif; font-size: 0.9rem; @if($user->description_color) color: {{$user->description_color}}; @endif">{{ $user->description }}</p>
+			        	<p style="font-family: 'Manrope', sans-serif; font-size: 0.9rem; @if($user->description_color) color: {{$user->description_color}}; @endif">{{ $user->description }}</p>
 			        @endif
 		      	</div><!-- /.col-lg-4 -->
 	    	</div>
@@ -123,14 +123,14 @@
 	  		<div class="container" style="padding-left:8px; padding-right:8px">
 
 			  	<a href="{{$link->link}}" style="text-decoration:none">
-			  		<div class="row ms-1 me-1 card rounded-3 mt-2 {{$link->shadow}}" style="background-color:{{$link->background_color}}; border: 2px solid {{$link->background_color}};">
+			  		<div class="row ms-1 me-1 card {{$link->rounded}} {{$link->shadow}}" style="background-color:{{$link->background_color}}; border: 2px solid {{$link->background_color}}; margin-top: 12px;">
 			  			<div class="d-flex align-items-center justify-content-start mt-1 mb-1" style="padding-left: 4px; padding-right: 4px;">
 			  				<div class="col-1">
-			  					<img class="rounded-3" src="{{$link->photo}}" style="width:50px;">
+			  					<img class="{{$link->rounded}}" src="{{$link->photo}}" style="width:50px;">
 			  				</div>
 			  				<div class=" col-10 text-center">
 			  					<div class="me-5 ms-5">
-			  						<h4 class="" style="font-family: 'Inter', sans-serif; line-height: 1.5; font-size: 1rem; margin: 0;color: {{$link->title_color}}">{{$link->title}}</h4>
+			  						<h4 class="" style="font-family: 'Inter', sans-serif; line-height: 1.5; font-size: 0.9rem; margin: 0;color: {{$link->title_color}}">{{$link->title}}</h4>
 			  					</div>
 			  				</div>
 			  				<div class="col-1">

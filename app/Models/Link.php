@@ -11,5 +11,5 @@ class Link extends Model
 
     protected $table = 'links';
 
-    protected $fillable = ['title', 'link', 'title_color', 'background_color', 'photo', 'shadow'];
+    protected $fillable = ['title', 'link', 'title_color', 'background_color', 'photo', 'shadow', 'rounded'];
 }
