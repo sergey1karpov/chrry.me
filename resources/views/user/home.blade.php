@@ -245,17 +245,4 @@
 
 
 
-{{-- <div class="container">
-			  	<div class="row ms-1 me-1 card rounded-3 mt-3" style="background-color:{{$link->background_color}}">
-		  			<div class="d-flex justify-content-start mt-2 mb-2" style="padding-left: 8px;">
-		  				<div class="me-2 col-2">
-		  					<img class="rounded-3" src="{{$link->photo}}" style="width:50px;">
-		  				</div>
-		  				<div class="me-3 col-9 text-center">
-		  					<h4 class="mt-2" style="font-family: 'Rubik', sans-serif; font-size: 1rem; margin: 0; color: {{$link->title_color}}">{{$link->title}}</h4>
-		  				</div>
-		  			</div>
-			  	</div>
-			</div>	 --}}
 
-			{{-- align-items-center --}}

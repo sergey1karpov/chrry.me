@@ -15,6 +15,147 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;600&display=swap" rel="stylesheet">
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+		<script type="text/javascript">
+		  	google.charts.load("current", {packages:["imagepiechart"]});
+		  	google.charts.setOnLoadCallback(drawChart);
+
+		  	function drawChart() {
+				var data = google.visualization.arrayToDataTable([
+			  		['Task', 'Hours per Day'],
+			 		@foreach($day['uniqueCity'] as $c)
+					['{{$c->city}}: {{$c->count}}',     {{$c->count}}],
+					@endforeach
+				]);
+
+				var chart = new google.visualization.ImagePieChart(document.getElementById('piechart'));
+
+				chart.draw(data, {width: 320, height: 240});
+		  	}
+		</script>
+        <script type="text/javascript">
+            google.charts.load("current", {packages:["imagepiechart"]});
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+                var data = google.visualization.arrayToDataTable([
+                    ['Task', 'Hours per Day'],
+                    @foreach($day['uniqueCountry'] as $c)
+                    ['{{$c->country}}: {{$c->count}}',     {{$c->count}}],
+                    @endforeach
+                ]);
+
+                var chart = new google.visualization.ImagePieChart(document.getElementById('piechart_c'));
+
+                chart.draw(data, {width: 320, height: 240});
+            }
+        </script>
+
+        <script type="text/javascript">
+            google.charts.load("current", {packages:["imagepiechart"]});
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+                var data = google.visualization.arrayToDataTable([
+                    ['Task', 'Hours per Day'],
+                    @foreach($month['uniqueCity'] as $c)
+                    ['{{$c->city}}: {{$c->count}}',     {{$c->count}}],
+                    @endforeach
+                ]);
+
+                var chart = new google.visualization.ImagePieChart(document.getElementById('m_piechart'));
+
+                chart.draw(data, {width: 320, height: 240});
+            }
+        </script>
+        <script type="text/javascript">
+            google.charts.load("current", {packages:["imagepiechart"]});
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+                var data = google.visualization.arrayToDataTable([
+                    ['Task', 'Hours per Day'],
+                    @foreach($month['uniqueCountry'] as $c)
+                    ['{{$c->country}}: {{$c->count}}',     {{$c->count}}],
+                    @endforeach
+                ]);
+
+                var chart = new google.visualization.ImagePieChart(document.getElementById('m_piechart_c'));
+
+                chart.draw(data, {width: 320, height: 240});
+            }
+        </script>
+
+        <script type="text/javascript">
+            google.charts.load("current", {packages:["imagepiechart"]});
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+                var data = google.visualization.arrayToDataTable([
+                    ['Task', 'Hours per Day'],
+                    @foreach($year['uniqueCity'] as $c)
+                    ['{{$c->city}}: {{$c->count}}',     {{$c->count}}],
+                    @endforeach
+                ]);
+
+                var chart = new google.visualization.ImagePieChart(document.getElementById('y_piechart'));
+
+                chart.draw(data, {width: 320, height: 240});
+            }
+        </script>
+        <script type="text/javascript">
+            google.charts.load("current", {packages:["imagepiechart"]});
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+                var data = google.visualization.arrayToDataTable([
+                    ['Task', 'Hours per Day'],
+                    @foreach($year['uniqueCountry'] as $c)
+                    ['{{$c->country}}: {{$c->count}}',     {{$c->count}}],
+                    @endforeach
+                ]);
+
+                var chart = new google.visualization.ImagePieChart(document.getElementById('y_piechart_c'));
+
+                chart.draw(data, {width: 320, height: 240});
+            }
+        </script>
+
+        <script type="text/javascript">
+            google.charts.load("current", {packages:["imagepiechart"]});
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+                var data = google.visualization.arrayToDataTable([
+                    ['Task', 'Hours per Day'],
+                    @foreach($all['uniqueCity'] as $c)
+                    ['{{$c->city}}: {{$c->count}}',     {{$c->count}}],
+                    @endforeach
+                ]);
+
+                var chart = new google.visualization.ImagePieChart(document.getElementById('a_piechart'));
+
+                chart.draw(data, {width: 320, height: 240});
+            }
+        </script>
+        <script type="text/javascript">
+            google.charts.load("current", {packages:["imagepiechart"]});
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+                var data = google.visualization.arrayToDataTable([
+                    ['Task', 'Hours per Day'],
+                    @foreach($all['uniqueCountry'] as $c)
+                    ['{{$c->country}}: {{$c->count}}',     {{$c->count}}],
+                    @endforeach
+                ]);
+
+                var chart = new google.visualization.ImagePieChart(document.getElementById('a_piechart_c'));
+
+                chart.draw(data, {width: 320, height: 240});
+            }
+        </script>
 
         <style type="text/css">
         	body{
@@ -77,13 +218,15 @@
     <body class="antialiased">
     	<div class="container-fluid justify-content-center text-center">
 
+            {{-- <div id="piechart_3d" style="width: 900px; height: 500px;"></div> --}}
+
     		<!-- Отображение валидационных ошибок -->
 			<x-auth-validation-errors class="mb-4" :errors="$errors" />
 
 			<!-- Ссылка на профиль -->
 			<div class="row" style="margin-top: 12px">
 				<a class="" href="{{ route('userHomePage',  ['slug' => Auth::user()->slug]) }}" style="text-decoration: none; border: 0; ">
-					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
 						<div class="box-part text-center rounded-3" style="margin: 0;">
 							<div class="d-flex justify-content-center">
                                 <div class="img" style="background-image: url({{$user->avatar}});"></div>
@@ -99,6 +242,102 @@
 					</div>
 				</a>
 			</div>
+
+            <!-- Статистика профиля -->
+            <div class="row" style="margin-top: 12px">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 d-flex justify-content-center" data-bs-toggle="modal" data-bs-target="#exampleModalStat">
+					<div class="box-part rounded-3" style="margin: 0">
+                        {{-- <img src="https://i.ibb.co/tx0Bgz9/1111.png" class="img-fluid mb-2" width="40px">	 --}}
+						<div class="title">
+							{{-- <h4 class="mt-2" style="font-family: 'Rubik', sans-serif;">Настройки</h4> --}}
+							<h4 class="mt-2" style="font-family: 'Rubik', sans-serif;">Статистика</h4>
+						</div>
+						<div class="text mb-1">
+							<span style="font-family: 'Rubik', sans-serif; font-size: 75%; line-height: 16px; display:block">Кол-во просмотров профиля, переходов по ссылкам, геолокация кликов</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModalStat" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Статистика</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" style="padding: 0">
+                        <div class="accordion" id="accordionExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        Статистика за день
+                                    </button>
+                                </h2>
+                                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        <h6 style="font-family: 'Rubik', sans-serif; margin: 0">Уникальных просмотров: <strong>{{count($day['stat'])}}</strong></h6><br>
+										<small>Города из которых к вам заходили</small>
+                                        <div id="piechart" style=" height: 270px;"></div>
+                                        <small>Страны из которых к вам заходили</small>
+                                        <div id="piechart_c" style="height: 270px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingTwo">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        Статистика за месяц
+                                    </button>
+                                </h2>
+                                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        <h6 style="font-family: 'Rubik', sans-serif; margin: 0">Уникальных просмотров: <strong>{{count($month['stat'])}}</strong></h6><br>
+                                        <small>Города из которых к вам заходили</small>
+                                        <div id="m_piechart" style="width: 350px; height: 270px;"></div>
+                                        <small>Страны из которых к вам заходили</small>
+                                        <div id="m_piechart_c" style="width: 350px; height: 270px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingThree">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                         Статистика за год
+                                    </button>
+                                </h2>
+                                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        <h6 style="font-family: 'Rubik', sans-serif; margin: 0">Уникальных просмотров: <strong>{{count($year['stat'])}}</strong></h6><br>
+                                        <small>Города из которых к вам заходили</small>
+                                        <div id="y_piechart" style="width: 350px; height: 270px;"></div>
+                                        <small>Страны из которых к вам заходили</small>
+                                        <div id="y_piechart_c" style="width: 350px; height: 270px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingFour">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                        Вся статистика просмотров профиля
+                                    </button>
+                                </h2>
+                                <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        <h6 style="font-family: 'Rubik', sans-serif; margin: 0">Уникальных просмотров: <strong>{{count($all['stat'])}}</strong></h6><br>
+                                        <small>Города из которых к вам заходили</small>
+                                        <div id="a_piechart" style="width: 350px; height: 270px;"></div>
+                                        <small>Страны из которых к вам заходили</small>
+                                        <div id="a_piechart_c" style="width: 350px; height: 270px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
 
 			<!-- Редактировать профиль -->
 			<div class="row" style="margin-top: 12px">

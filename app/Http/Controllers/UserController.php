@@ -13,6 +13,7 @@ use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\App;
 use App\Http\Requests\UpdateRegisteruserRequest;
+use App\Services\StatsService;
 
 class UserController extends Controller
 {
@@ -22,6 +23,8 @@ class UserController extends Controller
         $user = User::where('slug', $slug)->firstOrFail();
         $links = \DB::table('links')->where('user_id', $user->id)->orderBy('id', 'desc')->get();
 
+        StatsService::createUserStats($user);
+
         return view('user.home', compact('user', 'links'));
     }
 
@@ -30,8 +33,13 @@ class UserController extends Controller
         $user = User::where('id', $id)->firstOrFail();
         $links = \DB::table('links')->where('user_id', $user->id)->orderBy('id', 'desc')->get();
 
+        $day = StatsService::getUserStatsByDay($user);
+        $month = StatsService::fetUserStatsByMonth($user);
+        $year = StatsService::getUserStatsByYear($user);
+        $all = StatsService::getAllUserStats($user);
+
         if($user) {
-            return view('user.edit-profile', compact('user', 'links'));
+            return view('user.edit-profile', compact('user', 'links', 'day', 'month', 'year', 'all'));
         }
         abort(404);
     }
@@ -74,7 +82,7 @@ class UserController extends Controller
             } else {
                 User::where('id', $user->id)
                     ->update(['background_color' => $user->background_color]);
-            }    
+            }
 
             if($request->name_color != 'Выберите один из цветов') {
                 User::where('id', $user->id)
@@ -82,7 +90,7 @@ class UserController extends Controller
             } else {
                 User::where('id', $user->id)
                     ->update(['name_color' => $user->name_color]);
-            }  
+            }
 
             if($request->description_color != 'Выберите один из цветов') {
                 User::where('id', $user->id)
@@ -90,7 +98,7 @@ class UserController extends Controller
             } else {
                 User::where('id', $user->id)
                     ->update(['description_color' => $user->description_color]);
-            } 
+            }
 
             if($request->verify_color != 'Выберите один из цветов') {
                 User::where('id', $user->id)
@@ -98,24 +106,24 @@ class UserController extends Controller
             } else {
                 User::where('id', $user->id)
                     ->update(['verify_color' => $user->verify_color]);
-            } 
+            }
 
             if($request->slug) {
                 User::where('id', $user->id)
                     ->update(['slug' => $request->slug]);
-            }      
+            }
 
             if($request->avatar) {
                 User::where('id', $user->id)
                     ->update(['avatar' => $this->addPhotos($request->avatar)]);
-            }   
+            }
 
             if($request->banner) {
                 User::where('id', $user->id)
                     ->update(['banner' => $this->addPhotos($request->banner)]);
-            }   
+            }
 
-            return redirect()->back();   
+            return redirect()->back();
         }
 
         return abort(404);
@@ -136,7 +144,7 @@ class UserController extends Controller
 
         if(!$user) {
             $active_user = User::where('utag', $request->segment(2))->where('is_active', 1)->first();
-            return redirect()->route('userHomePage', ['slug' => $active_user->slug]); 
+            return redirect()->route('userHomePage', ['slug' => $active_user->slug]);
         }
         return view('auth.edit-user', compact('user'));
     }
@@ -159,13 +167,13 @@ class UserController extends Controller
                 'is_active' => 1,
             ]);
 
-        $user = User::where('utag', $utag)->where('is_active', 1)->firstOrFail();    
+        $user = User::where('utag', $utag)->where('is_active', 1)->firstOrFail();
 
         event(new Registered($user));
 
-        Auth::login($user);    
+        Auth::login($user);
 
-        return redirect()->route('editProfileForm', ['id' => $user->id]);   
+        return redirect()->route('editProfileForm', ['id' => $user->id]);
     }
 
     public function delUserAvatar($id) {
@@ -183,7 +191,7 @@ class UserController extends Controller
 
     public function delUserBanner($id) {
         $user = User::where('id', $id)->firstOrFail();
-        
+
         User::where('id', $id)->update([
             'banner' => null,
         ]);
