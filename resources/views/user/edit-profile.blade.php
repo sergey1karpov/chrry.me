@@ -16,146 +16,6 @@
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;600&display=swap" rel="stylesheet">
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-		<script type="text/javascript">
-		  	google.charts.load("current", {packages:["imagepiechart"]});
-		  	google.charts.setOnLoadCallback(drawChart);
-
-		  	function drawChart() {
-				var data = google.visualization.arrayToDataTable([
-			  		['Task', 'Hours per Day'],
-			 		@foreach($day['uniqueCity'] as $c)
-					['{{$c->city}}: {{$c->count}}',     {{$c->count}}],
-					@endforeach
-				]);
-
-				var chart = new google.visualization.ImagePieChart(document.getElementById('piechart'));
-
-				chart.draw(data, {width: 320, height: 240});
-		  	}
-		</script>
-        <script type="text/javascript">
-            google.charts.load("current", {packages:["imagepiechart"]});
-            google.charts.setOnLoadCallback(drawChart);
-
-            function drawChart() {
-                var data = google.visualization.arrayToDataTable([
-                    ['Task', 'Hours per Day'],
-                    @foreach($day['uniqueCountry'] as $c)
-                    ['{{$c->country}}: {{$c->count}}',     {{$c->count}}],
-                    @endforeach
-                ]);
-
-                var chart = new google.visualization.ImagePieChart(document.getElementById('piechart_c'));
-
-                chart.draw(data, {width: 320, height: 240});
-            }
-        </script>
-
-        <script type="text/javascript">
-            google.charts.load("current", {packages:["imagepiechart"]});
-            google.charts.setOnLoadCallback(drawChart);
-
-            function drawChart() {
-                var data = google.visualization.arrayToDataTable([
-                    ['Task', 'Hours per Day'],
-                    @foreach($month['uniqueCity'] as $c)
-                    ['{{$c->city}}: {{$c->count}}',     {{$c->count}}],
-                    @endforeach
-                ]);
-
-                var chart = new google.visualization.ImagePieChart(document.getElementById('m_piechart'));
-
-                chart.draw(data, {width: 320, height: 240});
-            }
-        </script>
-        <script type="text/javascript">
-            google.charts.load("current", {packages:["imagepiechart"]});
-            google.charts.setOnLoadCallback(drawChart);
-
-            function drawChart() {
-                var data = google.visualization.arrayToDataTable([
-                    ['Task', 'Hours per Day'],
-                    @foreach($month['uniqueCountry'] as $c)
-                    ['{{$c->country}}: {{$c->count}}',     {{$c->count}}],
-                    @endforeach
-                ]);
-
-                var chart = new google.visualization.ImagePieChart(document.getElementById('m_piechart_c'));
-
-                chart.draw(data, {width: 320, height: 240});
-            }
-        </script>
-
-        <script type="text/javascript">
-            google.charts.load("current", {packages:["imagepiechart"]});
-            google.charts.setOnLoadCallback(drawChart);
-
-            function drawChart() {
-                var data = google.visualization.arrayToDataTable([
-                    ['Task', 'Hours per Day'],
-                    @foreach($year['uniqueCity'] as $c)
-                    ['{{$c->city}}: {{$c->count}}',     {{$c->count}}],
-                    @endforeach
-                ]);
-
-                var chart = new google.visualization.ImagePieChart(document.getElementById('y_piechart'));
-
-                chart.draw(data, {width: 320, height: 240});
-            }
-        </script>
-        <script type="text/javascript">
-            google.charts.load("current", {packages:["imagepiechart"]});
-            google.charts.setOnLoadCallback(drawChart);
-
-            function drawChart() {
-                var data = google.visualization.arrayToDataTable([
-                    ['Task', 'Hours per Day'],
-                    @foreach($year['uniqueCountry'] as $c)
-                    ['{{$c->country}}: {{$c->count}}',     {{$c->count}}],
-                    @endforeach
-                ]);
-
-                var chart = new google.visualization.ImagePieChart(document.getElementById('y_piechart_c'));
-
-                chart.draw(data, {width: 320, height: 240});
-            }
-        </script>
-
-        <script type="text/javascript">
-            google.charts.load("current", {packages:["imagepiechart"]});
-            google.charts.setOnLoadCallback(drawChart);
-
-            function drawChart() {
-                var data = google.visualization.arrayToDataTable([
-                    ['Task', 'Hours per Day'],
-                    @foreach($all['uniqueCity'] as $c)
-                    ['{{$c->city}}: {{$c->count}}',     {{$c->count}}],
-                    @endforeach
-                ]);
-
-                var chart = new google.visualization.ImagePieChart(document.getElementById('a_piechart'));
-
-                chart.draw(data, {width: 320, height: 240});
-            }
-        </script>
-        <script type="text/javascript">
-            google.charts.load("current", {packages:["imagepiechart"]});
-            google.charts.setOnLoadCallback(drawChart);
-
-            function drawChart() {
-                var data = google.visualization.arrayToDataTable([
-                    ['Task', 'Hours per Day'],
-                    @foreach($all['uniqueCountry'] as $c)
-                    ['{{$c->country}}: {{$c->count}}',     {{$c->count}}],
-                    @endforeach
-                ]);
-
-                var chart = new google.visualization.ImagePieChart(document.getElementById('a_piechart_c'));
-
-                chart.draw(data, {width: 320, height: 240});
-            }
-        </script>
 
         <style type="text/css">
         	body{
@@ -272,32 +132,60 @@
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="headingOne">
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        Статистика за день
+                                        Просмотры профиля за сутки
                                     </button>
                                 </h2>
                                 <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                    <div class="accordion-body">
-                                        <h6 style="font-family: 'Rubik', sans-serif; margin: 0">Уникальных просмотров: <strong>{{count($day['stat'])}}</strong></h6><br>
-										<small>Города из которых к вам заходили</small>
-                                        <div id="piechart" style=" height: 270px;"></div>
-                                        <small>Страны из которых к вам заходили</small>
-                                        <div id="piechart_c" style="height: 270px;"></div>
+                                    <div class="accordion-body text-center">
+                                        <h1 class="display-4" style="margin: 0">{{count($day['stat'])}}</h1>
+                                        <h1 class="display-4 mb-3" style="font-size: 1rem">Просмотры профиля</h1>
+										<ul class="list-group mb-3">
+											@foreach($day['uniqueCity'] as $c)
+											<li class="list-group-item d-flex justify-content-between align-items-center" style="border-top: 0; border-left: 0; border-right: 0; border-radius: 0">
+												{{$c->city}}
+											  	<span class="badge bg-light" style="color: black">{{$c->count}}</span>
+											</li>
+											@endforeach
+										</ul>
+										<h1 class="display-4" style="font-size: 1rem">Страны</h1>
+										<ul class="list-group mb-3">
+											@foreach($day['uniqueCountry'] as $c)
+											<li class="list-group-item d-flex justify-content-between align-items-center" style="border-top: 0; border-left: 0; border-right: 0; border-radius: 0">
+												{{$c->country}}
+											  	<span class="badge bg-light" style="color: black">{{$c->count}}</span>
+											</li>
+											@endforeach
+										</ul>
                                     </div>
                                 </div>
                             </div>
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="headingTwo">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                        Статистика за месяц
+                                        Просмотры профиля за месяц
                                     </button>
                                 </h2>
                                 <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                                    <div class="accordion-body">
-                                        <h6 style="font-family: 'Rubik', sans-serif; margin: 0">Уникальных просмотров: <strong>{{count($month['stat'])}}</strong></h6><br>
-                                        <small>Города из которых к вам заходили</small>
-                                        <div id="m_piechart" style="width: 350px; height: 270px;"></div>
-                                        <small>Страны из которых к вам заходили</small>
-                                        <div id="m_piechart_c" style="width: 350px; height: 270px;"></div>
+                                    <div class="accordion-body text-center">
+                                        <h1 class="display-4" style="margin: 0">{{count($month['stat'])}}</h1>
+                                        <h1 class="display-4 mb-3" style="font-size: 1rem">Просмотры профиля</h1>
+										<ul class="list-group mb-3">
+											@foreach($month['uniqueCity'] as $c)
+											<li class="list-group-item d-flex justify-content-between align-items-center" style="border-top: 0; border-left: 0; border-right: 0; border-radius: 0">
+												{{$c->city}}
+											  	<span class="badge bg-light" style="color: black">{{$c->count}}</span>
+											</li>
+											@endforeach
+										</ul>
+										<h1 class="display-4" style="font-size: 1rem">Страны</h1>
+										<ul class="list-group mb-3">
+											@foreach($month['uniqueCountry'] as $c)
+											<li class="list-group-item d-flex justify-content-between align-items-center" style="border-top: 0; border-left: 0; border-right: 0; border-radius: 0">
+												{{$c->country}}
+											  	<span class="badge bg-light" style="color: black">{{$c->count}}</span>
+											</li>
+											@endforeach
+										</ul>
                                     </div>
                                 </div>
                             </div>
@@ -308,12 +196,26 @@
                                     </button>
                                 </h2>
                                 <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                                    <div class="accordion-body">
-                                        <h6 style="font-family: 'Rubik', sans-serif; margin: 0">Уникальных просмотров: <strong>{{count($year['stat'])}}</strong></h6><br>
-                                        <small>Города из которых к вам заходили</small>
-                                        <div id="y_piechart" style="width: 350px; height: 270px;"></div>
-                                        <small>Страны из которых к вам заходили</small>
-                                        <div id="y_piechart_c" style="width: 350px; height: 270px;"></div>
+                                    <div class="accordion-body text-center">
+                                        <h1 class="display-4" style="margin: 0">{{count($year['stat'])}}</h1>
+                                        <h1 class="display-4 mb-3" style="font-size: 1rem">Просмотры профиля</h1>
+										<ul class="list-group mb-3">
+											@foreach($year['uniqueCity'] as $c)
+											<li class="list-group-item d-flex justify-content-between align-items-center" style="border-top: 0; border-left: 0; border-right: 0; border-radius: 0">
+												{{$c->city}}
+											  	<span class="badge bg-light" style="color: black">{{$c->count}}</span>
+											</li>
+											@endforeach
+										</ul>
+										<h1 class="display-4" style="font-size: 1rem">Страны</h1>
+										<ul class="list-group mb-3">
+											@foreach($year['uniqueCountry'] as $c)
+											<li class="list-group-item d-flex justify-content-between align-items-center" style="border-top: 0; border-left: 0; border-right: 0; border-radius: 0">
+												{{$c->country}}
+											  	<span class="badge bg-light" style="color: black">{{$c->count}}</span>
+											</li>
+											@endforeach
+										</ul>
                                     </div>
                                 </div>
                             </div>
@@ -324,12 +226,26 @@
                                     </button>
                                 </h2>
                                 <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
-                                    <div class="accordion-body">
-                                        <h6 style="font-family: 'Rubik', sans-serif; margin: 0">Уникальных просмотров: <strong>{{count($all['stat'])}}</strong></h6><br>
-                                        <small>Города из которых к вам заходили</small>
-                                        <div id="a_piechart" style="width: 350px; height: 270px;"></div>
-                                        <small>Страны из которых к вам заходили</small>
-                                        <div id="a_piechart_c" style="width: 350px; height: 270px;"></div>
+                                    <div class="accordion-body text-center">
+                                        <h1 class="display-4" style="margin: 0">{{count($all['stat'])}}</h1>
+                                        <h1 class="display-4 mb-3" style="font-size: 1rem">Просмотры профиля</h1>
+										<ul class="list-group mb-3">
+											@foreach($all['uniqueCity'] as $c)
+											<li class="list-group-item d-flex justify-content-between align-items-center" style="border-top: 0; border-left: 0; border-right: 0; border-radius: 0">
+												{{$c->city}}
+											  	<span class="badge bg-light" style="color: black">{{$c->count}}</span>
+											</li>
+											@endforeach
+										</ul>
+										<h1 class="display-4" style="font-size: 1rem">Страны</h1>
+										<ul class="list-group mb-3">
+											@foreach($all['uniqueCountry'] as $c)
+											<li class="list-group-item d-flex justify-content-between align-items-center" style="border-top: 0; border-left: 0; border-right: 0; border-radius: 0">
+												{{$c->country}}
+											  	<span class="badge bg-light" style="color: black">{{$c->count}}</span>
+											</li>
+											@endforeach
+										</ul>
                                     </div>
                                 </div>
                             </div>

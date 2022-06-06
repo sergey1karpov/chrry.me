@@ -31,8 +31,8 @@ class StatsService
     public static function getUserStatsByDay(User $user) //Статистика за день
     {
         $data['stat'] = Stats::where('created_at', Carbon::today())->where('user_id', $user->id)->get();
-        $data['uniqueCity'] = \DB::table('stats')->where('created_at', Carbon::today())->where('user_id', $user->id)->select('city', \DB::raw('COUNT(city) as count'))->groupBy('city')->get();
-        $data['uniqueCountry'] = \DB::table('stats')->where('created_at', Carbon::today())->where('user_id', $user->id)->select('country', \DB::raw('COUNT(country) as count'))->groupBy('country')->get();
+        $data['uniqueCity'] = \DB::table('stats')->where('created_at', Carbon::today())->where('user_id', $user->id)->select('city', \DB::raw('COUNT(city) as count'))->orderByRaw('COUNT(city) DESC')->groupBy('city')->get(); //LIMIT ???
+        $data['uniqueCountry'] = \DB::table('stats')->where('created_at', Carbon::today())->where('user_id', $user->id)->select('country', \DB::raw('COUNT(country) as count'))->orderByRaw('COUNT(country) DESC')->groupBy('country')->get();
 
         return $data;
     }
@@ -40,8 +40,8 @@ class StatsService
     public static function fetUserStatsByMonth(User $user) //Статистика за месяц
     {
         $data['stat'] = Stats::whereMonth('created_at', Carbon::now()->month)->where('user_id', $user->id)->get();
-        $data['uniqueCity'] = \DB::table('stats')->whereMonth('created_at', Carbon::today())->where('user_id', $user->id)->select('city', \DB::raw('COUNT(city) as count'))->groupBy('city')->get();
-        $data['uniqueCountry'] = \DB::table('stats')->whereMonth('created_at', Carbon::today())->where('user_id', $user->id)->select('country', \DB::raw('COUNT(country) as count'))->groupBy('country')->get();
+        $data['uniqueCity'] = \DB::table('stats')->whereMonth('created_at', Carbon::today())->where('user_id', $user->id)->select('city', \DB::raw('COUNT(city) as count'))->orderByRaw('COUNT(city) DESC')->groupBy('city')->get();
+        $data['uniqueCountry'] = \DB::table('stats')->whereMonth('created_at', Carbon::today())->where('user_id', $user->id)->select('country', \DB::raw('COUNT(country) as count'))->orderByRaw('COUNT(country) DESC')->groupBy('country')->get();
 
         return $data;
     }
@@ -49,8 +49,8 @@ class StatsService
     public static function getUserStatsByYear(User $user) //Статистика за год
     {
         $data['stat'] = Stats::whereYear('updated_at', Carbon::now()->year)->where('user_id', $user->id)->get();
-        $data['uniqueCity'] = \DB::table('stats')->whereYear('created_at', Carbon::today())->where('user_id', $user->id)->select('city', \DB::raw('COUNT(city) as count'))->groupBy('city')->get();
-        $data['uniqueCountry'] = \DB::table('stats')->whereYear('created_at', Carbon::today())->where('user_id', $user->id)->select('country', \DB::raw('COUNT(country) as count'))->groupBy('country')->get();
+        $data['uniqueCity'] = \DB::table('stats')->whereYear('created_at', Carbon::today())->where('user_id', $user->id)->select('city', \DB::raw('COUNT(city) as count'))->orderByRaw('COUNT(city) DESC')->groupBy('city')->get();
+        $data['uniqueCountry'] = \DB::table('stats')->whereYear('created_at', Carbon::today())->where('user_id', $user->id)->select('country', \DB::raw('COUNT(country) as count'))->orderByRaw('COUNT(country) DESC')->groupBy('country')->get();
 
         return $data;
     }
@@ -58,8 +58,8 @@ class StatsService
     public static function getAllUserStats(User $user) //Вся стата
     {
         $data['stat'] = Stats::where('user_id', $user->id)->get();
-        $data['uniqueCity'] = \DB::table('stats')->where('user_id', $user->id)->select('city', \DB::raw('COUNT(city) as count'))->groupBy('city')->get();
-        $data['uniqueCountry'] = \DB::table('stats')->where('user_id', $user->id)->select('country', \DB::raw('COUNT(country) as count'))->groupBy('country')->get();
+        $data['uniqueCity'] = \DB::table('stats')->where('user_id', $user->id)->select('city', \DB::raw('COUNT(city) as count'))->orderByRaw('COUNT(city) DESC')->groupBy('city')->get();
+        $data['uniqueCountry'] = \DB::table('stats')->where('user_id', $user->id)->select('country', \DB::raw('COUNT(country) as count'))->orderByRaw('COUNT(country) DESC')->groupBy('country')->get();
 
         return $data;
     }
