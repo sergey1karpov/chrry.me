@@ -110,10 +110,10 @@
                         {{-- <img src="https://i.ibb.co/tx0Bgz9/1111.png" class="img-fluid mb-2" width="40px">	 --}}
 						<div class="title">
 							{{-- <h4 class="mt-2" style="font-family: 'Rubik', sans-serif;">Настройки</h4> --}}
-							<h4 class="mt-2" style="font-family: 'Rubik', sans-serif;">Статистика</h4>
+							<h4 class="mt-2" style="font-family: 'Rubik', sans-serif;">Статистика профиля</h4>
 						</div>
 						<div class="text mb-1">
-							<span style="font-family: 'Rubik', sans-serif; font-size: 75%; line-height: 16px; display:block">Кол-во просмотров профиля, переходов по ссылкам, геолокация кликов</span>
+							<span style="font-family: 'Rubik', sans-serif; font-size: 75%; line-height: 16px; display:block">Кол-во просмотров профиля, геолокация по городам и странам </span>
 						</div>
 					</div>
 				</div>
@@ -124,7 +124,7 @@
                 <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Статистика</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Статистика </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body" style="padding: 0">
@@ -387,7 +387,7 @@
 
 			<!-- Добавление ссылок -->
 			<div class="row" style="margin-top: 12px">
-				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-bs-toggle="modal" data-bs-target="#exampleModalLink">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-1" data-bs-toggle="modal" data-bs-target="#exampleModalLink">
 					<div class="box-part text-center rounded-3" style="margin: 0">
                         {{-- <img src="https://i.ibb.co/74YMCMB/333.png" class="img-fluid mb-2" width="40px"> --}}
 						<div class="title">
@@ -485,7 +485,7 @@
 				</div>
 		  	</div>
 
-		  	<!-- Управление ссылками -->
+		  	{{-- <!-- Управление ссылками -->
 		  	<div class="row mb-3" style="margin-top: 12px;">
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					<div class="box-part text-center rounded-3" style="margin: 0">
@@ -495,142 +495,152 @@
 						<div class="text mb-3">
 							<span style="font-family: 'Rubik', sans-serif; font-size: 75%; line-height: 16px; display:block">Изменить или удалить вашу ссылку</span>
 						</div>
-						@foreach($links as $link)
-					    	<div class="row card {{$link->rounded}} box-part2" style="background-color:{{$link->background_color}}; border: 2px solid {{$link->background_color}}; opacity: 0.9;">
-					  			<div class="d-flex align-items-center justify-content-start mt-2 mb-2" style="padding-left: 4px; padding-right: 4px;">
-					  				<div class="col-1">
-					  					<img class="{{$link->rounded}}" src="{{$link->photo}}" style="width:50px;">
-					  				</div>
-					  				<div class=" col-10 text-center">
-					  					<div class="me-4 ms-4">
-					  						<h4 class="" style="font-family: 'Open Sans', sans-serif; line-height: 1.5; font-size: 1rem; color: {{$link->title_color}}">{{$link->title}}</h4>
-					  					</div>
-					  				</div>
-					  				<div class="col-1">
-					  					<!-- Говно -->
-					  				</div>
-					  			</div>
-					  			<div class="d-flex justify-content-between border-bottom rounded-bottom rounded-3" style="padding: 0;">
-							  		<div class="col-6" style="background-color: #f0eeef; box-shadow: 5px 0px 0px black;" data-bs-toggle="modal" data-bs-target="#exampleModalEdit{{$link->id}}">
-							  			<button class="btn-sm" style="background-color: #f0eeef; border: 0;">
-							  				Изменить
-							  			</button>
-							  		</div>
-							  		<div class="col-6" style="background-color: #f0eeef; ">
-							  			<form action="{{ route('delLink', ['id' => Auth::user()->id, 'link' => $link->id]) }}" method="POST">
-							  				@csrf @method('DELETE')
-							  				<button class="btn-sm" style="background-color: #f0eeef; border: 0;">
-							  					Удалить
-							  				</button>
-							  			</form>
-							  		</div>
-							  	</div>
-						  	</div>
-						  	<div class="modal fade" id="exampleModalEdit{{$link->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-						  		<div class="modal-dialog">
-								    <div class="modal-content">
-								    	<div class="modal-header">
-								        	<h5 class="modal-title" style="font-family: 'Rubik', sans-serif;">Изменить ссылку</h5>
-								        	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-								      	</div>
-
-								      	@if($link->photo)
-										    <div class="mb-3">
-												<label for="exampleInputEmail1" class="form-label mt-3" style="font-family: 'Rubik', sans-serif;">Текущее изображение</label><br>
-												<div class="row d-flex align-items-center justify-content-center">
-													<div class="col-4">
-														<img class="rounded-3" src="{{$link->photo}}" style="width:50px;">
-													</div>
-													<div class="col-8">
-														<form action="{{ route('delLinkPhoto', ['id' => Auth::user()->id, 'link' => $link->id]) }}" method="POST">
-												    		@csrf @method('PATCH')
-												    		<button class="btn btn-light">Удалить</button>
-												    	</form>
-													</div>
-												</div>
-											</div>
-									    @endif
-
-								      	<div class="modal-body">
-								        	<form action="{{ route('editLink', ['id' => Auth::user()->id, 'link' => $link->id]) }}" method="post" enctype="multipart/form-data">
-								        		@csrf @method('PATCH')
-								        		<div>
-								        			<div class="mb-3">
-												    	<label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Заголовок</label>
-												    	<input type="text" class="form-control" name="title" placeholder="Моя красивая ссылка" maxlength="150" value="{{$link->title}}">
-												    	<span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Заголовок может содержать от 3 букв до 150 символов</span>
-												    </div>
-												    <div class="mb-3">
-												    	<label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Вставьте ссылку</label>
-												    	<input type="text" class="form-control" name="link" placeholder="http://..." value="{{$link->link}}">
-												    	<span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Измените хорошую ссылку</span>
-												    </div>
-												    <div class="mb-3">
-												    	<label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Текущий цвет заголовка</label>
-													  	<div class="mb-3 text-center d-flex justify-content-center">
-															<input type="color" class="form-control " id="exampleColorInput" value="{{$link->title_color}}" title="Choose your color" name="title_color" style="height: 40px;">
-													  	</div>
-													</div>
-													<div class="mb-3">
-														<label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Текущий фоновый цвет</label>
-													  	<div class="mb-3 text-center d-flex justify-content-center">
-															<input type="color" class="form-control " id="exampleColorInput" value="{{$link->background_color}}" title="Choose your color" name="background_color" style="height: 40px;">
-													  	</div>
-												    </div>
-                                                    <div class="mb-3">
-                                                        <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Добавить тень</label><br>
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="radio" name="shadow" id="inlineRadio1" value="shadow-none" @if($link->shadow == 'shadow-none') checked @endif>
-                                                            <label class="form-check-label" for="inlineRadio1">none</label>
-                                                        </div>
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="radio" name="shadow" id="inlineRadio2" value="shadow-sm" @if($link->shadow == 'shadow-sm') checked @endif>
-                                                            <label class="form-check-label" for="inlineRadio2">sm</label>
-                                                        </div>
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="radio" name="shadow" id="inlineRadio3" value="shadow" @if($link->shadow == 'shadow') checked @endif>
-                                                            <label class="form-check-label" for="inlineRadio3">md</label>
-                                                        </div>
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="radio" name="shadow" id="inlineRadio3" value="shadow-lg" @if($link->shadow == 'shadow-lg') checked @endif>
-                                                            <label class="form-check-label" for="inlineRadio3">lg</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Округление углов блоков и фото</label><br>
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="radio" name="rounded" id="inlineRadio1" value="rounded-0" @if($link->rounded == 'rounded-0') checked @endif>
-                                                            <label class="form-check-label" for="inlineRadio1">none</label>
-                                                        </div>
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="radio" name="rounded" id="inlineRadio2" value="rounded-1" @if($link->rounded == 'rounded-1') checked @endif>
-                                                            <label class="form-check-label" for="inlineRadio2">sm</label>
-                                                        </div>
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="radio" name="rounded" id="inlineRadio3" value="rounded-2" @if($link->rounded == 'rounded-2') checked @endif>
-                                                            <label class="form-check-label" for="inlineRadio3">md</label>
-                                                        </div>
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="radio" name="rounded" id="inlineRadio3" value="rounded-3" @if($link->rounded == 'rounded-3') checked @endif>
-                                                            <label class="form-check-label" for="inlineRadio3">lg</label>
-                                                        </div>
-                                                    </div>
-												    <div class="mb-3">
-												    	<label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Фото</label>
-												    	<input type="file" class="form-control" id="inputGroupFile02" name="photo">
-												    	<span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Мы принимаем картинки jpeg, jpg, png, gif формата, размерои до 3мб. Хотя можете обойтись и без изображения, но зачем если можно?</span>
-												    </div>
-												    <button type="submit" class="btn btn-primary">Изменить</button>
-				  								</div>
-								        	</form>
-								      	</div>
-								    </div>
-						  		</div>
-							</div>
-						@endforeach
 					</div>
 				</div>
-			</div>
+			</div> --}}
+
+            @foreach($links as $link)
+                <div class="row card {{$link->rounded}} box-part2" style="background-color:{{$link->background_color}}; border: 2px solid {{$link->background_color}}; opacity: 0.9;">
+                    <div class="d-flex align-items-center justify-content-start mt-2 mb-2" style="padding-left: 4px; padding-right: 4px;">
+                        <div class="col-1">
+                            <img class="{{$link->rounded}}" src="{{$link->photo}}" style="width:50px;">
+                        </div>
+                        <div class=" col-10 text-center">
+                            <div class="me-4 ms-4">
+                                <h4 class="" style="font-family: 'Open Sans', sans-serif; line-height: 1.5; font-size: 1rem; color: {{$link->title_color}}">{{$link->title}}</h4>
+                            </div>
+                        </div>
+                        <div class="col-1">
+                            <!-- Говно -->
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between rounded-bottom rounded-3" style="padding: 0;">
+                        {{-- <a href="{{ route('showClickStat', ['id' => $user->id, 'link' => $link->id]) }}" style="text-decoration: none; color: black"> --}}
+                        <div class="col-4 border-end " style="background-color: #f0eeef; box-shadow: 5px 0px 0px black;">
+                            <a href="{{ route('showClickStat', ['id' => $user->id, 'link' => $link->id]) }}" style="text-decoration: none; color: black">
+                                <button href="{{ route('showClickStat', ['id' => $user->id, 'link' => $link->id]) }}" class="btn-sm" style="background-color: #f0eeef; border: 0;">
+                                    Статистика
+                                </button>
+                            </a>
+                        </div>
+                        {{-- </a> --}}
+                        <div class="col-4 border-end" style="background-color: #f0eeef; box-shadow: 5px 0px 0px black;" data-bs-toggle="modal" data-bs-target="#exampleModalEdit{{$link->id}}">
+                            <button class="btn-sm" style="background-color: #f0eeef; border: 0;">
+                                Изменить
+                            </button>
+                        </div>
+                        <div class="col-4" style="background-color: #f0eeef; ">
+                            <form action="{{ route('delLink', ['id' => Auth::user()->id, 'link' => $link->id]) }}" method="POST">
+                                @csrf @method('DELETE')
+                                <button class="btn-sm" style="background-color: #f0eeef; border: 0;">
+                                    Удалить
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="exampleModalEdit{{$link->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" style="font-family: 'Rubik', sans-serif;">Изменить ссылку</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            @if($link->photo)
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label mt-3" style="font-family: 'Rubik', sans-serif;">Текущее изображение</label><br>
+                                    <div class="row d-flex align-items-center justify-content-center">
+                                        <div class="col-4">
+                                            <img class="rounded-3" src="{{$link->photo}}" style="width:50px;">
+                                        </div>
+                                        <div class="col-8">
+                                            <form action="{{ route('delLinkPhoto', ['id' => Auth::user()->id, 'link' => $link->id]) }}" method="POST">
+                                                @csrf @method('PATCH')
+                                                <button class="btn btn-light">Удалить</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+
+                            <div class="modal-body">
+                                <form action="{{ route('editLink', ['id' => Auth::user()->id, 'link' => $link->id]) }}" method="post" enctype="multipart/form-data">
+                                    @csrf @method('PATCH')
+                                    <div>
+                                        <div class="mb-3">
+                                            <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Заголовок</label>
+                                            <input type="text" class="form-control" name="title" placeholder="Моя красивая ссылка" maxlength="150" value="{{$link->title}}">
+                                            <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Заголовок может содержать от 3 букв до 150 символов</span>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Вставьте ссылку</label>
+                                            <input type="text" class="form-control" name="link" placeholder="http://..." value="{{$link->link}}">
+                                            <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Измените хорошую ссылку</span>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Текущий цвет заголовка</label>
+                                            <div class="mb-3 text-center d-flex justify-content-center">
+                                                <input type="color" class="form-control " id="exampleColorInput" value="{{$link->title_color}}" title="Choose your color" name="title_color" style="height: 40px;">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Текущий фоновый цвет</label>
+                                            <div class="mb-3 text-center d-flex justify-content-center">
+                                                <input type="color" class="form-control " id="exampleColorInput" value="{{$link->background_color}}" title="Choose your color" name="background_color" style="height: 40px;">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Добавить тень</label><br>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="shadow" id="inlineRadio1" value="shadow-none" @if($link->shadow == 'shadow-none') checked @endif>
+                                                <label class="form-check-label" for="inlineRadio1">none</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="shadow" id="inlineRadio2" value="shadow-sm" @if($link->shadow == 'shadow-sm') checked @endif>
+                                                <label class="form-check-label" for="inlineRadio2">sm</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="shadow" id="inlineRadio3" value="shadow" @if($link->shadow == 'shadow') checked @endif>
+                                                <label class="form-check-label" for="inlineRadio3">md</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="shadow" id="inlineRadio3" value="shadow-lg" @if($link->shadow == 'shadow-lg') checked @endif>
+                                                <label class="form-check-label" for="inlineRadio3">lg</label>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Округление углов блоков и фото</label><br>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="rounded" id="inlineRadio1" value="rounded-0" @if($link->rounded == 'rounded-0') checked @endif>
+                                                <label class="form-check-label" for="inlineRadio1">none</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="rounded" id="inlineRadio2" value="rounded-1" @if($link->rounded == 'rounded-1') checked @endif>
+                                                <label class="form-check-label" for="inlineRadio2">sm</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="rounded" id="inlineRadio3" value="rounded-2" @if($link->rounded == 'rounded-2') checked @endif>
+                                                <label class="form-check-label" for="inlineRadio3">md</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="rounded" id="inlineRadio3" value="rounded-3" @if($link->rounded == 'rounded-3') checked @endif>
+                                                <label class="form-check-label" for="inlineRadio3">lg</label>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Фото</label>
+                                            <input type="file" class="form-control" id="inputGroupFile02" name="photo">
+                                            <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Мы принимаем картинки jpeg, jpg, png, gif формата, размерои до 3мб. Хотя можете обойтись и без изображения, но зачем если можно?</span>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Изменить</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
 
 			<!-- Футер -->
 			<footer class="footer nav">
@@ -644,7 +654,7 @@
 		      		<div>
 		      			<form method="POST" action="{{ route('logout') }}">
 	                        @csrf
-	                        <button class="nav-link text-muted" style="padding:  0; border: 0; outline: none; background-color:#f5f5f5;">
+	                        <button class="nav-link text-muted mt-2" style="padding:  0; border: 0; outline: none; background-color:#f5f5f5;">
 	                        	<h4 style="font-family: 'Rubik', sans-serif; font-size: 1rem">Выход</h4>
 	                        </button>
 	                    </form>

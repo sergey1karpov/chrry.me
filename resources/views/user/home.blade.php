@@ -25,8 +25,12 @@
 		<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;600&display=swap" rel="stylesheet">
 
 		<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <style type="text/css">
         	@if($user->banner)
@@ -50,8 +54,38 @@
 			    background-repeat: no-repeat;
 			}
         </style>
+        @foreach($links as $link)
+            <script type="text/javascript">
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                function countRabbits{{$link->id}}() {
+
+                    let guest = '{{$_SERVER['REMOTE_ADDR']}}';
+                    let linkId = '{{$link->id}}';
+                    let userId = '{{$user->id}}';
+
+                    $.ajax({
+                        url: userId+"/link",
+                        type: 'POST',
+                        data: { user_id: userId, link_id: linkId, guest_ip: guest, func: 'func_data' },
+                        success: function(data){
+                            console.log('GOOD');
+                        },
+                        error: function(){
+                            console.log('ERROR');
+                        }
+                    })
+                }
+            </script>
+        @endforeach
     </head>
     <body class="antialiased">
+
     	@auth
         <nav class="navbar navbar-expand-lg fixed-top">
             <div class="container-fluid">
@@ -122,7 +156,7 @@
 	    @foreach($links as $link)
 	  		<div class="container" style="padding-left:8px; padding-right:8px">
 
-			  	<a href="{{$link->link}}" style="text-decoration:none">
+			  	<a href="{{$link->link}}" style="text-decoration:none" onclick="countRabbits{{$link->id}}()">
 			  		<div class="row ms-1 me-1 card {{$link->rounded}} {{$link->shadow}}" style="background-color:{{$link->background_color}}; border: 2px solid {{$link->background_color}}; margin-top: 12px;">
 			  			<div class="d-flex align-items-center justify-content-start mt-1 mb-1" style="padding-left: 4px; padding-right: 4px;">
 			  				<div class="col-1">

@@ -28,18 +28,51 @@ class UserController extends Controller
         return view('user.home', compact('user', 'links'));
     }
 
-    //Отображение формы редактирования информации профиля
+    // Отображение формы редактирования информации профиля
+    // public function editProfileForm($id) {
+    //     $user = User::where('id', $id)->firstOrFail();
+    //     $links = \DB::table('links')->where('user_id', $user->id)->orderBy('id', 'desc')->get();
+
+    //     $day = StatsService::getUserStatsByDay($user);
+    //     $month = StatsService::getUserStatsByMonth($user);
+    //     $year = StatsService::getUserStatsByYear($user);
+    //     $all = StatsService::getAllUserStats($user);
+
+    //     $dayClick = StatsService::getUserLinkStatsByDay($user);
+    //     $monthClick = StatsService::getUserLinkStatsByMonth($user);
+    //     $yearClick = StatsService::getUserLinkStatsByYear($user);
+    //     $allClick = StatsService::getAllUserLinkStats($user);
+
+    //     if($user) {
+    //         return view('user.edit-profile', compact('user', 'links', 'day', 'month', 'year', 'all', 'dayClick', 'monthClick', 'yearClick', 'allClick'));
+    //     }
+    //     abort(404);
+    // }
     public function editProfileForm($id) {
         $user = User::where('id', $id)->firstOrFail();
         $links = \DB::table('links')->where('user_id', $user->id)->orderBy('id', 'desc')->get();
 
         $day = StatsService::getUserStatsByDay($user);
-        $month = StatsService::fetUserStatsByMonth($user);
+        $month = StatsService::getUserStatsByMonth($user);
         $year = StatsService::getUserStatsByYear($user);
         $all = StatsService::getAllUserStats($user);
 
+        $dayClick = [];
+        $monthClick = [];
+        $yearClick = [];
+        $allClick = [];
+
+        foreach($links as $link) {
+            $dayClick[] = StatsService::getUserLinkStatsByDay($user, $link->id);
+            $monthClick[] = StatsService::getUserLinkStatsByMonth($user, $link->id);
+            $yearClick[] = StatsService::getUserLinkStatsByYear($user, $link->id);
+            $allClick[] = StatsService::getAllUserLinkStats($user, $link->id);
+        }
+
+        // dd($dayClick[0]['stat']);
+
         if($user) {
-            return view('user.edit-profile', compact('user', 'links', 'day', 'month', 'year', 'all'));
+            return view('user.edit-profile', compact('user', 'links', 'day', 'month', 'year', 'all', 'dayClick', 'monthClick', 'yearClick', 'allClick'));
         }
         abort(404);
     }

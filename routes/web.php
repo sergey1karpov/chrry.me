@@ -37,6 +37,9 @@ Route::patch('/{id}/add-link/{link}/edit', [LinkController::class, 'editLink'])-
 Route::delete('/{id}/add-link/{link}/delete', [LinkController::class, 'delLink'])->name('delLink');
 Route::patch('/{id}/add-link/{link}/delete-photo', [LinkController::class, 'delLinkPhoto'])->name('delLinkPhoto');
 
+Route::post('/{id}/link', [LinkController::class, 'clickStat'])->name('clickStat');
+Route::get('/{id}/link/{link}', [LinkController::class, 'showClickStat'])->name('showClickStat');
+
 
 
 //bord.link/cc/q1w2e3r4 - вшита

@@ -6,13 +6,14 @@ use App\Models\Stats;
 use Illuminate\Support\Carbon;
 use App\Models\User;
 use Illuminate\Support\Facades\Http;
+use App\Models\LinkStat;
 
 class StatsService
 {
     public static function createUserStats(User $user)
     {
-        $response = Http::get('http://ip-api.com/php/' . $_SERVER['REMOTE_ADDR']);
-        $array = unserialize($response->body());
+        // $response = Http::get('http://ip-api.com/php/' . $_SERVER['REMOTE_ADDR']);
+        // $array = unserialize($response->body());
 
         $stat = Stats::where('guest_ip', $_SERVER['REMOTE_ADDR'])->where('created_at', Carbon::today())->where('user_id', $user->id)->first();
         if(false == $stat) {
@@ -20,9 +21,9 @@ class StatsService
             $stats->user_id    = $user->id;
             $stats->guest_ip   = $_SERVER['REMOTE_ADDR'];
             $stats->created_at = Carbon::today();
-            $stats->city = $array['city'];
-            $stats->country = $array['country'];
-            $stats->country_code = $array['countryCode'];
+            // $stats->city = $array['city'];
+            // $stats->country = $array['country'];
+            // $stats->country_code = $array['countryCode'];
 
             $stats->save();
         }
@@ -37,7 +38,7 @@ class StatsService
         return $data;
     }
 
-    public static function fetUserStatsByMonth(User $user) //Статистика за месяц
+    public static function getUserStatsByMonth(User $user) //Статистика за месяц
     {
         $data['stat'] = Stats::whereMonth('created_at', Carbon::now()->month)->where('user_id', $user->id)->get();
         $data['uniqueCity'] = \DB::table('stats')->whereMonth('created_at', Carbon::today())->where('user_id', $user->id)->select('city', \DB::raw('COUNT(city) as count'))->orderByRaw('COUNT(city) DESC')->groupBy('city')->get();
@@ -60,6 +61,44 @@ class StatsService
         $data['stat'] = Stats::where('user_id', $user->id)->get();
         $data['uniqueCity'] = \DB::table('stats')->where('user_id', $user->id)->select('city', \DB::raw('COUNT(city) as count'))->orderByRaw('COUNT(city) DESC')->groupBy('city')->get();
         $data['uniqueCountry'] = \DB::table('stats')->where('user_id', $user->id)->select('country', \DB::raw('COUNT(country) as count'))->orderByRaw('COUNT(country) DESC')->groupBy('country')->get();
+
+        return $data;
+    }
+
+    //Links
+
+    public static function getUserLinkStatsByDay($user, $link) //Статистика за день
+    {
+        $data['stat'] = LinkStat::where('created_at', Carbon::today())->where('user_id', $user->id)->where('link_id', $link)->get();
+        $data['uniqueCity'] = \DB::table('link_stat')->where('link_id', $link)->where('created_at', Carbon::today())->where('user_id', $user->id)->select('city', \DB::raw('COUNT(city) as count'))->orderByRaw('COUNT(city) DESC')->groupBy('city')->get();
+        $data['uniqueCountry'] = \DB::table('link_stat')->where('link_id', $link)->where('created_at', Carbon::today())->where('user_id', $user->id)->select('country', \DB::raw('COUNT(country) as count'))->orderByRaw('COUNT(country) DESC')->groupBy('country')->get();
+
+        return $data;
+    }
+
+    public static function getUserLinkStatsByMonth(User $user, int $link)//Статистика за месяц
+    {
+        $data['stat'] = LinkStat::whereMonth('created_at', Carbon::now()->month)->where('user_id', $user->id)->where('link_id',  $link)->get();
+        $data['uniqueCity'] = \DB::table('link_stat')->where('link_id', $link)->whereMonth('created_at', Carbon::today())->where('user_id', $user->id)->select('city', \DB::raw('COUNT(city) as count'))->orderByRaw('COUNT(city) DESC')->groupBy('city')->get();
+        $data['uniqueCountry'] = \DB::table('link_stat')->where('link_id', $link)->whereMonth('created_at', Carbon::today())->where('user_id', $user->id)->select('country', \DB::raw('COUNT(country) as count'))->orderByRaw('COUNT(country) DESC')->groupBy('country')->get();
+
+        return $data;
+    }
+
+    public static function getUserLinkStatsByYear(User $user, int $link) //Статистика за год
+    {
+        $data['stat'] = LinkStat::whereYear('created_at', Carbon::now()->year)->where('user_id', $user->id)->where('link_id', $link)->get();
+        $data['uniqueCity'] = \DB::table('link_stat')->where('link_id', $link)->whereYear('created_at', Carbon::today())->where('user_id', $user->id)->select('city', \DB::raw('COUNT(city) as count'))->orderByRaw('COUNT(city) DESC')->groupBy('city')->get();
+        $data['uniqueCountry'] = \DB::table('link_stat')->where('link_id', $link)->whereYear('created_at', Carbon::today())->where('user_id', $user->id)->select('country', \DB::raw('COUNT(country) as count'))->orderByRaw('COUNT(country) DESC')->groupBy('country')->get();
+
+        return $data;
+    }
+
+    public static function getAllUserLinkStats(User $user, int $link) //Вся стата
+    {
+        $data['stat'] = LinkStat::where('user_id', $user->id)->where('link_id', $link)->get();
+        $data['uniqueCity'] = \DB::table('link_stat')->where('link_id', $link)->where('user_id', $user->id)->select('city', \DB::raw('COUNT(city) as count'))->orderByRaw('COUNT(city) DESC')->groupBy('city')->get();
+        $data['uniqueCountry'] = \DB::table('link_stat')->where('link_id', $link)->where('user_id', $user->id)->select('country', \DB::raw('COUNT(country) as count'))->orderByRaw('COUNT(country) DESC')->groupBy('country')->get();
 
         return $data;
     }

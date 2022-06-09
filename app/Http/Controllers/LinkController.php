@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Auth;
 use Intervention\Image\ImageManagerStatic as Image;
 use Intervention\Image\ImageManager;
 use App\Http\Requests\LinkRequest;
+use App\Models\LinkStat;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Carbon;
+use App\Services\StatsService;
 
 class LinkController extends Controller
 {
@@ -120,6 +124,43 @@ class LinkController extends Controller
         $url = '/'.$img->dirname . '/' . $img->basename;
 
         return $url;
+    }
+
+    public function clickStat()
+    {
+        $response = Http::get('http://ip-api.com/php/' . $_POST['guest_ip']);
+        $array = unserialize($response->body());
+
+        $stat = LinkStat::where('guest_ip', $_POST['guest_ip'])->where('created_at', Carbon::today())->where('user_id', $_POST['user_id'])->where('link_id', $_POST['link_id'])->first();
+
+        if(false == $stat) {
+            $func = $_POST['func'];
+            if ($func === 'func_data') {
+
+                $linkStat = new LinkStat();
+                $linkStat->user_id = $_POST['user_id'];
+                $linkStat->link_id = $_POST['link_id'];
+                $linkStat->guest_ip = $_POST['guest_ip'];
+                $linkStat->created_at = Carbon::today();
+                $linkStat->city = $array['city'];
+                $linkStat->country = $array['country'];
+                $linkStat->country_code = $array['countryCode'];
+                $linkStat->save();
+
+            }
+        }
+    }
+
+    public function showClickStat($id, $link)
+    {
+        $user = User::where('id', $id)->firstOrFail();
+
+        $day = StatsService::getUserLinkStatsByDay($user, $link);
+        $month = StatsService::getUserLinkStatsByMonth($user,$link);
+        $year = StatsService::getUserLinkStatsByYear($user, $link);
+        $all = StatsService::getAllUserLinkStats($user, $link);
+
+        return view('user.link-stat', compact('user', 'link', 'day', 'month', 'year', 'all'));
     }
 
 }
