@@ -28,26 +28,6 @@ class UserController extends Controller
         return view('user.home', compact('user', 'links'));
     }
 
-    // Отображение формы редактирования информации профиля
-    // public function editProfileForm($id) {
-    //     $user = User::where('id', $id)->firstOrFail();
-    //     $links = \DB::table('links')->where('user_id', $user->id)->orderBy('id', 'desc')->get();
-
-    //     $day = StatsService::getUserStatsByDay($user);
-    //     $month = StatsService::getUserStatsByMonth($user);
-    //     $year = StatsService::getUserStatsByYear($user);
-    //     $all = StatsService::getAllUserStats($user);
-
-    //     $dayClick = StatsService::getUserLinkStatsByDay($user);
-    //     $monthClick = StatsService::getUserLinkStatsByMonth($user);
-    //     $yearClick = StatsService::getUserLinkStatsByYear($user);
-    //     $allClick = StatsService::getAllUserLinkStats($user);
-
-    //     if($user) {
-    //         return view('user.edit-profile', compact('user', 'links', 'day', 'month', 'year', 'all', 'dayClick', 'monthClick', 'yearClick', 'allClick'));
-    //     }
-    //     abort(404);
-    // }
     public function editProfileForm($id) {
         $user = User::where('id', $id)->firstOrFail();
         $links = \DB::table('links')->where('user_id', $user->id)->orderBy('id', 'desc')->get();
@@ -69,8 +49,6 @@ class UserController extends Controller
             $allClick[] = StatsService::getAllUserLinkStats($user, $link->id);
         }
 
-        // dd($dayClick[0]['stat']);
-
         if($user) {
             return view('user.edit-profile', compact('user', 'links', 'day', 'month', 'year', 'all', 'dayClick', 'monthClick', 'yearClick', 'allClick'));
         }
@@ -83,8 +61,6 @@ class UserController extends Controller
 
         if($request->avatar) {
             if($user->avatar != '') {
-                // $ava = explode("/", $user->avatar);
-                // Storage::delete('public/' . Auth::user()->id . '/profile/' . $ava[4]);
                 $path = $user->avatar;
                 unlink($path);
             }
@@ -92,8 +68,6 @@ class UserController extends Controller
 
         if($request->banner) {
             if($user->banner != '') {
-                // $ban = explode("/", $user->banner);
-                // Storage::delete('public/' . Auth::user()->id . '/profile/' . $ban[4]);
                 $path = $user->banner;
                 unlink($path);
             }
@@ -106,7 +80,6 @@ class UserController extends Controller
                 ->update([
                     'name' => $request->name,
                     'description' => $request->description,
-                    // 'locale' => $request->locale,
                 ]);
 
             if($request->background_color != 'Выберите один из цветов') {
@@ -163,9 +136,7 @@ class UserController extends Controller
     }
 
     public function addPhotos($img) {
-        $path = Storage::putFile('public/' . Auth::user()->id . '/profile', $img); //Where to put the file
-        // $url = Storage::url($path); //url() - Get the URL for the file at the given path.
-        // return $url;
+        $path = Storage::putFile('public/' . Auth::user()->id . '/profile', $img);
         $strpos = strpos($path, '/');
         $mb_substr = mb_substr($path, $strpos);
         $url = '../storage/app/public'.$mb_substr;
@@ -173,7 +144,7 @@ class UserController extends Controller
     }
 
     public function editNewUserForm($utag, Request $request) {
-        $user = User::where('utag', $utag)->where('is_active', 0)->first(); //Если пидр не активен
+        $user = User::where('utag', $utag)->where('is_active', 0)->first();
 
         if(!$user) {
             $active_user = User::where('utag', $request->segment(2))->where('is_active', 1)->first();

@@ -90,44 +90,9 @@
         <nav class="navbar navbar-expand-lg fixed-top">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{{ route('editProfileForm', ['id' => Auth::user()->id]) }}">
-                    <img src="https://i.ibb.co/x7FjC42/menu.png" class="img-fluid mb-4" style="width:27px">
+                    <img src="https://i.ibb.co/DM6hKmk/bbbbbbbbbbb.png" class="img-fluid mb-4" style="width:20px">
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" style="border: 0">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav me-auto mb-lg-0">
-                        <li><a href="#" class="nav-link link-dark" style="font-family: 'Overpass Mono', monospace;">Блог</a></li>
-                        <li><a href="#" class="nav-link link-dark" style="font-family: 'Overpass Mono', monospace;">Инструкция</a></li>
-                        <li><a href="#" class="nav-link link-dark" style="font-family: 'Overpass Mono', monospace;">О Нас</a></li>
-                        <li><a href="#" class="nav-link link-dark" style="font-family: 'Overpass Mono', monospace;">Контакты</a></li>
-                        @if (Route::has('login'))
-                            @auth
-                                {{-- <li class="nav-item">
-                                    <a class="nav-link text-muted" aria-current="page" href="{{ route('editProfileForm',  ['id' => Auth::user()->id]) }}" style="font-family: 'Overpass Mono', monospace;">Изменить профиль</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-muted" aria-current="page" href="{{ route('showAddLinkForm',  ['id' => Auth::user()->id]) }}" style="font-family: 'Overpass Mono', monospace;">Добавить ссылки</a>
-                                </li> --}}
-                                <li class="nav-item">
-                                    <form method="POST" action="{{ route('logout') }}">
-                                        @csrf
-                                        <button class="nav-link text-muted" style="font-family: 'Overpass Mono', monospace; border: 0; outline: none; background-color:white;">Выйти</button>
-                                    </form>
-                                </li>
-                            @else
-                                <li class="nav-item">
-                                    <a class="nav-link text-muted" aria-current="page" href="{{ route('login') }}" style="font-family: 'Overpass Mono', monospace;">Войти</a>
-                                </li>
-                                @if (Route::has('register'))
-                                    <li class="nav-item">
-                                        <a class="nav-link text-muted" aria-current="page" href="{{ route('register') }}" style="font-family: 'Overpass Mono', monospace;">Регистрация</a>
-                                    </li>
-                                @endif
-                            @endauth
-                        @endif
-                    </ul>
-                </div>
+
             </div>
         </nav>
         @endauth
