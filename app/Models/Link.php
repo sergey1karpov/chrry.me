@@ -44,9 +44,9 @@ class Link extends Model
         }
     }
 
-    protected static function editLink($id, $link, LinkRequest $request) : void
+    protected static function editLink(int $id, $link, LinkRequest $request) : void
     {
-        $actualLink = self::where('id', $link)->where('user_id', Auth::user()->id)->firstOrFail();
+        $actualLink = self::where('id', $link)->where('user_id', $id)->firstOrFail();
 
         self::where('id', $link)
             ->update([
@@ -60,7 +60,7 @@ class Link extends Model
             ]);
     }
 
-    protected static function delLink($id, $link) : void
+    protected static function delLink(int $id, int $link) : void
     {
         $user = User::where('id', $id)->firstOrFail();
         if($user) {
@@ -94,7 +94,7 @@ class Link extends Model
         return $url;
     }
 
-    protected static function delLinkPhoto($id, $link) : void
+    protected static function delLinkPhoto(int $id, int $link) : void
     {
         $user = User::where('id', $id)->firstOrFail();
         if($user) {

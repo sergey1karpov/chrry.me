@@ -11,12 +11,13 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\UpdateRegisteruserRequest;
 use App\Services\StatsService;
 use App\Http\Requests\RegNewUserRequest;
+use Illuminate\Support\Arr;
 
 class UserController extends Controller
 {
     //Отображение главной страницы/профиля пользователя
-    public function userHomePage($slug) {
-
+    public function userHomePage(string $slug) : mixed
+    {
         $user = User::where('slug', $slug)->firstOrFail();
         $links = \DB::table('links')->where('user_id', $user->id)->orderBy('id', 'desc')->get();
 
@@ -25,7 +26,9 @@ class UserController extends Controller
         return view('user.home', compact('user', 'links'));
     }
 
-    public function editProfileForm($id) {
+    //Отображение личного кабинета со статистикой по профилю и по кликам
+    public function editProfileForm(int $id) : mixed
+    {
         $user = User::where('id', $id)->firstOrFail();
         $links = \DB::table('links')->where('user_id', $user->id)->orderBy('id', 'desc')->get();
 
@@ -52,8 +55,9 @@ class UserController extends Controller
         abort(404);
     }
 
-    public function editUserProfile($id, UpdateRegisteruserRequest $request) {
-
+    //Редактирование профиля
+    public function editUserProfile(int $id, UpdateRegisteruserRequest $request) : mixed
+    {
         $user = User::where('id', $id)->firstOrFail();
 
         if($request->avatar) {
@@ -71,42 +75,22 @@ class UserController extends Controller
         }
 
         if($user) {
-
-            User::where('id', $user->id)
-                ->update([
-                    'name' => $request->name,
-                    'description' => $request->description,
-                    'background_color' => isset($request->background_color) ? $request->background_color : $user->background_color,
-                    'name_color' => isset($request->name_color) ? $request->name_color : $user->name_color,
-                    'description_color' => isset($request->description_color) ? $request->description_color : $user->description_color,
-                    'verify_color' => isset($request->verify_color) ? $request->verify_color : $user->verify_color,
-                    'slug' => isset($request->slug) ? $request->slug : $user->slug,
-                    'avatar' => isset($request->avatar) ? $this->addPhotos($request->avatar) : $user->avatar,
-                    'banner' => isset($request->banner) ? $this->addPhotos($request->banner) : $user->banner,
-                ]);
-
+            User::editUserProfile($user, $request);
             return redirect()->back();
         }
 
         return abort(404);
     }
 
-    public function addPhotos($img) {
-        $path = Storage::putFile('public/' . Auth::user()->id . '/profile', $img);
-        $strpos = strpos($path, '/');
-        $mb_substr = mb_substr($path, $strpos);
-        $url = '../storage/app/public'.$mb_substr;
-        return $url;
-    }
+    //Отображение фальш реги юзер-формы
+    public function editNewUserForm(string $utag, Request $request) {
+        $user = User::where('utag', $utag)->where('is_active', 0)->first(); //Берем юзера где ютаг = ютаг и где юзер не активен еще
 
-    public function editNewUserForm($utag, Request $request) {
-        $user = User::where('utag', $utag)->where('is_active', 0)->first();
-
-        if(!$user) {
-            $active_user = User::where('utag', $request->segment(2))->where('is_active', 1)->first();
-            return redirect()->route('userHomePage', ['slug' => $active_user->slug]);
+        if(!$user) { //Если такой записи нет
+            $active_user = User::where('utag', $request->segment(2))->where('is_active', 1)->first(); //Берем активного юзера в бд, берем сегмент 2
+            return redirect()->route('userHomePage', ['slug' => $active_user->slug]); //редиректим на страницу со слаг
         }
-        return view('auth.edit-user', compact('user'));
+        return view('auth.edit-user', compact('user')); //Возвр форму фальш реги
     }
 
     public function editNewUser($utag, RegNewUserRequest $request) {

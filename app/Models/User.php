@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Link;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable
 {
@@ -54,5 +56,29 @@ class User extends Authenticatable
 
     public function links() {
         return $this->hasMany(Link::class);
+    }
+
+    protected static function editUserProfile(User $user, $request) : void
+    {
+        self::where('id', $user->id)
+            ->update([
+                'name' => $request->name,
+                'description' => $request->description,
+                'background_color' => isset($request->background_color) ? $request->background_color : $user->background_color,
+                'name_color' => isset($request->name_color) ? $request->name_color : $user->name_color,
+                'description_color' => isset($request->description_color) ? $request->description_color : $user->description_color,
+                'verify_color' => isset($request->verify_color) ? $request->verify_color : $user->verify_color,
+                'slug' => isset($request->slug) ? $request->slug : $user->slug,
+                'avatar' => isset($request->avatar) ? self::addPhotos($request->avatar) : $user->avatar,
+                'banner' => isset($request->banner) ? self::addPhotos($request->banner) : $user->banner,
+            ]);
+    }
+
+    public static function addPhotos($img) {
+        $path = Storage::putFile('public/' . Auth::user()->id . '/profile', $img);
+        $strpos = strpos($path, '/');
+        $mb_substr = mb_substr($path, $strpos);
+        $url = '../storage/app/public'.$mb_substr;
+        return $url;
     }
 }

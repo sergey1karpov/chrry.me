@@ -105,7 +105,7 @@
 
             <!-- Статистика профиля -->
             <div class="row" style="margin-top: 12px">
-				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 d-flex justify-content-center" data-bs-toggle="modal" data-bs-target="#exampleModalStat">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-bs-toggle="modal" data-bs-target="#exampleModalStat">
 					<div class="box-part rounded-3" style="margin: 0">
                         {{-- <img src="https://i.ibb.co/tx0Bgz9/1111.png" class="img-fluid mb-2" width="40px">	 --}}
 						<div class="title">
@@ -399,6 +399,16 @@
 					</div>
 				</div>
 			</div>
+
+            {{-- @if (session()->has('message'))
+                <div class="row" style="margin-top: 12px; margin-left: 6px; margin-right: 6px">
+                    <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin: 0">
+                        {{ session('message') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+            @endif --}}
+
 			<div class="modal fade" id="exampleModalLink" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		  		<div class="modal-dialog">
 				    <div class="modal-content">
