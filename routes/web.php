@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LinkController;
-use App\Http\Controllers\LocaleController;
+use App\Http\Controllers\StatisticController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,8 +37,8 @@ Route::patch('/{id}/add-link/{link}/edit', [LinkController::class, 'editLink'])-
 Route::delete('/{id}/add-link/{link}/delete', [LinkController::class, 'delLink'])->name('delLink');
 Route::patch('/{id}/add-link/{link}/delete-photo', [LinkController::class, 'delLinkPhoto'])->name('delLinkPhoto');
 
-Route::post('/{id}/link', [LinkController::class, 'clickStat'])->name('clickStat');
-Route::get('/{id}/link/{link}', [LinkController::class, 'showClickStat'])->name('showClickStat');
+Route::post('/{id}/link', [StatisticController::class, 'clickLinkStatistic'])->name('clickLinkStatistic');
+Route::get('/{id}/link/{link}', [StatisticController::class, 'showClickLinkStatistic'])->name('showClickLinkStatistic');
 
 
 

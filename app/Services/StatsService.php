@@ -10,10 +10,10 @@ use App\Models\LinkStat;
 
 class StatsService
 {
-    public static function createUserStats(User $user)
+    public static function createUserStats(User $user) : void
     {
-        // $response = Http::get('http://ip-api.com/php/' . $_SERVER['REMOTE_ADDR']);
-        // $array = unserialize($response->body());
+        $response = Http::get('http://ip-api.com/php/' . $_SERVER['REMOTE_ADDR']);
+        $array = unserialize($response->body());
 
         $stat = Stats::where('guest_ip', $_SERVER['REMOTE_ADDR'])->where('created_at', Carbon::today())->where('user_id', $user->id)->first();
         if(false == $stat) {
@@ -21,11 +21,36 @@ class StatsService
             $stats->user_id    = $user->id;
             $stats->guest_ip   = $_SERVER['REMOTE_ADDR'];
             $stats->created_at = Carbon::today();
-            // $stats->city = $array['city'];
-            // $stats->country = $array['country'];
-            // $stats->country_code = $array['countryCode'];
+            $stats->city = $array['city'];
+            $stats->country = $array['country'];
+            $stats->country_code = $array['countryCode'];
 
             $stats->save();
+        }
+    }
+
+    public static function clickLinkStatistic() : void
+    {
+        $response = Http::get('http://ip-api.com/php/' . $_POST['guest_ip']);
+        $data = unserialize($response->body());
+
+        $stat = LinkStat::where('guest_ip', $_POST['guest_ip'])->where('created_at', Carbon::today())->where('user_id', $_POST['user_id'])->where('link_id', $_POST['link_id'])->first();
+
+        if(false == $stat) {
+            $func = $_POST['func'];
+            if ($func === 'func_data') {
+
+                $linkStat = new LinkStat();
+                $linkStat->user_id = $_POST['user_id'];
+                $linkStat->link_id = $_POST['link_id'];
+                $linkStat->guest_ip = $_POST['guest_ip'];
+                $linkStat->created_at = Carbon::today();
+                $linkStat->city = $data['city'];
+                $linkStat->country = $data['country'];
+                $linkStat->country_code = $data['countryCode'];
+                $linkStat->save();
+
+            }
         }
     }
 

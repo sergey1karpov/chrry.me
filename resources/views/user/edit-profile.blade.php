@@ -517,8 +517,8 @@
                     <div class="d-flex justify-content-between rounded-bottom rounded-3" style="padding: 0;">
                         {{-- <a href="{{ route('showClickStat', ['id' => $user->id, 'link' => $link->id]) }}" style="text-decoration: none; color: black"> --}}
                         <div class="col-4 border-end " style="background-color: #f0eeef; box-shadow: 5px 0px 0px black;">
-                            <a href="{{ route('showClickStat', ['id' => $user->id, 'link' => $link->id]) }}" style="text-decoration: none; color: black">
-                                <button href="{{ route('showClickStat', ['id' => $user->id, 'link' => $link->id]) }}" class="btn-sm" style="background-color: #f0eeef; border: 0;">
+                            <a href="{{ route('showClickLinkStatistic', ['id' => $user->id, 'link' => $link->id]) }}" style="text-decoration: none; color: black">
+                                <button href="{{ route('showClickLinkStatistic', ['id' => $user->id, 'link' => $link->id]) }}" class="btn-sm" style="background-color: #f0eeef; border: 0;">
                                     Статистика
                                 </button>
                             </a>

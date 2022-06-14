@@ -31,8 +31,8 @@ class UpdateRegisteruserRequest extends FormRequest
             'description_color' => 'nullable',
             'verify_color' => 'nullable',
             'background_color' => 'nullable',
-            'banner' => 'nullable|mimes:jpeg,png,jpg|max:5000',
-            'avatar' => 'nullable|mimes:jpeg,png,jpg|max:5000',
+            'banner' => 'nullable|mimes:jpeg,png,jpg,gif|max:5000',
+            'avatar' => 'nullable|mimes:jpeg,png,jpg,gif|max:5000',
             'locale' => 'nullable',
         ];
     }

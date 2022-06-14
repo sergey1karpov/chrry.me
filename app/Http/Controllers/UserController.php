@@ -4,16 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\UserLinks;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\App;
 use App\Http\Requests\UpdateRegisteruserRequest;
 use App\Services\StatsService;
+use App\Http\Requests\RegNewUserRequest;
 
 class UserController extends Controller
 {
@@ -56,7 +53,7 @@ class UserController extends Controller
     }
 
     public function editUserProfile($id, UpdateRegisteruserRequest $request) {
-        // dd($request);
+
         $user = User::where('id', $id)->firstOrFail();
 
         if($request->avatar) {
@@ -75,59 +72,18 @@ class UserController extends Controller
 
         if($user) {
 
-            //Говнокод, оптимизировать всю эту чепуху
             User::where('id', $user->id)
                 ->update([
                     'name' => $request->name,
                     'description' => $request->description,
+                    'background_color' => isset($request->background_color) ? $request->background_color : $user->background_color,
+                    'name_color' => isset($request->name_color) ? $request->name_color : $user->name_color,
+                    'description_color' => isset($request->description_color) ? $request->description_color : $user->description_color,
+                    'verify_color' => isset($request->verify_color) ? $request->verify_color : $user->verify_color,
+                    'slug' => isset($request->slug) ? $request->slug : $user->slug,
+                    'avatar' => isset($request->avatar) ? $this->addPhotos($request->avatar) : $user->avatar,
+                    'banner' => isset($request->banner) ? $this->addPhotos($request->banner) : $user->banner,
                 ]);
-
-            if($request->background_color != 'Выберите один из цветов') {
-                User::where('id', $user->id)
-                    ->update(['background_color' => $request->background_color]);
-            } else {
-                User::where('id', $user->id)
-                    ->update(['background_color' => $user->background_color]);
-            }
-
-            if($request->name_color != 'Выберите один из цветов') {
-                User::where('id', $user->id)
-                    ->update(['name_color' => $request->name_color]);
-            } else {
-                User::where('id', $user->id)
-                    ->update(['name_color' => $user->name_color]);
-            }
-
-            if($request->description_color != 'Выберите один из цветов') {
-                User::where('id', $user->id)
-                    ->update(['description_color' => $request->description_color]);
-            } else {
-                User::where('id', $user->id)
-                    ->update(['description_color' => $user->description_color]);
-            }
-
-            if($request->verify_color != 'Выберите один из цветов') {
-                User::where('id', $user->id)
-                    ->update(['verify_color' => $request->verify_color]);
-            } else {
-                User::where('id', $user->id)
-                    ->update(['verify_color' => $user->verify_color]);
-            }
-
-            if($request->slug) {
-                User::where('id', $user->id)
-                    ->update(['slug' => $request->slug]);
-            }
-
-            if($request->avatar) {
-                User::where('id', $user->id)
-                    ->update(['avatar' => $this->addPhotos($request->avatar)]);
-            }
-
-            if($request->banner) {
-                User::where('id', $user->id)
-                    ->update(['banner' => $this->addPhotos($request->banner)]);
-            }
 
             return redirect()->back();
         }
@@ -153,14 +109,7 @@ class UserController extends Controller
         return view('auth.edit-user', compact('user'));
     }
 
-    public function editNewUser($utag, Request $request) {
-
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'min:5', 'max:100'],
-            'slug' => ['required', 'unique:users', 'min:5', 'max:150', 'alpha_dash'],
-            'email' => ['required', 'email', 'unique:users', 'max:255'],
-            'password' =>['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+    public function editNewUser($utag, RegNewUserRequest $request) {
 
         User::where('utag', $utag)
             ->update([
