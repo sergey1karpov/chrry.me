@@ -32,6 +32,7 @@ Route::patch('/{id}/edit-profile/edit', [UserController::class, 'editUserProfile
 Route::patch('/{id}/edit-profile/del-avatar', [UserController::class, 'delUserAvatar'])->name('delUserAvatar');
 Route::patch('/{id}/edit-profile/del-banner', [UserController::class, 'delUserBanner'])->name('delUserBanner');
 
+Route::get('/{id}/links', [LinkController::class, 'allLinks'])->name('allLinks');
 Route::post('/{id}/add-link', [LinkController::class, 'addLink'])->name('addLink');
 Route::patch('/{id}/add-link/{link}/edit', [LinkController::class, 'editLink'])->name('editLink');
 Route::delete('/{id}/add-link/{link}/delete', [LinkController::class, 'delLink'])->name('delLink');

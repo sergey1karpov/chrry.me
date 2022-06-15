@@ -3,9 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Link;
+use App\Models\User;
 use App\Http\Requests\LinkRequest;
 class LinkController extends Controller
 {
+    public function allLinks($id)
+    {
+        $user = User::where('id', $id)->firstOrFail();
+        $links = Link::where('user_id', $user->id)->orderBy('id', 'desc')->paginate(10);
+        return view('user.links', compact('user', 'links'));
+    }
+
     public function addLink(int $id, LinkRequest $request)
     {
         Link::addLink($id, $request);

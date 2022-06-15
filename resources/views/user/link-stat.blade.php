@@ -39,7 +39,7 @@
     	@auth
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
-                <a class="navbar-brand" href="{{ route('editProfileForm', ['id' => Auth::user()->id]) }}" style="color: black">
+                <a class="navbar-brand" href="{{ route('allLinks', ['id' => Auth::user()->id]) }}" style="color: black">
                     <img src="https://i.ibb.co/DM6hKmk/bbbbbbbbbbb.png" class="img-fluid mb-4" style="width:20px">
 
                 </a>

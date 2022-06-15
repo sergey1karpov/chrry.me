@@ -74,7 +74,8 @@ class User extends Authenticatable
             ]);
     }
 
-    public static function addPhotos($img) {
+    public static function addPhotos($img) : string
+    {
         $path = Storage::putFile('public/' . Auth::user()->id . '/profile', $img);
         $strpos = strpos($path, '/');
         $mb_substr = mb_substr($path, $strpos);

@@ -122,7 +122,7 @@
 	  		<div class="container" style="padding-left:8px; padding-right:8px">
 
 			  	<a href="{{$link->link}}" style="text-decoration:none" onclick="countRabbits{{$link->id}}()">
-			  		<div class="row ms-1 me-1 card {{$link->rounded}} {{$link->shadow}}" style="background-color:{{$link->background_color}}; border: 2px solid {{$link->background_color}}; margin-top: 12px;">
+			  		<div class="row ms-1 me-1 card {{$link->rounded}} {{$link->shadow}}" style="background-color:{{$link->background_color}}{{$link->transparency}}; border: 0; margin-top: 12px;">
 			  			<div class="d-flex align-items-center justify-content-start mt-1 mb-1" style="padding-left: 4px; padding-right: 4px;">
 			  				<div class="col-1">
 			  					<img class="{{$link->rounded}}" src="{{$link->photo}}" style="width:50px;">
@@ -138,102 +138,7 @@
 			  			</div>
 				  	</div>
 			  	</a>
-
-			  	{{-- @auth
-			  		@if(Auth::user()->id == $user->id)
-			  			<div class="row">
-					  		<div class="col-6">
-					  			<button data-bs-toggle="modal" data-bs-target="#exampleModalEdit{{$link->id}}">Изменить</button>
-					  		</div>
-					  		<div class="col-6">
-					  			<form action="{{ route('delLink', ['id' => Auth::user()->id, 'link' => $link->id]) }}" method="POST">
-					  				@csrf @method('DELETE')
-					  				<button>Delete</button>
-					  			</form>
-					  		</div>
-					  	</div>
-			  		@endif
-			  	@endauth --}}
-
 			</div>
-
-			@auth
-				@if(Auth::user()->id == $user->id)
-					<div class="modal fade" id="exampleModalEdit{{$link->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				  		<div class="modal-dialog">
-						    <div class="modal-content">
-						    	<div class="modal-header">
-						        	<h5 class="modal-title" style="font-family: 'Rubik', sans-serif;">Изменить ссылку</h5>
-						        	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-						      	</div>
-						      	текущее фото
-								    <div>
-								    	<img class="rounded-3" src="{{$link->photo}}" style="width:50px;">
-								    	<form action="{{ route('delLinkPhoto', ['id' => Auth::user()->id, 'link' => $link->id]) }}" method="POST">
-								    		@csrf @method('PATCH')
-								    		<button>Del img</button>
-								    	</form>
-								    </div>
-						      	<div class="modal-body">
-						        	<form action="{{ route('editLink', ['id' => Auth::user()->id, 'link' => $link->id]) }}" method="post" enctype="multipart/form-data">
-						        		@csrf @method('PATCH')
-						        			<div class="mb-3">
-										    	<label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Заголовок</label>
-										    	<input type="text" class="form-control" name="title" placeholder="Моя красивая ссылка" value="{{$link->title}}">
-										    </div>
-										    <div class="mb-3">
-										    	<label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Вставьте ссылку</label>
-										    	<input type="text" class="form-control" name="link" placeholder="http://..." value="{{$link->link}}">
-										    </div>
-										    <div class="mb-3">
-											    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">* Цвет заголовка</label>
-											    <select class="form-select" aria-label="Default select example" name="title_color">
-											  		<option style="font-family: 'Rubik', sans-serif;">Выберите один из цветов</option>
-											  		<option value="white" style="font-family: 'Rubik', sans-serif;">Белый</option>
-											  		<option value="#f8f9fb" style="font-family: 'Rubik', sans-serif; background-color: #f8f9fb;">White-light</option>
-											  		<option value="black" style="font-family: 'Rubik', sans-serif; background-color: black; color: white;">Черный</option>
-											  		<option value="#353a40" style="font-family: 'Rubik', sans-serif; background-color: #353a40; color: white;">Dark-light</option>
-											  		<option value="#0ca1b7" style="font-family: 'Rubik', sans-serif; background-color: #0ca1b7; color: white;">Голубой</option>
-											  		<option value="#ffc43a" style="font-family: 'Rubik', sans-serif; background-color: #ffc43a; color: white;">Желтый</option>
-											  		<option value="#de3346" style="font-family: 'Rubik', sans-serif; background-color: #de3346; color: white">Красный</option>
-											  		<option value="#1faa4f" style="font-family: 'Rubik', sans-serif; background-color: #1faa4f; color: white">Зеленый</option>
-											  		<option value="#6c757c" style="font-family: 'Rubik', sans-serif; background-color: #6c757c; color: white;">Серый</option>
-											  		<option value="#0473f9" style="font-family: 'Rubik', sans-serif; background-color: #0473f9; color: white">Синий</option>
-												</select>
-											</div>
-											<div class="mb-3">
-										    	<label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">* Фоновый цвет</label>
-										    	<select class="form-select" aria-label="Default select example" name="background_color">
-											  		<option style="font-family: 'Rubik', sans-serif;">Выберите один из цветов</option>
-											  		<option value="white" style="font-family: 'Rubik', sans-serif;">Белый</option>
-											  		<option value="#f8f9fb" style="font-family: 'Rubik', sans-serif; background-color: #f8f9fb;">White-light</option>
-											  		<option value="black" style="font-family: 'Rubik', sans-serif; background-color: black; color: white;">Черный</option>
-											  		<option value="#353a40" style="font-family: 'Rubik', sans-serif; background-color: #353a40; color: white;">Dark-light</option>
-											  		<option value="#0ca1b7" style="font-family: 'Rubik', sans-serif; background-color: #0ca1b7; color: white;">Голубой</option>
-											  		<option value="#ffc43a" style="font-family: 'Rubik', sans-serif; background-color: #ffc43a; color: white;">Желтый</option>
-											  		<option value="#de3346" style="font-family: 'Rubik', sans-serif; background-color: #de3346; color: white">Красный</option>
-											  		<option value="#1faa4f" style="font-family: 'Rubik', sans-serif; background-color: #1faa4f; color: white">Зеленый</option>
-											  		<option value="#6c757c" style="font-family: 'Rubik', sans-serif; background-color: #6c757c; color: white;">Серый</option>
-											  		<option value="#0473f9" style="font-family: 'Rubik', sans-serif; background-color: #0473f9; color: white">Синий</option>
-												</select>
-										    </div>
-										    <div class="mb-3">
-										    	<label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">* Фото</label>
-										    	<input type="file" class="form-control" id="inputGroupFile02" name="photo">
-										    </div>
-
-										    <div class="mb-3">
-										    	<label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">* - Поля не обязательны для заполнения</label>
-										    </div>
-										    <button type="submit" class="btn btn-primary">Submit</button>
-		  								</div>
-						        	</form>
-						      	</div>
-						    </div>
-				  		</div>
-					</div>
-				@endif
-			@endauth
 		@endforeach
 
     </body>

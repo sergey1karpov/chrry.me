@@ -23,7 +23,8 @@ class Link extends Model
         'background_color',
         'photo',
         'shadow',
-        'rounded'
+        'rounded',
+        'transparency'
     ];
 
     protected static function addLink(int $userId, LinkRequest $request) : void
@@ -38,6 +39,7 @@ class Link extends Model
                 'photo' => isset($request->photo) ? self::addLinkPhoto($request->photo) : null,
                 'shadow' => $request->shadow,
                 'rounded' => $request->rounded,
+                'transparency' => $request->transparency,
             ]);
 
             $user->links()->save($link);
@@ -57,6 +59,7 @@ class Link extends Model
                 'title_color' => isset($request->title_color) ? $request->title_color : $actualLink->title_color,
                 'background_color' => isset($request->background_color) ? $request->background_color : $actualLink->background_color,
                 'photo' => isset($request->photo) ? self::addLinkPhoto($request->photo) : $actualLink->photo,
+                'transparency' => isset($request->transparency) ? $request->transparency : $actualLink->transparency,
             ]);
     }
 

@@ -31,6 +31,7 @@ class LinkRequest extends FormRequest
             'photo' => 'nullable|mimes:jpeg,png,jpg,gif|max:3000',
             'shadow' => 'nullable',
             'rounded' => 'nullable',
+            'transparency' => 'nullable',
         ];
     }
 }
