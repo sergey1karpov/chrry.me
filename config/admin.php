@@ -59,7 +59,7 @@ return [
     */
     'route' => [
 
-        'prefix' => env('ADMIN_ROUTE_PREFIX', 'admin/rap-govno'),
+        'prefix' => env('ADMIN_ROUTE_PREFIX', 'admin/admin'),
 
         'namespace' => 'App\\Admin\\Controllers',
 

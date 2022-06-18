@@ -9,10 +9,11 @@ use Illuminate\Support\Facades\Auth;
 use Intervention\Image\ImageManagerStatic as Image;
 use App\Models\User;
 use App\Http\Requests\LinkRequest;
+use Laravel\Scout\Searchable;
 
 class Link extends Model
 {
-    use HasFactory;
+    use HasFactory, Searchable;
 
     protected $table = 'links';
 
@@ -26,6 +27,19 @@ class Link extends Model
         'rounded',
         'transparency'
     ];
+
+    public function searchableAs()
+    {
+        return 'links_index';
+    }
+
+    public function toSearchableArray()
+    {
+        return [
+            'id' => $this->id,
+            'title' => $this->title,
+        ];
+    }
 
     protected static function addLink(int $userId, LinkRequest $request) : void
     {
@@ -61,6 +75,12 @@ class Link extends Model
                 'photo' => isset($request->photo) ? self::addLinkPhoto($request->photo) : $actualLink->photo,
                 'transparency' => isset($request->transparency) ? $request->transparency : $actualLink->transparency,
             ]);
+
+        if($request->withoutTransparency) {
+            self::where('id', $link)->update([
+                'transparency' => null,
+            ]);
+        }
     }
 
     protected static function delLink(int $id, int $link) : void

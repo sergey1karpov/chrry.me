@@ -92,48 +92,22 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
     </head>
     <body class="antialiased">
-
-        <div class="container-fluid" style="padding: 0">
-            <nav class="navbar navbar-expand-lg " style="background-color: #f1f2f2">
-                <div class="container-fluid">
-                    <a class="mb-1" href="{{ route('editProfileForm', ['id' => Auth::user()->id]) }}">
-                        <img src="https://i.ibb.co/DM6hKmk/bbbbbbbbbbb.png" class="img-fluid" style="width:20px; border: 0">
-                    </a>
-                    <form class="" action="{{ route('searchLink', ['id' => Auth::user()->id]) }}">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search" style="height: 30px">
-                    </form>
-                    <div class="img" style="background-image: url({{$user->avatar}});"></div>
-                </div>
-            </nav>
-        </div>
+        @auth
+            <div class="container-fluid" style="padding: 0">
+                <nav class="navbar navbar-expand-lg " style="background-color: #f1f2f2">
+                    <div class="container-fluid">
+                        <a class="mb-1" href="{{ route('allLinks', ['id' => Auth::user()->id]) }}">
+                            <img src="https://i.ibb.co/DM6hKmk/bbbbbbbbbbb.png" class="img-fluid" style="width:20px; border: 0">
+                        </a>
+                        <div class="img" style="background-image: url({{$user->avatar}});"></div>
+                    </div>
+                </nav>
+            </div>
+        @endauth
 
         <div class="container-fluid justify-content-center text-center">
 
-            @auth
 
-                {{-- <nav class="navbar navbar-expand-lg" style="height: 25px">
-                    <div class="container-fluid" style="padding: 0">
-                        <a class="navbar-brand" href="{{ route('editProfileForm', ['id' => Auth::user()->id]) }}">
-                            <img src="https://i.ibb.co/DM6hKmk/bbbbbbbbbbb.png" class="img-fluid mb-4" style="width:20px; border: 0">
-                        </a>
-                    </div>
-                </nav> --}}
-
-            @endauth
-
-            <div class="row" style="margin-top: px" >
-                <div class="col-12 mb-" data-bs-toggle="modal" data-bs-target="#exampleModalLink" style="padding-right: 12px;">
-					<div class="box-part text-center shadow-sm rounded-3" style="margin: 0; background-color: #feae72">
-                        {{-- <img src="https://i.ibb.co/74YMCMB/333.png" class="img-fluid mb-2" width="40px"> --}}
-						<div class="title">
-							<h4 class="mt-2" style="font-family: 'Rubik', sans-serif; color: white">Изменение ссылок</h4>
-						</div>
-						<div class="text mb-1">
-							<span style="font-family: 'Rubik', sans-serif; font-size: 75%; line-height: 16px; display:block; color: white">Воспользовавшись этой функцией, вы придадите всем вашим ссылкам единый дизайн</span>
-						</div>
-					</div>
-				</div>
-            </div>
 
             <div class="modal fade" id="exampleModalLink" tabindex="-1" aria-labelledby="exampleModalLink" aria-hidden="true">
                 <div class="modal-dialog">
@@ -374,12 +348,6 @@
                     </div>
                 </div>
             @endforeach
-
-            <div class="row">
-                <div>
-                    {!! $links->links('vendor.pagination.default') !!}
-                </div>
-            </div>
         </div>
     </body>
 </html>

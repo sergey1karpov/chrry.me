@@ -33,10 +33,12 @@ Route::patch('/{id}/edit-profile/del-avatar', [UserController::class, 'delUserAv
 Route::patch('/{id}/edit-profile/del-banner', [UserController::class, 'delUserBanner'])->name('delUserBanner');
 
 Route::get('/{id}/links', [LinkController::class, 'allLinks'])->name('allLinks');
+Route::get('/{id}/search', [LinkController::class, 'searchLink'])->name('searchLink');
 Route::post('/{id}/add-link', [LinkController::class, 'addLink'])->name('addLink');
 Route::patch('/{id}/add-link/{link}/edit', [LinkController::class, 'editLink'])->name('editLink');
 Route::delete('/{id}/add-link/{link}/delete', [LinkController::class, 'delLink'])->name('delLink');
 Route::patch('/{id}/add-link/{link}/delete-photo', [LinkController::class, 'delLinkPhoto'])->name('delLinkPhoto');
+Route::patch('/{id}/edit-links', [LinkController::class, 'editAllLink'])->name('editAllLink');
 
 Route::post('/{id}/link', [StatisticController::class, 'clickLinkStatistic'])->name('clickLinkStatistic');
 Route::get('/{id}/link/{link}', [StatisticController::class, 'showClickLinkStatistic'])->name('showClickLinkStatistic');
