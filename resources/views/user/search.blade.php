@@ -99,7 +99,9 @@
                         <a class="mb-1" href="{{ route('allLinks', ['id' => Auth::user()->id]) }}">
                             <img src="https://i.ibb.co/DM6hKmk/bbbbbbbbbbb.png" class="img-fluid" style="width:20px; border: 0">
                         </a>
-                        <div class="img" style="background-image: url({{$user->avatar}});"></div>
+                        <a class="" href="{{ route('userHomePage',  ['slug' => Auth::user()->slug]) }}" style="text-decoration: none; border: 0; padding: 0">
+                            <div class="img" style="background-image: url({{$user->avatar}});"></div>
+                        </a>
                     </div>
                 </nav>
             </div>

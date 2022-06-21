@@ -12,7 +12,7 @@ class LinkController extends Controller
     public function allLinks($id)
     {
         $user = User::where('id', $id)->firstOrFail();
-        $links = Link::where('user_id', $user->id)->orderBy('id', 'desc')->paginate(10);
+        $links = Link::where('user_id', $user->id)->orderBy('position')->get();
         return view('user.links', compact('user', 'links'));
     }
 
@@ -67,5 +67,20 @@ class LinkController extends Controller
         $user = User::where('id', $id)->firstOrFail();
         $links = Link::search($request->search)->where('user_id', $user->id)->orderBy('id', 'desc')->get();
         return view('user.search', compact('user', 'links'));
+    }
+
+    public function sortLink($id)
+    {
+        if (isset($_POST['update'])) {
+            foreach($_POST['positions'] as $position) {
+               $index = $position[0];
+               $newPosition = $position[1];
+
+            //    $conn->query("UPDATE country SET position = '$newPosition' WHERE id='$index'");
+               Link::where('user_id', $id)->where('id', $index)->update([
+                    'position' => $newPosition,
+               ]);
+            }
+        }
     }
 }

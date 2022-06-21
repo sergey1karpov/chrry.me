@@ -40,6 +40,9 @@ Route::delete('/{id}/add-link/{link}/delete', [LinkController::class, 'delLink']
 Route::patch('/{id}/add-link/{link}/delete-photo', [LinkController::class, 'delLinkPhoto'])->name('delLinkPhoto');
 Route::patch('/{id}/edit-links', [LinkController::class, 'editAllLink'])->name('editAllLink');
 
+Route::post('{id}/ppp/sort', [LinkController::class, 'sortLink'])->name('sortLink');
+
+
 Route::post('/{id}/link', [StatisticController::class, 'clickLinkStatistic'])->name('clickLinkStatistic');
 Route::get('/{id}/link/{link}', [StatisticController::class, 'showClickLinkStatistic'])->name('showClickLinkStatistic');
 

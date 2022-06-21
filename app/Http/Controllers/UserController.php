@@ -19,7 +19,7 @@ class UserController extends Controller
     public function userHomePage(string $slug) : mixed
     {
         $user = User::where('slug', $slug)->firstOrFail();
-        $links = \DB::table('links')->where('user_id', $user->id)->orderBy('id', 'desc')->get();
+        $links = \DB::table('links')->where('user_id', $user->id)->orderBy('position')->get();
 
         StatsService::createUserStats($user);
 

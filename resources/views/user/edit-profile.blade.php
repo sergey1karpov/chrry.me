@@ -39,7 +39,7 @@
 			.box-part{
 			    background:#fcfcf9;
 			    border-radius:25;
-			    padding:20px 10px;
+			    padding:30px 20px;
 			    margin:30px 0px;
 			    -webkit-box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.12);
 				-moz-box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.12);
@@ -65,8 +65,18 @@
 				height:80px;
 			}
 			.img {
-			    width: 100px;
-			    height: 100px;
+			    width: 85px;
+			    height: 85px;
+			    border-radius: 50%;
+			    margin-right: 0;
+			    background-position: center center;
+			    -wekit-background-size: cover;
+			    background-size: cover;
+			    background-repeat: no-repeat;
+			}
+			.imgg {
+			    width: 60px;
+			    height: 60px;
 			    border-radius: 50%;
 			    margin-right: 0;
 			    background-position: center center;
@@ -85,31 +95,49 @@
 			<x-auth-validation-errors class="mb-4" :errors="$errors" />
 
 			<!-- Ссылка на профиль -->
-			<div class="row" style="margin-top: 12px">
-				<a class="" href="{{ route('userHomePage',  ['slug' => Auth::user()->slug]) }}" style="text-decoration: none; border: 0; ">
-					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
-						<div class="box-part text-center rounded-3" style="margin: 0; background-color: #00a7c7">
+			<div class="row">
+				<a class="" href="{{ route('userHomePage',  ['slug' => Auth::user()->slug]) }}" style="text-decoration: none; border: 0; padding: 0">
+					<div class="col-12">
+						<div class="box-part text-center shadow" style="margin: 0; background-color: #ffe0db">
 							<div class="d-flex justify-content-center">
                                 <div class="img" style="background-image: url({{$user->avatar}});"></div>
                             </div>
-	                        {{-- <img class="mb-1 rounded-circle" src="{{ $user->avatar }}"> --}}
 							<div class="title">
-								<h4 class="mt-2" style="font-family: 'Rubik', sans-serif; color: white; ">Посмотреть профиль</h4>
+								<h4 class="mt-3" style="font-family: 'Rubik', sans-serif; color: #464646; font-weight: 600 ;">{{ $user->name }}</h4>
 							</div>
 							<div class="text mb-1">
-							<span style="font-family: 'Rubik', sans-serif; font-size: 75%; line-height: 16px; display:block; color: white">Вы можете посмотреть как выглядит ваш профиль после его кастомизации и добавления ссылок</span>
+							<span style="font-family: 'Rubik', sans-serif; font-size: 75%; line-height: 16px; display:block; color: #464646;">Вы можете посмотреть как выглядит ваш профиль после его кастомизации и добавления ссылок</span>
 						</div>
 						</div>
 					</div>
 				</a>
 			</div>
+			{{-- <div class="row" style="margin-right: 0">
+				<a class="" href="{{ route('userHomePage',  ['slug' => Auth::user()->slug]) }}" style="text-decoration: none; border: 0; padding: 0">
+					<div class="col-12">
+						<div class="row" style="background-color: #ffe0db">
+							<div class="col-4">
+								<div class="img m-5" style="background-image: url({{$user->avatar}});"></div>
+							</div>
+							<div class="col-8 d-flex align-items-center">
+								<div class="row">
+									<div class="col-12">
+										<h4 class="mt-4 ms-3 text-start" style="font-family: 'Rubik', sans-serif; color: #1d1d1d; font-weight: 600 ;">{{ $user->name }}</h4>
+									</div>
+									<div class="col-12">
+										<h4 class="mb-3 ms-3 text-start" style="font-family: 'Rubik', sans-serif; color: #1d1d1d; font-size: 0.8rem">{{ '@'.$user->slug }}</h4>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</a>
+			</div> --}}
 
             <!-- Добавление ссылок -->
-			<div class="row" style="margin-top: 12px" data-masonry='{"percentPosition": true }'>
-
-				<div class="col-6 mb-1" data-bs-toggle="modal" data-bs-target="#exampleModalLink" style="padding-right: 7px;">
-					<div class="box-part text-center shadow-sm rounded-3" style="margin: 0; background-color: #FE513D">
-                        {{-- <img src="https://i.ibb.co/74YMCMB/333.png" class="img-fluid mb-2" width="40px"> --}}
+			{{-- <div class="row" >
+				<div class="col-12" data-bs-toggle="modal" data-bs-target="#exampleModalLink" style="padding-right: 7px; padding: 0">
+					<div class="box-part text-center shadow-sm " style="margin: 0; background-color: #ffbdb3">
 						<div class="title">
 							<h4 class="mt-2" style="font-family: 'Rubik', sans-serif; color: white">Добавить ссылку</h4>
 						</div>
@@ -118,11 +146,31 @@
 						</div>
 					</div>
 				</div>
+            </div> --}}
+			<div class="row" style="margin-right: 0">
+				<div class="col-12" data-bs-toggle="modal" data-bs-target="#exampleModalLink" style="padding-right: 7px; padding: 0">
+					<div class="row d-flex justify-content-start shadow" style="background-color: #ffbdb3">
+						<div class="col-4">
+							<div class="imgg m-5" style="background-image: url(https://i.ibb.co/SvCxHnG/zzzzz.png);"></div>
+						</div>
+						<div class="col-8 d-flex align-items-center">
+							<div class="row">
+								<div class="col-12">
+									<h4 class="mt-4 text-start" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">Добавить ссылку</h4>
+								</div>
+								<div class="col-12">
+									<h4 class="mb-3 text-start" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">Вы можете разместить неограниченное кол-во ссылок на своей странице. Прикрепить к ним изображение, добавить описание, цвет тд.</h4>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 
-                <div class="col-6 mb-1" style="padding-left: 7px">
+            {{-- <div class="row" >
+                <div class="col-12" style="padding-left: 7px; padding: 0">
                     <a href="{{ route('allLinks', ['id' => Auth::user()->id]) }}" style="color:black; text-decoration: none; border-bottom: 0">
-                        <div class="box-part text-center shadow-sm rounded-3" style="margin: 0; background-color: #feab6b">
-                            {{-- <img src="https://i.ibb.co/74YMCMB/333.png" class="img-fluid mb-2" width="40px"> --}}
+                        <div class="box-part text-center shadow-sm " style="margin: 0; background-color: #fe948d">
                             <div class="title">
                                 <h4 class="mt-2" style="font-family: 'Rubik', sans-serif; color: white">Все ссылки</h4>
                             </div>
@@ -132,14 +180,36 @@
                         </div>
                     </a>
                 </div>
+            </div> --}}
+			<div class="row" style="margin-right: 0">
+				<a class="" href="{{ route('allLinks', ['id' => Auth::user()->id]) }}" style="text-decoration: none; border: 0; padding: 0">
+					<div class="col-12">
+						<div class="row shadow" style="background-color: #fe948d">
+							<div class="col-4">
+								<div class="imgg m-5" style="background-image: url(https://i.ibb.co/k4ykGnT/xxxxx.png);"></div>
+							</div>
+							<div class="col-8 d-flex align-items-center">
+								<div class="row">
+									<div class="col-12">
+										<h4 class="mt-4 text-start" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">Все ссылки</h4>
+									</div>
+									<div class="col-12">
+										<h4 class="mb-3 text-start" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">Тут вы можете редактировать и удалять свои ссылки, а так же просматривать статистику кликов по ним</h4>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</a>
+			</div>
 
-                <div class="col-6 mb-1 mt-2" data-bs-toggle="modal" data-bs-target="#exampleModalStat" style="padding-left: 7px;">
-					<div class="box-part shadow-sm rounded-3" style="margin: 0; background-color: #e76f3d">
+            {{-- <div class="row" >
+                <div class="col-12" data-bs-toggle="modal" data-bs-target="#exampleModalStat" style="padding-left: 7px; padding: 0">
+					<div class="box-part shadow-sm" style="margin: 0; background-color: #fe7968">
                         <div class="d-flex justify-content-center text-center">
                             <div class="text-center img" style="background-image: url(https://i.ibb.co/y4SNFP9/statistic-loop.gif); height: 50px; width: 50px"></div>
                         </div>
 						<div class="title">
-							{{-- <h4 class="mt-2" style="font-family: 'Rubik', sans-serif;">Настройки</h4> --}}
 							<h4 class="mt-3" style="font-family: 'Rubik', sans-serif; color: white">Статистика профиля</h4>
 						</div>
 						<div class="text mb-1">
@@ -147,9 +217,30 @@
 						</div>
 					</div>
 				</div>
+            </div> --}}
+			<div class="row" style="margin-right: 0">
+				<div class="col-12" data-bs-toggle="modal" data-bs-target="#exampleModalStat" style="padding-left: 7px; padding: 0">
+					<div class="row shadow" style="background-color: #fe7968">
+						<div class="col-4">
+							<div class="imgg m-5" style="background-image: url(https://i.ibb.co/djxLR3S/ccccc.png);"></div>
+						</div>
+						<div class="col-8 d-flex align-items-center">
+							<div class="row">
+								<div class="col-12">
+									<h4 class="mt-4 text-start" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">Статистика профиля</h4>
+								</div>
+								<div class="col-12">
+									<h4 class="mb-3 text-start" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">Кол-во просмотров профиля, геолокация по городам и странам</h4>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 
-                <div class="col-6 mb-1 mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal" style="padding-right: 7px">
-					<div class="box-part text-center shadow-sm rounded-3" style="margin: 0; background-color: #02C9AF">
+            {{-- <div class="row" >
+                <div class="col-12" data-bs-toggle="modal" data-bs-target="#exampleModal" style="padding-right: 7px; padding: 0">
+					<div class="box-part text-center shadow-sm " style="margin: 0; background-color: #ec4f43">
                         <div class="d-flex justify-content-center text-center">
                             <div class="text-center img" style="background-image: url(https://i.ibb.co/dQPJY0d/recurring-settings.gif); height: 50px; width: 50px"></div>
                         </div>
@@ -161,6 +252,41 @@
 						</div>
 					</div>
 				</div>
+            </div> --}}
+			<div class="row" style="margin-right: 0">
+				<div class="col-12" data-bs-toggle="modal" data-bs-target="#exampleModal" style="padding-right: 7px; padding: 0">
+					<div class="row shadow" style="background-color: #ec4f43">
+						<div class="col-4">
+							<div class="imgg m-5" style="background-image: url(https://i.ibb.co/3vmRBDy/vvvvvvvv.png);"></div>
+						</div>
+						<div class="col-8 d-flex align-items-center">
+							<div class="row">
+								<div class="col-12">
+									<h4 class="mt-4 text-start" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">Настройки</h4>
+								</div>
+								<div class="col-12">
+									<h4 class="mb-3 text-start" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">Здесь вы можете редактировать свой профиль. Изменить имя, адрес, описание страницы. Так же загрузить ааватар и фоновое изображение</h4>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row" >
+                <div class="col-12" data-bs-toggle="modal" data-bs-target="#exampleModal" style="padding-right: 7px; padding: 0">
+					<div class="box-part text-center shadow-sm " style="margin: 0; background-color: white">
+                        <div class="d-flex justify-content-center text-center">
+                            <form method="POST" action="{{ route('logout') }}">
+								@csrf
+								<button class="nav-link text-muted mt-2" style="padding:  0; border: 0; outline: none; background-color:white;">
+									<h4 style="font-family: 'Rubik', sans-serif; font-size: 1rem">Выход</h4>
+								</button>
+							</form>
+                        </div>
+					</div>
+				</div>
+            </div>
 
 			</div>
 
@@ -548,14 +674,8 @@
 
 
 			<!-- Футер -->
-			<footer class="footer nav">
+			{{-- <footer class="footer nav">
 		      	<div class="container mb-3 mt-2 d-flex justify-content-around ">
-		      		{{-- <div class="d-flex align-items-center">
-		      			<h4 class="text-muted" style="font-family: 'Rubik', sans-serif; font-size: 1rem;">О нас</h4>
-		      		</div>
-		      		<div class="d-flex align-items-center">
-		      			<h4 class="text-muted" style="font-family: 'Rubik', sans-serif; font-size: 1rem">Блог</h4>
-		      		</div> --}}
 		      		<div>
 		      			<form method="POST" action="{{ route('logout') }}">
 	                        @csrf
@@ -565,7 +685,7 @@
 	                    </form>
 		      		</div>
 		      	</div>
-		    </footer>
+		    </footer> --}}
     	</div>
     </body>
 </html>
