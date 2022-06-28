@@ -35,9 +35,12 @@ Route::patch('/{id}/edit-profile/del-banner', [UserController::class, 'delUserBa
 Route::get('/{id}/links', [LinkController::class, 'allLinks'])->name('allLinks');
 Route::get('/{id}/search', [LinkController::class, 'searchLink'])->name('searchLink');
 Route::post('/{id}/add-link', [LinkController::class, 'addLink'])->name('addLink');
+Route::post('/{id}/add-post', [LinkController::class, 'addPost'])->name('addPost');
 Route::patch('/{id}/add-link/{link}/edit', [LinkController::class, 'editLink'])->name('editLink');
+Route::patch('/{id}/add-link/{link}/edit-post', [LinkController::class, 'editPost'])->name('editPost');
 Route::delete('/{id}/add-link/{link}/delete', [LinkController::class, 'delLink'])->name('delLink');
 Route::patch('/{id}/add-link/{link}/delete-photo', [LinkController::class, 'delLinkPhoto'])->name('delLinkPhoto');
+Route::patch('/{id}/add-link/{link}/delete-photo-post', [LinkController::class, 'delPostPhoto'])->name('delPostPhoto');
 Route::patch('/{id}/edit-links', [LinkController::class, 'editAllLink'])->name('editAllLink');
 
 Route::post('{id}/ppp/sort', [LinkController::class, 'sortLink'])->name('sortLink');

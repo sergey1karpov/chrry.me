@@ -92,7 +92,37 @@
             {{-- <div id="piechart_3d" style="width: 900px; height: 500px;"></div> --}}
 
     		<!-- Отображение валидационных ошибок -->
-			<x-auth-validation-errors class="mb-4" :errors="$errors" />
+            {{-- <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div> --}}
+
+            @if ($errors->any())
+                <div class="row">
+                    <div class="col-12" style="padding: 0">
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert" style="margin: 0; background-color: red">
+                            @foreach ($errors->all() as $error)
+                                <div class="title">
+                                    <span style="font-family: 'Rubik', sans-serif; font-size: 80%; line-height: 16px; display:block; color: white;">- {{$error}}</span>
+                                </div>
+                            @endforeach
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+            @endif
+            @if ($message = Session::get('error'))
+                <div class="row">
+                    <div class="col-12" style="padding: 0">
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert" style="margin: 0; background-color: red">
+                            <div class="title">
+                                <span style="font-family: 'Rubik', sans-serif; font-size: 80%; line-height: 16px; display:block; color: white;">- {{$message}}</span>
+                            </div>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+            @endif
 
 			<!-- Ссылка на профиль -->
 			<div class="row">
@@ -112,42 +142,65 @@
 					</div>
 				</a>
 			</div>
-			{{-- <div class="row" style="margin-right: 0">
-				<a class="" href="{{ route('userHomePage',  ['slug' => Auth::user()->slug]) }}" style="text-decoration: none; border: 0; padding: 0">
-					<div class="col-12">
-						<div class="row" style="background-color: #ffe0db">
-							<div class="col-4">
-								<div class="img m-5" style="background-image: url({{$user->avatar}});"></div>
-							</div>
-							<div class="col-8 d-flex align-items-center">
-								<div class="row">
-									<div class="col-12">
-										<h4 class="mt-4 ms-3 text-start" style="font-family: 'Rubik', sans-serif; color: #1d1d1d; font-weight: 600 ;">{{ $user->name }}</h4>
-									</div>
-									<div class="col-12">
-										<h4 class="mb-3 ms-3 text-start" style="font-family: 'Rubik', sans-serif; color: #1d1d1d; font-size: 0.8rem">{{ '@'.$user->slug }}</h4>
-									</div>
+
+
+
+
+
+            <div class="row" style="margin-right: 0">
+				<div class="col-12" style="padding-right: 7px; padding: 0">
+					<div class="row d-flex justify-content-start shadow" style="background-color: #ffbdb3">
+						<div class="col-4" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+							<div class="imgg m-5" style="background-image: url(https://i.ibb.co/SvCxHnG/zzzzz.png);"></div>
+						</div>
+						<div class="col-8 d-flex align-items-center" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+							<div class="row">
+								<div class="col-12">
+									<h4  class="mt-4 text-start" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">Добавить ссылку</h4>
+								</div>
+								<div class="col-12">
+									<h4  class="mb-3 text-start" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">Вы можете добавить как обычную ссылку, так и её более развернутый вариант в виде поста</h4>
 								</div>
 							</div>
 						</div>
-					</div>
-				</a>
-			</div> --}}
 
-            <!-- Добавление ссылок -->
-			{{-- <div class="row" >
-				<div class="col-12" data-bs-toggle="modal" data-bs-target="#exampleModalLink" style="padding-right: 7px; padding: 0">
-					<div class="box-part text-center shadow-sm " style="margin: 0; background-color: #ffbdb3">
-						<div class="title">
-							<h4 class="mt-2" style="font-family: 'Rubik', sans-serif; color: white">Добавить ссылку</h4>
-						</div>
-						<div class="text mb-1">
-							<span style="font-family: 'Rubik', sans-serif; font-size: 75%; line-height: 16px; display:block; color: white">Вы можете разместить неограниченное кол-во ссылок на своей странице. Прикрепить к ним изображение, добавить описание, цвет тд.</span>
-						</div>
+                        <div class="collapse" id="collapseExample" style="padding: 0">
+                            <div class="card card-body" style="background-color: #ffbdb3; border: 0; padding-left: 28px; padding-bottom: 0; padding-top: 0">
+                                <div class="row d-flex justify-content-center">
+                                    <div class="col-6 text-center" data-bs-toggle="modal" data-bs-target="#exampleModalLink">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <h4 class="mt-4 text-center" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">Ссылка</h4>
+                                            </div>
+                                            <div class="col-12">
+                                                <h4 class="mb-3 text-center" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">Самая простая ссылка на внешний ресурс. Фото, заголовок и сама ссылка</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 text-center" data-bs-toggle="modal" data-bs-target="#exampleModalPost">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <h4 class="mt-4 text-center" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">Пост</h4>
+                                            </div>
+                                            <div class="col-12">
+                                                <h4 class="mb-3 text-center" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">Более развернутая ссылка с фото галереей и увеличенным кол-вом символов для текста</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 					</div>
 				</div>
-            </div> --}}
-			<div class="row" style="margin-right: 0">
+			</div>
+
+
+
+
+
+
+
+			{{-- <div class="row" style="margin-right: 0">
 				<div class="col-12" data-bs-toggle="modal" data-bs-target="#exampleModalLink" style="padding-right: 7px; padding: 0">
 					<div class="row d-flex justify-content-start shadow" style="background-color: #ffbdb3">
 						<div class="col-4">
@@ -166,21 +219,27 @@
 					</div>
 				</div>
 			</div>
+            <div class="row" style="margin-right: 0">
+				<div class="col-12" data-bs-toggle="modal" data-bs-target="#exampleModalPost" style="padding-right: 7px; padding: 0">
+					<div class="row d-flex justify-content-start shadow" style="background-color: #ffbdb3">
+						<div class="col-4">
+							<div class="imgg m-5" style="background-image: url(https://i.ibb.co/SvCxHnG/zzzzz.png);"></div>
+						</div>
+						<div class="col-8 d-flex align-items-center">
+							<div class="row">
+								<div class="col-12">
+									<h4 class="mt-4 text-start" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">Добавить ПОСТ</h4>
+								</div>
+								<div class="col-12">
+									<h4 class="mb-3 text-start" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">Вы можете разместить неограниченное кол-во ссылок на своей странице. Прикрепить к ним изображение, добавить описание, цвет тд.</h4>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div> --}}
 
-            {{-- <div class="row" >
-                <div class="col-12" style="padding-left: 7px; padding: 0">
-                    <a href="{{ route('allLinks', ['id' => Auth::user()->id]) }}" style="color:black; text-decoration: none; border-bottom: 0">
-                        <div class="box-part text-center shadow-sm " style="margin: 0; background-color: #fe948d">
-                            <div class="title">
-                                <h4 class="mt-2" style="font-family: 'Rubik', sans-serif; color: white">Все ссылки</h4>
-                            </div>
-                            <div class="text mb-1">
-                                <span style="font-family: 'Rubik', sans-serif; font-size: 75%; line-height: 16px; display:block; color: white">Тут вы можете редактировать и удалять свои ссылки, а так же просматривать статистику кликов по ним</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div> --}}
+
 			<div class="row" style="margin-right: 0">
 				<a class="" href="{{ route('allLinks', ['id' => Auth::user()->id]) }}" style="text-decoration: none; border: 0; padding: 0">
 					<div class="col-12">
@@ -194,7 +253,7 @@
 										<h4 class="mt-4 text-start" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">Все ссылки</h4>
 									</div>
 									<div class="col-12">
-										<h4 class="mb-3 text-start" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">Тут вы можете редактировать и удалять свои ссылки, а так же просматривать статистику кликов по ним</h4>
+										<h4 class="mb-3 text-start" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">Тут вы можете редактировать и удалять свои ссылки и посты, а так же просматривать статистику кликов по ним</h4>
 									</div>
 								</div>
 							</div>
@@ -203,21 +262,6 @@
 				</a>
 			</div>
 
-            {{-- <div class="row" >
-                <div class="col-12" data-bs-toggle="modal" data-bs-target="#exampleModalStat" style="padding-left: 7px; padding: 0">
-					<div class="box-part shadow-sm" style="margin: 0; background-color: #fe7968">
-                        <div class="d-flex justify-content-center text-center">
-                            <div class="text-center img" style="background-image: url(https://i.ibb.co/y4SNFP9/statistic-loop.gif); height: 50px; width: 50px"></div>
-                        </div>
-						<div class="title">
-							<h4 class="mt-3" style="font-family: 'Rubik', sans-serif; color: white">Статистика профиля</h4>
-						</div>
-						<div class="text mb-1">
-							<span style="font-family: 'Rubik', sans-serif; font-size: 75%; line-height: 16px; display:block; color: white">Кол-во просмотров профиля, геолокация по городам и странам </span>
-						</div>
-					</div>
-				</div>
-            </div> --}}
 			<div class="row" style="margin-right: 0">
 				<div class="col-12" data-bs-toggle="modal" data-bs-target="#exampleModalStat" style="padding-left: 7px; padding: 0">
 					<div class="row shadow" style="background-color: #fe7968">
@@ -238,21 +282,6 @@
 				</div>
 			</div>
 
-            {{-- <div class="row" >
-                <div class="col-12" data-bs-toggle="modal" data-bs-target="#exampleModal" style="padding-right: 7px; padding: 0">
-					<div class="box-part text-center shadow-sm " style="margin: 0; background-color: #ec4f43">
-                        <div class="d-flex justify-content-center text-center">
-                            <div class="text-center img" style="background-image: url(https://i.ibb.co/dQPJY0d/recurring-settings.gif); height: 50px; width: 50px"></div>
-                        </div>
-						<div class="title">
-							<h4 class="mt-3" style="font-family: 'Rubik', sans-serif; color: white">Настройки</h4>
-						</div>
-						<div class="text mb-1">
-							<span style="font-family: 'Rubik', sans-serif; font-size: 75%; line-height: 16px; display:block; color: white">Здесь вы можете редактировать свой профиль. Изменить имя, адрес, описание страницы. Так же загрузить ааватар и фоновое изображение</span>
-						</div>
-					</div>
-				</div>
-            </div> --}}
 			<div class="row" style="margin-right: 0">
 				<div class="col-12" data-bs-toggle="modal" data-bs-target="#exampleModal" style="padding-right: 7px; padding: 0">
 					<div class="row shadow" style="background-color: #ec4f43">
@@ -275,7 +304,7 @@
 
 			<div class="row" >
                 <div class="col-12" data-bs-toggle="modal" data-bs-target="#exampleModal" style="padding-right: 7px; padding: 0">
-					<div class="box-part text-center shadow-sm " style="margin: 0; background-color: white">
+					<div class="box-part text-center shadow-sm " style="margin: 0; background-color: white; padding-top: 10px; padding-bottom: 10px">
                         <div class="d-flex justify-content-center text-center">
                             <form method="POST" action="{{ route('logout') }}">
 								@csrf
@@ -290,18 +319,9 @@
 
 			</div>
 
-            {{-- @if (session()->has('message'))
-                <div class="row" style="margin-top: 12px; margin-left: 6px; margin-right: 6px">
-                    <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin: 0">
-                        {{ session('message') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                </div>
-            @endif --}}
-
-			<div class="modal fade" id="exampleModalLink" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal fade" id="exampleModalLink" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background-color: #1b1b1b">
 		  		<div class="modal-dialog">
-				    <div class="modal-content">
+				    <div class="modal-content text-center" style="background-color: #FBF6EA">
 				    	<div class="modal-header">
 				        	<h5 class="modal-title" style="font-family: 'Rubik', sans-serif;">Добавить ссылку</h5>
 				        	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -310,9 +330,9 @@
 				        <form action="{{ route('addLink', ['id' => Auth::user()->id]) }}" method="post" enctype="multipart/form-data">
 			        		@csrf @method('POST')
 		        			<div class="mb-3">
-						    	<label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Заголовок</label>
-						    	<input type="text" class="form-control" name="title" placeholder="Моя красивая ссылка" maxlength="150">
-						    	<span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Заголовок может содержать от 3 букв до 150 символов</span>
+						    	<label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Текст ссылки</label>
+						    	<input type="text" class="form-control" name="title" placeholder="Моя красивая ссылка" maxlength="50">
+						    	<span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Заголовок может содержать до 50 символов</span>
 						    </div>
 						    <div class="mb-3">
 						    	<label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Вставьте ссылку</label>
@@ -334,10 +354,10 @@
 
                             <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Прозрачность фона</label>
                             <div class="mb-3 text-center d-flex justify-content-center">
-                                <input type="range" class="form-range" min="19" max="99" step="10" id="customRange2" name="transparency">
+                                <input type="range" class="form-range" min="0.0" max="1.0" step="0.1" id="customRange2" name="transparency" value="1.0">
                             </div>
 
-                            <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Добавить тень</label>
+                            <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Добавить тень для ссылки</label>
 						  	<div class="mb-3 text-center d-flex justify-content-center">
 								<div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="shadow" id="inlineRadio1" value="shadow-none">
@@ -358,24 +378,10 @@
 						  	</div>
 
                             <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Округление углов карточки и фото</label>
-						  	<div class="mb-3 text-center d-flex justify-content-center">
-								<div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="rounded" id="inlineRadio1" value="rounded-0">
-                                    <label class="form-check-label" for="inlineRadio1">none</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="rounded" id="inlineRadio2" value="rounded-1">
-                                    <label class="form-check-label" for="inlineRadio2">sm</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="rounded" id="inlineRadio3" value="rounded-2">
-                                    <label class="form-check-label" for="inlineRadio3">md</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="rounded" id="inlineRadio3" value="rounded-3">
-                                    <label class="form-check-label" for="inlineRadio3">lg</label>
-                                </div>
-						  	</div>
+                            <div class="mb-3 text-center d-flex justify-content-center">
+                                <input type="range" class="form-range" min="1" max="50" step="1" id="customRange2" name="rounded" value="25">
+                            </div>
+
 
 						    <div class="mb-3">
 						    	<label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Фото</label>
@@ -383,20 +389,109 @@
 						    	<span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Мы принимаем картинки jpeg, jpg, png, gif формата, размерои до 3мб. Хотя можете обойтись и без изображения, но зачем если можно?</span>
 						    </div>
 
-						    <button type="submit" class="btn btn-primary">Добавить</button>
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary">Добавить</button>
+                              </div>
 							</div>
 				        </form>
 				    </div>
 				</div>
 		  	</div>
 
-            <!-- Статистика профиля -->
+            <!-- Добавить пост -->
+            <div class="modal fade" id="exampleModalPost" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background-color: #1b1b1b">
+                <div class="modal-dialog">
+                  <div class="modal-content text-center" style="background-color: #FBF6EA">
+                        <div class="modal-header">
+                            <h5 class="modal-title" style="font-family: 'Rubik', sans-serif;">Добавить пост</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{{ route('addPost', ['id' => Auth::user()->id]) }}" method="post" enctype="multipart/form-data">
+                                @csrf @method('POST')
+                                <input type="hidden" value="POST" name="type"> <!-- Тип ссылки -->
+                                <div class="mb-3"> <!-- Заголовок -->
+                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Заголовок</label>
+                                    <input type="text" class="form-control" name="title" placeholder="Моя красивая ссылка" maxlength="50">
+                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Заголовок может содержать до 50 символов</span>
+                                </div>
+                                <div class="mb-3"> <!-- Полный текст -->
+                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Текст</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" maxlength="2500" name="full_text"></textarea>
+                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Свободный текст до 2500 символов</span>
+                                </div>
+                                <div class="mb-3"> <!-- Ссылка на источник -->
+                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Ссылка</label>
+                                    <input type="text" class="form-control" name="link">
+                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Если есть ссылка на внешний ресурс, вставьте её сюда</span>
+                                </div>
+                                <div class="mb-3"> <!-- Фотографии -->
+                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Фото</label>
+                                    <input type="file" class="form-control" id="inputGroupFile02" name="photos[]" accept=".png, .jpg, .jpeg" multiple>
+                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Мы принимаем картинки jpeg, jpg, png формата. Вы можете загрузить до 10 изображений</span>
+                                </div>
+                                <div class="mb-3"> <!-- Ссылка на видео -->
+                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Ссылка на видео</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" name="video"></textarea>
+                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Если хотите прикрепить видео, вставьте сюда ссылку на youtube, vimeo или что то другое...</span>
+                                </div>
+                                <div class="mb-3"> <!-- Ссылка на любое медиа -->
+                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Ссылка на медиа</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" name="media"></textarea>
+                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Поле для кода. Сюда можно вставить код для плейлиста ВК, Яндекса и много чего</span>
+                                </div>
+
+                                <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Цвет заголовка</label>
+                                <div class="mb-3 text-center d-flex justify-content-center"> <!-- выбор цвета на заголовок -->
+                                    <input type="color" class="form-control" id="exampleColorInput" value="#050507" title="Choose your color" name="title_color" style="height: 40px;"><br>
+                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Черный по умолчанию</span>
+                                </div>
+                                <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Фоновый цвет</label>
+                                <div class="mb-3 text-center d-flex justify-content-center"> <!-- выбор цвета на фон -->
+                                    <input type="color" class="form-control " id="exampleColorInput" value="#ECECE2" title="Choose your color" name="background_color" style="height: 40px;">
+                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Белый по умолчанию</span>
+                                </div>
+                                <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Прозрачность фона</label>
+                                <div class="mb-3 text-center d-flex justify-content-center"> <!-- выбор прозрачности фона -->
+                                    <input type="range" class="form-range" min="0.0" max="1.0" step="0.1" id="customRange2" name="transparency" value="1.0">
+                                </div>
+                                <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Добавить тень для ссылки</label>
+                                <div class="mb-3 text-center d-flex justify-content-center"> <!-- Добавить тень -->
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="shadow" id="inlineRadio1" value="shadow-none">
+                                        <label class="form-check-label" for="inlineRadio1">none</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="shadow" id="inlineRadio2" value="shadow-sm">
+                                        <label class="form-check-label" for="inlineRadio2">sm</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="shadow" id="inlineRadio3" value="shadow">
+                                        <label class="form-check-label" for="inlineRadio3">md</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="shadow" id="inlineRadio3" value="shadow-lg">
+                                        <label class="form-check-label" for="inlineRadio3">lg</label>
+                                    </div>
+                                </div>
+                                <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Округление углов карточки и фото</label>
+                                <div class="mb-3 text-center d-flex justify-content-center"> <!-- Добивить округление углов -->
+                                    <input type="range" class="form-range" min="1" max="50" step="1" id="customRange2" name="rounded" value="25">
+                                </div>
+                          <div class="d-grid gap-2">
+                              <button type="submit" class="btn btn-primary">Добавить пост</button>
+                            </div>
+                          </div>
+                      </form>
+                  </div>
+              </div>
+            </div>
 
 
             <!-- Modal -->
-            <div class="modal fade" id="exampleModalStat" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="exampleModalStat" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background-color: #1b1b1b">
                 <div class="modal-dialog">
-                <div class="modal-content">
+                    <div class="modal-content text-center" style="background-color: #FBF6EA">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Статистика </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -542,9 +637,9 @@
 					</div>
 				</div>
 			</div> --}}
-			<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background-color: #1b1b1b">
 		  		<div class="modal-dialog">
-				    <div class="modal-content">
+				    <div class="modal-content text-center" style="background-color: #FBF6EA">
 				    	<div class="modal-header">
 				        	<h5 class="modal-title" style="font-family: 'Rubik', sans-serif;">Редактировать профиль</h5>
 				        	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -687,6 +782,16 @@
 		      	</div>
 		    </footer> --}}
     	</div>
+        <script>
+            $(function(){
+                $("input[type='submit']").click(function(){
+                    var $fileUpload = $("input[type='file']");
+                    if (parseInt($fileUpload.get(0).files.length)>2){
+                    alert("You can only upload a maximum of 2 files");
+                    }
+                });
+            });​
+        </script>
     </body>
 </html>
 

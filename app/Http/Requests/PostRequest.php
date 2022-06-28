@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LinkRequest extends FormRequest
+class PostRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,14 +24,9 @@ class LinkRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'min:1|max:50',
-            'link' => 'required|url',
-            'title_color' => 'nullable',
-            'background_color' => 'nullable',
-            'photo' => 'nullable|mimes:jpeg,png,jpg,gif|max:3000',
-            'shadow' => 'nullable',
-            'rounded' => 'nullable',
-            'transparency' => 'nullable',
+            'title' => 'required|min:1|max:50',
+            'full_text' => 'nullable|max:2500',
+            'photos[]' => 'nullable|image|mimes:jpeg,jpg,png|max:10000',
         ];
     }
 }

@@ -18,14 +18,25 @@ class Link extends Model
     protected $table = 'links';
 
     protected $fillable = [
+        //common properties
         'title',
         'link',
         'title_color',
         'background_color',
+        'title_color_hex',
+        'background_color_hex',
         'photo',
         'shadow',
         'rounded',
-        'transparency'
+        'transparency',
+        'position',
+        'type',
+        'user_id',
+        //Post properties
+        'full_text',
+        'photos',
+        'video',
+        'media',
     ];
 
     public function searchableAs()
@@ -49,7 +60,9 @@ class Link extends Model
                 'title' => $request->title,
                 'link' => $request->link,
                 'title_color' => $request->title_color,
-                'background_color' => $request->background_color,
+                'background_color' => self::convertBackgroundColor($request->background_color),
+                'title_color_hex' => $request->title_color,
+                'background_color_hex' => $request->background_color,
                 'photo' => isset($request->photo) ? self::addLinkPhoto($request->photo) : null,
                 'shadow' => $request->shadow,
                 'rounded' => $request->rounded,
@@ -58,6 +71,12 @@ class Link extends Model
 
             $user->links()->save($link);
         }
+    }
+
+    public static function convertBackgroundColor($color)
+    {
+        list($r, $g, $b) = sscanf($color, "#%02x%02x%02x");
+        return $r.', '.$g.', '.$b;
     }
 
     protected static function editLink(int $id, $link, LinkRequest $request) : void
@@ -71,7 +90,9 @@ class Link extends Model
                 'shadow' => $request->shadow,
                 'rounded' => $request->rounded,
                 'title_color' => isset($request->title_color) ? $request->title_color : $actualLink->title_color,
-                'background_color' => isset($request->background_color) ? $request->background_color : $actualLink->background_color,
+                'background_color' => isset($request->background_color) ? self::convertBackgroundColor($request->background_color) : $actualLink->background_color,
+                'title_color_hex' => $request->title_color,
+                'background_color_hex' => $request->background_color,
                 'photo' => isset($request->photo) ? self::addLinkPhoto($request->photo) : $actualLink->photo,
                 'transparency' => isset($request->transparency) ? $request->transparency : $actualLink->transparency,
             ]);
@@ -108,9 +129,11 @@ class Link extends Model
         $mb_substr = mb_substr($path, $strrpos);
 
         $name = $mb_substr;
-        $img = Image::make($img->getRealPath())->resize(100, null, function ($constraint) {
-            $constraint->aspectRatio();
-        });
+        // $img = Image::make($img->getRealPath())->resize(100, null, function ($constraint) {
+        //     $constraint->aspectRatio();
+        // });
+        $img = Image::make($img->getRealPath())->fit(200);
+        // $img = Image::make($img->getRealPath())->crop(1000, 1000);
         $img->save('../storage/app/public/'. Auth::user()->id. '/links'. $name);
         $url = '/'.$img->dirname . '/' . $img->basename;
 
