@@ -341,6 +341,30 @@
                                                         <input type="text" class="form-control" name="link" placeholder="http://..." value="{{$link->link}}">
                                                         <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Измените хорошую ссылку</span>
                                                     </div>
+
+                                                    <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Иконка</label>
+                                                    <div class="mb-3">
+                                                        <select id="select-beast-empty{{$link->id}}" data-placeholder="Поиск иконки..."  autocomplete="off" name="icon">
+                                                            <option value="">None</option>
+                                                            <option value="4">telegram</option>
+                                                            <option value="1">vkontakte</option>
+                                                            <option value="3">facebook</option>
+                                                            <option value="5">viber</option>
+                                                            <option value="6">wechat</option>
+                                                            <option value="7">instagram</option>
+                                                            <option value="8">odnoclasniki</option>
+                                                            <option value="9">averro</option>
+                                                        </select>
+                                                        <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Вы можете выбрать иконку из нашей базы для своей ссылки</span>
+                                                    </div>
+                                                    @if($link->icon == false)
+                                                        <div class="mb-3">
+                                                            <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Фото</label>
+                                                            <input type="file" class="form-control" id="inputGroupFile02" name="photo">
+                                                            <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Если иконка вам не подходит, загрузите своё изображение. Мы принимаем картинки jpeg, jpg, png, gif формата.</span>
+                                                        </div>
+                                                    @endif
+
                                                     <div class="mb-3">
                                                         <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Текущий цвет заголовка</label>
                                                         <div class="mb-3 text-center d-flex justify-content-center">
@@ -393,28 +417,7 @@
                                                             <input type="range" class="form-range" min="1" max="50" step="1" id="customRange2" name="rounded" value="{{$link->rounded}}">
                                                         </div>
                                                     </div>
-                                                    <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Иконка</label>
-                                                    <div class="mb-3">
-                                                        <select id="select-beast-empty{{$link->id}}" data-placeholder="Поиск иконки..."  autocomplete="off" name="icon">
-                                                            <option value="">None</option>
-                                                            <option value="4">telegram</option>
-                                                            <option value="1">vkontakte</option>
-                                                            <option value="3">facebook</option>
-                                                            <option value="5">viber</option>
-                                                            <option value="6">wechat</option>
-                                                            <option value="7">instagram</option>
-                                                            <option value="8">odnoclasniki</option>
-                                                            <option value="9">averro</option>
-                                                        </select>
-                                                        <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Вы можете выбрать иконку из нашей базы для своей ссылки</span>
-                                                    </div>
-                                                    @if($link->icon == false)
-                                                        <div class="mb-3">
-                                                            <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Фото</label>
-                                                            <input type="file" class="form-control" id="inputGroupFile02" name="photo">
-                                                            <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Если иконка вам не подходит, загрузите своё изображение. Мы принимаем картинки jpeg, jpg, png, gif формата.</span>
-                                                        </div>
-                                                    @endif
+
                                                     <button type="submit" class="btn btn-primary">Изменить</button>
                                                 </div>
                                             </form>
@@ -463,8 +466,8 @@
                                 </div>
                                 <div class="mb-3"> <!-- Полный текст -->
                                     <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Текст</label>
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" maxlength="2500" name="full_text">{{$link->full_text}}</textarea>
-                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Свободный текст до 2500 символов</span>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="full_text">{{$link->full_text}}</textarea>
+                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Свободный текст</span>
                                 </div>
                                 <div class="mb-3"> <!-- Ссылка на источник -->
                                     <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Ссылка</label>
@@ -541,27 +544,72 @@
                     valueField: 'img',
                     searchField: 'title',
                     options: [
-                        {id: 1, title: 'Behance', img: '{{ asset('public/images/social/Behance.png') }}'},
-                        {id: 2, title: 'Facebook', img: '{{ asset('public/images/social/Facebook.png') }}'},
-                        {id: 3, title: 'Instagram',  img: '{{ asset('public/images/social/Instagram.png') }}'},
-                        {id: 4, title: 'LinkedIn',  img: '{{ asset('public/images/social/LinkedIn.png') }}'},
-                        {id: 5, title: 'Ok',  img: '{{ asset('public/images/social/Ok.png') }}'},
-                        {id: 6, title: 'Pinterest',  img: '{{ asset('public/images/social/Pinterest.png') }}'},
-                        {id: 7, title: 'Skype',  img: '{{ asset('public/images/social/Skype.png') }}'},
-                        {id: 8, title: 'Snapchat',  img: '{{ asset('public/images/social/Snapchat.png') }}'},
-                        {id: 9, title: 'SoundCloud', img: '{{ asset('public/images/social/SoundCloud.png') }}'},
-                        {id: 10, title: 'Spotify', img: '{{ asset('public/images/social/Spotify.png') }}'},
-                        {id: 11, title: 'Telegram',  img: '{{ asset('public/images/social/Telegram.png') }}'},
-                        {id: 12, title: 'TikTok',  img: '{{ asset('public/images/social/TikTok.png') }}'},
-                        {id: 13, title: 'Tumblr',  img: '{{ asset('public/images/social/Tumblr.png') }}'},
-                        {id: 14, title: 'Twitch',  img: '{{ asset('public/images/social/Twitch.png') }}'},
-                        {id: 15, title: 'Twitter',  img: '{{ asset('public/images/social/Twitter.png') }}'},
-                        {id: 16, title: 'Viber',  img: '{{ asset('public/images/social/Viber.png') }}'},
-                        {id: 17, title: 'Vimeo',  img: '{{ asset('public/images/social/Vimeo.png') }}'},
-                        {id: 18, title: 'VK', img: '{{ asset('public/images/social/VK.png') }}'},
-                        {id: 19, title: 'WeChat', img: '{{ asset('public/images/social/WeChat.png') }}'},
-                        {id: 20, title: 'WhatsApp',  img: '{{ asset('public/images/social/WhatsApp.png') }}'},
-                        {id: 21, title: 'YouTube',  img: '{{ asset('public/images/social/YouTube.png') }}'},
+                        {id: 1, title: 'Без иконки', img: ''},
+                        {id: 2, title: 'Behance', img: '{{ asset('public/images/social/Behance.png') }}'},
+                        {id: 3, title: 'Facebook', img: '{{ asset('public/images/social/Facebook.png') }}'},
+                        {id: 4, title: 'Instagram',  img: '{{ asset('public/images/social/Instagram.png') }}'},
+                        {id: 5, title: 'LinkedIn',  img: '{{ asset('public/images/social/LinkedIn.png') }}'},
+                        {id: 6, title: 'Ok',  img: '{{ asset('public/images/social/Ok.png') }}'},
+                        {id: 7, title: 'Pinterest',  img: '{{ asset('public/images/social/Pinterest.png') }}'},
+                        {id: 8, title: 'Skype',  img: '{{ asset('public/images/social/Skype.png') }}'},
+                        {id: 9, title: 'Snapchat',  img: '{{ asset('public/images/social/Snapchat.png') }}'},
+                        {id: 10, title: 'SoundCloud', img: '{{ asset('public/images/social/SoundCloud.png') }}'},
+                        {id: 11, title: 'Spotify', img: '{{ asset('public/images/social/Spotify.png') }}'},
+                        {id: 12, title: 'Telegram',  img: '{{ asset('public/images/social/Telegram.png') }}'},
+                        {id: 13, title: 'TikTok',  img: '{{ asset('public/images/social/TikTok.png') }}'},
+                        {id: 14, title: 'Tumblr',  img: '{{ asset('public/images/social/Tumblr.png') }}'},
+                        {id: 15, title: 'Twitch',  img: '{{ asset('public/images/social/Twitch.png') }}'},
+                        {id: 16, title: 'Twitter',  img: '{{ asset('public/images/social/Twitter.png') }}'},
+                        {id: 17, title: 'Viber',  img: '{{ asset('public/images/social/Viber.png') }}'},
+                        {id: 18, title: 'Vimeo',  img: '{{ asset('public/images/social/Vimeo.png') }}'},
+                        {id: 19, title: 'VK', img: '{{ asset('public/images/social/VK.png') }}'},
+                        {id: 20, title: 'WeChat', img: '{{ asset('public/images/social/WeChat.png') }}'},
+                        {id: 21, title: 'WhatsApp',  img: '{{ asset('public/images/social/WhatsApp.png') }}'},
+                        {id: 22, title: 'YouTube',  img: '{{ asset('public/images/social/YouTube.png') }}'},
+
+                        {id: 23, title: 'Behance Black', img: '{{ asset('public/images/social/Behance_black.png') }}'},
+                        {id: 24, title: 'Facebook Black', img: '{{ asset('public/images/social/Facebook_black.png') }}'},
+                        {id: 25, title: 'Instagram Black',  img: '{{ asset('public/images/social/Instagram_black.png') }}'},
+                        {id: 26, title: 'LinkedIn Black',  img: '{{ asset('public/images/social/LinkedIn_black.png') }}'},
+                        {id: 27, title: 'Ok Black',  img: '{{ asset('public/images/social/Ok_black.png') }}'},
+                        {id: 28, title: 'Pinterest Black',  img: '{{ asset('public/images/social/Pinterest_black.png') }}'},
+                        {id: 29, title: 'Skype Black',  img: '{{ asset('public/images/social/Skype_black.png') }}'},
+                        {id: 30, title: 'Snapchat Black',  img: '{{ asset('public/images/social/Snapchat_black.png') }}'},
+                        {id: 31, title: 'SoundCloud Black', img: '{{ asset('public/images/social/SoundCloud_black.png') }}'},
+                        {id: 32, title: 'Spotify Black', img: '{{ asset('public/images/social/Spotify_black.png') }}'},
+                        {id: 33, title: 'Telegram Black',  img: '{{ asset('public/images/social/Telegram_black.png') }}'},
+                        {id: 34, title: 'TikTok Black',  img: '{{ asset('public/images/social/TikTok_black.png') }}'},
+                        {id: 35, title: 'Tumblr Black',  img: '{{ asset('public/images/social/Tumblr_black.png') }}'},
+                        {id: 36, title: 'Twitch Black',  img: '{{ asset('public/images/social/Twitch_black.png') }}'},
+                        {id: 37, title: 'Twitter Black',  img: '{{ asset('public/images/social/Twitter_black.png') }}'},
+                        {id: 38, title: 'Viber Black',  img: '{{ asset('public/images/social/Viber_black.png') }}'},
+                        {id: 39, title: 'Vimeo Black',  img: '{{ asset('public/images/social/Vimeo_black.png') }}'},
+                        {id: 40, title: 'VK Black', img: '{{ asset('public/images/social/VK_black.png') }}'},
+                        {id: 41, title: 'WeChat Black', img: '{{ asset('public/images/social/WeChat_black.png') }}'},
+                        {id: 42, title: 'WhatsApp Black',  img: '{{ asset('public/images/social/WhatsApp_black.png') }}'},
+                        {id: 43, title: 'YouTube Black',  img: '{{ asset('public/images/social/YouTube_black.png') }}'},
+
+                        {id: 44, title: 'Behance White', img: '{{ asset('public/images/social/Behance_white.png') }}'},
+                        {id: 45, title: 'Facebook White', img: '{{ asset('public/images/social/Facebook_white.png') }}'},
+                        {id: 46, title: 'Instagram White',  img: '{{ asset('public/images/social/Instagram_white.png') }}'},
+                        {id: 47, title: 'LinkedIn White',  img: '{{ asset('public/images/social/LinkedIn_white.png') }}'},
+                        {id: 48, title: 'Ok White',  img: '{{ asset('public/images/social/Ok_white.png') }}'},
+                        {id: 49, title: 'Pinterest White',  img: '{{ asset('public/images/social/Pinterest_white.png') }}'},
+                        {id: 50, title: 'Skype White',  img: '{{ asset('public/images/social/Skype_white.png') }}'},
+                        {id: 51, title: 'Snapchat White',  img: '{{ asset('public/images/social/Snapchat_white.png') }}'},
+                        {id: 52, title: 'SoundCloud White', img: '{{ asset('public/images/social/SoundCloud_white.png') }}'},
+                        {id: 53, title: 'Spotify White', img: '{{ asset('public/images/social/Spotify_white.png') }}'},
+                        {id: 54, title: 'Telegram White',  img: '{{ asset('public/images/social/Telegram_white.png') }}'},
+                        {id: 55, title: 'TikTok White',  img: '{{ asset('public/images/social/TikTok_white.png') }}'},
+                        {id: 56, title: 'Tumblr White',  img: '{{ asset('public/images/social/Tumblr_white.png') }}'},
+                        {id: 57, title: 'Twitch White',  img: '{{ asset('public/images/social/Twitch_white.png') }}'},
+                        {id: 58, title: 'Twitter White',  img: '{{ asset('public/images/social/Twitter_white.png') }}'},
+                        {id: 59, title: 'Viber White',  img: '{{ asset('public/images/social/Viber_white.png') }}'},
+                        {id: 60, title: 'Vimeo White',  img: '{{ asset('public/images/social/Vimeo_white.png') }}'},
+                        {id: 61, title: 'VK White', img: '{{ asset('public/images/social/VK_white.png') }}'},
+                        {id: 62, title: 'WeChat White', img: '{{ asset('public/images/social/WeChat_white.png') }}'},
+                        {id: 63, title: 'WhatsApp White',  img: '{{ asset('public/images/social/WhatsApp_white.png') }}'},
+                        {id: 64, title: 'YouTube White',  img: '{{ asset('public/images/social/YouTube_white.png') }}'},
                     ],
                     render: {
                         option: function(data, escape) {

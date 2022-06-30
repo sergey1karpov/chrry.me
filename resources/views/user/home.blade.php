@@ -30,6 +30,17 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
 
+        <!-- Ярлык -->
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="mobile-web-app-capable" content="yes">
+
+        <meta name="apple-mobile-web-app-title" content="Add to Home">
+        <link href="{{asset('public/css/addtohomescreen.css')}}" rel="stylesheet">
+        <script src="{{asset('public/js/addtohomescreen.min.js')}}"></script>
+        <link rel="shortcut icon" sizes="16x16" href="{{$user->avatar}}">
+        <link rel="shortcut icon" sizes="196x196" href="{{$user->avatar}}">
+        <link rel="apple-touch-icon-precomposed"href="{{$user->avatar}}">
+
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <x-embed-styles />
@@ -151,7 +162,7 @@
 			  					</div>
 			  				</div>
 			  				<div class="col-1">
-
+                                <div id="up" class="imgg" style="background-image: url(https://i.ibb.co/VLbJkrG/dots.png);"></div>
 			  				</div>
 			  			</div>
 				  	</div>
@@ -187,12 +198,24 @@
                                         @endif
                                     </div>
 
-                                    <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
-                                        <span class="carousel-control-prev-icon"></span>
-                                    </button>
-                                    <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
-                                        <span class="carousel-control-next-icon"></span>
-                                    </button>
+                                    @if($link->photos)
+                                        @php
+                                            $photos = [];
+                                            foreach(unserialize($link->photos) as $photo) {
+                                                $photos[] = $photo;
+                                            }
+                                        @endphp
+                                    @endif
+
+                                    @if(count($photos) > 1)
+                                        <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+                                            <span class="carousel-control-prev-icon"></span>
+                                        </button>
+                                        <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+                                            <span class="carousel-control-next-icon"></span>
+                                        </button>
+                                    @endif
+
                                 </div>
 
                                 @if(!$link->photos)
