@@ -138,7 +138,11 @@
                                         @endforeach
                                     @endif
                                 @elseif($link->type != 'POST')
-                                    <img src="{{$link->photo}}" style="width:50px; border-radius: {{$link->rounded}}px;">
+                                    @if($link->icon)
+                                        <img src="{{$link->icon}}" style="width:50px; border-radius: {{$link->rounded}}px;">
+                                    @elseif($link->icon == false)
+                                        <img src="{{$link->photo}}" style="width:50px; border-radius: {{$link->rounded}}px;">
+                                    @endif
                                 @endif
 			  				</div>
 			  				<div class=" col-10 text-center">

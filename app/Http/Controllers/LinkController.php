@@ -172,4 +172,13 @@ class LinkController extends Controller
 
         return redirect()->back();
     }
+
+    public function delLinkIcon($id, $link)
+    {
+        Link::where('id', $link)->update([
+            'icon' => null,
+        ]);
+
+        return redirect()->back();
+    }
 }

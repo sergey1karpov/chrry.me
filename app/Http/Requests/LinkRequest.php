@@ -28,6 +28,7 @@ class LinkRequest extends FormRequest
             'link' => 'required|url',
             'title_color' => 'nullable',
             'background_color' => 'nullable',
+            'icon' => 'nullable',
             'photo' => 'nullable|mimes:jpeg,png,jpg,gif|max:3000',
             'shadow' => 'nullable',
             'rounded' => 'nullable',

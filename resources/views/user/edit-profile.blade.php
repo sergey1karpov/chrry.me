@@ -18,6 +18,11 @@
 		<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;600&display=swap" rel="stylesheet">
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
+        <link href="https://cdn.jsdelivr.net/npm/tom-select@2.0.3/dist/css/tom-select.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/tom-select@2.0.3/dist/js/tom-select.complete.min.js"></script>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
         <style type="text/css">
         	body{
 			    background: #f1f2f2;
@@ -303,7 +308,7 @@
 			</div>
 
 			<div class="row" >
-                <div class="col-12" data-bs-toggle="modal" data-bs-target="#exampleModal" style="padding-right: 7px; padding: 0">
+                <div class="col-12" style="padding-right: 7px; padding: 0">
 					<div class="box-part text-center shadow-sm " style="margin: 0; background-color: white; padding-top: 10px; padding-bottom: 10px">
                         <div class="d-flex justify-content-center text-center">
                             <form method="POST" action="{{ route('logout') }}">
@@ -382,11 +387,26 @@
                                 <input type="range" class="form-range" min="1" max="50" step="1" id="customRange2" name="rounded" value="25">
                             </div>
 
+                            <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Иконка</label>
+                            <div class="mb-3">
+                                <select id="select-beast-empty" data-placeholder="Поиск иконки..."  autocomplete="off" name="icon">
+                                    <option value="">None</option>
+                                    <option value="4">telegram</option>
+                                    <option value="1">vkontakte</option>
+                                    <option value="3">facebook</option>
+                                    <option value="5">viber</option>
+                                    <option value="6">wechat</option>
+                                    <option value="7">instagram</option>
+                                    <option value="8">odnoclasniki</option>
+                                    <option value="9">averro</option>
+                                </select>
+                                <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Вы можете выбрать иконку из нашей базы для своей ссылки</span>
+                            </div>
 
-						    <div class="mb-3">
+						    <div class="mb-3" id="download-file">
 						    	<label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Фото</label>
-						    	<input type="file" class="form-control" id="inputGroupFile02" name="photo">
-						    	<span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Мы принимаем картинки jpeg, jpg, png, gif формата, размерои до 3мб. Хотя можете обойтись и без изображения, но зачем если можно?</span>
+						    	<input type="file" class="form-control" id="inputGroupFile02" name="photo" accept=".jpg, .jpeg, .png, .gif">
+						    	<span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Если иконка вам не подходит, загрузите своё изображение. Мы принимаем картинки jpeg, jpg, png, gif формата.</span>
 						    </div>
 
                             <div class="d-grid gap-2">
@@ -751,36 +771,6 @@
 				    </div>
 		  		</div>
 			</div>
-
-		  	{{-- <!-- Управление ссылками -->
-		  	<div class="row mb-3" style="margin-top: 12px;">
-				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-					<div class="box-part text-center rounded-3" style="margin: 0">
-						<div class="title">
-							<h4 class="mt-2" style="font-family: 'Rubik', sans-serif;">Управление ссылками</h4>
-						</div>
-						<div class="text mb-3">
-							<span style="font-family: 'Rubik', sans-serif; font-size: 75%; line-height: 16px; display:block">Изменить или удалить вашу ссылку</span>
-						</div>
-					</div>
-				</div>
-			</div> --}}
-
-
-
-			<!-- Футер -->
-			{{-- <footer class="footer nav">
-		      	<div class="container mb-3 mt-2 d-flex justify-content-around ">
-		      		<div>
-		      			<form method="POST" action="{{ route('logout') }}">
-	                        @csrf
-	                        <button class="nav-link text-muted mt-2" style="padding:  0; border: 0; outline: none; background-color:#ECECE2;">
-	                        	<h4 style="font-family: 'Rubik', sans-serif; font-size: 1rem">Выход</h4>
-	                        </button>
-	                    </form>
-		      		</div>
-		      	</div>
-		    </footer> --}}
     	</div>
         <script>
             $(function(){
@@ -791,6 +781,74 @@
                     }
                 });
             });​
+        </script>
+        <script>
+			new TomSelect('#select-beast-empty',{
+				valueField: 'img',
+				searchField: 'title',
+				options: [
+                    {id: 1, title: 'Без иконки', img: ''},
+					{id: 2, title: 'Behance', img: '{{ asset('public/images/social/Behance.png') }}'},
+					{id: 3, title: 'Facebook', img: '{{ asset('public/images/social/Facebook.png') }}'},
+					{id: 4, title: 'Instagram',  img: '{{ asset('public/images/social/Instagram.png') }}'},
+					{id: 5, title: 'LinkedIn',  img: '{{ asset('public/images/social/LinkedIn.png') }}'},
+
+
+					{id: 6, title: 'Ok',  img: '{{ asset('public/images/social/Ok.png') }}'},
+					{id: 7, title: 'Pinterest',  img: '{{ asset('public/images/social/Pinterest.png') }}'},
+					{id: 8, title: 'Skype',  img: '{{ asset('public/images/social/Skype.png') }}'},
+					{id: 9, title: 'Snapchat',  img: '{{ asset('public/images/social/Snapchat.png') }}'},
+                    {id: 10, title: 'SoundCloud', img: '{{ asset('public/images/social/SoundCloud.png') }}'},
+					{id: 11, title: 'Spotify', img: '{{ asset('public/images/social/Spotify.png') }}'},
+					{id: 12, title: 'Telegram',  img: '{{ asset('public/images/social/Telegram.png') }}'},
+					{id: 13, title: 'TikTok',  img: '{{ asset('public/images/social/TikTok.png') }}'},
+					{id: 14, title: 'Tumblr',  img: '{{ asset('public/images/social/Tumblr.png') }}'},
+					{id: 15, title: 'Twitch',  img: '{{ asset('public/images/social/Twitch.png') }}'},
+					{id: 16, title: 'Twitter',  img: '{{ asset('public/images/social/Twitter.png') }}'},
+					{id: 17, title: 'Viber',  img: '{{ asset('public/images/social/Viber.png') }}'},
+
+					{id: 18, title: 'Vimeo',  img: '{{ asset('public/images/social/Vimeo.png') }}'},
+                    {id: 19, title: 'VK', img: '{{ asset('public/images/social/VK.png') }}'},
+					{id: 20, title: 'WeChat', img: '{{ asset('public/images/social/WeChat.png') }}'},
+					{id: 21, title: 'WhatsApp',  img: '{{ asset('public/images/social/WhatsApp.png') }}'},
+					{id: 22, title: 'YouTube',  img: '{{ asset('public/images/social/YouTube.png') }}'},
+				],
+				render: {
+					option: function(data, escape) {
+						return '<div>' +
+								'<img style="margin-right: 16px" width="30" src="' + escape(data.img) + '">' +
+								'<span class="title">' + escape(data.title) + '</span>' +
+							'</div>';
+					},
+					item: function(data, escape) {
+						return  '<img style="margin-right: 16px" width="30" src="' + escape(data.img) + '">' + '<span class="title">' + escape(data.title) + '</span>';
+					}
+				}
+			});
+        </script>
+        <script>
+            // $( document ).ready(function() {
+            //     $('#select-beast-empty').change(function(){
+            //         $('#pp').html($(this).val());
+            //         if($(this).val() != '') {
+            //             $('#download-file').hide();
+            //         }
+            //         else {
+            //             $('#download-file').show();
+            //         }
+            //     });
+            // });
+            $( document ).ready(function() {
+                $('#select-beast-empty').change(function(){
+                    $('#pp').html($(this).val());
+                    if($(this).val() != '') {
+                        $('#download-file').hide();
+                    }
+                    if($(this).val() == '') {
+                        $('#download-file').show();
+                    }
+                });
+            });
         </script>
     </body>
 </html>

@@ -32,6 +32,7 @@ class Link extends Model
         'position',
         'type',
         'user_id',
+        'icon',
         //Post properties
         'full_text',
         'photos',
@@ -54,6 +55,7 @@ class Link extends Model
 
     protected static function addLink(int $userId, LinkRequest $request) : void
     {
+        // dd($request);
         $user = User::where('id', $userId)->firstOrFail();
         if(true == $user) {
             $link = new self([
@@ -63,6 +65,7 @@ class Link extends Model
                 'background_color' => self::convertBackgroundColor($request->background_color),
                 'title_color_hex' => $request->title_color,
                 'background_color_hex' => $request->background_color,
+                'icon' => $request->icon,
                 'photo' => isset($request->photo) ? self::addLinkPhoto($request->photo) : null,
                 'shadow' => $request->shadow,
                 'rounded' => $request->rounded,
@@ -94,6 +97,7 @@ class Link extends Model
                 'title_color_hex' => $request->title_color,
                 'background_color_hex' => $request->background_color,
                 'photo' => isset($request->photo) ? self::addLinkPhoto($request->photo) : $actualLink->photo,
+                'icon' => isset($request->icon) ? $request->icon : $actualLink->icon,
                 'transparency' => isset($request->transparency) ? $request->transparency : $actualLink->transparency,
             ]);
 

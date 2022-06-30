@@ -34,6 +34,9 @@
         <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js" integrity="sha256-6XMVI0zB8cRzfZjqKcD01PBsAy3FlDASrlC8SxCpInY=" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
 
+        <link href="https://cdn.jsdelivr.net/npm/tom-select@2.0.3/dist/css/tom-select.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/tom-select@2.0.3/dist/js/tom-select.complete.min.js"></script>
+
         <style type="text/css">
         	body{
 			    background: #f1f2f2;
@@ -230,6 +233,7 @@
             </div>
         </div>
 
+        <!-- Ссылки -->
         <table class="table">
             <tbody>
                 @foreach($links as $link)
@@ -249,7 +253,11 @@
                                                         @endforeach
                                                     @endif
                                                 @elseif($link->type != 'POST')
-                                                    <img src="{{$link->photo}}" style="width:50px; border-radius: {{$link->rounded}}px;">
+                                                    @if($link->icon)
+                                                        <img src="{{$link->icon}}" style="width:50px; border-radius: {{$link->rounded}}px;">
+                                                    @elseif($link->icon == false)
+                                                        <img src="{{$link->photo}}" style="width:50px; border-radius: {{$link->rounded}}px;">
+                                                    @endif
                                                 @endif
                                             </div>
                                             <div class=" col-10 text-center">
@@ -292,17 +300,34 @@
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
 
-                                                @if($link->photo)
-                                                    <div class="mb-3">
-                                                        <label for="exampleInputEmail1" class="form-label mt-3" style="font-family: 'Rubik', sans-serif;">Текущее изображение</label><br>
-                                                        <div class="row d-flex align-items-center justify-content-center">
-                                                            <div class="col-4">
-                                                                <img class="rounded-3" src="{{$link->photo}}" style="width:50px;">
+                                                @if($link->icon == false)
+                                                    @if($link->photo)
+                                                        <div class="mb-3">
+                                                            <label for="exampleInputEmail1" class="form-label mt-3" style="font-family: 'Rubik', sans-serif;">Текущее изображение</label><br>
+                                                            <div class="row d-flex align-items-center justify-content-center">
+                                                                <div class="col-12">
+                                                                    <img class="rounded-3" src="{{$link->photo}}" style="width:50px;">
+                                                                </div>
+                                                                <div class="col-12 mt-2">
+                                                                    <form action="{{ route('delLinkPhoto', ['id' => Auth::user()->id, 'link' => $link->id]) }}" method="POST">
+                                                                        @csrf @method('PATCH')
+                                                                        <button class="btn btn-sm btn-danger">Удалить</button>
+                                                                    </form>
+                                                                </div>
                                                             </div>
-                                                            <div class="col-8">
-                                                                <form action="{{ route('delLinkPhoto', ['id' => Auth::user()->id, 'link' => $link->id]) }}" method="POST">
+                                                        </div>
+                                                    @endif
+                                                @elseif($link->icon)
+                                                    <div class="mb-3">
+                                                        <label for="exampleInputEmail1" class="form-label mt-3" style="font-family: 'Rubik', sans-serif;">Текущая иконка</label><br>
+                                                        <div class="row d-flex align-items-center justify-content-center">
+                                                            <div class="col-12">
+                                                                <img class="rounded-3" src="{{$link->icon}}" style="width:50px;">
+                                                            </div>
+                                                            <div class="col-12 mt-2">
+                                                                <form action="{{ route('delLinkIcon', ['id' => Auth::user()->id, 'link' => $link->id]) }}" method="POST">
                                                                     @csrf @method('PATCH')
-                                                                    <button class="btn btn-light">Удалить</button>
+                                                                    <button class="btn btn-sm btn-danger">Удалить</button>
                                                                 </form>
                                                             </div>
                                                         </div>
@@ -375,11 +400,29 @@
                                                                     <input type="range" class="form-range" min="1" max="50" step="1" id="customRange2" name="rounded" value="{{$link->rounded}}">
                                                                 </div>
                                                             </div>
+
+                                                            <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Иконка</label>
                                                             <div class="mb-3">
-                                                                <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Фото</label>
-                                                                <input type="file" class="form-control" id="inputGroupFile02" name="photo">
-                                                                <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Мы принимаем картинки jpeg, jpg, png, gif формата, размерои до 3мб. Хотя можете обойтись и без изображения, но зачем если можно?</span>
+                                                                <select id="select-beast-empty{{$link->id}}" data-placeholder="Поиск иконки..."  autocomplete="off" name="icon">
+                                                                    <option value="">None</option>
+                                                                    <option value="4">telegram</option>
+                                                                    <option value="1">vkontakte</option>
+                                                                    <option value="3">facebook</option>
+                                                                    <option value="5">viber</option>
+                                                                    <option value="6">wechat</option>
+                                                                    <option value="7">instagram</option>
+                                                                    <option value="8">odnoclasniki</option>
+                                                                    <option value="9">averro</option>
+                                                                </select>
+                                                                <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Вы можете выбрать иконку из нашей базы для своей ссылки</span>
                                                             </div>
+                                                            @if($link->icon == false)
+                                                                <div class="mb-3">
+                                                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Фото</label>
+                                                                    <input type="file" class="form-control" id="inputGroupFile02" name="photo">
+                                                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Если иконка вам не подходит, загрузите своё изображение. Мы принимаем картинки jpeg, jpg, png, gif формата.</span>
+                                                                </div>
+                                                            @endif
                                                             <button type="submit" class="btn btn-primary">Изменить</button>
                                                         </div>
                                                     </form>
@@ -402,16 +445,16 @@
                                 @if($link->photos)
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1" class="form-label mt-3" style="font-family: 'Rubik', sans-serif;">Текущее изображение</label><br>
-                                        <div class="row d-flex align-items-center justify-content-center">
-                                            <div class="col-4">
+                                        <div class="">
+                                            <div class="col-12">
                                                 @foreach(unserialize($link->photos) as $photo)
-                                                    <img class="rounded-3" src="{{$photo}}" style="width:50px;">
+                                                    <img class="rounded-3 mt-2" src="{{$photo}}" style="width:50px;">
                                                 @endforeach
                                             </div>
-                                            <div class="col-8">
+                                            <div class="col-12 mt-2">
                                                 <form action="{{ route('delPostPhoto', ['id' => Auth::user()->id, 'link' => $link->id]) }}" method="POST">
                                                     @csrf @method('PATCH')
-                                                    <button class="btn btn-light">Открепить изображения</button>
+                                                    <button class="btn btn-sm btn-danger">Открепить изображения</button>
                                                 </form>
                                             </div>
                                         </div>
@@ -546,6 +589,50 @@
                         }
                     });
                 }
+            </script>
+
+            <script>
+                new TomSelect('#select-beast-empty{{$link->id}}',{
+                    valueField: 'img',
+                    searchField: 'title',
+                    options: [
+                        {id: 1, title: 'Behance', img: '{{ asset('public/images/social/Behance.png') }}'},
+                        {id: 2, title: 'Facebook', img: '{{ asset('public/images/social/Facebook.png') }}'},
+                        {id: 3, title: 'Instagram',  img: '{{ asset('public/images/social/Instagram.png') }}'},
+                        {id: 4, title: 'LinkedIn',  img: '{{ asset('public/images/social/LinkedIn.png') }}'},
+
+
+                        {id: 5, title: 'Ok',  img: '{{ asset('public/images/social/Ok.png') }}'},
+                        {id: 6, title: 'Pinterest',  img: '{{ asset('public/images/social/Pinterest.png') }}'},
+                        {id: 7, title: 'Skype',  img: '{{ asset('public/images/social/Skype.png') }}'},
+                        {id: 8, title: 'Snapchat',  img: '{{ asset('public/images/social/Snapchat.png') }}'},
+                        {id: 9, title: 'SoundCloud', img: '{{ asset('public/images/social/SoundCloud.png') }}'},
+                        {id: 10, title: 'Spotify', img: '{{ asset('public/images/social/Spotify.png') }}'},
+                        {id: 11, title: 'Telegram',  img: '{{ asset('public/images/social/Telegram.png') }}'},
+                        {id: 12, title: 'TikTok',  img: '{{ asset('public/images/social/TikTok.png') }}'},
+                        {id: 13, title: 'Tumblr',  img: '{{ asset('public/images/social/Tumblr.png') }}'},
+                        {id: 14, title: 'Twitch',  img: '{{ asset('public/images/social/Twitch.png') }}'},
+                        {id: 15, title: 'Twitter',  img: '{{ asset('public/images/social/Twitter.png') }}'},
+                        {id: 16, title: 'Viber',  img: '{{ asset('public/images/social/Viber.png') }}'},
+
+                        {id: 17, title: 'Vimeo',  img: '{{ asset('public/images/social/Vimeo.png') }}'},
+                        {id: 18, title: 'VK', img: '{{ asset('public/images/social/VK.png') }}'},
+                        {id: 19, title: 'WeChat', img: '{{ asset('public/images/social/WeChat.png') }}'},
+                        {id: 20, title: 'WhatsApp',  img: '{{ asset('public/images/social/WhatsApp.png') }}'},
+                        {id: 21, title: 'YouTube',  img: '{{ asset('public/images/social/YouTube.png') }}'},
+                    ],
+                    render: {
+                        option: function(data, escape) {
+                            return '<div>' +
+                                    '<img style="margin-right: 16px" width="30" src="' + escape(data.img) + '">' +
+                                    '<span class="title">' + escape(data.title) + '</span>' +
+                                '</div>';
+                        },
+                        item: function(data, escape) {
+                            return  '<img style="margin-right: 16px" width="30" src="' + escape(data.img) + '">' + '<span class="title">' + escape(data.title) + '</span>';
+                        }
+                    }
+                });
             </script>
         @endforeach
     </body>
