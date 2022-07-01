@@ -461,8 +461,8 @@
                                 <input type="hidden" value="POST" name="type"> <!-- Тип ссылки -->
                                 <div class="mb-3"> <!-- Заголовок -->
                                     <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Заголовок</label>
-                                    <input type="text" class="form-control" name="title" maxlength="50" value="{{$link->title}}">
-                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Заголовок может содержать до 50 символов</span>
+                                    <input type="text" class="form-control" name="title" maxlength="100" value="{{$link->title}}">
+                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Заголовок может содержать до 100 символов</span>
                                 </div>
                                 <div class="mb-3"> <!-- Полный текст -->
                                     <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Текст</label>

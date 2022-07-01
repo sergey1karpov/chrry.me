@@ -26,12 +26,14 @@ Route::get('/dashboard', function () {
 
 require __DIR__.'/auth.php';
 
+//Админка юзера
 Route::get('/{slug}', [UserController::class, 'userHomePage'])->name('userHomePage')->middleware('redir');
 Route::get('/{id}/edit-profile', [UserController::class, 'editProfileForm'])->name('editProfileForm')->middleware('loc');
 Route::patch('/{id}/edit-profile/edit', [UserController::class, 'editUserProfile'])->name('editUserProfile');
 Route::patch('/{id}/edit-profile/del-avatar', [UserController::class, 'delUserAvatar'])->name('delUserAvatar');
 Route::patch('/{id}/edit-profile/del-banner', [UserController::class, 'delUserBanner'])->name('delUserBanner');
 
+//Функционал
 Route::get('/{id}/links', [LinkController::class, 'allLinks'])->name('allLinks');
 Route::get('/{id}/search', [LinkController::class, 'searchLink'])->name('searchLink');
 Route::post('/{id}/add-link', [LinkController::class, 'addLink'])->name('addLink');
@@ -44,13 +46,12 @@ Route::patch('/{id}/add-link/{link}/delete-icon', [LinkController::class, 'delLi
 Route::patch('/{id}/add-link/{link}/delete-photo-post', [LinkController::class, 'delPostPhoto'])->name('delPostPhoto');
 Route::patch('/{id}/edit-links', [LinkController::class, 'editAllLink'])->name('editAllLink');
 
+//Сортировка ссылок
 Route::post('{id}/ppp/sort', [LinkController::class, 'sortLink'])->name('sortLink');
 
-
+//Статистика
 Route::post('/{id}/link', [StatisticController::class, 'clickLinkStatistic'])->name('clickLinkStatistic');
 Route::get('/{id}/link/{link}', [StatisticController::class, 'showClickLinkStatistic'])->name('showClickLinkStatistic');
-
-
 
 //bord.link/cc/q1w2e3r4 - вшита
 Route::get('cc/{utag}', [UserController::class, 'editNewUserForm'])->name('editNewUserForm');

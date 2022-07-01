@@ -45,6 +45,8 @@ class Link extends Model
         return 'links_index';
     }
 
+    protected $dates = ['created_at'];
+
     public function toSearchableArray()
     {
         return [
