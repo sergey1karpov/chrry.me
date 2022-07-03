@@ -144,7 +144,7 @@
                         <img src="https://i.ibb.co/DM6hKmk/bbbbbbbbbbb.png" class="img-fluid" style="width:20px; border: 0">
                     </a>
                     <form class="" action="{{ route('searchLink', ['id' => Auth::user()->id]) }}">
-                        <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Search" name="search" style="height: 30px">
+                        <input class="form-control me-2" type="search" placeholder="Поиск ссылок" aria-label="Search" name="search" style="height: 30px">
                     </form>
                     <a class="" href="{{ route('userHomePage',  ['slug' => Auth::user()->slug]) }}" style="text-decoration: none; border: 0; padding: 0">
                         <div class="img" style="background-image: url({{$user->avatar}});"></div>
@@ -156,10 +156,10 @@
         <!-- Массовое изменение -->
         <div class="container-fluid justify-content-center text-center">
             <div class="row" style="margin-top: px" >
-                <div class="col-12 mb-" data-bs-toggle="modal" data-bs-target="#exampleModalLink" style="padding-right: 12px;">
+                <div class="col-12 mt-" data-bs-toggle="modal" data-bs-target="#exampleModalLink" style="padding-right: 0; padding-left: 0">
 					<div class="box-part text-center shadow-sm " style="margin: 0; background-color: #feae72">
 						<div class="title">
-							<h4 class="mt-2" style="font-family: 'Rubik', sans-serif; color: white">Изменение ссылок</h4>
+							<h4 class="mt-2" style="font-family: 'Rubik', sans-serif; color: white">Изменить все ссылки</h4>
 						</div>
 						<div class="text mb-1">
 							<span style="font-family: 'Rubik', sans-serif; font-size: 75%; line-height: 16px; display:block; color: white">Воспользовавшись этой функцией, вы придадите всем вашим ссылкам единый дизайн</span>
@@ -235,7 +235,7 @@
                         <td style="padding-left: 0; padding-right: 0; padding-bottom: 0; border: 0">
                             <div class="container-fluid justify-content-center text-center" data-index="{{$link->id}}" data-position="{{$link->position}}">
                                 <div class="col-12">
-                                    <div class="row ms-1 me-1 card {{$link->shadow}}" style="background-color:rgba({{$link->background_color}}, {{$link->transparency}}); border: 0; margin-top: 12px; border-radius: {{$link->rounded}}px; background-position: center">
+                                    <div class="row card {{$link->shadow}}" style="background-color:rgba({{$link->background_color}}, {{$link->transparency}}); border: 0; margin-top: 12px; border-radius: {{$link->rounded}}px; background-position: center; margin-left: 1px; margin-right: 1px">
                                         <div class="d-flex align-items-center justify-content-start mt-1 mb-1" style="padding-left: 4px; padding-right: 4px;">
                                             <div class="col-1">
                                                 @if($link->type == 'POST')
@@ -255,8 +255,8 @@
                                                 @endif
                                             </div>
                                             <div class=" col-10 text-center">
-                                                <div class="me-4 ms-4">
-                                                    <h4 class="" style="margin: 0; font-family: 'Open Sans', sans-serif; line-height: 1.5; font-size: 1rem; color: {{$link->title_color}}; @if($link->photo == '' && $link->photos == '') margin-top: 14px; margin-bottom: 14px @endif">{{$link->title}}</h4>
+                                                <div class="me-5 ms-5">
+                                                    <h4 class="" style="font-family: 'Inter', sans-serif; line-height: 1.5; font-size: 0.9rem; margin: 0;color: {{$link->title_color}}; @if($link->photo == '' && $link->photos == '') margin-top: 14px; margin-bottom: 14px @endif">{{$link->title}}</h4>
                                                 </div>
                                             </div>
                                             <div class="col-1">

@@ -94,9 +94,20 @@
 			    background-size: cover;
 			    background-repeat: no-repeat;
 			}
+            .loader{
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                width: 100%;
+                height: 100%;
+                background: url('https://flevix.com/wp-content/uploads/2019/07/Box-Loading-1-1.gif') no-repeat 50% 50%;
+            }
         </style>
     </head>
     <body class="antialiased">
+
     	<div class="container-fluid justify-content-center text-center">
 
             <!-- Отображение валидационных ошибок -->
@@ -353,90 +364,99 @@
 		  	</div>
 
             <!-- Модалка для добавления поста -->
-            <div class="modal fade" id="exampleModalPost" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background-color: #1b1b1b">
+            <div class="modal fade" id="exampleModalPost" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background-color: #1b1b1b" id="add-post-modal">
                 <div class="modal-dialog">
-                  <div class="modal-content text-center" style="background-color: #FBF6EA">
-                        <div class="modal-header">
-                            <h5 class="modal-title" style="font-family: 'Rubik', sans-serif;">Добавить пост</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form action="{{ route('addPost', ['id' => Auth::user()->id]) }}" method="post" enctype="multipart/form-data">
-                                @csrf @method('POST')
-                                <input type="hidden" value="POST" name="type"> <!-- Тип ссылки -->
-                                <div class="mb-3"> <!-- Заголовок -->
-                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Заголовок</label>
-                                    <input type="text" class="form-control" name="title" placeholder="Моя красивая ссылка" maxlength="100">
-                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Заголовок может содержать до 100 символов</span>
-                                </div>
-                                <div class="mb-3"> <!-- Полный текст -->
-                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Текст</label>
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="full_text"></textarea>
-                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Свободный текст</span>
-                                </div>
-                                <div class="mb-3"> <!-- Ссылка на источник -->
-                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Ссылка</label>
-                                    <input type="text" class="form-control" name="link">
-                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Если есть ссылка на внешний ресурс, вставьте её сюда</span>
-                                </div>
-                                <div class="mb-3"> <!-- Фотографии -->
-                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Фото</label>
-                                    <input type="file" class="form-control" id="inputGroupFile02" name="photos[]" accept=".png, .jpg, .jpeg" multiple>
-                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Мы принимаем картинки jpeg, jpg, png формата. Вы можете загрузить до 10 изображений</span>
-                                </div>
-                                <div class="mb-3"> <!-- Ссылка на видео -->
-                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Ссылка на видео</label>
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" name="video"></textarea>
-                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Если хотите прикрепить видео, вставьте сюда ссылку на youtube, vimeo или что то другое...</span>
-                                </div>
-                                <div class="mb-3"> <!-- Ссылка на любое медиа -->
-                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Ссылка на медиа</label>
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" name="media"></textarea>
-                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Поле для кода. Сюда можно вставить код для плейлиста ВК, Яндекса и много чего</span>
-                                </div>
-                                <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Цвет заголовка</label>
-                                <div class="mb-3 text-center d-flex justify-content-center"> <!-- выбор цвета на заголовок -->
-                                    <input type="color" class="form-control" id="exampleColorInput" value="#050507" title="Choose your color" name="title_color" style="height: 40px;"><br>
-                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Черный по умолчанию</span>
-                                </div>
-                                <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Фоновый цвет</label>
-                                <div class="mb-3 text-center d-flex justify-content-center"> <!-- выбор цвета на фон -->
-                                    <input type="color" class="form-control " id="exampleColorInput" value="#ECECE2" title="Choose your color" name="background_color" style="height: 40px;">
-                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Белый по умолчанию</span>
-                                </div>
-                                <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Прозрачность фона</label>
-                                <div class="mb-3 text-center d-flex justify-content-center"> <!-- выбор прозрачности фона -->
-                                    <input type="range" class="form-range" min="0.0" max="1.0" step="0.1" id="customRange2" name="transparency" value="1.0">
-                                </div>
-                                <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Добавить тень для ссылки</label>
-                                <div class="mb-3 text-center d-flex justify-content-center"> <!-- Добавить тень -->
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="shadow" id="inlineRadio1" value="shadow-none">
-                                        <label class="form-check-label" for="inlineRadio1">none</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="shadow" id="inlineRadio2" value="shadow-sm">
-                                        <label class="form-check-label" for="inlineRadio2">sm</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="shadow" id="inlineRadio3" value="shadow">
-                                        <label class="form-check-label" for="inlineRadio3">md</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="shadow" id="inlineRadio3" value="shadow-lg">
-                                        <label class="form-check-label" for="inlineRadio3">lg</label>
-                                    </div>
-                                </div>
-                                <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Округление углов карточки и фото</label>
-                                <div class="mb-3 text-center d-flex justify-content-center"> <!-- Добивить округление углов -->
-                                    <input type="range" class="form-range" min="1" max="50" step="1" id="customRange2" name="rounded" value="25">
-                                </div>
-                                <div class="d-grid gap-2">
-                                    <button type="submit" class="btn btn-primary">Добавить пост</button>
-                                </div>
+
+                        <div class="modal-content text-center" style="background-color: white">
+                            <div class="modal-header">
+                                <h5 class="modal-title" style="font-family: 'Rubik', sans-serif;">Добавить пост</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-post-modal"></button>
                             </div>
-                        </form>
-                    </div>
+                            <div class="modal-body">
+                                <form action="{{ route('addPost', ['id' => Auth::user()->id]) }}" method="post" enctype="multipart/form-data" id="add-post">
+                                    @csrf @method('POST')
+                                    <input type="hidden" value="POST" name="type"> <!-- Тип ссылки -->
+                                    <div class="mb-3"> <!-- Заголовок -->
+                                        <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Заголовок</label>
+                                        <input type="text" class="form-control" name="title" id="title" placeholder="Моя красивая ссылка" maxlength="100">
+                                        <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Заголовок может содержать до 100 символов</span>
+                                    </div>
+                                    <div class="mb-3"> <!-- Полный текст -->
+                                        <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Текст</label>
+                                        <textarea class="form-control"  rows="3" name="full_text" id="full_text"></textarea>
+                                        <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Свободный текст</span>
+                                    </div>
+                                    <div class="mb-3"> <!-- Ссылка на источник -->
+                                        <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Ссылка</label>
+                                        <input type="text" class="form-control" name="link" id="link">
+                                        <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Если есть ссылка на внешний ресурс, вставьте её сюда</span>
+                                    </div>
+                                    <div class="mb-3"> <!-- Фотографии -->
+                                        <div style="display: none" id="maxPhoto">
+                                            <p><h6>Вы можете прикрепить максимум 10 изображений</h6></p>
+                                        </div>
+                                        <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Фото</label>
+                                        <input type="file" class="form-control" id="inputGroupFile022" name="photos[]" accept=".png, .jpg, .jpeg" multiple>
+                                        <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Мы принимаем картинки jpeg, jpg, png формата. Вы можете загрузить до 10 изображений</span>
+                                    </div>
+                                    <div class="mb-3"> <!-- Ссылка на видео -->
+                                        <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Ссылка на видео</label>
+                                        <textarea class="form-control"  rows="2" name="video" id="video"></textarea>
+                                        <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Если хотите прикрепить видео, вставьте сюда ссылку на youtube, vimeo или что то другое...</span>
+                                    </div>
+                                    <div class="mb-3"> <!-- Ссылка на любое медиа -->
+                                        <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Ссылка на медиа</label>
+                                        <textarea class="form-control"  rows="2" name="media" id="media"></textarea>
+                                        <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Поле для кода. Сюда можно вставить код для плейлиста ВК, Яндекса и много чего</span>
+                                    </div>
+                                    <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Цвет заголовка</label>
+                                    <div class="mb-3 text-center d-flex justify-content-center"> <!-- выбор цвета на заголовок -->
+                                        <input type="color" class="form-control" id="exampleColorInput" value="#050507" title="Choose your color" name="title_color" style="height: 40px;"><br>
+                                        <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Черный по умолчанию</span>
+                                    </div>
+                                    <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Фоновый цвет</label>
+                                    <div class="mb-3 text-center d-flex justify-content-center"> <!-- выбор цвета на фон -->
+                                        <input type="color" class="form-control " id="exampleColorInput" value="#ECECE2" title="Choose your color" name="background_color" style="height: 40px;">
+                                        <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Белый по умолчанию</span>
+                                    </div>
+                                    <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Прозрачность фона</label>
+                                    <div class="mb-3 text-center d-flex justify-content-center"> <!-- выбор прозрачности фона -->
+                                        <input type="range" class="form-range" min="0.0" max="1.0" step="0.1" id="customRange2" name="transparency" value="1.0">
+                                    </div>
+                                    <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Добавить тень для ссылки</label>
+                                    <div class="mb-3 text-center d-flex justify-content-center"> <!-- Добавить тень -->
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="shadow" id="inlineRadio1" value="shadow-none">
+                                            <label class="form-check-label" for="inlineRadio1">none</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="shadow" id="inlineRadio2" value="shadow-sm">
+                                            <label class="form-check-label" for="inlineRadio2">sm</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="shadow" id="inlineRadio3" value="shadow">
+                                            <label class="form-check-label" for="inlineRadio3">md</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="shadow" id="inlineRadio3" value="shadow-lg">
+                                            <label class="form-check-label" for="inlineRadio3">lg</label>
+                                        </div>
+                                    </div>
+                                    <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Округление углов карточки и фото</label>
+                                    <div class="mb-3 text-center d-flex justify-content-center"> <!-- Добивить округление углов -->
+                                        <input type="range" class="form-range" min="1" max="50" step="1" id="customRange2" name="rounded" value="25">
+                                    </div>
+                                    <div class="loader" id="in-pogress" style="display: none;" class="mb-3">
+                                        {{-- <img src="https://f.hubspotusercontent40.net/hubfs/5621549/ping-pong-preloader-gif.gif" width="150">
+                                        <h5 style="font-family: 'Rubik', sans-serif; font-size: 1rem">Идет обработка изображений. Подождите...</h5> --}}
+                                    </div>
+                                    <div class="d-grid gap-2">
+                                        <button id="post-btn" type="submit" class="btn btn-primary">Добавить пост</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
                 </div>
             </div>
 
@@ -790,6 +810,59 @@
                 });
             });
         </script>
+
+        <!-- Прелоадер -->
+        <script>
+            $( document ).ready(function() {
+                $('#post-btn').click(function(){
+                    $('#in-pogress').show();
+                });
+            });
+        </script>
+
+        {{-- <script type="text/javascript">
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $( "#add-post" ).submit(function( e ) {
+                e.preventDefault();
+
+                var formData = new FormData(this);
+
+                $.ajax({
+                    type: "POST",
+                    @if(Auth::check())
+                    url: "{{route('addPost', ['id' => Auth::user()->id])}}",
+                    @endif
+                    data: formData,
+                    beforeSend: function() {
+                        $("#in-pogress").html("Обработка изображений. Подождите...");
+                    },
+                    success: function (data) {
+                        console.log('nice');
+                        //Close modals
+                        $("#close-post-modal").click();
+                        //Clear fields
+						$('#title').val('').change();
+                        $('#full_text').val('').change();
+                        $('#link').val('').change();
+                        $('#inputGroupFile022').val('').change();
+                        $('#video').val('').change();
+                        $('#media').val('').change();
+
+                        $("#in-pogress").hide();
+                    },
+                    error: function(data) {
+                        $("#errors").show();
+                    },
+                    contentType: false,
+                    processData: false,
+                });
+            });
+        </script> --}}
+
     </body>
 </html>
 

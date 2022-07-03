@@ -98,7 +98,7 @@ class LinkController extends Controller
         }
 
         Link::create([
-            'type' => $request->type,
+            'type' => 'POST',
             'user_id' => $user->id,
             'title' => $request->title,
             'full_text' => $request->full_text,
