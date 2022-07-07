@@ -27,6 +27,7 @@ class PostRequest extends FormRequest
             'title' => 'required|min:1|max:100',
             'full_text' => 'nullable',
             'photos[]' => 'nullable|image|mimes:jpeg,jpg,png|max:10000',
+            'check_last_link' => 'nullable',
         ];
     }
 }

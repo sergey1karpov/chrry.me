@@ -56,6 +56,13 @@ return [
             'throw' => false,
         ],
 
+        'admin' => [
+            'driver'     => 'local',
+            'root'       => 'images',
+            'visibility' => 'public',
+            'url' => env('APP_URL').'/public/images/',
+        ],
+
     ],
 
     /*

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\ImageManagerStatic as Image;
 use App\Http\Requests\PostRequest;
+use Illuminate\Support\Facades\File;
 
 class LinkController extends Controller
 {
@@ -17,7 +18,11 @@ class LinkController extends Controller
     {
         $user = User::where('id', $id)->firstOrFail();
         $links = Link::where('user_id', $user->id)->orderBy('position')->get();
-        return view('user.links', compact('user', 'links'));
+
+        $icons  = public_path('images/social');
+        $allIconsInsideFolder = File::files($icons);
+
+        return view('user.links', compact('user', 'links', 'allIconsInsideFolder'));
     }
 
     public function addLink(int $id, LinkRequest $request)
@@ -70,7 +75,11 @@ class LinkController extends Controller
     {
         $user = User::where('id', $id)->firstOrFail();
         $links = Link::search($request->search)->where('user_id', $user->id)->orderBy('id', 'desc')->get();
-        return view('user.search', compact('user', 'links'));
+
+        $icons  = public_path('images/social');
+        $allIconsInsideFolder = File::files($icons);
+
+        return view('user.search', compact('user', 'links', 'allIconsInsideFolder'));
     }
 
     public function sortLink($id)
@@ -97,23 +106,46 @@ class LinkController extends Controller
             }
         }
 
-        Link::create([
-            'type' => 'POST',
-            'user_id' => $user->id,
-            'title' => $request->title,
-            'full_text' => $request->full_text,
-            'link' => $request->link,
-            'photos' => isset($request->photos) ? $this->addPhotos($request->photos) : null,
-            'video' => $request->video,
-            'media' => $request->media,
-            'shadow' => $request->shadow,
-            'rounded' => $request->rounded,
-            'title_color' => $request->title_color,
-            'background_color' => Link::convertBackgroundColor($request->background_color),
-            'title_color_hex' => $request->title_color,
-            'background_color_hex' => $request->background_color,
-            'transparency' => $request->transparency,
-        ]);
+        if($request->check_last_link == 'penis') {
+
+            $lastLink = Link::where('user_id', $id)->orderBy('created_at', 'desc')->first();
+
+            Link::create([
+                'type' => 'POST',
+                'user_id' => $user->id,
+                'title' => $request->title,
+                'full_text' => $request->full_text,
+                'link' => $request->link,
+                'photos' => isset($request->photos) ? $this->addPhotos($request->photos) : null,
+                'video' => $request->video,
+                'media' => $request->media,
+                'shadow' => $lastLink->shadow,
+                'rounded' => $lastLink->rounded,
+                'title_color' => $lastLink->title_color,
+                'background_color' => $lastLink->background_color,
+                'title_color_hex' => $lastLink->title_color_hex,
+                'background_color_hex' => $lastLink->background_color_hex,
+                'transparency' => $lastLink->transparency,
+            ]);
+        } else {
+            Link::create([
+                'type' => 'POST',
+                'user_id' => $user->id,
+                'title' => $request->title,
+                'full_text' => $request->full_text,
+                'link' => $request->link,
+                'photos' => isset($request->photos) ? $this->addPhotos($request->photos) : null,
+                'video' => $request->video,
+                'media' => $request->media,
+                'shadow' => $request->shadow,
+                'rounded' => $request->rounded,
+                'title_color' => $request->title_color,
+                'background_color' => Link::convertBackgroundColor($request->background_color),
+                'title_color_hex' => $request->title_color,
+                'background_color_hex' => $request->background_color,
+                'transparency' => $request->transparency,
+            ]);
+        }
 
         return redirect()->back();
     }

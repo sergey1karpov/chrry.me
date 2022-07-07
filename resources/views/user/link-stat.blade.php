@@ -50,9 +50,9 @@
         <div class="container-fluid">
             <div class="col-12 text-center">
 
-                <h1 class="mb-3" style="font-size: 1.2rem">Статистика за день</h1>
+                <h1 class="mb-3" style="font-size: 1.2rem">@lang('app.day_stat')</h1>
                 <h1 class="display-4" style="margin: 0">{{count($day['stat'])}}</h1>
-                <h1 class="display-4 mb-4" style="font-size: 1rem">Уникальные клики</h1>
+                <h1 class="display-4 mb-4" style="font-size: 1rem">@lang('app.uniq_click')</h1>
                 {{-- <h1 class="display-4 mb-3" style="font-size: 1rem">Клики по городам</h1> --}}
                 <ul class="list-group mb-4">
                     @foreach($day['uniqueCity'] as $c)
@@ -62,7 +62,7 @@
                         </li>
                     @endforeach
                 </ul>
-                <h1 class="display-4 mb-3" style="font-size: 1rem">Клики по странам</h1>
+                <h1 class="display-4 mb-3" style="font-size: 1rem">@lang('app.contry_click')</h1>
                 <ul class="list-group mb-4">
                     @foreach($day['uniqueCountry'] as $c)
                         <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-info" style="border-top: 0; border-left: 0; border-right: 0; border-radius: 0; background-color: #e3e8ff; border-color: #f1f2f2">
@@ -76,13 +76,13 @@
                     <div class="accordion-item" style="background-color: #f1f2f2">
                         <h2 class="accordion-header" id="flush-headingOne">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne" style="background-color: #E7EEE7">
-                            Статистика за месяц
+                            @lang('app.month_stat')
                             </button>
                         </h2>
                         <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                            <h1 class="mb-3 mt-3" style="font-size: 1.2rem">Статистика за месяц</h1>
+                            <h1 class="mb-3 mt-3" style="font-size: 1.2rem">@lang('app.month_stat')</h1>
                             <h1 class="display-4" style="margin: 0">{{count($month['stat'])}}</h1>
-                            <h1 class="display-4 mb-4" style="font-size: 1rem">Уникальные клики</h1>
+                            <h1 class="display-4 mb-4" style="font-size: 1rem">@lang('app.uniq_click')</h1>
                             {{-- <h1 class="display-4 mb-3" style="font-size: 1rem">Клики по городам</h1> --}}
                             <ul class="list-group mb-4">
                                 @foreach($month['uniqueCity'] as $c)
@@ -92,7 +92,7 @@
                                     </li>
                                 @endforeach
                             </ul>
-                            <h1 class="display-4 mb-3" style="font-size: 1rem">Клики по странам</h1>
+                            <h1 class="display-4 mb-3" style="font-size: 1rem">@lang('app.contry_click')</h1>
                             <ul class="list-group mb-4">
                                 @foreach($month['uniqueCountry'] as $c)
                                     <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-info" style="border-top: 0; border-left: 0; border-right: 0; border-radius: 0; background-color: #e3e8ff; border-color: #f1f2f2">
@@ -106,13 +106,13 @@
                     <div class="accordion-item" style="background-color: #f1f2f2">
                         <h2 class="accordion-header" id="flush-headingTwo">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo" style="background-color: #FEAE73; color: white">
-                            Статистика за год
+                            @lang('app.year_stat')
                             </button>
                         </h2>
                         <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                            <h1 class="mb-3 mt-3" style="font-size: 1.2rem">Статистика за год</h1>
+                            <h1 class="mb-3 mt-3" style="font-size: 1.2rem">@lang('app.year_stat')</h1>
                             <h1 class="display-4" style="margin: 0">{{count($year['stat'])}}</h1>
-                            <h1 class="display-4 mb-4" style="font-size: 1rem">Уникальные клики</h1>
+                            <h1 class="display-4 mb-4" style="font-size: 1rem">@lang('app.uniq_click')</h1>
                             {{-- <h1 class="display-4 mb-3" style="font-size: 1rem">Клики по городам</h1> --}}
                             <ul class="list-group mb-4">
                                 @foreach($year['uniqueCity'] as $c)
@@ -122,7 +122,7 @@
                                     </li>
                                 @endforeach
                             </ul>
-                            <h1 class="display-4 mb-3" style="font-size: 1rem">Клики по странам</h1>
+                            <h1 class="display-4 mb-3" style="font-size: 1rem">@lang('app.contry_click')</h1>
                             <ul class="list-group mb-4">
                                 @foreach($year['uniqueCountry'] as $c)
                                     <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-info" style="border-top: 0; border-left: 0; border-right: 0; border-radius: 0; background-color: #e3e8ff; border-color: #f1f2f2">
@@ -136,13 +136,13 @@
                     <div class="accordion-item" style="background-color: #f1f2f2">
                         <h2 class="accordion-header" id="flush-headingThree">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree" style="background-color: #D64E52; color: white; ">
-                            Статистика за все время
+                            @lang('app.all_day_stat')
                             </button>
                         </h2>
                         <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-                            <h1 class="mb-3 mt-3" style="font-size: 1.2rem">Статистика за все время</h1>
+                            <h1 class="mb-3 mt-3" style="font-size: 1.2rem">@lang('app.all_day_stat')</h1>
                             <h1 class="display-4" style="margin: 0">{{count($all['stat'])}}</h1>
-                            <h1 class="display-4 mb-4" style="font-size: 1rem">Уникальные клики</h1>
+                            <h1 class="display-4 mb-4" style="font-size: 1rem">@lang('app.uniq_click')</h1>
                             {{-- <h1 class="display-4 mb-3" style="font-size: 1rem">Клики по городам</h1> --}}
                             <ul class="list-group mb-4">
                                 @foreach($all['uniqueCity'] as $c)
@@ -152,7 +152,7 @@
                                     </li>
                                 @endforeach
                             </ul>
-                            <h1 class="display-4 mb-3" style="font-size: 1rem">Клики по странам</h1>
+                            <h1 class="display-4 mb-3" style="font-size: 1rem">@lang('app.contry_click')</h1>
                             <ul class="list-group mb-4">
                                 @foreach($all['uniqueCountry'] as $c)
                                     <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-info" style="border-top: 0; border-left: 0; border-right: 0; border-radius: 0; background-color: #e3e8ff; border-color: #f1f2f2">
@@ -173,127 +173,6 @@
 
             </div>
         </div>
-
-        {{-- <div class="accordion-item">
-            <h2 class="accordion-header" id="headingOne">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    Просмотры профиля за сутки
-                </button>
-            </h2>
-            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                <div class="accordion-body text-center">
-                    <h1 class="display-4" style="margin: 0">{{count($day['stat'])}}</h1>
-                    <h1 class="display-4 mb-3" style="font-size: 1rem">Просмотры профиля</h1>
-                    <ul class="list-group mb-3">
-                        @foreach($day['uniqueCity'] as $c)
-                        <li class="list-group-item d-flex justify-content-between align-items-center" style="border-top: 0; border-left: 0; border-right: 0; border-radius: 0">
-                            {{$c->city}}
-                              <span class="badge bg-light" style="color: black">{{$c->count}}</span>
-                        </li>
-                        @endforeach
-                    </ul>
-                    <h1 class="display-4" style="font-size: 1rem">Страны</h1>
-                    <ul class="list-group mb-3">
-                        @foreach($day['uniqueCountry'] as $c)
-                        <li class="list-group-item d-flex justify-content-between align-items-center" style="border-top: 0; border-left: 0; border-right: 0; border-radius: 0">
-                            {{$c->country}}
-                              <span class="badge bg-light" style="color: black">{{$c->count}}</span>
-                        </li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="headingTwo">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                    Просмотры профиля за месяц
-                </button>
-            </h2>
-            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                <div class="accordion-body text-center">
-                    <h1 class="display-4" style="margin: 0">{{count($month['stat'])}}</h1>
-                    <h1 class="display-4 mb-3" style="font-size: 1rem">Просмотры профиля</h1>
-                    <ul class="list-group mb-3">
-                        @foreach($month['uniqueCity'] as $c)
-                        <li class="list-group-item d-flex justify-content-between align-items-center" style="border-top: 0; border-left: 0; border-right: 0; border-radius: 0">
-                            {{$c->city}}
-                              <span class="badge bg-light" style="color: black">{{$c->count}}</span>
-                        </li>
-                        @endforeach
-                    </ul>
-                    <h1 class="display-4" style="font-size: 1rem">Страны</h1>
-                    <ul class="list-group mb-3">
-                        @foreach($month['uniqueCountry'] as $c)
-                        <li class="list-group-item d-flex justify-content-between align-items-center" style="border-top: 0; border-left: 0; border-right: 0; border-radius: 0">
-                            {{$c->country}}
-                              <span class="badge bg-light" style="color: black">{{$c->count}}</span>
-                        </li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="headingThree">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                     Статистика за год
-                </button>
-            </h2>
-            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                <div class="accordion-body text-center">
-                    <h1 class="display-4" style="margin: 0">{{count($year['stat'])}}</h1>
-                    <h1 class="display-4 mb-3" style="font-size: 1rem">Просмотры профиля</h1>
-                    <ul class="list-group mb-3">
-                        @foreach($year['uniqueCity'] as $c)
-                        <li class="list-group-item d-flex justify-content-between align-items-center" style="border-top: 0; border-left: 0; border-right: 0; border-radius: 0">
-                            {{$c->city}}
-                              <span class="badge bg-light" style="color: black">{{$c->count}}</span>
-                        </li>
-                        @endforeach
-                    </ul>
-                    <h1 class="display-4" style="font-size: 1rem">Страны</h1>
-                    <ul class="list-group mb-3">
-                        @foreach($year['uniqueCountry'] as $c)
-                        <li class="list-group-item d-flex justify-content-between align-items-center" style="border-top: 0; border-left: 0; border-right: 0; border-radius: 0">
-                            {{$c->country}}
-                              <span class="badge bg-light" style="color: black">{{$c->count}}</span>
-                        </li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="headingFour">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                    Вся статистика просмотров профиля
-                </button>
-            </h2>
-            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
-                <div class="accordion-body text-center">
-                    <h1 class="display-4" style="margin: 0">{{count($all['stat'])}}</h1>
-                    <h1 class="display-4 mb-3" style="font-size: 1rem">Просмотры профиля</h1>
-                    <ul class="list-group mb-3">
-                        @foreach($all['uniqueCity'] as $c)
-                        <li class="list-group-item d-flex justify-content-between align-items-center" style="border-top: 0; border-left: 0; border-right: 0; border-radius: 0">
-                            {{$c->city}}
-                              <span class="badge bg-light" style="color: black">{{$c->count}}</span>
-                        </li>
-                        @endforeach
-                    </ul>
-                    <h1 class="display-4" style="font-size: 1rem">Страны</h1>
-                    <ul class="list-group mb-3">
-                        @foreach($all['uniqueCountry'] as $c)
-                        <li class="list-group-item d-flex justify-content-between align-items-center" style="border-top: 0; border-left: 0; border-right: 0; border-radius: 0">
-                            {{$c->country}}
-                              <span class="badge bg-light" style="color: black">{{$c->count}}</span>
-                        </li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
-        </div> --}}
 
     </body>
 </html>

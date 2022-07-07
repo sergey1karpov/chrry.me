@@ -71,6 +71,7 @@ class User extends Authenticatable
                 'slug' => isset($request->slug) ? $request->slug : $user->slug,
                 'avatar' => isset($request->avatar) ? self::addPhotos($request->avatar) : $user->avatar,
                 'banner' => isset($request->banner) ? self::addPhotos($request->banner) : $user->banner,
+                'locale' => $request->locale,
             ]);
     }
 

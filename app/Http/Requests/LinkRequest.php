@@ -33,6 +33,7 @@ class LinkRequest extends FormRequest
             'shadow' => 'nullable',
             'rounded' => 'nullable',
             'transparency' => 'nullable',
+            'check_last_link' => 'nullable',
         ];
     }
 }

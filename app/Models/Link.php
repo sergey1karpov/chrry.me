@@ -55,12 +55,39 @@ class Link extends Model
         ];
     }
 
+    public function icon()
+    {
+        return $this->hasMany(IconModel::class);
+    }
+
     protected static function addLink(int $userId, LinkRequest $request) : void
     {
-        // dd($request);
         $user = User::where('id', $userId)->firstOrFail();
-        if(true == $user) {
+
+        if($request->check_last_link == 'penis') {
+
+            $lastLink = Link::where('user_id', $userId)->orderBy('created_at', 'desc')->first();
+
             $link = new self([
+                'type' => 'LINK',
+                'title' => $request->title,
+                'link' => $request->link,
+                'title_color' => $lastLink->title_color,
+                'background_color' => $lastLink->background_color,
+                'title_color_hex' => $lastLink->title_color_hex,
+                'background_color_hex' => $lastLink->background_color_hex,
+                'icon' => $request->icon,
+                'photo' => isset($request->photo) ? self::addLinkPhoto($request->photo) : null,
+                'shadow' => $lastLink->shadow,
+                'rounded' => $lastLink->rounded,
+                'transparency' => $lastLink->transparency,
+            ]);
+
+            $user->links()->save($link);
+
+        } else {
+            $link = new self([
+                'type' => 'LINK',
                 'title' => $request->title,
                 'link' => $request->link,
                 'title_color' => $request->title_color,
@@ -76,6 +103,7 @@ class Link extends Model
 
             $user->links()->save($link);
         }
+
     }
 
     public static function convertBackgroundColor($color)

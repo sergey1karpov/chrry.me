@@ -22,6 +22,7 @@ class UserObserver
         $user->utag = $this->flush();
         $user->is_active = 0;
         $user->full_url = 'chrry.me/cc/'.$user->utag;
+        $user->locale = 'ru';
     }
 
     /**

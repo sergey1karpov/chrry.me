@@ -167,15 +167,15 @@
                                                 @if($link->photos)
                                                     @foreach(unserialize($link->photos) as $key => $photo)
                                                         @if($key == 0)
-                                                            <img src="{{$photo}}" style="width:50px; border-radius: {{$link->rounded}}px;">
+                                                            <img src="{{$photo}}" style="width:48px; border-radius: {{$link->rounded}}px;">
                                                         @endif
                                                     @endforeach
                                                 @endif
                                             @elseif($link->type != 'POST')
                                                 @if($link->icon)
-                                                    <img src="{{$link->icon}}" style="width:50px; border-radius: {{$link->rounded}}px;">
+                                                    <img src="{{$link->icon}}" style="width:48px; border-radius: {{$link->rounded}}px;">
                                                 @elseif($link->icon == false)
-                                                    <img src="{{$link->photo}}" style="width:50px; border-radius: {{$link->rounded}}px;">
+                                                    <img src="{{$link->photo}}" style="width:48px; border-radius: {{$link->rounded}}px;">
                                                 @endif
                                             @endif
                                         </div>
@@ -201,22 +201,20 @@
                         <!-- Ссылка типа POST -->
                         @if($link->type == 'POST')
                             <div class="modal fade" id="post-{{$link->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" style="margin: 0;">
-                                    <div class="modal-content" style="border-radius: 0">
+                                <div class="modal-dialog" style="margin: 0">
+                                    <div class="modal-content " style="border-radius: 0">
                                         <!-- Шапка -->
                                         <div class="modal-header p-1" style="border: 0">
-
-                                                <div class="col-6 d-flex justify-content-start">
-                                                    <button style="border: 0; background-color: white" type="button" data-bs-dismiss="modal" aria-label="Close" class="mt-1">
-                                                        <img src="https://i.ibb.co/DM6hKmk/bbbbbbbbbbb.png" class="img-fluid" style="width:20px; margin-bottom: 3px">
-                                                    </button>
-                                                </div>
-                                                <div class="col-6 d-flex justify-content-end">
-                                                    <button data-bs-toggle="modal" data-bs-target="#btn{{$link->id}}" style="border: 0; background-color: white" type="button" data-bs-dismiss="modal" aria-label="Close" class="mt-1">
-                                                        <img src="https://icon-library.com/images/three-dots-icon/three-dots-icon-26.jpg" class="img-fluid" style="width:20px; margin-bottom: 3px">
-                                                    </button>
-                                                </div>
-
+                                            <div class="col-6 d-flex justify-content-start">
+                                                <button style="border: 0; background-color: white" type="button" data-bs-dismiss="modal" aria-label="Close" class="mt-1">
+                                                    <img src="https://i.ibb.co/DM6hKmk/bbbbbbbbbbb.png" class="img-fluid" style="width:20px; margin-bottom: 3px">
+                                                </button>
+                                            </div>
+                                            <div class="col-6 d-flex justify-content-end">
+                                                <button data-bs-toggle="modal" data-bs-target="#btn{{$link->id}}" style="border: 0; background-color: white" type="button" data-bs-dismiss="modal" aria-label="Close" class="mt-1">
+                                                    <img src="https://icon-library.com/images/three-dots-icon/three-dots-icon-26.jpg" class="img-fluid" style="width:20px; margin-bottom: 3px">
+                                                </button>
+                                            </div>
                                         </div>
                                         <div class="ms-2 me-2 mb-2 mt-3">
                                             <h5 style="font-family: 'Jost', sans-serif; font-size: 2.4rem; line-height: 1;" class="modal-title" id="exampleModalLabel">{{$link->title}}</h5>
@@ -246,7 +244,7 @@
                                                 </div>
                                             @endif
                                             <div id="demo" class="carousel slide" data-bs-ride="carousel">
-                                                <div class="carousel-inner">
+                                                <div class="carousel-inner" >
                                                     @if($link->photos)
                                                         @foreach(unserialize($link->photos) as $key => $photo)
                                                             <div class="carousel-item {{$key == 0 ? 'active' : '' }}">

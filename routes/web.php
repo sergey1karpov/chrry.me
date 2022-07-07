@@ -27,15 +27,15 @@ Route::get('/dashboard', function () {
 require __DIR__.'/auth.php';
 
 //Админка юзера
-Route::get('/{slug}', [UserController::class, 'userHomePage'])->name('userHomePage')->middleware('redir');
-Route::get('/{id}/edit-profile', [UserController::class, 'editProfileForm'])->name('editProfileForm')->middleware('loc');
+Route::get('/{slug}', [UserController::class, 'userHomePage'])->name('userHomePage');
+Route::get('/{id}/edit-profile', [UserController::class, 'editProfileForm'])->name('editProfileForm')->middleware('locale');
 Route::patch('/{id}/edit-profile/edit', [UserController::class, 'editUserProfile'])->name('editUserProfile');
 Route::patch('/{id}/edit-profile/del-avatar', [UserController::class, 'delUserAvatar'])->name('delUserAvatar');
 Route::patch('/{id}/edit-profile/del-banner', [UserController::class, 'delUserBanner'])->name('delUserBanner');
 
 //Функционал
-Route::get('/{id}/links', [LinkController::class, 'allLinks'])->name('allLinks');
-Route::get('/{id}/search', [LinkController::class, 'searchLink'])->name('searchLink');
+Route::get('/{id}/links', [LinkController::class, 'allLinks'])->name('allLinks')->middleware('locale');
+Route::get('/{id}/search', [LinkController::class, 'searchLink'])->name('searchLink')->middleware('locale');
 Route::post('/{id}/add-link', [LinkController::class, 'addLink'])->name('addLink');
 Route::post('/{id}/add-post', [LinkController::class, 'addPost'])->name('addPost');
 Route::patch('/{id}/add-link/{link}/edit', [LinkController::class, 'editLink'])->name('editLink');
@@ -51,7 +51,7 @@ Route::post('{id}/ppp/sort', [LinkController::class, 'sortLink'])->name('sortLin
 
 //Статистика
 Route::post('/{id}/link', [StatisticController::class, 'clickLinkStatistic'])->name('clickLinkStatistic');
-Route::get('/{id}/link/{link}', [StatisticController::class, 'showClickLinkStatistic'])->name('showClickLinkStatistic');
+Route::get('/{id}/link/{link}', [StatisticController::class, 'showClickLinkStatistic'])->name('showClickLinkStatistic')->middleware('locale');
 
 //bord.link/cc/q1w2e3r4 - вшита
 Route::get('cc/{utag}', [UserController::class, 'editNewUserForm'])->name('editNewUserForm');

@@ -109,32 +109,32 @@
     <body class="antialiased">
 
         <div class="container-fluid justify-content-center text-center">
-        @if ($errors->any())
-            <div class="row">
-                <div class="col-12" style="padding: 0">
-                    <div class="alert alert-warning alert-dismissible fade show" role="alert" style="margin: 0; background-color: red">
-                        @foreach ($errors->all() as $error)
-                            <div class="title">
-                                <span style="font-family: 'Rubik', sans-serif; font-size: 80%; line-height: 16px; display:block; color: white;">- {{$error}}</span>
-                            </div>
-                        @endforeach
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                </div>
-            </div>
-        @endif
-        @if ($message = Session::get('error'))
-            <div class="row">
-                <div class="col-12" style="padding: 0">
-                    <div class="alert alert-warning alert-dismissible fade show" role="alert" style="margin: 0; background-color: red">
-                        <div class="title">
-                            <span style="font-family: 'Rubik', sans-serif; font-size: 80%; line-height: 16px; display:block; color: white;">- {{$message}}</span>
+            @if ($errors->any())
+                <div class="row">
+                    <div class="col-12" style="padding: 0">
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert" style="margin: 0; background-color: red">
+                            @foreach ($errors->all() as $error)
+                                <div class="title">
+                                    <span style="font-family: 'Rubik', sans-serif; font-size: 80%; line-height: 16px; display:block; color: white;">- {{$error}}</span>
+                                </div>
+                            @endforeach
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 </div>
-            </div>
-        @endif
+            @endif
+            @if ($message = Session::get('error'))
+                <div class="row">
+                    <div class="col-12" style="padding: 0">
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert" style="margin: 0; background-color: red">
+                            <div class="title">
+                                <span style="font-family: 'Rubik', sans-serif; font-size: 80%; line-height: 16px; display:block; color: white;">- {{$message}}</span>
+                            </div>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+            @endif
         </div>
 
         <div class="container-fluid" style="padding: 0">
@@ -159,10 +159,10 @@
                 <div class="col-12 mt-" data-bs-toggle="modal" data-bs-target="#exampleModalLink" style="padding-right: 0; padding-left: 0">
 					<div class="box-part text-center shadow-sm " style="margin: 0; background-color: #feae72">
 						<div class="title">
-							<h4 class="mt-2" style="font-family: 'Rubik', sans-serif; color: white">Изменить все ссылки</h4>
+							<h4 class="mt-2" style="font-family: 'Rubik', sans-serif; color: white">@lang('app.a_edit_links')</h4>
 						</div>
 						<div class="text mb-1">
-							<span style="font-family: 'Rubik', sans-serif; font-size: 75%; line-height: 16px; display:block; color: white">Воспользовавшись этой функцией, вы придадите всем вашим ссылкам единый дизайн</span>
+							<span style="font-family: 'Rubik', sans-serif; font-size: 75%; line-height: 16px; display:block; color: white">@lang('app.a_edit_links_descr')</span>
 						</div>
 					</div>
 				</div>
@@ -171,7 +171,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" style="font-family: 'Rubik', sans-serif;">Изменить ссылки</h5>
+                            <h5 class="modal-title" style="font-family: 'Rubik', sans-serif;">@lang('app.a_edit_links')</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -179,24 +179,24 @@
                                 @csrf @method('PATCH')
                                 <div>
                                     <div class="mb-3">
-                                        <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Цвет заголовка</label>
+                                        <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.a_title')</label>
                                         <div class="mb-3 text-center d-flex justify-content-center">
                                             <input type="color" class="form-control " id="exampleColorInput" value="" title="Choose your color" name="title_color" style="height: 40px;">
                                         </div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Фоновый цвет</label>
+                                        <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.a_back_color')</label>
                                         <div class="mb-3 text-center d-flex justify-content-center">
                                             <input type="color" class="form-control " id="exampleColorInput" value="" title="Choose your color" name="background_color" style="height: 40px;">
                                         </div>
                                     </div>
 
-                                    <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Прозрачность фона</label>
+                                    <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.a_trans')</label>
                                     <div class="mb- text-center d-flex justify-content-center">
                                         <input type="range" class="form-range" min="0.0" max="1.0" step="0.1" id="customRange2" name="transparency">
                                     </div>
                                     <div class="mb-3">
-                                        <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Добавить тень</label><br>
+                                        <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.a_shadow')</label><br>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="shadow" id="inlineRadio1" value="shadow-none">
                                             <label class="form-check-label" for="inlineRadio1">none</label>
@@ -215,7 +215,7 @@
                                         </div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Округление углов блоков и фото</label><br>
+                                        <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.a_round')</label><br>
                                         <input type="range" class="form-range" min="1" max="50" step="1" id="customRange2" name="rounded">
                                     </div>
                                     <button type="submit" class="btn btn-primary">Изменить</button>
@@ -233,10 +233,10 @@
                 @foreach($links as $link)
                     <tr data-index="{{$link->id}}" data-position="{{$link->position}}">
                         <td style="padding-left: 0; padding-right: 0; padding-bottom: 0; border: 0">
-                            <div class="container-fluid justify-content-center text-center" data-index="{{$link->id}}" data-position="{{$link->position}}">
+                            <div class="ms-2 me-2 justify-content-center text-center" data-index="{{$link->id}}" data-position="{{$link->position}}">
                                 <div class="col-12">
-                                    <div class="row card {{$link->shadow}}" style="background-color:rgba({{$link->background_color}}, {{$link->transparency}}); border: 0; margin-top: 12px; border-radius: {{$link->rounded}}px; background-position: center; margin-left: 1px; margin-right: 1px">
-                                        <div class="d-flex align-items-center justify-content-start mt-1 mb-1" style="padding-left: 4px; padding-right: 4px;">
+                                    <div class="row card ms-1 me-1 {{$link->shadow}}" style="background-color:rgba({{$link->background_color}}, {{$link->transparency}}); border: 0; margin-top: 12px; border-radius: {{$link->rounded}}px; background-position: center;">
+                                        <div class="d-flex align-items-center justify-content-start mt-1 mb-1" style="padding-left: 4px; padding-right: 4px">
                                             <div class="col-1">
                                                 @if($link->type == 'POST')
                                                     @if($link->photos)
@@ -267,21 +267,21 @@
                                     <div class="d-flex justify-content-between rounded-bottom rounded-3" style="padding: 0;">
                                         <div class="col-4 border-end " style="background-color: #f0eeef; box-shadow: 5px 0px 0px black;">
                                             <a href="{{ route('showClickLinkStatistic', ['id' => $user->id, 'link' => $link->id]) }}" style="text-decoration: none; color: black">
-                                                <button href="{{ route('showClickLinkStatistic', ['id' => $user->id, 'link' => $link->id]) }}" class="btn-sm" style="background-color: #f0eeef; border: 0;">
-                                                    Статистика
+                                                <button href="{{ route('showClickLinkStatistic', ['id' => $user->id, 'link' => $link->id]) }}" class="btn-sm" style="background-color: #f1f2f2; border: 0;">
+                                                    @lang('app.s_stats')
                                                 </button>
                                             </a>
                                         </div>
                                         <div class="col-4 border-end" style="background-color: #f0eeef; box-shadow: 5px 0px 0px black;" @if($link->type == 'POST') data-bs-toggle="modal" data-bs-target="#exampleModalPost{{$link->id}}" @elseif($link->type != 'POST') data-bs-toggle="modal" data-bs-target="#exampleModalEdit{{$link->id}}" @endif>
-                                            <button class="btn-sm" style="background-color: #f0eeef; border: 0;">
-                                                Изменить
+                                            <button class="btn-sm" style="background-color: #f1f2f2; border: 0;">
+                                                @lang('app.a_edit')
                                             </button>
                                         </div>
-                                        <div class="col-4" style="background-color: #f0eeef; ">
+                                        <div class="col-4" style="background-color: #f1f2f2; ">
                                             <form action="{{ route('delLink', ['id' => Auth::user()->id, 'link' => $link->id]) }}" method="POST">
                                                 @csrf @method('DELETE')
                                                 <button class="btn-sm" style="background-color: #f0eeef; border: 0;">
-                                                    Удалить
+                                                    @lang('app.a_del')
                                                 </button>
                                             </form>
                                         </div>
@@ -290,14 +290,14 @@
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" style="font-family: 'Rubik', sans-serif;">Изменить ссылку</h5>
+                                                    <h5 class="modal-title" style="font-family: 'Rubik', sans-serif;">@lang('app.a_edit_link')</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
 
                                                 @if($link->icon == false)
                                                     @if($link->photo)
                                                         <div class="mb-3">
-                                                            <label for="exampleInputEmail1" class="form-label mt-3" style="font-family: 'Rubik', sans-serif;">Текущее изображение</label><br>
+                                                            <label for="exampleInputEmail1" class="form-label mt-3" style="font-family: 'Rubik', sans-serif;">@lang('app.a_now_link')</label><br>
                                                             <div class="row d-flex align-items-center justify-content-center">
                                                                 <div class="col-12">
                                                                     <img class="rounded-3" src="{{$link->photo}}" style="width:50px;">
@@ -305,7 +305,7 @@
                                                                 <div class="col-12 mt-2">
                                                                     <form action="{{ route('delLinkPhoto', ['id' => Auth::user()->id, 'link' => $link->id]) }}" method="POST">
                                                                         @csrf @method('PATCH')
-                                                                        <button class="btn btn-sm btn-danger">Удалить</button>
+                                                                        <button class="btn btn-sm btn-danger">@lang('app.a_now_del')</button>
                                                                     </form>
                                                                 </div>
                                                             </div>
@@ -313,7 +313,7 @@
                                                     @endif
                                                 @elseif($link->icon)
                                                     <div class="mb-3">
-                                                        <label for="exampleInputEmail1" class="form-label mt-3" style="font-family: 'Rubik', sans-serif;">Текущая иконка</label><br>
+                                                        <label for="exampleInputEmail1" class="form-label mt-3" style="font-family: 'Rubik', sans-serif;">@lang('app.a_now_icon')</label><br>
                                                         <div class="row d-flex align-items-center justify-content-center">
                                                             <div class="col-12">
                                                                 <img class="rounded-3" src="{{$link->icon}}" style="width:50px;">
@@ -321,7 +321,7 @@
                                                             <div class="col-12 mt-2">
                                                                 <form action="{{ route('delLinkIcon', ['id' => Auth::user()->id, 'link' => $link->id]) }}" method="POST">
                                                                     @csrf @method('PATCH')
-                                                                    <button class="btn btn-sm btn-danger">Удалить</button>
+                                                                    <button class="btn btn-sm btn-danger">@lang('app.a_now_del')</button>
                                                                 </form>
                                                             </div>
                                                         </div>
@@ -333,17 +333,17 @@
                                                         @csrf @method('PATCH')
                                                         <div>
                                                             <div class="mb-3">
-                                                                <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Заголовок</label>
+                                                                <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.p_title')</label>
                                                                 <input type="text" class="form-control" name="title" placeholder="Моя красивая ссылка" maxlength="50" value="{{$link->title}}">
-                                                                <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Заголовок может содержать до 50 символов</span>
+                                                                <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.m_text_link_span')</span>
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Вставьте ссылку</label>
+                                                                <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.m_insert_link')</label>
                                                                 <input type="text" class="form-control" name="link" placeholder="http://..." value="{{$link->link}}">
-                                                                <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Измените хорошую ссылку</span>
+                                                                <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.a_edit_link')</span>
                                                             </div>
 
-                                                            <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Иконка</label>
+                                                            <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.m_icon')</label>
                                                             <div class="mb-3">
                                                                 <select id="select-beast-empty{{$link->id}}" data-placeholder="Поиск иконки..."  autocomplete="off" name="icon">
                                                                     <option value="">None</option>
@@ -356,18 +356,18 @@
                                                                     <option value="8">odnoclasniki</option>
                                                                     <option value="9">averro</option>
                                                                 </select>
-                                                                <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Вы можете выбрать иконку из нашей базы для своей ссылки</span>
+                                                                <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.m_icon_description')</span>
                                                             </div>
                                                             @if($link->icon == false)
                                                                 <div class="mb-3">
-                                                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Фото</label>
+                                                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.m_photo')</label>
                                                                     <input type="file" class="form-control" id="inputGroupFile02" name="photo">
-                                                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Если иконка вам не подходит, загрузите своё изображение. Мы принимаем картинки jpeg, jpg, png, gif формата.</span>
+                                                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.m_photo_description')</span>
                                                                 </div>
                                                             @endif
 
                                                             <div class="mb-3">
-                                                                <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Текущий цвет заголовка</label>
+                                                                <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.m_title_color')</label>
                                                                 <div class="mb-3 text-center d-flex justify-content-center">
                                                                     <input type="color" class="form-control " id="exampleColorInput" value="{{$link->title_color_hex}}" title="Choose your color" name="title_color" style="height: 40px;">
                                                                 </div>
@@ -375,26 +375,20 @@
 
 
                                                             <div class="mb-3">
-                                                                <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Текущий фоновый цвет</label>
+                                                                <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.m_background_color')</label>
                                                                 <div class="mb-3 text-center d-flex justify-content-center">
                                                                     <input type="color" class="form-control " id="exampleColorInput" value="{{$link->background_color_hex}}" title="Choose your color" name="background_color" style="height: 40px;">
                                                                 </div>
                                                             </div>
 
 
-                                                            <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Прозрачность фона</label>
+                                                            <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.m_transparency')</label>
                                                             <div class="mb- text-center d-flex justify-content-center">
                                                                 <input type="range" class="form-range" min="0.0" max="1.0" step="0.1" id="customRange2" name="transparency" value="{{$link->transparency}}">
                                                             </div>
-                                                            <div class="mb-3 text-center d-flex justify-content-center">
-                                                                <input class="me-2 form-check-input" type="checkbox" value="false" id="flexCheckIndeterminate" name="withoutTransparency">
-                                                                <label class="form-check-label" for="flexCheckIndeterminate">
-                                                                    Убрать прозрачность
-                                                                </label>
-                                                            </div>
 
                                                             <div class="mb-3">
-                                                                <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Добавить тень</label><br>
+                                                                <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.m_shadow')</label><br>
                                                                 <div class="form-check form-check-inline">
                                                                     <input class="form-check-input" type="radio" name="shadow" id="inlineRadio1" value="shadow-none" @if($link->shadow == 'shadow-none') checked @endif>
                                                                     <label class="form-check-label" for="inlineRadio1">none</label>
@@ -413,13 +407,13 @@
                                                                 </div>
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Округление углов карточки и фото</label>
+                                                                <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.m_round')</label>
                                                                 <div class="mb-3 text-center d-flex justify-content-center">
                                                                     <input type="range" class="form-range" min="1" max="50" step="1" id="customRange2" name="rounded" value="{{$link->rounded}}">
                                                                 </div>
                                                             </div>
 
-                                                            <button type="submit" class="btn btn-primary">Изменить</button>
+                                                            <button type="submit" class="btn btn-primary">@lang('app.a_edit')</button>
                                                         </div>
                                                     </form>
                                                 </div>
@@ -435,12 +429,12 @@
                         <div class="modal-dialog">
                         <div class="modal-content text-center" style="background-color: #FBF6EA">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" style="font-family: 'Rubik', sans-serif;">Редактировать пост</h5>
+                                    <h5 class="modal-title" style="font-family: 'Rubik', sans-serif;">@lang('app.a_edit_post')</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 @if($link->photos)
                                     <div class="mb-3">
-                                        <label for="exampleInputEmail1" class="form-label mt-3" style="font-family: 'Rubik', sans-serif;">Текущее изображение</label><br>
+                                        <label for="exampleInputEmail1" class="form-label mt-3" style="font-family: 'Rubik', sans-serif;">@lang('app.a_now_link')</label><br>
                                         <div class="">
                                             <div class="col-12">
                                                 @foreach(unserialize($link->photos) as $photo)
@@ -450,7 +444,7 @@
                                             <div class="col-12 mt-2">
                                                 <form action="{{ route('delPostPhoto', ['id' => Auth::user()->id, 'link' => $link->id]) }}" method="POST">
                                                     @csrf @method('PATCH')
-                                                    <button class="btn btn-sm btn-danger">Открепить изображения</button>
+                                                    <button class="btn btn-sm btn-danger">@lang('app.a_now_del')</button>
                                                 </form>
                                             </div>
                                         </div>
@@ -461,51 +455,51 @@
                                         @csrf @method('PATCH')
                                         <input type="hidden" value="POST" name="type"> <!-- Тип ссылки -->
                                         <div class="mb-3"> <!-- Заголовок -->
-                                            <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Заголовок</label>
+                                            <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">@lang('app.p_title')</label>
                                             <input type="text" class="form-control" name="title" maxlength="100" value="{{$link->title}}">
-                                            <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Заголовок может содержать до 100 символов</span>
+                                            <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_title_description')</span>
                                         </div>
                                         <div class="mb-3"> <!-- Полный текст -->
-                                            <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Текст</label>
+                                            <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">@lang('app.p_text')</label>
                                             <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="full_text">{{$link->full_text}}</textarea>
-                                            <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Свободный текст</span>
+                                            <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_free_text')</span>
                                         </div>
                                         <div class="mb-3"> <!-- Ссылка на источник -->
-                                            <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Ссылка</label>
+                                            <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.p_link')</label>
                                             <input type="text" class="form-control" name="link" value="{{$link->link}}">
-                                            <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Если есть ссылка на внешний ресурс, вставьте её сюда</span>
+                                            <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_description_link')</span>
                                         </div>
                                         <div class="mb-3"> <!-- Фотографии -->
-                                            <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Фото</label>
+                                            <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.p_photos')</label>
                                             <input type="file" class="form-control" id="inputGroupFile02" name="photos[]" accept=".png, .jpg, .jpeg" multiple>
-                                            <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Мы принимаем картинки jpeg, jpg, png формата. Вы можете загрузить до 10 изображений</span>
+                                            <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_photos_description')</span>
                                         </div>
                                         <div class="mb-3"> <!-- Ссылка на видео -->
-                                            <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Ссылка на видео</label>
+                                            <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.p_video')</label>
                                             <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" name="video">{{$link->video}}</textarea>
-                                            <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Если хотите прикрепить видео, вставьте сюда ссылку на youtube, vimeo или что то другое...</span>
+                                            <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_video_description')</span>
                                         </div>
                                         <div class="mb-3"> <!-- Ссылка на любое медиа -->
-                                            <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Ссылка на медиа</label>
+                                            <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.p_media')</label>
                                             <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" name="media">{{$link->media}}</textarea>
-                                            <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Поле для кода. Сюда можно вставить код для плейлиста ВК, Яндекса и много чего</span>
+                                            <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_media_description')</span>
                                         </div>
 
-                                        <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Цвет заголовка</label>
+                                        <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;"@lang('app.p_title_color')</label>
                                         <div class="mb-3 text-center d-flex justify-content-center"> <!-- выбор цвета на заголовок -->
                                             <input type="color" class="form-control" id="exampleColorInput" value="{{$link->title_color}}" title="Choose your color" name="title_color" style="height: 40px;"><br>
-                                            <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Черный по умолчанию</span>
+                                            <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_title_color_def')</span>
                                         </div>
-                                        <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Фоновый цвет</label>
+                                        <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.p_background_color')</label>
                                         <div class="mb-3 text-center d-flex justify-content-center"> <!-- выбор цвета на фон -->
                                             <input type="color" class="form-control " id="exampleColorInput" value="{{$link->background_color_hex}}" title="Choose your color" name="background_color" style="height: 40px;">
-                                            <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Белый по умолчанию</span>
+                                            <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_background_color_def')</span>
                                         </div>
-                                        <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Прозрачность фона</label>
+                                        <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.p_transparency')</label>
                                         <div class="mb-3 text-center d-flex justify-content-center"> <!-- выбор прозрачности фона -->
                                             <input type="range" class="form-range" min="0.0" max="1.0" step="0.1" id="customRange2" name="transparency" value="{{$link->transparency}}">
                                         </div>
-                                        <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Добавить тень для ссылки</label>
+                                        <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.p_shadow')</label>
                                         <div class="mb-3 text-center d-flex justify-content-center"> <!-- Добавить тень -->
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" name="shadow" id="inlineRadio1" value="shadow-none" @if($link->shadow == 'shadow-none') checked @endif>
@@ -524,12 +518,12 @@
                                                 <label class="form-check-label" for="inlineRadio3">lg</label>
                                             </div>
                                         </div>
-                                        <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Округление углов карточки и фото</label>
+                                        <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.p_round')</label>
                                         <div class="mb-3 text-center d-flex justify-content-center"> <!-- Добивить округление углов -->
                                             <input type="range" class="form-range" min="1" max="50" step="1" id="customRange2" name="rounded" value="{{$link->rounded}}">
                                         </div>
                                 <div class="d-grid gap-2">
-                                    <button type="submit" class="btn btn-primary">Изменить пост</button>
+                                    <button type="submit" class="btn btn-primary">@lang('app.p_edit_prof')</button>
                                     </div>
                                 </div>
                             </form>
@@ -592,72 +586,9 @@
                     valueField: 'img',
                     searchField: 'title',
                     options: [
-                        {id: 1, title: 'Без иконки', img: ''},
-                        {id: 2, title: 'Behance', img: '{{ asset('public/images/social/Behance.png') }}'},
-                        {id: 3, title: 'Facebook', img: '{{ asset('public/images/social/Facebook.png') }}'},
-                        {id: 4, title: 'Instagram',  img: '{{ asset('public/images/social/Instagram.png') }}'},
-                        {id: 5, title: 'LinkedIn',  img: '{{ asset('public/images/social/LinkedIn.png') }}'},
-                        {id: 6, title: 'Ok',  img: '{{ asset('public/images/social/Ok.png') }}'},
-                        {id: 7, title: 'Pinterest',  img: '{{ asset('public/images/social/Pinterest.png') }}'},
-                        {id: 8, title: 'Skype',  img: '{{ asset('public/images/social/Skype.png') }}'},
-                        {id: 9, title: 'Snapchat',  img: '{{ asset('public/images/social/Snapchat.png') }}'},
-                        {id: 10, title: 'SoundCloud', img: '{{ asset('public/images/social/SoundCloud.png') }}'},
-                        {id: 11, title: 'Spotify', img: '{{ asset('public/images/social/Spotify.png') }}'},
-                        {id: 12, title: 'Telegram',  img: '{{ asset('public/images/social/Telegram.png') }}'},
-                        {id: 13, title: 'TikTok',  img: '{{ asset('public/images/social/TikTok.png') }}'},
-                        {id: 14, title: 'Tumblr',  img: '{{ asset('public/images/social/Tumblr.png') }}'},
-                        {id: 15, title: 'Twitch',  img: '{{ asset('public/images/social/Twitch.png') }}'},
-                        {id: 16, title: 'Twitter',  img: '{{ asset('public/images/social/Twitter.png') }}'},
-                        {id: 17, title: 'Viber',  img: '{{ asset('public/images/social/Viber.png') }}'},
-                        {id: 18, title: 'Vimeo',  img: '{{ asset('public/images/social/Vimeo.png') }}'},
-                        {id: 19, title: 'VK', img: '{{ asset('public/images/social/VK.png') }}'},
-                        {id: 20, title: 'WeChat', img: '{{ asset('public/images/social/WeChat.png') }}'},
-                        {id: 21, title: 'WhatsApp',  img: '{{ asset('public/images/social/WhatsApp.png') }}'},
-                        {id: 22, title: 'YouTube',  img: '{{ asset('public/images/social/YouTube.png') }}'},
-
-                        {id: 23, title: 'Behance Black', img: '{{ asset('public/images/social/Behance_black.png') }}'},
-                        {id: 24, title: 'Facebook Black', img: '{{ asset('public/images/social/Facebook_black.png') }}'},
-                        {id: 25, title: 'Instagram Black',  img: '{{ asset('public/images/social/Instagram_black.png') }}'},
-                        {id: 26, title: 'LinkedIn Black',  img: '{{ asset('public/images/social/LinkedIn_black.png') }}'},
-                        {id: 27, title: 'Ok Black',  img: '{{ asset('public/images/social/Ok_black.png') }}'},
-                        {id: 28, title: 'Pinterest Black',  img: '{{ asset('public/images/social/Pinterest_black.png') }}'},
-                        {id: 29, title: 'Skype Black',  img: '{{ asset('public/images/social/Skype_black.png') }}'},
-                        {id: 30, title: 'Snapchat Black',  img: '{{ asset('public/images/social/Snapchat_black.png') }}'},
-                        {id: 31, title: 'SoundCloud Black', img: '{{ asset('public/images/social/SoundCloud_black.png') }}'},
-                        {id: 32, title: 'Spotify Black', img: '{{ asset('public/images/social/Spotify_black.png') }}'},
-                        {id: 33, title: 'Telegram Black',  img: '{{ asset('public/images/social/Telegram_black.png') }}'},
-                        {id: 34, title: 'TikTok Black',  img: '{{ asset('public/images/social/TikTok_black.png') }}'},
-                        {id: 35, title: 'Tumblr Black',  img: '{{ asset('public/images/social/Tumblr_black.png') }}'},
-                        {id: 36, title: 'Twitch Black',  img: '{{ asset('public/images/social/Twitch_black.png') }}'},
-                        {id: 37, title: 'Twitter Black',  img: '{{ asset('public/images/social/Twitter_black.png') }}'},
-                        {id: 38, title: 'Viber Black',  img: '{{ asset('public/images/social/Viber_black.png') }}'},
-                        {id: 39, title: 'Vimeo Black',  img: '{{ asset('public/images/social/Vimeo_black.png') }}'},
-                        {id: 40, title: 'VK Black', img: '{{ asset('public/images/social/VK_black.png') }}'},
-                        {id: 41, title: 'WeChat Black', img: '{{ asset('public/images/social/WeChat_black.png') }}'},
-                        {id: 42, title: 'WhatsApp Black',  img: '{{ asset('public/images/social/WhatsApp_black.png') }}'},
-                        {id: 43, title: 'YouTube Black',  img: '{{ asset('public/images/social/YouTube_black.png') }}'},
-
-                        {id: 44, title: 'Behance White', img: '{{ asset('public/images/social/Behance_white.png') }}'},
-                        {id: 45, title: 'Facebook White', img: '{{ asset('public/images/social/Facebook_white.png') }}'},
-                        {id: 46, title: 'Instagram White',  img: '{{ asset('public/images/social/Instagram_white.png') }}'},
-                        {id: 47, title: 'LinkedIn White',  img: '{{ asset('public/images/social/LinkedIn_white.png') }}'},
-                        {id: 48, title: 'Ok White',  img: '{{ asset('public/images/social/Ok_white.png') }}'},
-                        {id: 49, title: 'Pinterest White',  img: '{{ asset('public/images/social/Pinterest_white.png') }}'},
-                        {id: 50, title: 'Skype White',  img: '{{ asset('public/images/social/Skype_white.png') }}'},
-                        {id: 51, title: 'Snapchat White',  img: '{{ asset('public/images/social/Snapchat_white.png') }}'},
-                        {id: 52, title: 'SoundCloud White', img: '{{ asset('public/images/social/SoundCloud_white.png') }}'},
-                        {id: 53, title: 'Spotify White', img: '{{ asset('public/images/social/Spotify_white.png') }}'},
-                        {id: 54, title: 'Telegram White',  img: '{{ asset('public/images/social/Telegram_white.png') }}'},
-                        {id: 55, title: 'TikTok White',  img: '{{ asset('public/images/social/TikTok_white.png') }}'},
-                        {id: 56, title: 'Tumblr White',  img: '{{ asset('public/images/social/Tumblr_white.png') }}'},
-                        {id: 57, title: 'Twitch White',  img: '{{ asset('public/images/social/Twitch_white.png') }}'},
-                        {id: 58, title: 'Twitter White',  img: '{{ asset('public/images/social/Twitter_white.png') }}'},
-                        {id: 59, title: 'Viber White',  img: '{{ asset('public/images/social/Viber_white.png') }}'},
-                        {id: 60, title: 'Vimeo White',  img: '{{ asset('public/images/social/Vimeo_white.png') }}'},
-                        {id: 61, title: 'VK White', img: '{{ asset('public/images/social/VK_white.png') }}'},
-                        {id: 62, title: 'WeChat White', img: '{{ asset('public/images/social/WeChat_white.png') }}'},
-                        {id: 63, title: 'WhatsApp White',  img: '{{ asset('public/images/social/WhatsApp_white.png') }}'},
-                        {id: 64, title: 'YouTube White',  img: '{{ asset('public/images/social/YouTube_white.png') }}'},
+                        @foreach($allIconsInsideFolder as $icon)
+                            {id: {{$icon->getInode()}}, title: '{{$icon->getFilename()}}', img: '{{'http://links/public/images/social/'.$icon->getFilename()}}'},
+                        @endforeach
                     ],
                     render: {
                         option: function(data, escape) {

@@ -4,14 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\UpdateRegisteruserRequest;
 use App\Services\StatsService;
 use App\Http\Requests\RegNewUserRequest;
-use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+
 
 class UserController extends Controller
 {
@@ -49,13 +50,16 @@ class UserController extends Controller
             $allClick[] = StatsService::getAllUserLinkStats($user, $link->id);
         }
 
+        $icons  = public_path('images/social');
+        $allIconsInsideFolder = File::files($icons);
+
         if($user) {
-            return view('user.edit-profile', compact('user', 'links', 'day', 'month', 'year', 'all', 'dayClick', 'monthClick', 'yearClick', 'allClick'));
+            return view('user.edit-profile', compact('user', 'links', 'day', 'month', 'year', 'all', 'dayClick', 'monthClick', 'yearClick', 'allClick', 'allIconsInsideFolder'));
         }
         abort(404);
     }
 
-    //Редактирование профиля
+    //Редактирование профиля полсе фальш реги
     public function editUserProfile(int $id, UpdateRegisteruserRequest $request) : mixed
     {
         $user = User::where('id', $id)->firstOrFail();
