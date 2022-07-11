@@ -24,8 +24,8 @@ class UpdateRegisteruserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'nullable|min:5|max:100',
-            'slug' => 'nullable|unique:users|min:5|max:150|alpha_dash',
+            'name' => 'nullable|min:3|max:100',
+            'slug' => 'nullable|unique:users|min:3|max:150|alpha_dash',
             'description' => 'nullable|max:150',
             'name_color' => 'nullable',
             'description_color' => 'nullable',

@@ -89,7 +89,86 @@
 			    background-size: cover;
 			    background-repeat: no-repeat;
 			}
-
+            @font-face {
+                font-family: Oi; /* Имя шрифта */
+                src: url({{asset('public/fonts/Oi-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+            }
+            @font-face {
+                font-family: Rampart One; /* Имя шрифта */
+                src: url({{asset('public/fonts/RampartOne-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+            }
+            @font-face {
+                font-family: Yomogi; /* Имя шрифта */
+                src: url({{asset('public/fonts/Yomogi-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+            }
+            @font-face {
+                font-family: Yuji Syuku; /* Имя шрифта */
+                src: url({{asset('public/fonts/YujiSyuku-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+            }
+            @font-face {
+                font-family: Zen Kurenaido; /* Имя шрифта */
+                src: url({{asset('public/fonts/ZenKurenaido-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+            }
+            @font-face {
+                font-family: Comforter; /* Имя шрифта */
+                src: url({{asset('public/fonts/Comforter-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+            }
+            @font-face {
+                font-family: Murecho; /* Имя шрифта */
+                src: url({{asset('public/fonts/Murecho-VariableFont_wght.ttf')}}); /* Путь к файлу со шрифтом */
+            }
+            @font-face {
+                font-family: Train One; /* Имя шрифта */
+                src: url({{asset('public/fonts/TrainOne-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+            }
+            @font-face {
+                font-family: Alumni Sans; /* Имя шрифта */
+                src: url({{asset('public/fonts/AlumniSans-VariableFont_wght.ttf')}}); /* Путь к файлу со шрифтом */
+            }
+            @font-face {
+                font-family: DotGothic16; /* Имя шрифта */
+                src: url({{asset('public/fonts/DotGothic16-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+            }
+            @font-face {
+                font-family: Noto Sans Mono; /* Имя шрифта */
+                src: url({{asset('public/fonts/NotoSansMono-VariableFont_wdth,wght.ttf')}}); /* Путь к файлу со шрифтом */
+            }
+            @font-face {
+                font-family: Podkova; /* Имя шрифта */
+                src: url({{asset('public/fonts/Podkova-VariableFont_wght.ttf')}}); /* Путь к файлу со шрифтом */
+            }
+            @font-face {
+                font-family: Spectral SC; /* Имя шрифта */
+                src: url({{asset('public/fonts/SpectralSC-ExtraLight.ttf')}}); /* Путь к файлу со шрифтом */
+            }
+            @font-face {
+                font-family: JetBrains Mono; /* Имя шрифта */
+                src: url({{asset('public/fonts/JetBrainsMono-VariableFont_wght.ttf')}}); /* Путь к файлу со шрифтом */
+            }
+            @font-face {
+                font-family: Roboto; /* Имя шрифта */
+                src: url({{asset('public/fonts/Roboto-Light.ttf')}}); /* Путь к файлу со шрифтом */
+            }
+            @font-face {
+                font-family: Open Sans; /* Имя шрифта */
+                src: url({{asset('public/fonts/OpenSans-VariableFont_wdth,wght.ttf')}}); /* Путь к файлу со шрифтом */
+            }
+            @font-face {
+                font-family: Montserrat; /* Имя шрифта */
+                src: url({{asset('public/fonts/Montserrat-VariableFont_wght.ttf')}}); /* Путь к файлу со шрифтом */
+            }
+            @font-face {
+                font-family: Noto Sans; /* Имя шрифта */
+                src: url({{asset('public/fonts/NotoSans-Light.ttf')}}); /* Путь к файлу со шрифтом */
+            }
+            @font-face {
+                font-family: Russo One; /* Имя шрифта */
+                src: url({{asset('public/fonts/RussoOne-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+            }
+            @font-face {
+                font-family: Poiret One; /* Имя шрифта */
+                src: url({{asset('public/fonts/PoiretOne-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+            }
         </style>
 
         <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -175,12 +254,6 @@
                                     <div class="mb- text-center d-flex justify-content-center">
                                         <input type="range" class="form-range" min="19" max="99" step="10" id="customRange2" name="transparency" value=""><br>
                                     </div>
-                                    <div class="mb-3 text-center d-flex justify-content-center">
-                                        <input class="me-2 form-check-input" type="checkbox" value="false" id="flexCheckIndeterminate" name="withoutTransparency">
-                                        <label class="form-check-label" for="flexCheckIndeterminate">
-                                            Убрать прозрачность
-                                        </label>
-                                    </div>
 
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Добавить тень</label><br>
@@ -220,6 +293,24 @@
                                             <label class="form-check-label" for="inlineRadio3">lg</label>
                                         </div>
                                     </div>
+                                    <div class="mb-3 text-center">
+                                        <div>
+                                            <select class="form-select" aria-label="Default select example" name="animation">
+                                                <option selected>Выбрать анимацию...</option>
+                                                <option value="animate__animated animate__pulse animate__infinite infinite">Pulse</option>
+                                                <option value="animate__animated animate__headShake animate__infinite infinite">Head Shake</option>
+                                            </select>
+                                        </div>
+                                        <label style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Вы можете выделить свою ссылку от остальных выбрав одну из анимаций</label>
+                                    </div>
+                                    <div class="mb-3 text-center">
+                                        <div class="form-check text-center">
+                                            <input name="pinned" class="form-check-input" type="checkbox" value="{{true}}" id="flexCheckDefault">
+                                            <label class="form-check-label" for="flexCheckDefault">
+                                                Закрепите ссылку и она всегда будет вверху списка
+                                            </label>
+                                        </div>
+                                    </div>
 
                                     <button type="submit" class="btn btn-primary">Изменить</button>
                                 </div>
@@ -255,7 +346,7 @@
                                     </div>
                                     <div class=" col-10 text-center">
                                         <div class="me-4 ms-4">
-                                            <h4 class="" style="font-family: 'Open Sans', sans-serif; line-height: 1.5; font-size: 1rem; color: {{$link->title_color}}; @if($link->photo == '' && $link->photos == '') margin-top: 14px; margin-bottom: 14px @endif">{{$link->title}}</h4>
+                                            <h4 class="" style="font-family: '{{$link->font}}', sans-serif; line-height: 1.5; font-size: {{$link->font_size}}rem; color: {{$link->title_color}}; @if($link->photo == '' && $link->photos == '') margin-top: 14px; margin-bottom: 14px @endif">{{$link->title}}</h4>
                                         </div>
                                     </div>
                                     <div class="col-1">
@@ -302,8 +393,9 @@
                                                             <img class="rounded-3" src="{{$link->photo}}" style="width:50px;">
                                                         </div>
                                                         <div class="col-12 mt-2">
-                                                            <form action="{{ route('delLinkPhoto', ['id' => Auth::user()->id, 'link' => $link->id]) }}" method="POST">
+                                                            <form action="{{ route('delPhoto', ['id' => Auth::user()->id, 'link' => $link->id]) }}" method="POST">
                                                                 @csrf @method('PATCH')
+                                                                <input type="hidden" name="type" value="LINK">
                                                                 <button class="btn btn-sm btn-danger">@lang('app.a_now_del')</button>
                                                             </form>
                                                         </div>
@@ -331,11 +423,47 @@
                                             <form action="{{ route('editLink', ['id' => Auth::user()->id, 'link' => $link->id]) }}" method="post" enctype="multipart/form-data">
                                                 @csrf @method('PATCH')
                                                 <div>
+                                                    <input type="hidden" name="type" value="LINK"> <!-- Тип ссылки -->
                                                     <div class="mb-3">
                                                         <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.p_title')</label>
                                                         <input type="text" class="form-control" name="title" placeholder="Моя красивая ссылка" maxlength="50" value="{{$link->title}}">
                                                         <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.m_text_link_span')</span>
                                                     </div>
+                                                    <div class="mb- text-center d-flex justify-content-between">
+                                                        <div>
+                                                            <select class="form-select" aria-label="Default select example" name="font">
+                                                                <option @if($link->font == 'Inter') selected @endif value="Inter">Выбрать шрифт...</option>
+                                                                <option @if($link->font == 'Russo One') selected @endif style="font-family: Russo One" value="Russo One">Russo One Font</option>
+                                                                <option @if($link->font == 'Poiret One') selected @endif style="font-family: Poiret One" value="Poiret One">Poiret One Font</option>
+                                                                <option @if($link->font == 'Noto Sans') selected @endif style="font-family: Noto Sans" value="Noto Sans">Noto Sans Font</option>
+                                                                <option @if($link->font == 'Montserrat') selected @endif style="font-family: Montserrat" value="Montserrat">Montserrat Font</option>
+                                                                <option @if($link->font == 'Open Sans') selected @endif style="font-family: Open Sans" value="Open Sans">Open Sans Font</option>
+                                                                <option @if($link->font == 'Roboto') selected @endif style="font-family: Roboto" value="Roboto">Roboto Font</option>
+                                                                <option @if($link->font == 'JetBrains Mono') selected @endif style="font-family: JetBrains Mono" value="JetBrains Mono">JetBrains Mono Font</option>
+                                                                <option @if($link->font == 'Spectral SC') selected @endif style="font-family: Spectral SC" value="Spectral SC">Spectral SC Font</option>
+                                                                <option @if($link->font == 'Podkova') selected @endif style="font-family: Podkova" value="Podkova">Podkova Font</option>
+                                                                <option @if($link->font == 'Noto Sans Mono') selected @endif style="font-family: Noto Sans Mono" value="Noto Sans Mono">Noto Sans Mono Font</option>
+                                                                <option @if($link->font == 'DotGothic16') selected @endif style="font-family: DotGothic16" value="DotGothic16">DotGothic16 Font</option>
+                                                                <option @if($link->font == 'Alumni Sans') selected @endif style="font-family: Alumni Sans" value="Alumni Sans">Alumni Sans Font</option>
+                                                                <option @if($link->font == 'Murecho') selected @endif style="font-family: Murecho" value="Murecho">Murecho Font</option>
+                                                                <option @if($link->font == 'Comforter') selected @endif style="font-family: Comforter" value="Comforter">Comforter Font</option>
+                                                                <option @if($link->font == 'Zen Kurenaido') selected @endif style="font-family: Zen Kurenaido" value="Zen Kurenaido">Zen Kurenaido Font</option>
+                                                                <option @if($link->font == 'Yuji Syuku') selected @endif style="font-family: Yuji Syuku" value="Yuji Syuku">Yuji Syuku Font</option>
+                                                                <option @if($link->font == 'Yomogi') selected @endif style="font-family: Yomogi" value="Yomogi">Yomogi Font</option>
+                                                                <option @if($link->font == 'Rampart One') selected @endif style="font-family: Rampart One" value="Rampart One">Rampart One Font</option>
+                                                                <option @if($link->font == 'Oi') selected @endif style="font-family: Oi" value="Oi">Oi Font</option>
+                                                            </select>
+                                                        </div>
+                                                        <div>
+                                                            <select class="form-select" aria-label="Default select example" name="font_size">
+                                                                <option @if($link->font_size == 0.9) selected @endif value="0.9">1</option>
+                                                                <option @if($link->font_size == 1) selected @endif value="1">2</option>
+                                                                <option @if($link->font_size == 1.1) selected @endif value="1.1">3</option>
+                                                                <option @if($link->font_size == 1.2) selected @endif value="1.2">4</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <label class="mb-3" style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Вы можете выбрать шрифт и его размер для текста вашей ссылки</label>
                                                     <div class="mb-3">
                                                         <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.m_insert_link')</label>
                                                         <input type="text" class="form-control" name="link" placeholder="http://..." value="{{$link->link}}">
@@ -412,7 +540,26 @@
                                                         </div>
                                                     </div>
 
-                                                    <button type="submit" class="btn btn-primary">@lang('app.p_edit_prof')</button>
+                                                    <div class="mb-3 text-center">
+                                                        <div>
+                                                            <select class="form-select" aria-label="Default select example" name="animation">
+                                                                <option selected>Выбрать анимацию...</option>
+                                                                <option value="animate__animated animate__pulse animate__infinite infinite">Pulse</option>
+                                                                <option value="animate__animated animate__headShake animate__infinite infinite">Head Shake</option>
+                                                            </select>
+                                                        </div>
+                                                        <label style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Вы можете выделить свою ссылку от остальных выбрав одну из анимаций</label>
+                                                    </div>
+                                                    <div class="mb-3 text-center">
+                                                        <div class="form-check text-center">
+                                                            <input @if($link->pinned == 1) checked @endif name="pinned" class="form-check-input" type="checkbox" value="{{true}}" id="flexCheckDefault">
+                                                            <label class="form-check-label" for="flexCheckDefault">
+                                                                Закрепите ссылку и она всегда будет вверху списка
+                                                            </label>
+                                                        </div>
+                                                    </div>
+
+                                                    <button type="submit" class="btn btn-primary">@lang('app.a_edit')</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -441,8 +588,9 @@
                                         @endforeach
                                     </div>
                                     <div class="col-12 mt-2">
-                                        <form action="{{ route('delPostPhoto', ['id' => Auth::user()->id, 'link' => $link->id]) }}" method="POST">
+                                        <form action="{{ route('delPhoto', ['id' => Auth::user()->id, 'link' => $link->id]) }}" method="POST">
                                             @csrf @method('PATCH')
+                                            <input type="hidden" name="type" value="POST">
                                             <button class="btn btn-sm btn-danger">@lang('app.a_now_del')</button>
                                         </form>
                                     </div>
@@ -450,7 +598,7 @@
                             </div>
                         @endif
                         <div class="modal-body">
-                            <form action="{{ route('editPost', ['id' => Auth::user()->id, 'link' => $link->id]) }}" method="post" enctype="multipart/form-data">
+                            <form action="{{ route('editLink', ['id' => Auth::user()->id, 'link' => $link->id]) }}" method="post" enctype="multipart/form-data">
                                 @csrf @method('PATCH')
                                 <input type="hidden" value="POST" name="type"> <!-- Тип ссылки -->
                                 <div class="mb-3"> <!-- Заголовок -->
@@ -458,6 +606,41 @@
                                     <input type="text" class="form-control" name="title" maxlength="100" value="{{$link->title}}">
                                     <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_title_description')</span>
                                 </div>
+                                <div class="mb- text-center d-flex justify-content-between">
+                                    <div>
+                                        <select class="form-select" aria-label="Default select example" name="font">
+                                            <option @if($link->font == 'Inter') selected @endif value="Inter">Выбрать шрифт...</option>
+                                            <option @if($link->font == 'Russo One') selected @endif style="font-family: Russo One" value="Russo One">Russo One Font</option>
+                                            <option @if($link->font == 'Poiret One') selected @endif style="font-family: Poiret One" value="Poiret One">Poiret One Font</option>
+                                            <option @if($link->font == 'Noto Sans') selected @endif style="font-family: Noto Sans" value="Noto Sans">Noto Sans Font</option>
+                                            <option @if($link->font == 'Montserrat') selected @endif style="font-family: Montserrat" value="Montserrat">Montserrat Font</option>
+                                            <option @if($link->font == 'Open Sans') selected @endif style="font-family: Open Sans" value="Open Sans">Open Sans Font</option>
+                                            <option @if($link->font == 'Roboto') selected @endif style="font-family: Roboto" value="Roboto">Roboto Font</option>
+                                            <option @if($link->font == 'JetBrains Mono') selected @endif style="font-family: JetBrains Mono" value="JetBrains Mono">JetBrains Mono Font</option>
+                                            <option @if($link->font == 'Spectral SC') selected @endif style="font-family: Spectral SC" value="Spectral SC">Spectral SC Font</option>
+                                            <option @if($link->font == 'Podkova') selected @endif style="font-family: Podkova" value="Podkova">Podkova Font</option>
+                                            <option @if($link->font == 'Noto Sans Mono') selected @endif style="font-family: Noto Sans Mono" value="Noto Sans Mono">Noto Sans Mono Font</option>
+                                            <option @if($link->font == 'DotGothic16') selected @endif style="font-family: DotGothic16" value="DotGothic16">DotGothic16 Font</option>
+                                            <option @if($link->font == 'Alumni Sans') selected @endif style="font-family: Alumni Sans" value="Alumni Sans">Alumni Sans Font</option>
+                                            <option @if($link->font == 'Murecho') selected @endif style="font-family: Murecho" value="Murecho">Murecho Font</option>
+                                            <option @if($link->font == 'Comforter') selected @endif style="font-family: Comforter" value="Comforter">Comforter Font</option>
+                                            <option @if($link->font == 'Zen Kurenaido') selected @endif style="font-family: Zen Kurenaido" value="Zen Kurenaido">Zen Kurenaido Font</option>
+                                            <option @if($link->font == 'Yuji Syuku') selected @endif style="font-family: Yuji Syuku" value="Yuji Syuku">Yuji Syuku Font</option>
+                                            <option @if($link->font == 'Yomogi') selected @endif style="font-family: Yomogi" value="Yomogi">Yomogi Font</option>
+                                            <option @if($link->font == 'Rampart One') selected @endif style="font-family: Rampart One" value="Rampart One">Rampart One Font</option>
+                                            <option @if($link->font == 'Oi') selected @endif style="font-family: Oi" value="Oi">Oi Font</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <select class="form-select" aria-label="Default select example" name="font_size">
+                                            <option @if($link->font_size == 0.9) selected @endif value="0.9">1</option>
+                                            <option @if($link->font_size == 1) selected @endif value="1">2</option>
+                                            <option @if($link->font_size == 1.1) selected @endif value="1.1">3</option>
+                                            <option @if($link->font_size == 1.2) selected @endif value="1.2">4</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <label class="mb-3" style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Вы можете выбрать шрифт и его размер для текста вашей ссылки</label>
                                 <div class="mb-3"> <!-- Полный текст -->
                                     <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">@lang('app.p_text')</label>
                                     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="full_text">{{$link->full_text}}</textarea>
@@ -484,7 +667,7 @@
                                     <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_media_description')</span>
                                 </div>
 
-                                <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.p_title_color')</label>
+                                <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;"@lang('app.p_title_color')</label>
                                 <div class="mb-3 text-center d-flex justify-content-center"> <!-- выбор цвета на заголовок -->
                                     <input type="color" class="form-control" id="exampleColorInput" value="{{$link->title_color}}" title="Choose your color" name="title_color" style="height: 40px;"><br>
                                     <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_title_color_def')</span>
@@ -517,12 +700,30 @@
                                         <label class="form-check-label" for="inlineRadio3">lg</label>
                                     </div>
                                 </div>
-                                <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.m_round')</label>
+                                <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.p_round')</label>
                                 <div class="mb-3 text-center d-flex justify-content-center"> <!-- Добивить округление углов -->
                                     <input type="range" class="form-range" min="1" max="50" step="1" id="customRange2" name="rounded" value="{{$link->rounded}}">
                                 </div>
-                        <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-primary">@lang('app.a_edit_post')</button>
+                                <div class="mb-3 text-center">
+                                    <div>
+                                        <select class="form-select" aria-label="Default select example" name="animation">
+                                            <option selected>Выбрать анимацию...</option>
+                                            <option value="animate__animated animate__pulse animate__infinite infinite">Pulse</option>
+                                            <option value="animate__animated animate__headShake animate__infinite infinite">Head Shake</option>
+                                        </select>
+                                    </div>
+                                    <label style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Вы можете выделить свою ссылку от остальных выбрав одну из анимаций</label>
+                                </div>
+                                <div class="mb-3 text-center">
+                                    <div class="form-check text-center">
+                                        <input @if($link->pinned == 1) checked @endif name="pinned" class="form-check-input" type="checkbox" value="{{true}}" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Закрепите ссылку и она всегда будет вверху списка
+                                        </label>
+                                    </div>
+                                </div>
+                            <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">@lang('app.p_edit_prof')</button>
                             </div>
                         </div>
                     </form>
@@ -544,10 +745,11 @@
                     ],
                     render: {
                         option: function(data, escape) {
-                            return '<div>' +
-                                    '<img style="margin-right: 16px" width="30" src="' + escape(data.img) + '">' +
-                                    '<span class="title">' + escape(data.title) + '</span>' +
-                                '</div>';
+                            return  '<table>' +
+                                    '<tr>' +
+                                        '<img  width="90" src="' + escape(data.img) + '">' +
+                                    '</tr>' +
+                                '</table>';
                         },
                         item: function(data, escape) {
                             return  '<img style="margin-right: 16px" width="30" src="' + escape(data.img) + '">' + '<span class="title">' + escape(data.title) + '</span>';

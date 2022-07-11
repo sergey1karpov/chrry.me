@@ -4,6 +4,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{{ $user->name }}</title>
+        {{-- Animation animate.style --}}
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
 
         {{-- Bootstrap 5 --}}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -68,6 +70,86 @@
 			    background-size: cover;
 			    background-repeat: no-repeat;
 			}
+            @font-face {
+                font-family: Oi; /* Имя шрифта */
+                src: url({{asset('public/fonts/Oi-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+            }
+            @font-face {
+                font-family: Rampart One; /* Имя шрифта */
+                src: url({{asset('public/fonts/RampartOne-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+            }
+            @font-face {
+                font-family: Yomogi; /* Имя шрифта */
+                src: url({{asset('public/fonts/Yomogi-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+            }
+            @font-face {
+                font-family: Yuji Syuku; /* Имя шрифта */
+                src: url({{asset('public/fonts/YujiSyuku-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+            }
+            @font-face {
+                font-family: Zen Kurenaido; /* Имя шрифта */
+                src: url({{asset('public/fonts/ZenKurenaido-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+            }
+            @font-face {
+                font-family: Comforter; /* Имя шрифта */
+                src: url({{asset('public/fonts/Comforter-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+            }
+            @font-face {
+                font-family: Murecho; /* Имя шрифта */
+                src: url({{asset('public/fonts/Murecho-VariableFont_wght.ttf')}}); /* Путь к файлу со шрифтом */
+            }
+            @font-face {
+                font-family: Train One; /* Имя шрифта */
+                src: url({{asset('public/fonts/TrainOne-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+            }
+            @font-face {
+                font-family: Alumni Sans; /* Имя шрифта */
+                src: url({{asset('public/fonts/AlumniSans-VariableFont_wght.ttf')}}); /* Путь к файлу со шрифтом */
+            }
+            @font-face {
+                font-family: DotGothic16; /* Имя шрифта */
+                src: url({{asset('public/fonts/DotGothic16-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+            }
+            @font-face {
+                font-family: Noto Sans Mono; /* Имя шрифта */
+                src: url({{asset('public/fonts/NotoSansMono-VariableFont_wdth,wght.ttf')}}); /* Путь к файлу со шрифтом */
+            }
+            @font-face {
+                font-family: Podkova; /* Имя шрифта */
+                src: url({{asset('public/fonts/Podkova-VariableFont_wght.ttf')}}); /* Путь к файлу со шрифтом */
+            }
+            @font-face {
+                font-family: Spectral SC; /* Имя шрифта */
+                src: url({{asset('public/fonts/SpectralSC-ExtraLight.ttf')}}); /* Путь к файлу со шрифтом */
+            }
+            @font-face {
+                font-family: JetBrains Mono; /* Имя шрифта */
+                src: url({{asset('public/fonts/JetBrainsMono-VariableFont_wght.ttf')}}); /* Путь к файлу со шрифтом */
+            }
+            @font-face {
+                font-family: Roboto; /* Имя шрифта */
+                src: url({{asset('public/fonts/Roboto-Light.ttf')}}); /* Путь к файлу со шрифтом */
+            }
+            @font-face {
+                font-family: Open Sans; /* Имя шрифта */
+                src: url({{asset('public/fonts/OpenSans-VariableFont_wdth,wght.ttf')}}); /* Путь к файлу со шрифтом */
+            }
+            @font-face {
+                font-family: Montserrat; /* Имя шрифта */
+                src: url({{asset('public/fonts/Montserrat-VariableFont_wght.ttf')}}); /* Путь к файлу со шрифтом */
+            }
+            @font-face {
+                font-family: Noto Sans; /* Имя шрифта */
+                src: url({{asset('public/fonts/NotoSans-Light.ttf')}}); /* Путь к файлу со шрифтом */
+            }
+            @font-face {
+                font-family: Russo One; /* Имя шрифта */
+                src: url({{asset('public/fonts/RussoOne-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+            }
+            @font-face {
+                font-family: Poiret One; /* Имя шрифта */
+                src: url({{asset('public/fonts/PoiretOne-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+            }
         </style>
 
         @foreach($links as $link)
@@ -149,14 +231,13 @@
 		      	</div>
 	    	</div>
 	    </div>
-
-	    <!-- Ссылки -->
-        <table class="table">
+        <!-- Закрепленные ссылки -->
+        <table class="table" style="margin-bottom: 0">
             <tbody>
-                @foreach($links as $link)
+                @foreach($pinnedLinks as $link)
                     <tr data-index="{{$link->id}}" data-position="{{$link->position}}">
                         <td style="padding-left: 0; padding-right: 0; padding-bottom: 0; border: 0">
-                        <div class="container" style="padding-left:8px; padding-right:8px" @if($link->type == 'POST') id="post{{$link->id}}" data-bs-toggle="modal" data-bs-target="#post-{{$link->id}}" @endif>
+                        <div class="container @if($link->animation) {{$link->animation}} @endif" style="padding-left:8px; padding-right:8px" @if($link->type == 'POST') id="post{{$link->id}}" data-bs-toggle="modal" data-bs-target="#post-{{$link->id}}" @endif>
                             <!-- Если тип ссылки POST ссылка не работает\не кликабельно -->
                             @if($link->type != 'POST')<a href="{{$link->link}}" style="text-decoration:none" onclick="countRabbits{{$link->id}}()">@elseif($link->type == 'POST') <a style="text-decoration:none" onclick="countRabbits{{$link->id}}()"> @endif
                                 <div class="row ms-1 me-1 card {{$link->shadow}}" style="background-color:rgba({{$link->background_color}}, {{$link->transparency}}); border: 0; margin-top: 8px; border-radius: {{$link->rounded}}px; background-position: center">
@@ -182,15 +263,209 @@
                                         <!-- Текст ссылки -->
                                         <div class=" col-10 text-center">
                                             <div class="me-5 ms-5">
-                                                <h4 class="" style="font-family: 'Inter', sans-serif; line-height: 1.5; font-size: 0.9rem; margin: 0;color: {{$link->title_color}}; @if($link->photo == '' && $link->photos == '') margin-top: 14px; margin-bottom: 14px @endif">{{$link->title}}</h4>
+
+                                                <h4 class="" style="font-family: '{{$link->font}}', sans-serif; line-height: 1.5; font-size: {{$link->font_size}}rem; margin: 0;color: {{$link->title_color}}; @if($link->photo == '' && $link->photos == '') margin-top: 14px; margin-bottom: 14px @endif">{{$link->title}}</h4>
                                             </div>
                                         </div>
                                         <!-- Пустой div -->
                                         <div class="col-1">
-                                            @if(Auth::user()->id == $user->id)
-                                                <div id="up" class="imgg" style="background-image: url(https://i.ibb.co/VLbJkrG/dots.png);">
-                                                    <img src="https://i.ibb.co/VLbJkrG/dots.png" width="20">
+                                            @if(Auth::check())
+                                                @if(Auth::user()->id == $user->id)
+                                                    <div id="up" class="imgg" style="background-image: url(https://i.ibb.co/VLbJkrG/dots.png);">
+                                                        <img src="https://cdn3.iconfinder.com/data/icons/office-outline-15/64/Office_Icon_Set_Outline-10-512.png" width="20">
+                                                    </div>
+                                                @endif
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            @if($link->type != 'POST')</a>@endif
+                        </div>
+
+                        <!-- Ссылка типа POST -->
+                        @if($link->type == 'POST')
+                            <div class="modal fade" id="post-{{$link->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" style="margin: 0">
+                                    <div class="modal-content " style="border-radius: 0">
+                                        <!-- Шапка -->
+                                        <div class="modal-header p-1" style="border: 0">
+                                            <div class="col-6 d-flex justify-content-start">
+                                                <button style="border: 0; background-color: white" type="button" data-bs-dismiss="modal" aria-label="Close" class="mt-1">
+                                                    <img src="https://i.ibb.co/DM6hKmk/bbbbbbbbbbb.png" class="img-fluid" style="width:20px; margin-bottom: 3px">
+                                                </button>
+                                            </div>
+                                            <div class="col-6 d-flex justify-content-end">
+                                                <button data-bs-toggle="modal" data-bs-target="#btn{{$link->id}}" style="border: 0; background-color: white" type="button" data-bs-dismiss="modal" aria-label="Close" class="mt-1">
+                                                    <img src="https://icon-library.com/images/three-dots-icon/three-dots-icon-26.jpg" class="img-fluid" style="width:20px; margin-bottom: 3px">
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="ms-2 me-2 mb-2 mt-3">
+                                            <h5 style="font-family: 'Jost', sans-serif; font-size: 2.4rem; line-height: 1;" class="modal-title" id="exampleModalLabel">{{$link->title}}</h5>
+                                            <div class="row mt-4">
+                                                <div class="col-8 d-flex align-items-start">
+                                                    <h5 style="font-family: 'Jost', sans-serif; font-size: 1rem; line-height: 1;" class="modal-title" id="exampleModalLabel">
+                                                        {{$user->name}}
+                                                        @if($user->verify == 1)
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-patch-check-fill mb-1" viewBox="0 0 16 16" style="color: {{$user->verify_color}}">
+                                                                <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
+                                                            </svg>
+                                                        @endif
+                                                    </h5>
                                                 </div>
+                                                <div class="col-4 d-flex justify-content-end align-items-end" style="margin-bottom: 3px">
+                                                    <h5 data-bs-toggle="modal" data-bs-target="#data{{$link->id}}" style="font-family: 'Jost', sans-serif; font-size: 0.8rem; line-height: 1;" class="modal-title" id="exampleModalLabel; color: #292828">{{ Carbon\Carbon::parse($link->created_at)->format('Y-m-d') }}</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-body" style="padding: 0;>
+
+                                            <!-- Фотки -->
+                                            @if($link->photos)
+                                                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                                                    <div class="carousel-inner">
+                                                    </div>
+                                                </div>
+                                            @endif
+                                            <div id="demo" class="carousel slide" data-bs-ride="carousel">
+                                                <div class="carousel-inner" >
+                                                    @if($link->photos)
+                                                        @foreach(unserialize($link->photos) as $key => $photo)
+                                                            <div class="carousel-item {{$key == 0 ? 'active' : '' }}">
+                                                                <img src="{{$photo}}" alt="Los Angeles" class="img-fluid d-block w-100">
+                                                            </div>
+                                                        @endforeach
+                                                    @endif
+                                                </div>
+                                                @if($link->photos)
+                                                    @php
+                                                        $photos = [];
+                                                        foreach(unserialize($link->photos) as $photo) {
+                                                            $photos[] = $photo;
+                                                        }
+                                                    @endphp
+                                                @endif
+                                                @if($link->photos)
+                                                    @if(count($photos) > 1)
+                                                        <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+                                                            <span class="carousel-control-prev-icon"></span>
+                                                        </button>
+                                                        <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+                                                            <span class="carousel-control-next-icon"></span>
+                                                        </button>
+                                                    @endif
+                                                @endif
+                                            </div>
+
+                                            <!-- Если фоток нет, то видео -->
+                                            @if(!$link->photos)
+                                                @if($link->video)
+                                                    <div class="embed-responsive embed-responsive-16by9 mt-2 ">
+                                                        <x-embed url="{{$link->video}}" aspect-ratio="4:3" />
+                                                    </div>
+                                                @endif
+                                            @endif
+
+                                            <!-- Текст -->
+                                            @if($link->full_text)
+                                                <div class="me-2 ms-2 mb-4" style="white-space: pre-line; line-height: 1.2;">
+                                                    {{$link->full_text}}
+                                                </div>
+                                            @endif
+
+                                            <!-- Видео если есть фотки -->
+                                            @if($link->photos)
+                                                @if($link->video)
+                                                    <div class="embed-responsive embed-responsive-16by9 mt-2 ">
+                                                        <x-embed url="{{$link->video}}" aspect-ratio="4:3" />
+                                                    </div>
+                                                @endif
+                                            @endif
+
+                                            <!-- Медиа -->
+                                            @if($link->media)
+                                                <div class="">
+                                                    {!!$link->media!!}
+                                                </div>
+                                            @endif
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Модалка для меню поста -->
+                            <div class="modal fade" id="btn{{$link->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel" style="font-family: 'Jost', sans-serif; font-size: 1.3rem;">Копировать ссылку на пост</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body text-center">
+                                            <input class="mt-3" id="foo{{$link->id}}" value="http://chrry.me/{{$user->slug}}#post-{{$link->id}}">
+
+                                            <!-- Trigger -->
+                                            <button class="mb-3 post-btn{{$link->id}}" data-clipboard-target="#foo{{$link->id}}" style="border: 0; background-color: white">
+                                                <img class="mb-1" src="http://cdn.onlinewebfonts.com/svg/img_55411.png" alt="Copy to clipboard" width="20">
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </td>
+                        </tr>
+                    @endif
+                @endforeach
+            </tbody>
+        </table>
+
+
+	    <!-- Ссылки -->
+        <table class="table">
+            <tbody>
+                @foreach($links as $link)
+                    <tr data-index="{{$link->id}}" data-position="{{$link->position}}">
+                        <td style="padding-left: 0; padding-right: 0; padding-bottom: 0; border: 0">
+                        <div class="container @if($link->animation) {{$link->animation}} @endif" style="padding-left:8px; padding-right:8px" @if($link->type == 'POST') id="post{{$link->id}}" data-bs-toggle="modal" data-bs-target="#post-{{$link->id}}" @endif>
+                            <!-- Если тип ссылки POST ссылка не работает\не кликабельно -->
+                            @if($link->type != 'POST')<a href="{{$link->link}}" style="text-decoration:none" onclick="countRabbits{{$link->id}}()">@elseif($link->type == 'POST') <a style="text-decoration:none" onclick="countRabbits{{$link->id}}()"> @endif
+                                <div class="row ms-1 me-1 card {{$link->shadow}}" style="background-color:rgba({{$link->background_color}}, {{$link->transparency}}); border: 0; margin-top: 8px; border-radius: {{$link->rounded}}px; background-position: center">
+                                    <div class="d-flex align-items-center justify-content-start mt-1 mb-1" style="padding-left: 4px; padding-right: 4px;">
+                                        <!-- Картинка -->
+                                        <div class="col-1">
+                                            @if($link->type == 'POST')
+                                                @if($link->photos)
+                                                    @foreach(unserialize($link->photos) as $key => $photo)
+                                                        @if($key == 0)
+                                                            <img src="{{$photo}}" style="width:48px; border-radius: {{$link->rounded}}px;">
+                                                        @endif
+                                                    @endforeach
+                                                @endif
+                                            @elseif($link->type != 'POST')
+                                                @if($link->icon)
+                                                    <img src="{{$link->icon}}" style="width:48px; border-radius: {{$link->rounded}}px;">
+                                                @elseif($link->icon == false)
+                                                    <img src="{{$link->photo}}" style="width:48px; border-radius: {{$link->rounded}}px;">
+                                                @endif
+                                            @endif
+                                        </div>
+                                        <!-- Текст ссылки -->
+                                        <div class=" col-10 text-center">
+                                            <div class="me-5 ms-5">
+                                                <h4 class="" style="font-family: '{{$link->font}}', sans-serif; line-height: 1.5; font-size: {{$link->font_size}}rem; margin: 0;color: {{$link->title_color}}; @if($link->photo == '' && $link->photos == '') margin-top: 14px; margin-bottom: 14px @endif">{{$link->title}}</h4>
+                                            </div>
+                                        </div>
+                                        <!-- Пустой div -->
+                                        <div class="col-1">
+                                            @if(Auth::check())
+                                                @if(Auth::user()->id == $user->id)
+                                                    <div id="up" class="imgg" style="background-image: url(https://i.ibb.co/VLbJkrG/dots.png);">
+                                                        <img src="https://i.ibb.co/VLbJkrG/dots.png" width="20">
+                                                    </div>
+                                                @endif
                                             @endif
                                         </div>
                                     </div>

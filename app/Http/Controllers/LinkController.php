@@ -4,213 +4,208 @@ namespace App\Http\Controllers;
 
 use App\Models\Link;
 use App\Models\User;
-use App\Http\Requests\LinkRequest;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Auth;
-use Intervention\Image\ImageManagerStatic as Image;
-use App\Http\Requests\PostRequest;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Auth;
 
+/**
+ * [Работа со ссылками/постами]
+ */
 class LinkController extends Controller
 {
-    public function allLinks($id)
+    /**
+     * @param int $id
+     *
+     * @return mixed
+     *
+     * Возвращает страницу со всеми ссылками /links
+     */
+    public function allLinks(int $id) : mixed
     {
-        $user = User::where('id', $id)->firstOrFail();
-        $links = Link::where('user_id', $user->id)->orderBy('position')->get();
-
-        $icons  = public_path('images/social');
-        $allIconsInsideFolder = File::files($icons);
-
-        return view('user.links', compact('user', 'links', 'allIconsInsideFolder'));
-    }
-
-    public function addLink(int $id, LinkRequest $request)
-    {
-        Link::addLink($id, $request);
-        session()->flash('message', 'Ссылка успешно добавлена');
-        return redirect()->back();
-    }
-
-    public function editLink($id, $link, LinkRequest $request)
-    {
-        Link::editLink($id, $link, $request);
-        session()->flash('message', 'Ссылка успешно изменина');
-        return redirect()->back();
-    }
-
-    public function delLinkPhoto($id, $link)
-    {
-        Link::delLinkPhoto($id, $link);
-        return redirect()->back();
-    }
-
-    public function delLink($id, $link)
-    {
-        Link::delLink($id, $link);
-        session()->flash('message', 'Ссылка успешно удалена(');
-        return redirect()->back();
-    }
-
-    public function editAllLink($id, Request $request)
-    {
-        Link::where('user_id', $id)->update([
-            'title_color' => $request->title_color,
-            'background_color' => Link::convertBackgroundColor($request->background_color),
-            'transparency' => $request->transparency,
-            'shadow' => $request->shadow,
-            'rounded' => $request->rounded,
-        ]);
-
-        if($request->withoutTransparency) {
-            Link::where('user_id', $id)->update([
-                'transparency' => null,
-            ]);
-        }
-
-        return redirect()->back();
-    }
-
-    public function searchLink($id, Request $request)
-    {
-        $user = User::where('id', $id)->firstOrFail();
-        $links = Link::search($request->search)->where('user_id', $user->id)->orderBy('id', 'desc')->get();
-
-        $icons  = public_path('images/social');
-        $allIconsInsideFolder = File::files($icons);
-
-        return view('user.search', compact('user', 'links', 'allIconsInsideFolder'));
-    }
-
-    public function sortLink($id)
-    {
-        if (isset($_POST['update'])) {
-            foreach($_POST['positions'] as $position) {
-               $index = $position[0];
-               $newPosition = $position[1];
-
-               Link::where('user_id', $id)->where('id', $index)->update([
-                    'position' => $newPosition,
-               ]);
-            }
-        }
-    }
-
-    public function addPost($id, PostRequest $request)
-    {
-        $user = User::where('id', $id)->firstOrFail();
-
-        if(isset($request->photos)) {
-            if(count($request->photos) > 10) {
-                return redirect()->back()->with('error','К посту можно прикрепить не более 10 изображений');
-            }
-        }
-
-        if($request->check_last_link == 'penis') {
-
-            $lastLink = Link::where('user_id', $id)->orderBy('created_at', 'desc')->first();
-
-            Link::create([
-                'type' => 'POST',
-                'user_id' => $user->id,
-                'title' => $request->title,
-                'full_text' => $request->full_text,
-                'link' => $request->link,
-                'photos' => isset($request->photos) ? $this->addPhotos($request->photos) : null,
-                'video' => $request->video,
-                'media' => $request->media,
-                'shadow' => $lastLink->shadow,
-                'rounded' => $lastLink->rounded,
-                'title_color' => $lastLink->title_color,
-                'background_color' => $lastLink->background_color,
-                'title_color_hex' => $lastLink->title_color_hex,
-                'background_color_hex' => $lastLink->background_color_hex,
-                'transparency' => $lastLink->transparency,
-            ]);
+        if($id == Auth::user()->id) {
+            $user = User::where('id', $id)->firstOrFail();
+            $links = Link::where('user_id', $user->id)->where('pinned', null)->orderBy('position')->get();
+            $pinnedLinks = Link::where('user_id', $user->id)->where('pinned', true)->orderBy('position')->get();
+            $icons  = public_path('images/social');
+            $allIconsInsideFolder = File::files($icons);
+            return view('user.links', compact('user', 'links', 'allIconsInsideFolder','pinnedLinks'));
         } else {
-            Link::create([
-                'type' => 'POST',
-                'user_id' => $user->id,
-                'title' => $request->title,
-                'full_text' => $request->full_text,
-                'link' => $request->link,
-                'photos' => isset($request->photos) ? $this->addPhotos($request->photos) : null,
-                'video' => $request->video,
-                'media' => $request->media,
-                'shadow' => $request->shadow,
-                'rounded' => $request->rounded,
-                'title_color' => $request->title_color,
-                'background_color' => Link::convertBackgroundColor($request->background_color),
-                'title_color_hex' => $request->title_color,
-                'background_color_hex' => $request->background_color,
-                'transparency' => $request->transparency,
-            ]);
+            return abort(404);
         }
-
-        return redirect()->back();
     }
 
-    public function editPost($id, $link, PostRequest $request)
+    /**
+     * @param int $id
+     * @param Request $request
+     *
+     * @return [type]
+     *
+     * Добавление ссылки или поста, в зависимости от значения $request->type
+     */
+    public function addLink(int $id, Request $request)
     {
-        if(isset($request->photos)) {
-            if(count($request->photos) > 10) {
-                return redirect()->back()->with('error','К посту можно прикрепить не более 10 изображений');
+        if($id == Auth::user()->id) {
+            if($request->type == 'LINK') {
+                Link::addLink($id,$request);
+            }
+            if($request->type == 'POST') {
+                if(isset($request->photos)) {
+                    if(count($request->photos) > 10) {
+                        return redirect()->back()->with('error','К посту можно прикрепить не более 10 изображений');
+                    }
+                }
+                Link::addPost($id,$request);
+            }
+            return redirect()->back();
+        } else {
+            return abort(404);
+        }
+    }
+
+    /**
+     * @param int $id
+     * @param int $link
+     * @param Request $request
+     *
+     * @return [type]
+     *
+     * Редактирование ссылки или поста, в зависимости от $request->type
+     */
+    public function editLink(int $id, int $link, Request $request)
+    {
+        if($id == Auth::user()->id) {
+            if($request->type == 'LINK') {
+                Link::editLink($id,$link,$request);
+            }
+            if($request->type == 'POST') {
+                if(isset($request->photos)) {
+                    if(count($request->photos) > 10) {
+                        return redirect()->back()->with('error','К посту можно прикрепить не более 10 изображений');
+                    }
+                }
+                Link::editPost($id,$link,$request);
+            }
+            return redirect()->back();
+        } else {
+            return abort(404);
+        }
+    }
+
+    /**
+     * @param int $id
+     * @param Request $request
+     *
+     * @return [type]
+     *
+     * Массовое изменение ссылок
+     */
+    public function editAllLink(int $id, Request $request) : mixed
+    {
+        if($id == Auth::user()->id) {
+            Link::editAll($id, $request);
+            return redirect()->back();
+        } else {
+            return abort(404);
+        }
+    }
+
+    /**
+     * @param mixed $id
+     * @param mixed $link
+     * @param Request $request
+     *
+     * @return [type]
+     *
+     * Удаление фотографий в ссылке и посте в зависимости от параметра $request->type
+     */
+    public function delPhoto($id, $link, Request $request) : mixed
+    {
+        if($id == Auth::user()->id) {
+            Link::delLinkPhoto($id, $link, $request);
+            return redirect()->back();
+        } else {
+            return abort(404);
+        }
+    }
+
+    /**
+     * @param mixed $id
+     * @param mixed $link
+     *
+     * @return [type]
+     *
+     * Удаление ссылки и поста
+     */
+    public function delLink($id, $link) : mixed
+    {
+        if($id == Auth::user()->id) {
+            Link::where('user_id', $id)->where('id', $link)->delete();
+            return redirect()->back();
+        } else {
+            return abort(404);
+        }
+    }
+
+    /**
+     * @param int $id
+     * @param int $link
+     *
+     * @return mixed
+     *
+     * Удаление иконки ссылки
+     *
+     * P.S. передалать под фотографию
+     */
+    public function delLinkIcon(int $id, int $link) : mixed
+    {
+        if($id == Auth::user()->id) {
+            Link::where('id', $link)->update(['icon' => null]);
+            return redirect()->back();
+        } else {
+            return abort(404);
+        }
+    }
+
+    /**
+     * @param mixed $id
+     *
+     * @return [type]
+     *
+     * Сортировка ссылок на js
+     */
+    public function sortLink(int $id) : void
+    {
+        if($id == Auth::user()->id) {
+            if(isset($_POST['update'])) {
+                foreach($_POST['positions'] as $position) {
+                    $index = $position[0];
+                    $newPosition = $position[1];
+                    Link::where('user_id', $id)->where('id', $index)->update([
+                        'position' => $newPosition,
+                    ]);
+                }
             }
         }
-
-        $user = User::where('id', $id)->firstOrFail();
-        $link = Link::where('id', $link)->where('user_id', $id)->firstOrFail();
-
-        Link::where('id', $link->id)->update([
-            'title' => $request->title,
-            'full_text' => $request->full_text,
-            'link' => $request->link,
-            'photos' => isset($request->photos) ? $this->addPhotos($request->photos) : $link->photos,
-            'video' => $request->video,
-            'media' => $request->media,
-            'shadow' => isset($request->shadow) ? $request->shadow : $link->shadow,
-            'rounded' => isset($request->rounded) ? $request->rounded : $link->rounded,
-            'title_color' => isset($request->title_color) ? $request->title_color : $link->title_color,
-            'background_color' => Link::convertBackgroundColor($request->background_color),
-            'title_color_hex' => isset($request->title_color_hex) ? $request->title_color_hex : $link->title_color_hex,
-            'background_color_hex' => isset($request->background_color) ? $request->background_color : $link->background_color_hex,
-            'transparency' => isset($request->transparency) ? $request->transparency : $link->transparency,
-        ]);
-
-        return redirect()->back();
     }
 
-    public function addPhotos($photos)
+    /**
+     * @param int $id
+     * @param Request $request
+     *
+     * @return mixed
+     *
+     * Laravel Scout search service
+     */
+    public function searchLink(int $id, Request $request) : mixed
     {
-        $urls = [];
-        foreach($photos as $photo) {
-            $path = Storage::putFile('public/' . Auth::user()->id . '/posts', $photo);
-            $strrpos = strrpos($path, '/');
-            $mb_substr = mb_substr($path, $strrpos);
-            $name = $mb_substr;
-            $img = Image::make($photo->getRealPath())->fit(500);
-            $img->save('../storage/app/public/'. Auth::user()->id. '/posts'. $name);
-            $urls[] = '/'.$img->dirname . '/' . $img->basename;
+        if($id == Auth::user()->id) {
+            $user = User::where('id', $id)->firstOrFail();
+            $links = Link::search($request->search)->where('user_id', $user->id)->orderBy('id', 'desc')->get();
+            $icons  = public_path('images/social');
+            $allIconsInsideFolder = File::files($icons);
+            return view('user.search', compact('user', 'links', 'allIconsInsideFolder'));
+        } else {
+            return abort(404);
         }
-
-        return serialize($urls);
-    }
-
-    public function delPostPhoto($id, $link)
-    {
-        Link::where('id', $link)->update([
-            'photos' => null,
-        ]);
-
-        return redirect()->back();
-    }
-
-    public function delLinkIcon($id, $link)
-    {
-        Link::where('id', $link)->update([
-            'icon' => null,
-        ]);
-
-        return redirect()->back();
     }
 }

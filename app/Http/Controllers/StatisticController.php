@@ -7,12 +7,25 @@ use App\Models\User;
 
 class StatisticController extends Controller
 {
-    public function clickLinkStatistic()
+    /**
+     * @return void
+     *
+     * Сбор статистики по кликам по ссылкам
+     */
+    public function clickLinkStatistic() : void
     {
         StatsService::clickLinkStatistic();
     }
 
-    public function showClickLinkStatistic($id, $link)
+    /**
+     * @param int $id
+     * @param int $link
+     *
+     * @return mixed
+     *
+     * Отображение статистики по кликам за день, месяц, год, всё время
+     */
+    public function showClickLinkStatistic(int $id, int $link) : mixed
     {
         $user = User::where('id', $id)->firstOrFail();
 

@@ -41,7 +41,7 @@ Route::post('/{id}/add-post', [LinkController::class, 'addPost'])->name('addPost
 Route::patch('/{id}/add-link/{link}/edit', [LinkController::class, 'editLink'])->name('editLink');
 Route::patch('/{id}/add-link/{link}/edit-post', [LinkController::class, 'editPost'])->name('editPost');
 Route::delete('/{id}/add-link/{link}/delete', [LinkController::class, 'delLink'])->name('delLink');
-Route::patch('/{id}/add-link/{link}/delete-photo', [LinkController::class, 'delLinkPhoto'])->name('delLinkPhoto');
+Route::patch('/{id}/add-link/{link}/delete-photo', [LinkController::class, 'delPhoto'])->name('delPhoto');
 Route::patch('/{id}/add-link/{link}/delete-icon', [LinkController::class, 'delLinkIcon'])->name('delLinkIcon');
 Route::patch('/{id}/add-link/{link}/delete-photo-post', [LinkController::class, 'delPostPhoto'])->name('delPostPhoto');
 Route::patch('/{id}/edit-links', [LinkController::class, 'editAllLink'])->name('editAllLink');
