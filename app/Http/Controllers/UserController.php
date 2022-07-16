@@ -10,6 +10,7 @@ use App\Services\StatsService;
 use App\Http\Requests\RegNewUserRequest;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -23,9 +24,10 @@ class UserController extends Controller
     public function userHomePage(string $slug) : mixed
     {
         $user = User::where('slug', $slug)->firstOrFail();
-        $links = \DB::table('links')->where('user_id', $user->id)->where('pinned', null)->orderBy('position')->get();
+        $links = \DB::table('links')->where('user_id', $user->id)->where('pinned', false)->orderBy('position')->get();
         $pinnedLinks = \DB::table('links')->where('user_id', $user->id)->where('pinned', true)->orderBy('position')->get();
         StatsService::createUserStats($user);
+        Carbon::setLocale('ru');
         return view('user.home', compact('user', 'links', 'pinnedLinks'));
     }
 

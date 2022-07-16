@@ -70,6 +70,16 @@
 			    background-size: cover;
 			    background-repeat: no-repeat;
 			}
+            .img-small {
+			    width: 40px;
+			    height: 40px;
+			    border-radius: 50%;
+			    margin-right: 0;
+			    background-position: center center;
+			    -wekit-background-size: cover;
+			    background-size: cover;
+			    background-repeat: no-repeat;
+			}
             @font-face {
                 font-family: Oi; /* Имя шрифта */
                 src: url({{asset('public/fonts/Oi-Regular.ttf')}}); /* Путь к файлу со шрифтом */
@@ -182,7 +192,49 @@
             </script>
         @endforeach
 
+        @foreach($pinnedLinks as $link)
+            <script type="text/javascript">
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                function countRabbits{{$link->id}}() {
+
+                    let guest = '{{$_SERVER['REMOTE_ADDR']}}';
+                    let linkId = '{{$link->id}}';
+                    let userId = '{{$user->id}}';
+
+                    $.ajax({
+                        url: userId+"/link",
+                        type: 'POST',
+                        data: { user_id: userId, link_id: linkId, guest_ip: guest, func: 'func_data' },
+                        success: function(data){
+                            console.log('GOOD');
+                        },
+                        error: function(){
+                            console.log('ERROR');
+                        }
+                    })
+                }
+            </script>
+        @endforeach
+
         @foreach($links as $link)
+            <script>
+                $(document).ready(function(){
+                    var url = document.location.href;
+
+                    if (url == 'http://chrry.me/{{$user->slug}}#post-{{$link->id}}') {
+                        $("#post-{{$link->id}}").modal('show');
+                    }
+                });
+            </script>
+        @endforeach
+
+        @foreach($pinnedLinks as $link)
             <script>
                 $(document).ready(function(){
                     var url = document.location.href;
@@ -286,22 +338,28 @@
                         @if($link->type == 'POST')
                             <div class="modal fade" id="post-{{$link->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" style="margin: 0">
-                                    <div class="modal-content " style="border-radius: 0">
+                                    <div id="body{{$link->id}}" class="modal-content bg-light text-dark" style="border-radius: 0; border: 0;">
                                         <!-- Шапка -->
-                                        <div class="modal-header p-1" style="border: 0">
-                                            <div class="col-6 d-flex justify-content-start">
-                                                <button style="border: 0; background-color: white" type="button" data-bs-dismiss="modal" aria-label="Close" class="mt-1">
-                                                    <img src="https://i.ibb.co/DM6hKmk/bbbbbbbbbbb.png" class="img-fluid" style="width:20px; margin-bottom: 3px">
+                                        <div class="modal-header p-1" style="border: 0;">
+                                            <div class="col-1 d-flex justify-content-start">
+                                                <button id="back{{$link->id}}" style="border: 0; background-color: white; padding-left:4px; padding-right:4px" type="button" data-bs-dismiss="modal" aria-label="Close" class="mt-1 rounded-circle">
+                                                    <img src="https://i.ibb.co/4NmvBx3/images-modified.png" class="img-fluid" style="width:20px; margin-bottom: 3px">
                                                 </button>
                                             </div>
-                                            <div class="col-6 d-flex justify-content-end">
-                                                <button data-bs-toggle="modal" data-bs-target="#btn{{$link->id}}" style="border: 0; background-color: white" type="button" data-bs-dismiss="modal" aria-label="Close" class="mt-1">
+                                            <div class="col-10 d-flex justify-content-center mt-2">
+                                                <div class="form-check form-switch">
+                                                    <input id="theme{{$link->id}}" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                                                    {{-- <label class="form-check-label" for="flexSwitchCheckDefault">Сменить тему</label> --}}
+                                                </div>
+                                            </div>
+                                            <div class="col-1 d-flex justify-content-end">
+                                                <button data-bs-toggle="modal" data-bs-target="#btn{{$link->id}}" style="border: 0; background-color: white; padding-left:4px; padding-right:4px" type="button" data-bs-dismiss="modal" aria-label="Close" class="mt-1 rounded-circle">
                                                     <img src="https://icon-library.com/images/three-dots-icon/three-dots-icon-26.jpg" class="img-fluid" style="width:20px; margin-bottom: 3px">
                                                 </button>
                                             </div>
                                         </div>
                                         <div class="ms-2 me-2 mb-2 mt-3">
-                                            <h5 style="font-family: 'Jost', sans-serif; font-size: 2.4rem; line-height: 1;" class="modal-title" id="exampleModalLabel">{{$link->title}}</h5>
+                                            <h5 style="font-family: 'Jost', serif; font-size: 2.4rem; line-height: 1;" class="modal-title" id="exampleModalLabel">{{$link->title}}</h5>
                                             <div class="row mt-4">
                                                 <div class="col-8 d-flex align-items-start">
                                                     <h5 style="font-family: 'Jost', sans-serif; font-size: 1rem; line-height: 1;" class="modal-title" id="exampleModalLabel">
@@ -314,7 +372,7 @@
                                                     </h5>
                                                 </div>
                                                 <div class="col-4 d-flex justify-content-end align-items-end" style="margin-bottom: 3px">
-                                                    <h5 data-bs-toggle="modal" data-bs-target="#data{{$link->id}}" style="font-family: 'Jost', sans-serif; font-size: 0.8rem; line-height: 1;" class="modal-title" id="exampleModalLabel; color: #292828">{{ Carbon\Carbon::parse($link->created_at)->format('Y-m-d') }}</h5>
+                                                    <h5 data-bs-toggle="modal" data-bs-target="#data{{$link->id}}" style=" font-size: 0.8rem; line-height: 1;" class="modal-title" id="exampleModalLabel; color: #292828">{{Carbon\Carbon::parse($link->created_at)->diffForHumans()}}</h5>
                                                 </div>
                                             </div>
                                         </div>
@@ -476,40 +534,46 @@
                         <!-- Ссылка типа POST -->
                         @if($link->type == 'POST')
                             <div class="modal fade" id="post-{{$link->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" style="margin: 0">
-                                    <div class="modal-content " style="border-radius: 0">
+                                <div class="modal-dialog" style="margin: 0;">
+                                    <div id="body{{$link->id}}" class="modal-content bg-light text-dark" style="border-radius: 0; border: 0;">
                                         <!-- Шапка -->
-                                        <div class="modal-header p-1" style="border: 0">
-                                            <div class="col-6 d-flex justify-content-start">
-                                                <button style="border: 0; background-color: white" type="button" data-bs-dismiss="modal" aria-label="Close" class="mt-1">
-                                                    <img src="https://i.ibb.co/DM6hKmk/bbbbbbbbbbb.png" class="img-fluid" style="width:20px; margin-bottom: 3px">
+                                        <div class="modal-header p-1" style="border: 0;">
+                                            <div class="col-1 d-flex justify-content-start">
+                                                <button id="back{{$link->id}}" style="border: 0; background-color: white; padding-left:4px; padding-right:4px" type="button" data-bs-dismiss="modal" aria-label="Close" class="mt-1 rounded-circle">
+                                                    <img src="https://i.ibb.co/4NmvBx3/images-modified.png" class="img-fluid" style="width:20px; margin-bottom: 3px">
                                                 </button>
                                             </div>
-                                            <div class="col-6 d-flex justify-content-end">
-                                                <button data-bs-toggle="modal" data-bs-target="#btn{{$link->id}}" style="border: 0; background-color: white" type="button" data-bs-dismiss="modal" aria-label="Close" class="mt-1">
+                                            <div class="col-10 d-flex justify-content-center mt-1">
+                                                <div class="form-check form-switch">
+                                                    <input id="theme{{$link->id}}" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                                                    {{-- <label class="form-check-label" for="flexSwitchCheckDefault">Сменить тему</label> --}}
+                                                </div>
+                                            </div>
+                                            <div class="col-1 d-flex justify-content-end">
+                                                <button data-bs-toggle="modal" data-bs-target="#btn{{$link->id}}" style="border: 0; background-color: white; padding-left:4px; padding-right:4px" type="button" data-bs-dismiss="modal" aria-label="Close" class="mt-1 rounded-circle">
                                                     <img src="https://icon-library.com/images/three-dots-icon/three-dots-icon-26.jpg" class="img-fluid" style="width:20px; margin-bottom: 3px">
                                                 </button>
                                             </div>
                                         </div>
                                         <div class="ms-2 me-2 mb-2 mt-3">
-                                            <h5 style="font-family: 'Jost', sans-serif; font-size: 2.4rem; line-height: 1;" class="modal-title" id="exampleModalLabel">{{$link->title}}</h5>
+                                            <h5 style="font-family: 'Jost', serif; font-size: 2.4rem; line-height: 1;" class="modal-title" id="exampleModalLabel">{{$link->title}}</h5>
                                             <div class="row mt-4">
                                                 <div class="col-8 d-flex align-items-start">
                                                     <h5 style="font-family: 'Jost', sans-serif; font-size: 1rem; line-height: 1;" class="modal-title" id="exampleModalLabel">
                                                         {{$user->name}}
                                                         @if($user->verify == 1)
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-patch-check-fill mb-1" viewBox="0 0 16 16" style="color: {{$user->verify_color}}">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-patch-check-fill " viewBox="0 0 16 16" style="color: {{$user->verify_color}}; margin-top: px">
                                                                 <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
                                                             </svg>
                                                         @endif
                                                     </h5>
                                                 </div>
-                                                <div class="col-4 d-flex justify-content-end align-items-end" style="margin-bottom: 3px">
-                                                    <h5 data-bs-toggle="modal" data-bs-target="#data{{$link->id}}" style="font-family: 'Jost', sans-serif; font-size: 0.8rem; line-height: 1;" class="modal-title" id="exampleModalLabel; color: #292828">{{ Carbon\Carbon::parse($link->created_at)->format('Y-m-d') }}</h5>
+                                                <div class="col-4 d-flex justify-content-end align-items-end" style="margin-top: 3px">
+                                                    <h5 data-bs-toggle="modal" data-bs-target="#data{{$link->id}}" style=" font-size: 0.8rem; line-height: 1;" class="modal-title" id="exampleModalLabel; color: #292828">{{Carbon\Carbon::parse($link->created_at)->diffForHumans()}}</h5>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="modal-body" style="padding: 0;>
+                                        <div class="modal-body" style="padding: 0;">
 
                                             <!-- Фотки -->
                                             @if($link->photos)
@@ -523,7 +587,7 @@
                                                     @if($link->photos)
                                                         @foreach(unserialize($link->photos) as $key => $photo)
                                                             <div class="carousel-item {{$key == 0 ? 'active' : '' }}">
-                                                                <img src="{{$photo}}" alt="Los Angeles" class="img-fluid d-block w-100">
+                                                                <img id="{{$link->id}}{{$key}}" src="{{$photo}}" alt="Los Angeles" class="img-fluid d-block w-100">
                                                             </div>
                                                         @endforeach
                                                     @endif
@@ -580,8 +644,6 @@
                                                 </div>
                                             @endif
 
-
-
                                         </div>
                                     </div>
                                 </div>
@@ -613,13 +675,103 @@
             </tbody>
         </table>
 
-        <div class="mt-3">
-            <!-- Отступ снизу под лого -->
-        </div>
+        {{-- <div class="mt-5 text-center fixed-bottom">
+            <img src="https://i.ibb.co/3TzQpM2/logo.png" class="img-fluid" width="50">
+        </div> --}}
 
     </body>
+    @foreach($links as $link)
+        <script type="text/javascript">
+            $( document ).ready(function() {
+                $("#theme{{$link->id}}").click(function() {
+                    var themeColor = $(this).is(':checked');
+                    if(themeColor == true) {
+                        $("#body{{$link->id}}").addClass('bg-dark').addClass('text-white-50').removeClass('bg-light').removeClass('text-dark');
+                    } else {
+                        $("#body{{$link->id}}").addClass('bg-light').addClass('text-dark').removeClass('bg-dark').removeClass('text-white-50');
+                    }
+                });
+            });
+        </script>
+    @endforeach
+
+    @foreach($pinnedLinks as $link)
+        <script type="text/javascript">
+            $( document ).ready(function() {
+                $("#theme{{$link->id}}").click(function() {
+                    var themeColor = $(this).is(':checked');
+                    if(themeColor == true) {
+                        $("#body{{$link->id}}").addClass('bg-dark').addClass('text-white-50').removeClass('bg-light').removeClass('text-dark');
+                    } else {
+                        $("#body{{$link->id}}").addClass('bg-light').addClass('text-dark').removeClass('bg-dark').removeClass('text-white-50');
+                    }
+                });
+            });
+        </script>
+    @endforeach
 
     @foreach($links as $link)
+        <script type="text/javascript">
+            var clipboard = new Clipboard('.post-btn{{$link->id}}');
+            clipboard.on('success', function(e) {
+                console.info('Действие:', e.action);
+                console.info('Текст:', e.text);
+                console.info('Триггер:', e.trigger);
+                e.clearSelection();
+            });
+            clipboard.on('error', function(e) {
+                console.error('Действие:', e.action);
+                console.error('Триггер:', e.trigger);
+            });
+        </script>
+
+        <script type="text/javascript">
+                $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+                });
+
+                $(document).ready(function () {
+                    $('table tbody').sortable({
+                        // delay:2000,
+                        handle:'#up',
+                        update: function (event, ui) {
+                            $(this).children().each(function (index) {
+                                    if ($(this).attr('data-position') != (index+1)) {
+                                        $(this).attr('data-position', (index+1)).addClass('updated');
+                                    }
+                            });
+
+                            saveNewPositions();
+                        }
+                    });
+                });
+
+                function saveNewPositions() {
+                    var userId = {{$user->id}};
+                    var positions = [];
+                    $('.updated').each(function () {
+                        positions.push([$(this).attr('data-index'), $(this).attr('data-position')]);
+                        $(this).removeClass('updated');
+                    });
+
+                    $.ajax({
+                        url: userId + "/ppp/sort",
+                        method: 'POST',
+                        dataType: 'text',
+                        data: {
+                            update: 1,
+                            positions: positions
+                        }, success: function (response) {
+                                console.log(response);
+                        }
+                    });
+                }
+            </script>
+    @endforeach
+
+    @foreach($pinnedLinks as $link)
         <script type="text/javascript">
             var clipboard = new Clipboard('.post-btn{{$link->id}}');
             clipboard.on('success', function(e) {

@@ -24,7 +24,7 @@ class LinkController extends Controller
     {
         if($id == Auth::user()->id) {
             $user = User::where('id', $id)->firstOrFail();
-            $links = Link::where('user_id', $user->id)->where('pinned', null)->orderBy('position')->get();
+            $links = Link::where('user_id', $user->id)->where('pinned', false)->orderBy('position')->get();
             $pinnedLinks = Link::where('user_id', $user->id)->where('pinned', true)->orderBy('position')->get();
             $icons  = public_path('images/social');
             $allIconsInsideFolder = File::files($icons);
