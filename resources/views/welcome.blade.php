@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Laravel</title>
+        <title>chrry.me</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
@@ -14,8 +14,8 @@
         <link href="https://fonts.googleapis.com/css2?family=Train+One&display=swap" rel="stylesheet">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
 
         <style type="text/css">
             html {
@@ -36,7 +36,7 @@
     <body class="h-100 text-center text-dark">
 
         {{-- Section 1 --}}
-        <div class="cover-container w-100 h-100 p-3 mx-auto section d-flex align-items-center justify-content-center" style="background-image: url('https://wallpaperaccess.com/full/1092107.jpg');">
+        <div class="cover-container w-100 h-100 p-3 mx-auto section d-flex align-items-center justify-content-center" style="background-image: url('https://agroplace.ro/wp-content/uploads/2019/12/cherries-2399x1600-cherry-fruits-hd-5264.jpg');">
             <main class="text-center">
 
                 {{-- <nav class="nav nav-masthead justify-content-center float-md-end fixed-top mt-2">
@@ -64,6 +64,9 @@
                             </div>
                             <div class="offcanvas-body">
                                 <ul class="navbar-nav me-auto mb-lg-0">
+                                    <li class="nav-item">
+                                        {{-- <a class="nav-link" aria-current="page" href="{{ route('shop') }}" style="font-family: 'Roboto', sans-serif; color: black;font-size: 1rem">Магазин</a> --}}
+                                    </li>
                                     @if (Route::has('login'))
                                         @auth
                                             <li class="nav-item">

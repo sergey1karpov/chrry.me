@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LinkController;
 use App\Http\Controllers\StatisticController;
+use App\Http\Controllers\ShopController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,9 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
+
+//Shop
+// Route::get('/shop', [ShopController::class, 'shop'])->name('shop');
 
 //Админка юзера
 Route::get('/{slug}', [UserController::class, 'userHomePage'])->name('userHomePage');
@@ -56,3 +60,4 @@ Route::get('/{id}/link/{link}', [StatisticController::class, 'showClickLinkStati
 //bord.link/cc/q1w2e3r4 - вшита
 Route::get('cc/{utag}', [UserController::class, 'editNewUserForm'])->name('editNewUserForm');
 Route::patch('cc/{utag}/registered', [UserController::class, 'editNewUser'])->name('editNewUser');
+
