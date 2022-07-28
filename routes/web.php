@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\LinkController;
 use App\Http\Controllers\StatisticController;
 use App\Http\Controllers\ShopController;
+use App\Http\Controllers\EventController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +50,15 @@ Route::patch('/{id}/add-link/{link}/delete-photo', [LinkController::class, 'delP
 Route::patch('/{id}/add-link/{link}/delete-icon', [LinkController::class, 'delLinkIcon'])->name('delLinkIcon');
 Route::patch('/{id}/add-link/{link}/delete-photo-post', [LinkController::class, 'delPostPhoto'])->name('delPostPhoto');
 Route::patch('/{id}/edit-links', [LinkController::class, 'editAllLink'])->name('editAllLink');
+
+//Мероприятия
+Route::get('/{id}/events', [EventController::class, 'allEvents'])->name('allEvents');
+Route::post('/{id}/events/add-event', [EventController::class, 'addEvent'])->name('addEvent');
+Route::patch('/{id}/events/{event}/edit', [EventController::class, 'editEvent'])->name('editEvent');
+Route::delete('/{id}/events/{event}/delete', [EventController::class, 'deleteEvent'])->name('deleteEvent');
+Route::patch('/{id}/events/{event}/delete-banner', [EventController::class, 'deleteBanner'])->name('deleteBanner');
+
+Route::patch('/{id}/events/edit', [EventController::class, 'editAllEvent'])->name('editAllEvent');
 
 //Сортировка ссылок
 Route::post('{id}/ppp/sort', [LinkController::class, 'sortLink'])->name('sortLink');

@@ -329,7 +329,7 @@ class Link extends Model
     {
         if($type == 'LINK') {
             if($img->getClientOriginalExtension() == 'gif') {
-                $path = Storage::putFile('public/' . Auth::user()->id . '/links', $img);
+                $path = Storage::putFile('public/' . Auth::user()->id, $img);
                 return '../storage/app/'.$path;
             }
             $image = Image::make($img->getRealPath())->fit(200);
@@ -340,7 +340,6 @@ class Link extends Model
         if($type == 'POST') {
             $urls = [];
             foreach($img as $photo) {
-                $path = Storage::putFile('public/' . Auth::user()->id . '/posts', $photo);
                 $img = Image::make($photo->getRealPath())->fit(500);
                 $img->save('../storage/app/public/'. Auth::user()->id. '/posts'. $photo->hashName());
                 $urls[] = '/'.$img->dirname . '/' . $img->basename;

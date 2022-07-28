@@ -28,6 +28,14 @@
         <!-- JQuery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
+		<!-- Date JQuery -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
+        <!-- Time -->
+        <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" /> 
+        <script src="{{asset('public/js/moment.js')}}" type="text/javascript"></script>
+        <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+
         <style type="text/css">
         	body{
 			    background: #f1f2f2;
@@ -277,15 +285,103 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-12 text-center" data-bs-toggle="modal" data-bs-target="#exampleModalEvent">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <h4 class="mt-4 text-center" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">Мероприятие</h4>
+                                            </div>
+                                            <div class="col-12">
+                                                <h4 class="mb-3 text-center" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">Добавите свое мероприятие</h4>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+                            </div>
+                        </div>
+					</div>
+				</div>
+			</div>	
+
+
+
+
+
+
+			<!-- БЛОК: Все материалы -->
+            <div class="row" style="margin-right: 0">
+				<div class="col-12" style="padding-right: 7px; padding: 0">
+					<div class="row d-flex justify-content-start shadow" style="background-color: #fe948d">
+						<div class="col-4" data-bs-toggle="collapse" href="#collapseExample1" role="button" aria-expanded="false" aria-controls="collapseExample1">
+							<div class="imgg m-5" style="background-image: url(https://i.ibb.co/k4ykGnT/xxxxx.png);"></div>
+						</div>
+						<div class="col-8 d-flex align-items-center" data-bs-toggle="collapse" href="#collapseExample1" role="button" aria-expanded="false" aria-controls="collapseExample1">
+							<div class="row">
+								<div class="col-12">
+									<h4  class="mt-4 text-start" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">Все материалы</h4>
+								</div>
+								<div class="col-12">
+									<h4  class="mb-3 text-start" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">Здесь находятся все ваши ссылки, посты и мероприятия. В соответствующем разделе вы можете изменять их и удалять</h4>
+								</div>
+							</div>
+						</div>
+                        <div class="collapse" id="collapseExample1" style="padding: 0">
+                            <div class="card card-body" style="background-color: #fe948d; border: 0; padding-left: 28px; padding-bottom: 0; padding-top: 0">
+
+                            	<div class="row d-flex justify-content-center">
+                            		<div class="col-6 text-center">
+                            			<div class="row" >
+											<a href="{{ route('allLinks', ['id' => Auth::user()->id]) }}" style="text-decoration: none; border: 0; padding: 0">
+												<div class="col-12">
+													<div class="row " style="background-color: #fe948d; height: 150px; margin: 0;">
+														<div class="col-12 d-flex align-items-center">
+															<div class="row">
+																<div class="col-12">
+																	<h4 class="mt-4 text-center" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">Ссылки\Посты</h4>
+																</div>
+																<div class="col-12">
+																	<h4 class="mb-3 text-center" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">Редактирование, удаление и просмотр статистики</h4>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</a>
+										</div>
+                            		</div>
+                            		<div class="col-6 text-center">
+                            			<div class="row" >
+											<a href="{{ route('allEvents', ['id' => Auth::user()->id]) }}" style="text-decoration: none; border: 0; padding: 0">
+												<div class="col-12">
+													<div class="row " style="background-color: #fe948d; height: 150px; margin: 0;">
+														<div class="col-12 d-flex align-items-center">
+															<div class="row">
+																<div class="col-12">
+																	<h4 class="mt-4 text-center" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">Мероприятия</h4>
+																</div>
+																<div class="col-12">
+																	<h4 class="mb-3 text-center" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">Редактирование и удаление мероприятий</h4>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</a>
+										</div>
+                            		</div>
+                            	</div>
+
                             </div>
                         </div>
 					</div>
 				</div>
 			</div>
 
+
+
+
+
             <!-- БЛОК: Все ссылки -->
-			<div class="row" style="margin-right: 0">
+			{{-- <div class="row" style="margin-right: 0">
 				<a class="" href="{{ route('allLinks', ['id' => Auth::user()->id]) }}" style="text-decoration: none; border: 0; padding: 0">
 					<div class="col-12">
 						<div class="row shadow" style="background-color: #fe948d">
@@ -305,7 +401,30 @@
 						</div>
 					</div>
 				</a>
-			</div>
+			</div> --}}
+
+			<!-- БЛОК: Все мероприятия -->
+			{{-- <div class="row" style="margin-right: 0">
+				<a class="" href="{{ route('allEvents', ['id' => Auth::user()->id]) }}" style="text-decoration: none; border: 0; padding: 0">
+					<div class="col-12">
+						<div class="row shadow" style="background-color: #fe948d">
+							<div class="col-4">
+								<div class="imgg m-5" style="background-image: url(https://i.ibb.co/k4ykGnT/xxxxx.png);"></div>
+							</div>
+							<div class="col-8 d-flex align-items-center">
+								<div class="row">
+									<div class="col-12">
+										<h4 class="mt-4 text-start" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">Все мероприятия</h4>
+									</div>
+									<div class="col-12">
+										<h4 class="mb-3 text-start" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">Просмотр, редактирование и удаление мероприятий</h4>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</a>
+			</div> --}}
 
             <!-- БЛОК: татистика профиля -->
 			<div class="row" style="margin-right: 0">
@@ -667,6 +786,194 @@
                 </div>
             </div>
 
+            <!-- Модалка для добавления мероприятия -->
+            <div class="modal fade" id="exampleModalEvent" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background-color: #1b1b1b" id="add-post-modal">
+                <div class="modal-dialog">
+
+                        <div class="modal-content text-center" style="background-color: white">
+                            <div class="modal-header">
+                                <h5 class="modal-title" style="font-family: 'Rubik', sans-serif;">Добавить событие</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-post-modal"></button>
+                            </div>
+                            <div class="modal-body p-2">
+                                <form action="{{ route('addEvent', ['id' => Auth::user()->id]) }}" method="post" enctype="multipart/form-data" id="add-post">
+                                    @csrf @method('POST')
+                                    <span class="mb-1" style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Поля выделенные зеленым цветом обязательны к заполнению</span>
+                                    <input type="hidden" name="type" value="EVENT"> <!-- Тип ссылки -->
+                                    <div class="mb-3"> <!-- Город -->
+                                        <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Город проведения</label>
+                                        <input class="form-control" name="city" id="city" placeholder="Москва" style="background-color: #9bd77e">
+                                    </div>
+                                    <div class="mb-3"> <!-- Локация -->
+                                        <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Место проведения</label>
+                                        <input class="form-control" name="location" id="full_text" placeholder="Название места проведения мероприятия" style="background-color: #9bd77e">
+                                        <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Описание содержит до 255 символов</span>
+                                    </div>
+                                    <div class="mb-3"> <!-- Дата и время -->
+                                    	<div class="row">
+                                    		<div class="col-7">
+                                    			<label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Дата</label>
+												<input id="startDate" name="date" class="form-control" type="date" style="background-color: #9bd77e" />
+                                    		</div>
+                                    		<div class="col-5">
+                                    			<label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Время</label>
+                                        		<input type="text" class="form-control" name="time" id="timepicker" placeholder="21:30" maxlength="255" style="background-color: #9bd77e">
+                                    		</div>
+                                    	</div>
+                                    </div>
+                                    <div class="mb-3"> <!-- Описание события -->
+                                        <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Описание</label>
+                                        <textarea class="form-control"  rows="3" name="description" id="full_text"></textarea>
+                                        <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Описание содержит до 2500 символов</span>
+                                    </div>
+                                    <div class="mb-3"> <!-- Баннер события -->
+                                        <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Афиша</label>
+                                        <input type="file" class="form-control" id="inputGroupFile022" name="banner" accept=".png, .jpg, .jpeg" style="background-color: #9bd77e">
+                                        <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Мы принимаем картинки jpeg, jpg, png формата.</span>
+                                    </div>
+                                    <div class="mb-3"> <!-- Покупка билетов -->
+                                        <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Ссылка на продажу билетов</label>
+                                        <input class="form-control" name="tickets" id="full_text" placeholder="">
+                                    </div>
+                                    <div class="mb-3"> <!-- Ссылка на видео -->
+                                        <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.p_video')</label>
+                                        <textarea class="form-control"  rows="2" name="video" id="video"></textarea>
+                                        <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_video_description')</span>
+                                    </div>
+                                    <div class="mb-3"> <!-- Ссылка на любое медиа -->
+                                        <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.p_media')</label>
+                                        <textarea class="form-control"  rows="2" name="media" id="media"></textarea>
+                                        <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_media_description')</span>
+                                    </div>
+
+                                    <!-- Дизайн -->
+                                    <hr>
+                                    <label for="exampleInputEmail1" class="form-label mt-2 mb-2" style="font-family: 'Rubik', sans-serif;">Дизайн</label>
+                                    <label style="background-color: #ffbdb3" for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif; font-size: 0.7rem">Поставив здесь галочку, вам не нужно будет дальше заполнять форму и выбирать стиль, тк будет использован стиль вашего последнего мероприятия.</label>
+                                    <div class="mb-4 text-center" style="background-color: #ffbdb3">
+                                        <div class="form-check" style="background-color: #ffbdb3">
+                                            <input name="check_last_event" class="form-check-input" type="checkbox" value="penis" id="flexCheckDefault">
+                                            <label class="form-check-label" for="flexCheckDefault">
+                                                Использовать дизайн последнего мероприятия
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <hr>
+
+                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Шрифт, размер шрифта и цвет для города и локации</label>
+                                    <div class="row mb-3">
+                                    	<div class="col-6">
+                                    		<select class="form-select" aria-label="Default select example" name="location_font">
+                                                <option value="Inter">Выбрать шрифт...</option>
+                                                <option style="font-family: Russo One" value="Russo One">Russo One Font</option>
+                                                <option style="font-family: Poiret One" value="Poiret One">Poiret One Font</option>
+                                                <option style="font-family: Noto Sans" value="Noto Sans">Noto Sans Font</option>
+                                                <option style="font-family: Montserrat" value="Montserrat">Montserrat Font</option>
+                                                <option style="font-family: Open Sans" value="Open Sans">Open Sans Font</option>
+                                                <option style="font-family: Roboto" value="Roboto">Roboto Font</option>
+                                                <option style="font-family: JetBrains Mono" value="JetBrains Mono">JetBrains Mono Font</option>
+                                                <option style="font-family: Spectral SC" value="Spectral SC">Spectral SC Font</option>
+                                                <option style="font-family: Podkova" value="Podkova">Podkova Font</option>
+                                                <option style="font-family: Noto Sans Mono" value="Noto Sans Mono">Noto Sans Mono Font</option>
+                                                <option style="font-family: DotGothic16" value="DotGothic16">DotGothic16 Font</option>
+                                                <option style="font-family: Alumni Sans" value="Alumni Sans">Alumni Sans Font</option>
+                                                <option style="font-family: Murecho" value="Murecho">Murecho Font</option>
+                                                <option style="font-family: Comforter" value="Comforter">Comforter Font</option>
+                                                <option style="font-family: Zen Kurenaido" value="Zen Kurenaido">Zen Kurenaido Font</option>
+                                                <option style="font-family: Yuji Syuku" value="Yuji Syuku">Yuji Syuku Font</option>
+                                                <option style="font-family: Yomogi" value="Yomogi">Yomogi Font</option>
+                                                <option style="font-family: Rampart One" value="Rampart One">Rampart One Font</option>
+                                                <option style="font-family: Oi" value="Oi">Oi Font</option>
+                                            </select>
+                                    	</div>
+                                    	<div class="col-3">
+                                    		<select class="form-select" aria-label="Default select example" name="location_font_size">
+                                                <option value="0.9">1</option>
+                                                <option value="1">2</option>
+                                                <option value="1.1">3</option>
+                                                <option value="1.2">4</option>
+                                            </select>
+                                    	</div>
+                                    	<div class="col-3">
+                                    		<input type="color" class="form-control" id="exampleColorInput" value="#050507" title="Choose your color" name="location_font_color" style="height: 40px;"><br>
+                                    	</div>
+                                    </div>
+
+                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Шрифт, размер шрифта и цвет для даты и времени</label>
+                                    <div class="row mb-3">
+                                    	<div class="col-6">
+                                    		<select class="form-select" aria-label="Default select example" name="date_font">
+                                                <option value="Inter">Выбрать шрифт...</option>
+                                                <option style="font-family: Russo One" value="Russo One">Russo One Font</option>
+                                                <option style="font-family: Poiret One" value="Poiret One">Poiret One Font</option>
+                                                <option style="font-family: Noto Sans" value="Noto Sans">Noto Sans Font</option>
+                                                <option style="font-family: Montserrat" value="Montserrat">Montserrat Font</option>
+                                                <option style="font-family: Open Sans" value="Open Sans">Open Sans Font</option>
+                                                <option style="font-family: Roboto" value="Roboto">Roboto Font</option>
+                                                <option style="font-family: JetBrains Mono" value="JetBrains Mono">JetBrains Mono Font</option>
+                                                <option style="font-family: Spectral SC" value="Spectral SC">Spectral SC Font</option>
+                                                <option style="font-family: Podkova" value="Podkova">Podkova Font</option>
+                                                <option style="font-family: Noto Sans Mono" value="Noto Sans Mono">Noto Sans Mono Font</option>
+                                                <option style="font-family: DotGothic16" value="DotGothic16">DotGothic16 Font</option>
+                                                <option style="font-family: Alumni Sans" value="Alumni Sans">Alumni Sans Font</option>
+                                                <option style="font-family: Murecho" value="Murecho">Murecho Font</option>
+                                                <option style="font-family: Comforter" value="Comforter">Comforter Font</option>
+                                                <option style="font-family: Zen Kurenaido" value="Zen Kurenaido">Zen Kurenaido Font</option>
+                                                <option style="font-family: Yuji Syuku" value="Yuji Syuku">Yuji Syuku Font</option>
+                                                <option style="font-family: Yomogi" value="Yomogi">Yomogi Font</option>
+                                                <option style="font-family: Rampart One" value="Rampart One">Rampart One Font</option>
+                                                <option style="font-family: Oi" value="Oi">Oi Font</option>
+                                            </select>
+                                    	</div>
+                                    	<div class="col-3">
+                                    		<select class="form-select" aria-label="Default select example" name="date_font_size">
+                                                <option value="0.9">1</option>
+                                                <option value="1">2</option>
+                                                <option value="1.1">3</option>
+                                                <option value="1.2">4</option>
+                                            </select>
+                                    	</div>
+                                    	<div class="col-3">
+                                    		<input type="color" class="form-control" id="exampleColorInput" value="#050507" title="Choose your color" name="date_font_color" style="height: 40px;"><br>
+                                    	</div>
+                                    </div>
+
+									<label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Выбор фонового цвета и прозрачности</label>
+                                    <div class="row mb-3">
+                                    	<div class="col-3">
+                                    		<input type="color" class="form-control " id="exampleColorInput" value="#ECECE2" title="Choose your color" name="background_color_hex" style="height: 40px;">
+                                    	</div>
+                                    	<div class="col-9">
+                                    		<input type="range" class="form-range" min="0.0" max="1.0" step="0.1" id="customRange2" name="transparency" value="1.0">
+                                    	</div>
+                                    </div>
+
+                                    <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.p_round')</label>
+                                    <div class="mb-3 text-center d-flex justify-content-center"> <!-- Добивить округление углов -->
+                                        <input type="range" class="form-range" min="1" max="50" step="1" id="customRange2" name="event_round" value="25">
+                                    </div>
+
+                                    <div class="mb-3 text-center">
+                                        <div>
+                                            <select class="form-select" aria-label="Default select example" name="event_animation">
+                                                <option selected>Выбрать анимацию...</option>
+                                                <option value="animate__animated animate__pulse animate__infinite infinite">Pulse</option>
+                                                <option value="animate__animated animate__headShake animate__infinite infinite">Head Shake</option>
+                                            </select>
+                                        </div>
+                                        <label style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Анимация для мероприятия</label>
+                                    </div>
+
+                                    <div class="d-grid gap-2">
+                                        <button id="post-btn" type="submit" class="btn btn-primary">Добавить</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                </div>
+            </div>
+
 
             <!-- Модалка для статистики по профилю -->
             <div class="modal fade" id="exampleModalStat" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background-color: #1b1b1b">
@@ -905,7 +1212,37 @@
                                         <option @if($user->locale == 'en') selected @endif value="en">English</option>
                                     </select>
                                 </div>
-							  	<button type="submit" class="btn btn-dark mb-3 mt-3" style="font-family: 'Rubik', sans-serif; ">@lang('app.p_edit_prof')</button>
+                                <div class=" mb-3">
+                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Тип страницы</label>
+                                    <select id="type" name="type" class="form-select" aria-label="Default select example">
+                                        <option selected>Выберите тип страницы</option>
+                                        <option @if($user->type == 'Links') selected @endif value="Links">Ссылки</option>
+                                        <option @if($user->type == 'Events') selected @endif value="Events">Афиша</option>
+                                    </select>
+                                </div>
+                                <div id="event-block" style="display:none">
+                                	<div class=" mb-3">
+	                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Отображение иконок соц сетей</label>
+	                                    <select name="show_social" class="form-select" aria-label="Default select example">
+	                                        <option selected>Показать иконки соц. сетей или нет</option>
+	                                        <option @if($user->show_social == true) selected @endif value="1">Показать</option>
+	                                        <option @if($user->show_social == false) selected @endif value="0">Нет</option>
+	                                    </select>
+	                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Будут отображаться только ссылки с иконками из нашей бд.</span>
+	                                </div>
+	                                <div class=" mb-3">
+	                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Место положение иконок</label>
+	                                    <select name="social" class="form-select" aria-label="Default select example">
+	                                        <option selected>Показать иконки соц. сетей или нет</option>
+	                                        <option @if($user->social == 'TOP') selected @endif value="TOP">Вверху</option>
+	                                        <option @if($user->social == 'DOWN') selected @endif value="DOWN">Внизу</option>
+	                                    </select>
+	                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Вверху - между вашим именем и мероприятиями. Внизу - под мероприятиями</span>
+	                                </div>
+                                </div>
+                                <div class="d-grid gap-2">
+								  	<button type="submit" class="btn btn-dark mb-3 mt-3" style="font-family: 'Rubik', sans-serif; ">@lang('app.p_edit_prof')</button>
+								</div>
 							</form>
 				      	</div>
 				    </div>
@@ -940,10 +1277,6 @@
                 ],
                 render: {
                     option: function(data, escape) {
-                        // return  '<div>' +
-                        //             '<img style="margin-right: 16px" width="30" src="' + escape(data.img) + '">' +
-                        //             '<span class="title">' + escape(data.title) + '</span>' +
-                        //         '</div>';
                         return  '<table>' +
                                     '<tr>' +
                                         '<img  width="90" src="' + escape(data.img) + '">' +
@@ -957,9 +1290,8 @@
             });
         </script>
 
-
-        <!-- Скрипт скрыть поле если выбрана иконка -->
         <script>
+        	<!-- Скрипт скрыть поле если выбрана иконка -->
             $( document ).ready(function() {
                 $('#select-beast-empty').change(function(){
                     $('#pp').html($(this).val());
@@ -968,6 +1300,26 @@
                     }
                     if($(this).val() == '') {
                         $('#download-file').show();
+                    }
+                });
+            });
+
+            <!-- Скрипт скрыть блок -->
+            $( document ).ready(function() {
+            	var type = $('#type').val();
+            	if(type == 'Links') {
+            		$('#event-block').hide();
+            	}
+            	if(type == 'Events') {
+            		$('#event-block').show();
+            	}
+                $('#type').change(function(){
+                    $('#pp').html($(this).val());
+                    if($(this).val() == 'Events') {
+                        $('#event-block').show();
+                    }
+                    if($(this).val() == 'Links') {
+                        $('#event-block').hide();
                     }
                 });
             });
@@ -982,48 +1334,11 @@
             });
         </script>
 
-        {{-- <script type="text/javascript">
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $( "#add-post" ).submit(function( e ) {
-                e.preventDefault();
-
-                var formData = new FormData(this);
-
-                $.ajax({
-                    type: "POST",
-                    @if(Auth::check())
-                    url: "{{route('addPost', ['id' => Auth::user()->id])}}",
-                    @endif
-                    data: formData,
-                    beforeSend: function() {
-                        $("#in-pogress").html("Обработка изображений. Подождите...");
-                    },
-                    success: function (data) {
-                        console.log('nice');
-                        //Close modals
-                        $("#close-post-modal").click();
-                        //Clear fields
-						$('#title').val('').change();
-                        $('#full_text').val('').change();
-                        $('#link').val('').change();
-                        $('#inputGroupFile022').val('').change();
-                        $('#video').val('').change();
-                        $('#media').val('').change();
-
-                        $("#in-pogress").hide();
-                    },
-                    error: function(data) {
-                        $("#errors").show();
-                    },
-                    contentType: false,
-                    processData: false,
-                });
-            });
-        </script> --}}
+        <script>
+	        $('#timepicker').timepicker({
+	            uiLibrary: 'bootstrap5'
+	        });
+    	</script>
 
     </body>
 </html>

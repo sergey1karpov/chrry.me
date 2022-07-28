@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Link;
+use App\Models\Event;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -37,6 +38,9 @@ class User extends Authenticatable
         'avatar',
         'is_active',
         'locale',
+        'type',
+        'show_social',
+        'social',
     ];
 
     /**
@@ -65,6 +69,11 @@ class User extends Authenticatable
      */
     public function links() {
         return $this->hasMany(Link::class);
+    }
+
+    public function events()
+    {
+        return $this->hasMany(Event::class);
     }
 
     public static function confirmNewUser(string $utag, $request) : void
@@ -100,6 +109,9 @@ class User extends Authenticatable
             'avatar'            => isset($request->avatar) ? self::addPhotos($request->avatar) : $user->avatar,
             'banner'            => isset($request->banner) ? self::addPhotos($request->banner) : $user->banner,
             'locale'            => $request->locale,
+            'type'              => $request->type,
+            'show_social'       => isset($request->show_social) ? $request->show_social : Auth::user()->show_social,
+            'social'            => isset($request->social) ? $request->social : Auth::user()->social,
         ]);
     }
 

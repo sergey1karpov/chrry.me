@@ -280,403 +280,498 @@
 			        @if($user->description)
 			        	<p style="font-family: 'Manrope', sans-serif; font-size: 0.9rem; @if($user->description_color) color: {{$user->description_color}}; @endif">{{ $user->description }}</p>
 			        @endif
+                    @if($user->type == 'Events') 
+                        @if($user->show_social == true)
+                            @if($user->social == 'TOP')
+                                @if(count($links) > 0)
+                                    <nav class="navbar mt-2">
+                                        <div class="container-fluid d-flex justify-content-center">
+                                            @foreach($links as $link)
+                                                @if($link->icon)
+                                                    <img src="{{$link->icon}}" class="me-2 ms-2" style="width:40px;">
+                                                @endif
+                                            @endforeach
+                                        </div>
+                                    </nav>  
+                                @endif
+                            @endif    
+                        @endif 
+                    @endif       
 		      	</div>
 	    	</div>
 	    </div>
-        <!-- Закрепленные ссылки -->
-        <table class="table" style="margin-bottom: 0">
-            <tbody>
-                @foreach($pinnedLinks as $link)
-                    <tr data-index="{{$link->id}}" data-position="{{$link->position}}">
-                        <td style="padding-left: 0; padding-right: 0; padding-bottom: 0; border: 0">
-                        <div class="container @if($link->animation) {{$link->animation}} @endif" style="padding-left:8px; padding-right:8px" @if($link->type == 'POST') id="post{{$link->id}}" data-bs-toggle="modal" data-bs-target="#post-{{$link->id}}" @endif>
-                            <!-- Если тип ссылки POST ссылка не работает\не кликабельно -->
-                            @if($link->type != 'POST')<a href="{{$link->link}}" style="text-decoration:none" onclick="countRabbits{{$link->id}}()">@elseif($link->type == 'POST') <a style="text-decoration:none" onclick="countRabbits{{$link->id}}()"> @endif
-                                <div class="row ms-1 me-1 card {{$link->shadow}}" style="background-color:rgba({{$link->background_color}}, {{$link->transparency}}); border: 0; margin-top: 8px; border-radius: {{$link->rounded}}px; background-position: center">
-                                    <div class="d-flex align-items-center justify-content-start mt-1 mb-1" style="padding-left: 4px; padding-right: 4px;">
-                                        <!-- Картинка -->
-                                        <div class="col-1">
-                                            @if($link->type == 'POST')
-                                                @if($link->photos)
-                                                    @foreach(unserialize($link->photos) as $key => $photo)
-                                                        @if($key == 0)
-                                                            <img src="{{$photo}}" style="width:48px; border-radius: {{$link->rounded}}px;">
-                                                        @endif
-                                                    @endforeach
-                                                @endif
-                                            @elseif($link->type != 'POST')
-                                                @if($link->icon)
-                                                    <img src="{{$link->icon}}" style="width:48px; border-radius: {{$link->rounded}}px;">
-                                                @elseif($link->icon == false)
-                                                    <img src="{{$link->photo}}" style="width:48px; border-radius: {{$link->rounded}}px;">
-                                                @endif
-                                            @endif
-                                        </div>
-                                        <!-- Текст ссылки -->
-                                        <div class=" col-10 text-center">
-                                            <div class="me-5 ms-5">
-
-                                                <h4 class="" style="font-family: '{{$link->font}}', sans-serif; line-height: 1.5; font-size: {{$link->font_size}}rem; margin: 0;color: {{$link->title_color}}; @if($link->photo == '' && $link->photos == '') margin-top: 14px; margin-bottom: 14px @endif">{{$link->title}}</h4>
-                                            </div>
-                                        </div>
-                                        <!-- Пустой div -->
-                                        <div class="col-1">
-                                            @if(Auth::check())
-                                                @if(Auth::user()->id == $user->id)
-                                                    <div id="up" class="imgg" style="background-image: url(https://i.ibb.co/VLbJkrG/dots.png);">
-                                                        <img src="https://cdn3.iconfinder.com/data/icons/office-outline-15/64/Office_Icon_Set_Outline-10-512.png" width="20">
-                                                    </div>
-                                                @endif
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
-                            @if($link->type != 'POST')</a>@endif
-                        </div>
-
-                        <!-- Ссылка типа POST -->
-                        @if($link->type == 'POST')
-                            <div class="modal fade" id="post-{{$link->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" style="margin: 0">
-                                    <div id="body{{$link->id}}" class="modal-content bg-light text-dark" style="border-radius: 0; border: 0;">
-                                        <!-- Шапка -->
-                                        <div class="modal-header p-1" style="border: 0;">
-                                            <div class="col-1 d-flex justify-content-start">
-                                                <button id="back{{$link->id}}" style="border: 0; background-color: white; padding-left:4px; padding-right:4px" type="button" data-bs-dismiss="modal" aria-label="Close" class="mt-1 rounded-circle">
-                                                    <img src="https://i.ibb.co/4NmvBx3/images-modified.png" class="img-fluid" style="width:20px; margin-bottom: 3px">
-                                                </button>
-                                            </div>
-                                            <div class="col-10 d-flex justify-content-center mt-2">
-                                                <div class="form-check form-switch">
-                                                    <input id="theme{{$link->id}}" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                                                    {{-- <label class="form-check-label" for="flexSwitchCheckDefault">Сменить тему</label> --}}
-                                                </div>
-                                            </div>
-                                            <div class="col-1 d-flex justify-content-end">
-                                                <button data-bs-toggle="modal" data-bs-target="#btn{{$link->id}}" style="border: 0; background-color: white; padding-left:4px; padding-right:4px" type="button" data-bs-dismiss="modal" aria-label="Close" class="mt-1 rounded-circle">
-                                                    <img src="https://icon-library.com/images/three-dots-icon/three-dots-icon-26.jpg" class="img-fluid" style="width:20px; margin-bottom: 3px">
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="ms-2 me-2 mb-2 mt-3">
-                                            <h5 style="font-family: 'Jost', serif; font-size: 2.4rem; line-height: 1;" class="modal-title" id="exampleModalLabel">{{$link->title}}</h5>
-                                            <div class="row mt-4">
-                                                <div class="col-8 d-flex align-items-start">
-                                                    <h5 style="font-family: 'Jost', sans-serif; font-size: 1rem; line-height: 1;" class="modal-title" id="exampleModalLabel">
-                                                        {{$user->name}}
-                                                        @if($user->verify == 1)
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-patch-check-fill mb-1" viewBox="0 0 16 16" style="color: {{$user->verify_color}}">
-                                                                <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
-                                                            </svg>
-                                                        @endif
-                                                    </h5>
-                                                </div>
-                                                <div class="col-4 d-flex justify-content-end align-items-end" style="margin-bottom: 3px">
-                                                    <h5 data-bs-toggle="modal" data-bs-target="#data{{$link->id}}" style=" font-size: 0.8rem; line-height: 1;" class="modal-title" id="exampleModalLabel; color: #292828">{{Carbon\Carbon::parse($link->created_at)->diffForHumans()}}</h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-body" style="padding: 0;>
-
-                                            <!-- Фотки -->
-                                            @if($link->photos)
-                                                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-                                                    <div class="carousel-inner">
-                                                    </div>
-                                                </div>
-                                            @endif
-                                            <div id="demo" class="carousel slide" data-bs-ride="carousel">
-                                                <div class="carousel-inner" >
+        @if($user->type == 'Links')
+            <!-- Закрепленные ссылки -->
+            <table class="table" style="margin-bottom: 0">
+                <tbody>
+                    @foreach($pinnedLinks as $link)
+                        <tr data-index="{{$link->id}}" data-position="{{$link->position}}">
+                            <td style="padding-left: 0; padding-right: 0; padding-bottom: 0; border: 0">
+                            <div class="container @if($link->animation) {{$link->animation}} @endif" style="padding-left:8px; padding-right:8px" @if($link->type == 'POST') id="post{{$link->id}}" data-bs-toggle="modal" data-bs-target="#post-{{$link->id}}" @endif>
+                                <!-- Если тип ссылки POST ссылка не работает\не кликабельно -->
+                                @if($link->type != 'POST')<a href="{{$link->link}}" style="text-decoration:none" onclick="countRabbits{{$link->id}}()">@elseif($link->type == 'POST') <a style="text-decoration:none" onclick="countRabbits{{$link->id}}()"> @endif
+                                    <div class="row ms-1 me-1 card {{$link->shadow}}" style="background-color:rgba({{$link->background_color}}, {{$link->transparency}}); border: 0; margin-top: 8px; border-radius: {{$link->rounded}}px; background-position: center">
+                                        <div class="d-flex align-items-center justify-content-start mt-1 mb-1" style="padding-left: 4px; padding-right: 4px;">
+                                            <!-- Картинка -->
+                                            <div class="col-1">
+                                                @if($link->type == 'POST')
                                                     @if($link->photos)
                                                         @foreach(unserialize($link->photos) as $key => $photo)
-                                                            <div class="carousel-item {{$key == 0 ? 'active' : '' }}">
-                                                                <img src="{{$photo}}" alt="Los Angeles" class="img-fluid d-block w-100">
-                                                            </div>
+                                                            @if($key == 0)
+                                                                <img src="{{$photo}}" style="width:48px; border-radius: {{$link->rounded}}px;">
+                                                            @endif
                                                         @endforeach
                                                     @endif
-                                                </div>
-                                                @if($link->photos)
-                                                    @php
-                                                        $photos = [];
-                                                        foreach(unserialize($link->photos) as $photo) {
-                                                            $photos[] = $photo;
-                                                        }
-                                                    @endphp
-                                                @endif
-                                                @if($link->photos)
-                                                    @if(count($photos) > 1)
-                                                        <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
-                                                            <span class="carousel-control-prev-icon"></span>
-                                                        </button>
-                                                        <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
-                                                            <span class="carousel-control-next-icon"></span>
-                                                        </button>
+                                                @elseif($link->type != 'POST')
+                                                    @if($link->icon)
+                                                        <img src="{{$link->icon}}" style="width:48px; border-radius: {{$link->rounded}}px;">
+                                                    @elseif($link->icon == false)
+                                                        <img src="{{$link->photo}}" style="width:48px; border-radius: {{$link->rounded}}px;">
                                                     @endif
                                                 @endif
                                             </div>
+                                            <!-- Текст ссылки -->
+                                            <div class=" col-10 text-center">
+                                                <div class="me-5 ms-5">
 
-                                            <!-- Если фоток нет, то видео -->
-                                            @if(!$link->photos)
-                                                @if($link->video)
-                                                    <div class="embed-responsive embed-responsive-16by9 mt-2 ">
-                                                        <x-embed url="{{$link->video}}" aspect-ratio="4:3" />
-                                                    </div>
-                                                @endif
-                                            @endif
-
-                                            <!-- Текст -->
-                                            @if($link->full_text)
-                                                <div class="me-2 ms-2 mb-4" style="white-space: pre-line; line-height: 1.2;">
-                                                    {{$link->full_text}}
+                                                    <h4 class="" style="font-family: '{{$link->font}}', sans-serif; line-height: 1.5; font-size: {{$link->font_size}}rem; margin: 0;color: {{$link->title_color}}; @if($link->photo == '' && $link->photos == '') margin-top: 14px; margin-bottom: 14px @endif">{{$link->title}}</h4>
                                                 </div>
-                                            @endif
-
-                                            <!-- Видео если есть фотки -->
-                                            @if($link->photos)
-                                                @if($link->video)
-                                                    <div class="embed-responsive embed-responsive-16by9 mt-2 ">
-                                                        <x-embed url="{{$link->video}}" aspect-ratio="4:3" />
-                                                    </div>
+                                            </div>
+                                            <!-- Пустой div -->
+                                            <div class="col-1">
+                                                @if(Auth::check())
+                                                    @if(Auth::user()->id == $user->id)
+                                                        <div id="up" class="imgg" style="background-image: url(https://i.ibb.co/VLbJkrG/dots.png);">
+                                                            <img src="https://cdn3.iconfinder.com/data/icons/office-outline-15/64/Office_Icon_Set_Outline-10-512.png" width="20">
+                                                        </div>
+                                                    @endif
                                                 @endif
-                                            @endif
-
-                                            <!-- Медиа -->
-                                            @if($link->media)
-                                                <div class="">
-                                                    {!!$link->media!!}
-                                                </div>
-                                            @endif
-
-
-
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                @if($link->type != 'POST')</a>@endif
                             </div>
 
-                            <!-- Модалка для меню поста -->
-                            <div class="modal fade" id="btn{{$link->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel" style="font-family: 'Jost', sans-serif; font-size: 1.3rem;">Копировать ссылку на пост</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body text-center">
-                                            <input class="mt-3" id="foo{{$link->id}}" value="http://chrry.me/{{$user->slug}}#post-{{$link->id}}">
+                            <!-- Ссылка типа POST -->
+                            @if($link->type == 'POST')
+                                <div class="modal fade" id="post-{{$link->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" style="margin: 0">
+                                        <div id="body{{$link->id}}" class="modal-content bg-light text-dark" style="border-radius: 0; border: 0;">
+                                            <!-- Шапка -->
+                                            <div class="modal-header p-1" style="border: 0;">
+                                                <div class="col-1 d-flex justify-content-start">
+                                                    <button id="back{{$link->id}}" style="border: 0; background-color: white; padding-left:4px; padding-right:4px" type="button" data-bs-dismiss="modal" aria-label="Close" class="mt-1 rounded-circle">
+                                                        <img src="https://i.ibb.co/4NmvBx3/images-modified.png" class="img-fluid" style="width:20px; margin-bottom: 3px">
+                                                    </button>
+                                                </div>
+                                                <div class="col-10 d-flex justify-content-center mt-2">
+                                                    <div class="form-check form-switch">
+                                                        <input id="theme{{$link->id}}" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                                                        {{-- <label class="form-check-label" for="flexSwitchCheckDefault">Сменить тему</label> --}}
+                                                    </div>
+                                                </div>
+                                                <div class="col-1 d-flex justify-content-end">
+                                                    <button data-bs-toggle="modal" data-bs-target="#btn{{$link->id}}" style="border: 0; background-color: white; padding-left:4px; padding-right:4px" type="button" data-bs-dismiss="modal" aria-label="Close" class="mt-1 rounded-circle">
+                                                        <img src="https://icon-library.com/images/three-dots-icon/three-dots-icon-26.jpg" class="img-fluid" style="width:20px; margin-bottom: 3px">
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="ms-2 me-2 mb-2 mt-3">
+                                                <h5 style="font-family: 'Jost', serif; font-size: 2.4rem; line-height: 1;" class="modal-title" id="exampleModalLabel">{{$link->title}}</h5>
+                                                <div class="row mt-4">
+                                                    <div class="col-8 d-flex align-items-start">
+                                                        <h5 style="font-family: 'Jost', sans-serif; font-size: 1rem; line-height: 1;" class="modal-title" id="exampleModalLabel">
+                                                            {{$user->name}}
+                                                            @if($user->verify == 1)
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-patch-check-fill mb-1" viewBox="0 0 16 16" style="color: {{$user->verify_color}}">
+                                                                    <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
+                                                                </svg>
+                                                            @endif
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col-4 d-flex justify-content-end align-items-end" style="margin-bottom: 3px">
+                                                        <h5 data-bs-toggle="modal" data-bs-target="#data{{$link->id}}" style=" font-size: 0.8rem; line-height: 1;" class="modal-title" id="exampleModalLabel; color: #292828">{{Carbon\Carbon::parse($link->created_at)->diffForHumans()}}</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-body" style="padding: 0;>
 
-                                            <!-- Trigger -->
-                                            <button class="mb-3 post-btn{{$link->id}}" data-clipboard-target="#foo{{$link->id}}" style="border: 0; background-color: white">
-                                                <img class="mb-1" src="http://cdn.onlinewebfonts.com/svg/img_55411.png" alt="Copy to clipboard" width="20">
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            </td>
-                        </tr>
-                    @endif
-                @endforeach
-            </tbody>
-        </table>
-
-
-	    <!-- Ссылки -->
-        <table class="table">
-            <tbody>
-                @foreach($links as $link)
-                    <tr data-index="{{$link->id}}" data-position="{{$link->position}}">
-                        <td style="padding-left: 0; padding-right: 0; padding-bottom: 0; border: 0">
-                        <div class="container @if($link->animation) {{$link->animation}} @endif" style="padding-left:8px; padding-right:8px" @if($link->type == 'POST') id="post{{$link->id}}" data-bs-toggle="modal" data-bs-target="#post-{{$link->id}}" @endif>
-                            <!-- Если тип ссылки POST ссылка не работает\не кликабельно -->
-                            @if($link->type != 'POST')<a href="{{$link->link}}" style="text-decoration:none" onclick="countRabbits{{$link->id}}()">@elseif($link->type == 'POST') <a style="text-decoration:none" onclick="countRabbits{{$link->id}}()"> @endif
-                                <div class="row ms-1 me-1 card {{$link->shadow}}" style="background-color:rgba({{$link->background_color}}, {{$link->transparency}}); border: 0; margin-top: 8px; border-radius: {{$link->rounded}}px; background-position: center">
-                                    <div class="d-flex align-items-center justify-content-start mt-1 mb-1" style="padding-left: 4px; padding-right: 4px;">
-                                        <!-- Картинка -->
-                                        <div class="col-1">
-                                            @if($link->type == 'POST')
+                                                <!-- Фотки -->
                                                 @if($link->photos)
-                                                    @foreach(unserialize($link->photos) as $key => $photo)
-                                                        @if($key == 0)
-                                                            <img src="{{$photo}}" style="width:48px; border-radius: {{$link->rounded}}px;">
-                                                        @endif
-                                                    @endforeach
-                                                @endif
-                                            @elseif($link->type != 'POST')
-                                                @if($link->icon)
-                                                    <img src="{{$link->icon}}" style="width:48px; border-radius: {{$link->rounded}}px;">
-                                                @elseif($link->icon == false)
-                                                    <img src="{{$link->photo}}" style="width:48px; border-radius: {{$link->rounded}}px;">
-                                                @endif
-                                            @endif
-                                        </div>
-                                        <!-- Текст ссылки -->
-                                        <div class=" col-10 text-center">
-                                            <div class="me-5 ms-5">
-                                                <h4 class="" style="font-family: '{{$link->font}}', sans-serif; line-height: 1.5; font-size: {{$link->font_size}}rem; margin: 0;color: {{$link->title_color}}; @if($link->photo == '' && $link->photos == '') margin-top: 14px; margin-bottom: 14px @endif">{{$link->title}}</h4>
-                                            </div>
-                                        </div>
-                                        <!-- Пустой div -->
-                                        <div class="col-1">
-                                            @if(Auth::check())
-                                                @if(Auth::user()->id == $user->id)
-                                                    <div id="up" class="imgg" style="background-image: url(https://i.ibb.co/VLbJkrG/dots.png);">
-                                                        <img src="https://i.ibb.co/VLbJkrG/dots.png" width="20">
+                                                    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                                                        <div class="carousel-inner">
+                                                        </div>
                                                     </div>
                                                 @endif
-                                            @endif
+                                                <div id="demo" class="carousel slide" data-bs-ride="carousel">
+                                                    <div class="carousel-inner" >
+                                                        @if($link->photos)
+                                                            @foreach(unserialize($link->photos) as $key => $photo)
+                                                                <div class="carousel-item {{$key == 0 ? 'active' : '' }}">
+                                                                    <img src="{{$photo}}" alt="Los Angeles" class="img-fluid d-block w-100">
+                                                                </div>
+                                                            @endforeach
+                                                        @endif
+                                                    </div>
+                                                    @if($link->photos)
+                                                        @php
+                                                            $photos = [];
+                                                            foreach(unserialize($link->photos) as $photo) {
+                                                                $photos[] = $photo;
+                                                            }
+                                                        @endphp
+                                                    @endif
+                                                    @if($link->photos)
+                                                        @if(count($photos) > 1)
+                                                            <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+                                                                <span class="carousel-control-prev-icon"></span>
+                                                            </button>
+                                                            <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+                                                                <span class="carousel-control-next-icon"></span>
+                                                            </button>
+                                                        @endif
+                                                    @endif
+                                                </div>
+
+                                                <!-- Если фоток нет, то видео -->
+                                                @if(!$link->photos)
+                                                    @if($link->video)
+                                                        <div class="embed-responsive embed-responsive-16by9 mt-2 ">
+                                                            <x-embed url="{{$link->video}}" aspect-ratio="4:3" />
+                                                        </div>
+                                                    @endif
+                                                @endif
+
+                                                <!-- Текст -->
+                                                @if($link->full_text)
+                                                    <div class="me-2 ms-2 mb-4" style="white-space: pre-line; line-height: 1.2;">
+                                                        {{$link->full_text}}
+                                                    </div>
+                                                @endif
+
+                                                <!-- Видео если есть фотки -->
+                                                @if($link->photos)
+                                                    @if($link->video)
+                                                        <div class="embed-responsive embed-responsive-16by9 mt-2 ">
+                                                            <x-embed url="{{$link->video}}" aspect-ratio="4:3" />
+                                                        </div>
+                                                    @endif
+                                                @endif
+
+                                                <!-- Медиа -->
+                                                @if($link->media)
+                                                    <div class="">
+                                                        {!!$link->media!!}
+                                                    </div>
+                                                @endif
+
+
+
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            @if($link->type != 'POST')</a>@endif
-                        </div>
 
-                        <!-- Ссылка типа POST -->
-                        @if($link->type == 'POST')
-                            <div class="modal fade" id="post-{{$link->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" style="margin: 0;">
-                                    <div id="body{{$link->id}}" class="modal-content bg-light text-dark" style="border-radius: 0; border: 0;">
-                                        <!-- Шапка -->
-                                        <div class="modal-header p-1" style="border: 0;">
-                                            <div class="col-1 d-flex justify-content-start">
-                                                <button id="back{{$link->id}}" style="border: 0; background-color: white; padding-left:4px; padding-right:4px" type="button" data-bs-dismiss="modal" aria-label="Close" class="mt-1 rounded-circle">
-                                                    <img src="https://i.ibb.co/4NmvBx3/images-modified.png" class="img-fluid" style="width:20px; margin-bottom: 3px">
-                                                </button>
+                                <!-- Модалка для меню поста -->
+                                <div class="modal fade" id="btn{{$link->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel" style="font-family: 'Jost', sans-serif; font-size: 1.3rem;">Копировать ссылку на пост</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
-                                            <div class="col-10 d-flex justify-content-center mt-1">
-                                                <div class="form-check form-switch">
-                                                    <input id="theme{{$link->id}}" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                                                    {{-- <label class="form-check-label" for="flexSwitchCheckDefault">Сменить тему</label> --}}
-                                                </div>
-                                            </div>
-                                            <div class="col-1 d-flex justify-content-end">
-                                                <button data-bs-toggle="modal" data-bs-target="#btn{{$link->id}}" style="border: 0; background-color: white; padding-left:4px; padding-right:4px" type="button" data-bs-dismiss="modal" aria-label="Close" class="mt-1 rounded-circle">
-                                                    <img src="https://icon-library.com/images/three-dots-icon/three-dots-icon-26.jpg" class="img-fluid" style="width:20px; margin-bottom: 3px">
+                                            <div class="modal-body text-center">
+                                                <input class="mt-3" id="foo{{$link->id}}" value="http://chrry.me/{{$user->slug}}#post-{{$link->id}}">
+
+                                                <!-- Trigger -->
+                                                <button class="mb-3 post-btn{{$link->id}}" data-clipboard-target="#foo{{$link->id}}" style="border: 0; background-color: white">
+                                                    <img class="mb-1" src="http://cdn.onlinewebfonts.com/svg/img_55411.png" alt="Copy to clipboard" width="20">
                                                 </button>
                                             </div>
                                         </div>
-                                        <div class="ms-2 me-2 mb-2 mt-3">
-                                            <h5 style="font-family: 'Jost', serif; font-size: 2.4rem; line-height: 1;" class="modal-title" id="exampleModalLabel">{{$link->title}}</h5>
-                                            <div class="row mt-4">
-                                                <div class="col-8 d-flex align-items-start">
-                                                    <h5 style="font-family: 'Jost', sans-serif; font-size: 1rem; line-height: 1;" class="modal-title" id="exampleModalLabel">
-                                                        {{$user->name}}
-                                                        @if($user->verify == 1)
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-patch-check-fill " viewBox="0 0 16 16" style="color: {{$user->verify_color}}; margin-top: px">
-                                                                <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
-                                                            </svg>
-                                                        @endif
-                                                    </h5>
-                                                </div>
-                                                <div class="col-4 d-flex justify-content-end align-items-end" style="margin-top: 3px">
-                                                    <h5 data-bs-toggle="modal" data-bs-target="#data{{$link->id}}" style=" font-size: 0.8rem; line-height: 1;" class="modal-title" id="exampleModalLabel; color: #292828">{{Carbon\Carbon::parse($link->created_at)->diffForHumans()}}</h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-body" style="padding: 0;">
+                                    </div>
+                                </div>
+                                </td>
+                            </tr>
+                        @endif
+                    @endforeach
+                </tbody>
+            </table>
 
-                                            <!-- Фотки -->
-                                            @if($link->photos)
-                                                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-                                                    <div class="carousel-inner">
-                                                    </div>
-                                                </div>
-                                            @endif
-                                            <div id="demo" class="carousel slide" data-bs-ride="carousel">
-                                                <div class="carousel-inner" >
+
+    	    <!-- Ссылки -->
+            <table class="table">
+                <tbody>
+                    @foreach($links as $link)
+                        <tr data-index="{{$link->id}}" data-position="{{$link->position}}">
+                            <td style="padding-left: 0; padding-right: 0; padding-bottom: 0; border: 0">
+                            <div class="container @if($link->animation) {{$link->animation}} @endif" style="padding-left:8px; padding-right:8px" @if($link->type == 'POST') id="post{{$link->id}}" data-bs-toggle="modal" data-bs-target="#post-{{$link->id}}" @endif>
+                                <!-- Если тип ссылки POST ссылка не работает\не кликабельно -->
+                                @if($link->type != 'POST')<a href="{{$link->link}}" style="text-decoration:none" onclick="countRabbits{{$link->id}}()">@elseif($link->type == 'POST') <a style="text-decoration:none" onclick="countRabbits{{$link->id}}()"> @endif
+                                    <div class="row ms-1 me-1 card {{$link->shadow}}" style="background-color:rgba({{$link->background_color}}, {{$link->transparency}}); border: 0; margin-top: 8px; border-radius: {{$link->rounded}}px; background-position: center">
+                                        <div class="d-flex align-items-center justify-content-start mt-1 mb-1" style="padding-left: 4px; padding-right: 4px;">
+                                            <!-- Картинка -->
+                                            <div class="col-1">
+                                                @if($link->type == 'POST')
                                                     @if($link->photos)
                                                         @foreach(unserialize($link->photos) as $key => $photo)
-                                                            <div class="carousel-item {{$key == 0 ? 'active' : '' }}">
-                                                                <img id="{{$link->id}}{{$key}}" src="{{$photo}}" alt="Los Angeles" class="img-fluid d-block w-100">
-                                                            </div>
+                                                            @if($key == 0)
+                                                                <img src="{{$photo}}" style="width:48px; border-radius: {{$link->rounded}}px;">
+                                                            @endif
                                                         @endforeach
                                                     @endif
-                                                </div>
-                                                @if($link->photos)
-                                                    @php
-                                                        $photos = [];
-                                                        foreach(unserialize($link->photos) as $photo) {
-                                                            $photos[] = $photo;
-                                                        }
-                                                    @endphp
-                                                @endif
-                                                @if($link->photos)
-                                                    @if(count($photos) > 1)
-                                                        <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
-                                                            <span class="carousel-control-prev-icon"></span>
-                                                        </button>
-                                                        <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
-                                                            <span class="carousel-control-next-icon"></span>
-                                                        </button>
+                                                @elseif($link->type != 'POST')
+                                                    @if($link->icon)
+                                                        <img src="{{$link->icon}}" style="width:48px; border-radius: {{$link->rounded}}px;">
+                                                    @elseif($link->icon == false)
+                                                        <img src="{{$link->photo}}" style="width:48px; border-radius: {{$link->rounded}}px;">
                                                     @endif
                                                 @endif
                                             </div>
+                                            <!-- Текст ссылки -->
+                                            <div class=" col-10 text-center">
+                                                <div class="me-5 ms-5">
+                                                    <h4 class="" style="font-family: '{{$link->font}}', sans-serif; line-height: 1.5; font-size: {{$link->font_size}}rem; margin: 0;color: {{$link->title_color}}; @if($link->photo == '' && $link->photos == '') margin-top: 14px; margin-bottom: 14px @endif">{{$link->title}}</h4>
+                                                </div>
+                                            </div>
+                                            <!-- Пустой div -->
+                                            <div class="col-1">
+                                                @if(Auth::check())
+                                                    @if(Auth::user()->id == $user->id)
+                                                        <div id="up" class="imgg" style="background-image: url(https://i.ibb.co/VLbJkrG/dots.png);">
+                                                            <img src="https://i.ibb.co/VLbJkrG/dots.png" width="20">
+                                                        </div>
+                                                    @endif
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                @if($link->type != 'POST')</a>@endif
+                            </div>
 
-                                            <!-- Если фоток нет, то видео -->
-                                            @if(!$link->photos)
-                                                @if($link->video)
-                                                    <div class="embed-responsive embed-responsive-16by9 mt-2 ">
-                                                        <x-embed url="{{$link->video}}" aspect-ratio="4:3" />
+                            <!-- Ссылка типа POST -->
+                            @if($link->type == 'POST')
+                                <div class="modal fade" id="post-{{$link->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" style="margin: 0;">
+                                        <div id="body{{$link->id}}" class="modal-content bg-light text-dark" style="border-radius: 0; border: 0;">
+                                            <!-- Шапка -->
+                                            <div class="modal-header p-1" style="border: 0;">
+                                                <div class="col-1 d-flex justify-content-start">
+                                                    <button id="back{{$link->id}}" style="border: 0; background-color: white; padding-left:4px; padding-right:4px" type="button" data-bs-dismiss="modal" aria-label="Close" class="mt-1 rounded-circle">
+                                                        <img src="https://i.ibb.co/4NmvBx3/images-modified.png" class="img-fluid" style="width:20px; margin-bottom: 3px">
+                                                    </button>
+                                                </div>
+                                                <div class="col-10 d-flex justify-content-center mt-1">
+                                                    <div class="form-check form-switch">
+                                                        <input id="theme{{$link->id}}" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                                                        {{-- <label class="form-check-label" for="flexSwitchCheckDefault">Сменить тему</label> --}}
+                                                    </div>
+                                                </div>
+                                                <div class="col-1 d-flex justify-content-end">
+                                                    <button data-bs-toggle="modal" data-bs-target="#btn{{$link->id}}" style="border: 0; background-color: white; padding-left:4px; padding-right:4px" type="button" data-bs-dismiss="modal" aria-label="Close" class="mt-1 rounded-circle">
+                                                        <img src="https://icon-library.com/images/three-dots-icon/three-dots-icon-26.jpg" class="img-fluid" style="width:20px; margin-bottom: 3px">
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="ms-2 me-2 mb-2 mt-3">
+                                                <h5 style="font-family: 'Jost', serif; font-size: 2.4rem; line-height: 1;" class="modal-title" id="exampleModalLabel">{{$link->title}}</h5>
+                                                <div class="row mt-4">
+                                                    <div class="col-8 d-flex align-items-start">
+                                                        <h5 style="font-family: 'Jost', sans-serif; font-size: 1rem; line-height: 1;" class="modal-title" id="exampleModalLabel">
+                                                            {{$user->name}}
+                                                            @if($user->verify == 1)
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-patch-check-fill " viewBox="0 0 16 16" style="color: {{$user->verify_color}}; margin-top: px">
+                                                                    <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
+                                                                </svg>
+                                                            @endif
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col-4 d-flex justify-content-end align-items-end" style="margin-top: 3px">
+                                                        <h5 data-bs-toggle="modal" data-bs-target="#data{{$link->id}}" style=" font-size: 0.8rem; line-height: 1;" class="modal-title" id="exampleModalLabel; color: #292828">{{Carbon\Carbon::parse($link->created_at)->diffForHumans()}}</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-body" style="padding: 0;">
+
+                                                <!-- Фотки -->
+                                                @if($link->photos)
+                                                    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                                                        <div class="carousel-inner">
+                                                        </div>
                                                     </div>
                                                 @endif
-                                            @endif
-
-                                            <!-- Текст -->
-                                            @if($link->full_text)
-                                                <div class="me-2 ms-2 mb-4" style="white-space: pre-line; line-height: 1.2;">
-                                                    {{$link->full_text}}
+                                                <div id="demo" class="carousel slide" data-bs-ride="carousel">
+                                                    <div class="carousel-inner" >
+                                                        @if($link->photos)
+                                                            @foreach(unserialize($link->photos) as $key => $photo)
+                                                                <div class="carousel-item {{$key == 0 ? 'active' : '' }}">
+                                                                    <img id="{{$link->id}}{{$key}}" src="{{$photo}}" alt="Los Angeles" class="img-fluid d-block w-100">
+                                                                </div>
+                                                            @endforeach
+                                                        @endif
+                                                    </div>
+                                                    @if($link->photos)
+                                                        @php
+                                                            $photos = [];
+                                                            foreach(unserialize($link->photos) as $photo) {
+                                                                $photos[] = $photo;
+                                                            }
+                                                        @endphp
+                                                    @endif
+                                                    @if($link->photos)
+                                                        @if(count($photos) > 1)
+                                                            <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+                                                                <span class="carousel-control-prev-icon"></span>
+                                                            </button>
+                                                            <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+                                                                <span class="carousel-control-next-icon"></span>
+                                                            </button>
+                                                        @endif
+                                                    @endif
                                                 </div>
-                                            @endif
 
-                                            <!-- Видео если есть фотки -->
-                                            @if($link->photos)
-                                                @if($link->video)
-                                                    <div class="embed-responsive embed-responsive-16by9 mt-2 ">
-                                                        <x-embed url="{{$link->video}}" aspect-ratio="4:3" />
+                                                <!-- Если фоток нет, то видео -->
+                                                @if(!$link->photos)
+                                                    @if($link->video)
+                                                        <div class="embed-responsive embed-responsive-16by9 mt-2 ">
+                                                            <x-embed url="{{$link->video}}" aspect-ratio="4:3" />
+                                                        </div>
+                                                    @endif
+                                                @endif
+
+                                                <!-- Текст -->
+                                                @if($link->full_text)
+                                                    <div class="me-2 ms-2 mb-4" style="white-space: pre-line; line-height: 1.2;">
+                                                        {{$link->full_text}}
                                                     </div>
                                                 @endif
-                                            @endif
 
-                                            <!-- Медиа -->
-                                            @if($link->media)
-                                                <div class="">
-                                                    {!!$link->media!!}
-                                                </div>
-                                            @endif
+                                                <!-- Видео если есть фотки -->
+                                                @if($link->photos)
+                                                    @if($link->video)
+                                                        <div class="embed-responsive embed-responsive-16by9 mt-2 ">
+                                                            <x-embed url="{{$link->video}}" aspect-ratio="4:3" />
+                                                        </div>
+                                                    @endif
+                                                @endif
 
+                                                <!-- Медиа -->
+                                                @if($link->media)
+                                                    <div class="">
+                                                        {!!$link->media!!}
+                                                    </div>
+                                                @endif
+
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <!-- Модалка для меню поста -->
-                            <div class="modal fade" id="btn{{$link->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel" style="font-family: 'Jost', sans-serif; font-size: 1.3rem;">Копировать ссылку на пост</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body text-center">
-                                            <input class="mt-3" id="foo{{$link->id}}" value="http://chrry.me/{{$user->slug}}#post-{{$link->id}}">
+                                <!-- Модалка для меню поста -->
+                                <div class="modal fade" id="btn{{$link->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel" style="font-family: 'Jost', sans-serif; font-size: 1.3rem;">Копировать ссылку на пост</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body text-center">
+                                                <input class="mt-3" id="foo{{$link->id}}" value="http://chrry.me/{{$user->slug}}#post-{{$link->id}}">
 
-                                            <!-- Trigger -->
-                                            <button class="mb-3 post-btn{{$link->id}}" data-clipboard-target="#foo{{$link->id}}" style="border: 0; background-color: white">
-                                                <img class="mb-1" src="http://cdn.onlinewebfonts.com/svg/img_55411.png" alt="Copy to clipboard" width="20">
-                                            </button>
+                                                <!-- Trigger -->
+                                                <button class="mb-3 post-btn{{$link->id}}" data-clipboard-target="#foo{{$link->id}}" style="border: 0; background-color: white">
+                                                    <img class="mb-1" src="http://cdn.onlinewebfonts.com/svg/img_55411.png" alt="Copy to clipboard" width="20">
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                                </td>
+                            </tr>
+                        @endif
+                    @endforeach
+                </tbody>
+            </table>
+        @elseif($user->type == 'Events')
+            <div class="mt-3">
+                @foreach($events as $event)
+                    <div class="container mt-2" data-bs-toggle="modal" data-bs-target="#eventModal{{$event->id}}">
+                        <div class="col-lg-12 allalbums">
+                            <ul class="list-group list-group-flush">
+                                <li class="{{$event->event_animation}} list-group-item list-group-item-action text-center" style="background-color: rgba({{$event->background_color_rgba}}, {{$event->transparency}}); border-radius: {{$event->event_round}}px;">
+                                    <div class="row text-center">
+                                        <div class="col-12 text-center mt-3 mb-3" style="padding: 0">
+                                            <a href="#" style="color: black; text-decoration: none">
+                                                <p style="font-family: '{{$event->location_font}}', sans-serif; text-transform: uppercase; font-size: {{$event->location_font_size}}em; padding: 0; margin: 0; color: {{$event->location_font_color}}">{{$event->city}}, {{$event->location}}</p>
+                                                <p style="font-family: '{{$event->date_font}}', sans-serif; font-size: {{$event->date_font_size}}rem; margin-bottom: 0; color: {{$event->date_font_color}};">{{\Carbon\Carbon::parse($event->date)->format('d.m.Y')}}{{' @'.$event->time}}</p>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="eventModal{{$event->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">{{$event->city}}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body" style="padding: 0">
+                                    <img src="{{$event->banner}}" class="img-fluid">
+                                    <p class="mt-2 ms-2" style="font-size: 1.3em; padding: 0; margin: 0"><b>{{$event->city}}, {{$event->location}}</b></p>
+                                    <p class="ms-2 mb-3" style="font-size: 1rem; margin-bottom: 0;"><b>{{\Carbon\Carbon::parse($event->date)->format('d.m.Y')}}{{' @'.$event->time}}</b></p>
+
+                                    @if($event->description)
+                                        <p class="ms-2 mb-2 me-2" style="font-size: 1rem; margin-bottom: 0; white-space: pre-line; line-height: 1.2;">{{$event->description}}</p>
+                                    @endif
+
+                                    <!-- Видео если есть фотки -->
+                                    @if($event->video)
+                                        <div class="embed-responsive embed-responsive-16by9 mt-2 ">
+                                            <x-embed url="{{$event->video}}" aspect-ratio="4:3" />
+                                        </div>
+                                    @endif
+
+                                    <!-- Медиа -->
+                                    @if($event->media)
+                                        <div class="">
+                                            {!!$event->media!!}
+                                        </div>
+                                    @endif
+
+                                    <div style="background-color: #E45545;" class="text-center">
+                                        <a href="{{$event->tickets}}" style="text-decoration: none">
+                                            <h5 class="ms-2 pt-3 pb-3" style="margin-bottom: 0; color: white">Купить билет</h5>
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
-                            </td>
-                        </tr>
-                    @endif
+                        </div>
+                    </div>
                 @endforeach
-            </tbody>
-        </table>
-
-        {{-- <div class="mt-5 text-center fixed-bottom">
-            <img src="https://i.ibb.co/3TzQpM2/logo.png" class="img-fluid" width="50">
+            </div> 
+            @if($user->type == 'Events') 
+                @if($user->show_social == true)
+                    @if($user->social == 'DOWN')
+                        @if(count($links) > 0)
+                            <nav class="navbar mt-2">
+                                <div class="container-fluid d-flex justify-content-center">
+                                    @foreach($links as $link)
+                                        @if($link->icon)
+                                            <img src="{{$link->icon}}" class="me-2 ms-2" style="width:40px;">
+                                        @endif
+                                    @endforeach
+                                </div>
+                            </nav>  
+                        @endif
+                    @endif    
+                @endif
+            @endif    
+        @endif    
+        {{-- <div class="mt-5 mb-3 text-center ">
+            <img src="https://i.ibb.co/LnHC78h/2.png" class="img-fluid" width="100">
         </div> --}}
 
     </body>
