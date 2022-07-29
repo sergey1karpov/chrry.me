@@ -12,7 +12,18 @@ use App\Http\Requests\EventRequest;
 
 class EventController extends Controller
 {
-    public function addEvent($id, EventRequest $request)
+    private function mediaDriver($media)
+    {
+        $re = "/(?<=playlist)[^\r\n]++/"; 
+        preg_match_all($re, $media, $matches);
+        $element_id = $matches[0][0];
+        $strArr = explode('_', $element_id); //0,1
+
+        return $aaa = '<script type="text/javascript" src="https://vk.com/js/api/openapi.js?168" charset="windows-1251"></script>'.
+        "<div id='vk_playlist_" . $element_id . "'></div>" . '<script type="text/javascript">' . "VK.Widgets.Playlist('vk_playlist_" . $element_id . "', " . $strArr[0] . ", " . $strArr[1] . ", 'b9c03e0d8c5f9c59d2');</script>";
+    }
+
+    public function addEvent($id, Request $request)
     {
         $lastEvent = Event::where('user_id', $id)->orderBy('created_at', 'desc')->first();
 
@@ -25,7 +36,7 @@ class EventController extends Controller
             'date'        => $request->date,
             'banner'      => $this->addBanner($request->banner),
             'video'       => $request->video,
-            'media'       => $request->media,
+            'media'       => isset($request->media) ? $this->mediaDriver($request->media) : '',
             'tickets'     => $request->tickets,
             'user_id'     => Auth::user()->id,
             'link_id'     => 1,

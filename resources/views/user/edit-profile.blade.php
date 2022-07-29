@@ -841,9 +841,9 @@
                                         <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_video_description')</span>
                                     </div>
                                     <div class="mb-3"> <!-- Ссылка на любое медиа -->
-                                        <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.p_media')</label>
+                                        <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Плейлист</label>
                                         <textarea class="form-control"  rows="2" name="media" id="media"></textarea>
-                                        <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_media_description')</span>
+                                        <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Что бы добавить плейлист, зайдите на сайт vk.com, выберите нужный вам плейлист и вставьте сюда ссылку на него. Доступные драйверы: VK.com</span>
                                     </div>
 
                                     <!-- Дизайн -->
