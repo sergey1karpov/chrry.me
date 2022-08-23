@@ -28,7 +28,9 @@ class LinkController extends Controller
             $pinnedLinks = Link::where('user_id', $user->id)->where('pinned', true)->orderBy('position')->get();
             $icons  = public_path('images/social');
             $allIconsInsideFolder = File::files($icons);
-            return view('user.links', compact('user', 'links', 'allIconsInsideFolder','pinnedLinks'));
+            $fonts  = public_path('fonts');
+            $allFontsInFolder = File::files($fonts);
+            return view('user.links', compact('user', 'links', 'allIconsInsideFolder','pinnedLinks', 'allFontsInFolder'));
         } else {
             return abort(404);
         }
@@ -47,14 +49,6 @@ class LinkController extends Controller
         if($id == Auth::user()->id) {
             if($request->type == 'LINK') {
                 Link::addLink($id,$request);
-            }
-            if($request->type == 'POST') {
-                if(isset($request->photos)) {
-                    if(count($request->photos) > 10) {
-                        return redirect()->back()->with('error','К посту можно прикрепить не более 10 изображений');
-                    }
-                }
-                Link::addPost($id,$request);
             }
             return redirect()->back();
         } else {
@@ -76,14 +70,6 @@ class LinkController extends Controller
         if($id == Auth::user()->id) {
             if($request->type == 'LINK') {
                 Link::editLink($id,$link,$request);
-            }
-            if($request->type == 'POST') {
-                if(isset($request->photos)) {
-                    if(count($request->photos) > 10) {
-                        return redirect()->back()->with('error','К посту можно прикрепить не более 10 изображений');
-                    }
-                }
-                Link::editPost($id,$link,$request);
             }
             return redirect()->back();
         } else {
@@ -203,7 +189,9 @@ class LinkController extends Controller
             $links = Link::search($request->search)->where('user_id', $user->id)->orderBy('id', 'desc')->get();
             $icons  = public_path('images/social');
             $allIconsInsideFolder = File::files($icons);
-            return view('user.search', compact('user', 'links', 'allIconsInsideFolder'));
+            $fonts  = public_path('fonts');
+            $allFontsInFolder = File::files($fonts);
+            return view('user.search', compact('user', 'links', 'allIconsInsideFolder', 'allFontsInFolder'));
         } else {
             return abort(404);
         }

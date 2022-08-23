@@ -9,21 +9,11 @@ use App\Models\Event;
 use App\Models\Link;
 use App\Models\User;
 use App\Http\Requests\EventRequest;
+use Illuminate\Support\Facades\File;
 
 class EventController extends Controller
 {
-    private function mediaDriver($media)
-    {
-        $re = "/(?<=playlist)[^\r\n]++/"; 
-        preg_match_all($re, $media, $matches);
-        $element_id = $matches[0][0];
-        $strArr = explode('_', $element_id); //0,1
-
-        return $aaa = '<script type="text/javascript" src="https://vk.com/js/api/openapi.js?168" charset="windows-1251"></script>'.
-        "<div id='vk_playlist_" . $element_id . "'></div>" . '<script type="text/javascript">' . "VK.Widgets.Playlist('vk_playlist_" . $element_id . "', " . $strArr[0] . ", " . $strArr[1] . ", 'b9c03e0d8c5f9c59d2');</script>";
-    }
-
-    public function addEvent($id, Request $request)
+    public function addEvent($id, EventRequest $request)
     {
         $lastEvent = Event::where('user_id', $id)->orderBy('created_at', 'desc')->first();
 
@@ -36,7 +26,7 @@ class EventController extends Controller
             'date'        => $request->date,
             'banner'      => $this->addBanner($request->banner),
             'video'       => $request->video,
-            'media'       => isset($request->media) ? $this->mediaDriver($request->media) : '',
+            'media'       => $request->media,
             'tickets'     => $request->tickets,
             'user_id'     => Auth::user()->id,
             'link_id'     => 1,
@@ -70,8 +60,10 @@ class EventController extends Controller
     {
         $user = User::where('id', $id)->firstOrFail();
         if($user) {
+            $fonts  = public_path('fonts');
+            $allFontsInFolder = File::files($fonts);
             $events = Event::where('user_id', $user->id)->orderBy('date')->get();
-            return view('user.events', compact('user', 'events'));
+            return view('user.events', compact('user', 'events', 'allFontsInFolder'));
         } else {
             return abort(404);
         }
@@ -80,6 +72,7 @@ class EventController extends Controller
     public function editEvent(int $id, int $event, Request $request)
     {
         $user = User::where('id', $id)->firstOrFail();
+        $actualEvent = Event::where('user_id', $id)->where('id', $event)->firstOrFail();
         if($user) {
             $event = Event::where('user_id', $user->id)->where('id', $event)->firstOrFail();
             $event->title = $request->title;
@@ -93,10 +86,10 @@ class EventController extends Controller
             $event->media = $request->media;
             $event->tickets = $request->tickets;
 
-            $event->location_font = $request->location_font;
+            $event->location_font = isset($request->location_font) ? $request->location_font : $actualEvent->location_font;
             $event->location_font_size = $request->location_font_size;
             $event->location_font_color = $request->location_font_color;
-            $event->date_font = $request->date_font;
+            $event->date_font = isset($request->date_font) ? $request->date_font : $actualEvent->date_font;
             $event->date_font_size = $request->date_font_size;
             $event->date_font_color = $request->date_font_color;
             $event->transparency = $request->transparency;

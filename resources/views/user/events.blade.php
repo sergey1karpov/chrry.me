@@ -113,83 +113,83 @@
 			}
             @font-face {
                 font-family: Oi; /* Имя шрифта */
-                src: url({{asset('public/fonts/Oi-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+                src: url({{asset('public/fonts/Oi.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
-                font-family: Rampart One; /* Имя шрифта */
-                src: url({{asset('public/fonts/RampartOne-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+                font-family: RampartOne; /* Имя шрифта */
+                src: url({{asset('public/fonts/RampartOne.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
                 font-family: Yomogi; /* Имя шрифта */
-                src: url({{asset('public/fonts/Yomogi-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+                src: url({{asset('public/fonts/Yomogi.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
-                font-family: Yuji Syuku; /* Имя шрифта */
-                src: url({{asset('public/fonts/YujiSyuku-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+                font-family: YujiSyuku; /* Имя шрифта */
+                src: url({{asset('public/fonts/YujiSyuku.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
-                font-family: Zen Kurenaido; /* Имя шрифта */
-                src: url({{asset('public/fonts/ZenKurenaido-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+                font-family: ZenKurenaido; /* Имя шрифта */
+                src: url({{asset('public/fonts/ZenKurenaido.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
                 font-family: Comforter; /* Имя шрифта */
-                src: url({{asset('public/fonts/Comforter-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+                src: url({{asset('public/fonts/Comforter.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
                 font-family: Murecho; /* Имя шрифта */
-                src: url({{asset('public/fonts/Murecho-VariableFont_wght.ttf')}}); /* Путь к файлу со шрифтом */
+                src: url({{asset('public/fonts/Murecho.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
-                font-family: Train One; /* Имя шрифта */
-                src: url({{asset('public/fonts/TrainOne-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+                font-family: TrainOne; /* Имя шрифта */
+                src: url({{asset('public/fonts/TrainOne.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
-                font-family: Alumni Sans; /* Имя шрифта */
-                src: url({{asset('public/fonts/AlumniSans-VariableFont_wght.ttf')}}); /* Путь к файлу со шрифтом */
+                font-family: AlumniSans; /* Имя шрифта */
+                src: url({{asset('public/fonts/AlumniSans.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
                 font-family: DotGothic16; /* Имя шрифта */
-                src: url({{asset('public/fonts/DotGothic16-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+                src: url({{asset('public/fonts/DotGothic16.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
-                font-family: Noto Sans Mono; /* Имя шрифта */
-                src: url({{asset('public/fonts/NotoSansMono-VariableFont_wdth,wght.ttf')}}); /* Путь к файлу со шрифтом */
+                font-family: NotoSansMono; /* Имя шрифта */
+                src: url({{asset('public/fonts/NotoSansMono.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
                 font-family: Podkova; /* Имя шрифта */
-                src: url({{asset('public/fonts/Podkova-VariableFont_wght.ttf')}}); /* Путь к файлу со шрифтом */
+                src: url({{asset('public/fonts/Podkova.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
-                font-family: Spectral SC; /* Имя шрифта */
-                src: url({{asset('public/fonts/SpectralSC-ExtraLight.ttf')}}); /* Путь к файлу со шрифтом */
+                font-family: SpectralSC; /* Имя шрифта */
+                src: url({{asset('public/fonts/SpectralSC.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
-                font-family: JetBrains Mono; /* Имя шрифта */
-                src: url({{asset('public/fonts/JetBrainsMono-VariableFont_wght.ttf')}}); /* Путь к файлу со шрифтом */
+                font-family: JetBrainsMono; /* Имя шрифта */
+                src: url({{asset('public/fonts/JetBrainsMono.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
                 font-family: Roboto; /* Имя шрифта */
-                src: url({{asset('public/fonts/Roboto-Light.ttf')}}); /* Путь к файлу со шрифтом */
+                src: url({{asset('public/fonts/Roboto.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
-                font-family: Open Sans; /* Имя шрифта */
-                src: url({{asset('public/fonts/OpenSans-VariableFont_wdth,wght.ttf')}}); /* Путь к файлу со шрифтом */
+                font-family: OpenSans; /* Имя шрифта */
+                src: url({{asset('public/fonts/OpenSans.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
                 font-family: Montserrat; /* Имя шрифта */
-                src: url({{asset('public/fonts/Montserrat-VariableFont_wght.ttf')}}); /* Путь к файлу со шрифтом */
+                src: url({{asset('public/fonts/Montserrat.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
-                font-family: Noto Sans; /* Имя шрифта */
-                src: url({{asset('public/fonts/NotoSans-Light.ttf')}}); /* Путь к файлу со шрифтом */
+                font-family: NotoSans; /* Имя шрифта */
+                src: url({{asset('public/fonts/NotoSans.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
-                font-family: Russo One; /* Имя шрифта */
-                src: url({{asset('public/fonts/RussoOne-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+                font-family: RussoOne; /* Имя шрифта */
+                src: url({{asset('public/fonts/RussoOne.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
-                font-family: Poiret One; /* Имя шрифта */
-                src: url({{asset('public/fonts/PoiretOne-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+                font-family: PoiretOne; /* Имя шрифта */
+                src: url({{asset('public/fonts/PoiretOne.ttf')}}); /* Путь к файлу со шрифтом */
             }
         </style>
     </head>
@@ -267,28 +267,7 @@
                                 <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Шрифт, размер шрифта и цвет для города и локации</label>
                                 <div class="row mb-3">
                                     <div class="col-6">
-                                        <select class="form-select" aria-label="Default select example" name="location_font">
-                                            <option value="Inter">Выбрать шрифт...</option>
-                                            <option style="font-family: Russo One" value="Russo One">Russo One Font</option>
-                                            <option style="font-family: Poiret One" value="Poiret One">Poiret One Font</option>
-                                            <option style="font-family: Noto Sans" value="Noto Sans">Noto Sans Font</option>
-                                            <option style="font-family: Montserrat" value="Montserrat">Montserrat Font</option>
-                                            <option style="font-family: Open Sans" value="Open Sans">Open Sans Font</option>
-                                            <option style="font-family: Roboto" value="Roboto">Roboto Font</option>
-                                            <option style="font-family: JetBrains Mono" value="JetBrains Mono">JetBrains Mono Font</option>
-                                            <option style="font-family: Spectral SC" value="Spectral SC">Spectral SC Font</option>
-                                            <option style="font-family: Podkova" value="Podkova">Podkova Font</option>
-                                            <option style="font-family: Noto Sans Mono" value="Noto Sans Mono">Noto Sans Mono Font</option>
-                                            <option style="font-family: DotGothic16" value="DotGothic16">DotGothic16 Font</option>
-                                            <option style="font-family: Alumni Sans" value="Alumni Sans">Alumni Sans Font</option>
-                                            <option style="font-family: Murecho" value="Murecho">Murecho Font</option>
-                                            <option style="font-family: Comforter" value="Comforter">Comforter Font</option>
-                                            <option style="font-family: Zen Kurenaido" value="Zen Kurenaido">Zen Kurenaido Font</option>
-                                            <option style="font-family: Yuji Syuku" value="Yuji Syuku">Yuji Syuku Font</option>
-                                            <option style="font-family: Yomogi" value="Yomogi">Yomogi Font</option>
-                                            <option style="font-family: Rampart One" value="Rampart One">Rampart One Font</option>
-                                            <option style="font-family: Oi" value="Oi">Oi Font</option>
-                                        </select>
+                                        <select id="mass-event-location" data-placeholder="Поиск шрифта..."  autocomplete="off" name="location_font"></select>
                                     </div>
                                     <div class="col-3">
                                         <select class="form-select" aria-label="Default select example" name="location_font_size">
@@ -299,35 +278,14 @@
                                         </select>
                                     </div>
                                     <div class="col-3">
-                                        <input type="color" class="form-control" id="exampleColorInput" value="#050507" title="Choose your color" name="location_font_color" style="height: 40px;"><br>
+                                        <input type="color" class="form-control" id="exampleColorInput" title="Choose your color" name="location_font_color" style="height: 40px;"><br>
                                     </div>
                                 </div>
 
                                 <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Шрифт, размер шрифта и цвет для даты и времени</label>
                                 <div class="row mb-3">
                                     <div class="col-6">
-                                        <select class="form-select" aria-label="Default select example" name="date_font">
-                                            <option value="Inter">Выбрать шрифт...</option>
-                                            <option style="font-family: Russo One" value="Russo One">Russo One Font</option>
-                                            <option style="font-family: Poiret One" value="Poiret One">Poiret One Font</option>
-                                            <option style="font-family: Noto Sans" value="Noto Sans">Noto Sans Font</option>
-                                            <option style="font-family: Montserrat" value="Montserrat">Montserrat Font</option>
-                                            <option style="font-family: Open Sans" value="Open Sans">Open Sans Font</option>
-                                            <option style="font-family: Roboto" value="Roboto">Roboto Font</option>
-                                            <option style="font-family: JetBrains Mono" value="JetBrains Mono">JetBrains Mono Font</option>
-                                            <option style="font-family: Spectral SC" value="Spectral SC">Spectral SC Font</option>
-                                            <option style="font-family: Podkova" value="Podkova">Podkova Font</option>
-                                            <option style="font-family: Noto Sans Mono" value="Noto Sans Mono">Noto Sans Mono Font</option>
-                                            <option style="font-family: DotGothic16" value="DotGothic16">DotGothic16 Font</option>
-                                            <option style="font-family: Alumni Sans" value="Alumni Sans">Alumni Sans Font</option>
-                                            <option style="font-family: Murecho" value="Murecho">Murecho Font</option>
-                                            <option style="font-family: Comforter" value="Comforter">Comforter Font</option>
-                                            <option style="font-family: Zen Kurenaido" value="Zen Kurenaido">Zen Kurenaido Font</option>
-                                            <option style="font-family: Yuji Syuku" value="Yuji Syuku">Yuji Syuku Font</option>
-                                            <option style="font-family: Yomogi" value="Yomogi">Yomogi Font</option>
-                                            <option style="font-family: Rampart One" value="Rampart One">Rampart One Font</option>
-                                            <option style="font-family: Oi" value="Oi">Oi Font</option>
-                                        </select>
+                                        <select id="mass-event-date" data-placeholder="Поиск шрифта..."  autocomplete="off" name="date_font"></select>
                                     </div>
                                     <div class="col-3">
                                         <select class="form-select" aria-label="Default select example" name="date_font_size">
@@ -338,7 +296,7 @@
                                         </select>
                                     </div>
                                     <div class="col-3">
-                                        <input type="color" class="form-control" id="exampleColorInput" value="#050507" title="Choose your color" name="date_font_color" style="height: 40px;"><br>
+                                        <input type="color" class="form-control" id="exampleColorInput" title="Choose your color" name="date_font_color" style="height: 40px;"><br>
                                     </div>
                                 </div>
 
@@ -479,28 +437,7 @@
                                     <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Шрифт, размер шрифта и цвет для города и локации</label>
                                     <div class="row mb-3">
                                         <div class="col-6">
-                                            <select class="form-select" aria-label="Default select example" name="location_font">
-                                                <option @if($event->location_font == 'Inter') selected @endif value="Inter">Выбрать шрифт...</option>
-                                                <option @if($event->location_font == 'Russo One') selected @endif style="font-family: Russo One" value="Russo One">Russo One Font</option>
-                                                <option @if($event->location_font == 'Poiret One') selected @endif style="font-family: Poiret One" value="Poiret One">Poiret One Font</option>
-                                                <option @if($event->location_font == 'Noto Sans') selected @endif style="font-family: Noto Sans" value="Noto Sans">Noto Sans Font</option>
-                                                <option @if($event->location_font == 'Montserrat') selected @endif style="font-family: Montserrat" value="Montserrat">Montserrat Font</option>
-                                                <option @if($event->location_font == 'Open Sans') selected @endif style="font-family: Open Sans" value="Open Sans">Open Sans Font</option>
-                                                <option @if($event->location_font == 'Roboto') selected @endif style="font-family: Roboto" value="Roboto">Roboto Font</option>
-                                                <option @if($event->location_font == 'JetBrains Mono') selected @endif style="font-family: JetBrains Mono" value="JetBrains Mono">JetBrains Mono Font</option>
-                                                <option @if($event->location_font == 'Spectral SC') selected @endif style="font-family: Spectral SC" value="Spectral SC">Spectral SC Font</option>
-                                                <option @if($event->location_font == 'Podkova') selected @endif style="font-family: Podkova" value="Podkova">Podkova Font</option>
-                                                <option @if($event->location_font == 'Noto Sans Mono') selected @endif style="font-family: Noto Sans Mono" value="Noto Sans Mono">Noto Sans Mono Font</option>
-                                                <option @if($event->location_font == 'DotGothic16') selected @endif style="font-family: DotGothic16" value="DotGothic16">DotGothic16 Font</option>
-                                                <option @if($event->location_font == 'Alumni Sans') selected @endif style="font-family: Alumni Sans" value="Alumni Sans">Alumni Sans Font</option>
-                                                <option @if($event->location_font == 'Murecho') selected @endif style="font-family: Murecho" value="Murecho">Murecho Font</option>
-                                                <option @if($event->location_font == 'Comforter') selected @endif style="font-family: Comforter" value="Comforter">Comforter Font</option>
-                                                <option @if($event->location_font == 'Zen Kurenaido') selected @endif style="font-family: Zen Kurenaido" value="Zen Kurenaido">Zen Kurenaido Font</option>
-                                                <option @if($event->location_font == 'Yuji Syuku') selected @endif style="font-family: Yuji Syuku" value="Yuji Syuku">Yuji Syuku Font</option>
-                                                <option @if($event->location_font == 'Yomogi') selected @endif style="font-family: Yomogi" value="Yomogi">Yomogi Font</option>
-                                                <option @if($event->location_font == 'Rampart One') selected @endif style="font-family: Rampart One" value="Rampart One">Rampart One Font</option>
-                                                <option @if($event->location_font == 'Oi') selected @endif style="font-family: Oi" value="Oi">Oi Font</option>
-                                            </select>
+                                            <select id="select-beast-empty-post-location{{$event->id}}" data-placeholder="Поиск шрифта..."  autocomplete="off" name="location_font"></select>
                                         </div>
                                         <div class="col-3">
                                             <select class="form-select" aria-label="Default select example" name="location_font_size">
@@ -511,35 +448,14 @@
                                             </select>
                                         </div>
                                         <div class="col-3">
-                                            <input type="color" class="form-control" id="exampleColorInput" title="Choose your color" value="{{$event->location_font_color}}" name="location_font_color" style="height: 40px;"><br>
+                                            <input type="color" class="form-control" id="exampleColorInput" value="{{$event->location_font_color}}" title="Choose your color" name="location_font_color" style="height: 40px;"><br>
                                         </div>
                                     </div>
 
                                     <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Шрифт, размер шрифта и цвет для даты и времени</label>
                                     <div class="row mb-3">
                                         <div class="col-6">
-                                            <select class="form-select" aria-label="Default select example" name="date_font">
-                                                <option @if($event->date_font == 'Inter') selected @endif value="Inter">Выбрать шрифт...</option>
-                                                <option @if($event->date_font == 'Russo One') selected @endif style="font-family: Russo One" value="Russo One">Russo One Font</option>
-                                                <option @if($event->date_font == 'Poiret One') selected @endif style="font-family: Poiret One" value="Poiret One">Poiret One Font</option>
-                                                <option @if($event->date_font == 'Noto Sans') selected @endif style="font-family: Noto Sans" value="Noto Sans">Noto Sans Font</option>
-                                                <option @if($event->date_font == 'Montserrat') selected @endif style="font-family: Montserrat" value="Montserrat">Montserrat Font</option>
-                                                <option @if($event->date_font == 'Open Sans') selected @endif style="font-family: Open Sans" value="Open Sans">Open Sans Font</option>
-                                                <option @if($event->date_font == 'Roboto') selected @endif style="font-family: Roboto" value="Roboto">Roboto Font</option>
-                                                <option @if($event->date_font == 'JetBrains Mono') selected @endif style="font-family: JetBrains Mono" value="JetBrains Mono">JetBrains Mono Font</option>
-                                                <option @if($event->date_font == 'Spectral SC') selected @endif style="font-family: Spectral SC" value="Spectral SC">Spectral SC Font</option>
-                                                <option @if($event->date_font == 'Podkova') selected @endif style="font-family: Podkova" value="Podkova">Podkova Font</option>
-                                                <option @if($event->date_font == 'Noto Sans Mono') selected @endif style="font-family: Noto Sans Mono" value="Noto Sans Mono">Noto Sans Mono Font</option>
-                                                <option @if($event->date_font == 'DotGothic16') selected @endif style="font-family: DotGothic16" value="DotGothic16">DotGothic16 Font</option>
-                                                <option @if($event->date_font == 'Alumni Sans') selected @endif style="font-family: Alumni Sans" value="Alumni Sans">Alumni Sans Font</option>
-                                                <option @if($event->date_font == 'Murecho') selected @endif style="font-family: Murecho" value="Murecho">Murecho Font</option>
-                                                <option @if($event->date_font == 'Comforter') selected @endif style="font-family: Comforter" value="Comforter">Comforter Font</option>
-                                                <option @if($event->date_font == 'Zen Kurenaido') selected @endif style="font-family: Zen Kurenaido" value="Zen Kurenaido">Zen Kurenaido Font</option>
-                                                <option @if($event->date_font == 'Yuji Syuku') selected @endif style="font-family: Yuji Syuku" value="Yuji Syuku">Yuji Syuku Font</option>
-                                                <option @if($event->date_font == 'Yomogi') selected @endif style="font-family: Yomogi" value="Yomogi">Yomogi Font</option>
-                                                <option @if($event->date_font == 'Rampart One') selected @endif style="font-family: Rampart One" value="Rampart One">Rampart One Font</option>
-                                                <option @if($event->date_font == 'Oi') selected @endif style="font-family: Oi" value="Oi">Oi Font</option>
-                                            </select>
+                                            <select id="select-beast-empty-post-date{{$event->id}}" data-placeholder="Поиск шрифта..."  autocomplete="off" name="date_font"></select>
                                         </div>
                                         <div class="col-3">
                                             <select class="form-select" aria-label="Default select example" name="date_font_size">
@@ -597,7 +513,87 @@
                     uiLibrary: 'bootstrap5'
                 });
             </script>
+            <script>
+                new TomSelect('#select-beast-empty-post-location{{$event->id}}',{
+                    valueField: 'font',
+                    searchField: 'title',
+                    options: [
+                        @foreach($allFontsInFolder as $font)
+                            {id: {{$font->getInode()}}, title: '{{ stristr($font->getFilename(), '.', true)}}', font: '{{ stristr($font->getFilename(), '.', true) }}'},
+                        @endforeach
+                    ],
+                    render: {
+                        option: function(data, escape) {
+                            return  '<div>' +
+                                        '<span style="font-size: 1.3rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</span>' +
+                                    '</div>';
+                        },
+                        item: function(data, escape) {
+                            return  '<h4 style="font-size: 1.3rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</h4>';
+                        }
+                    }
+                });
+                new TomSelect('#select-beast-empty-post-date{{$event->id}}',{
+                    valueField: 'font',
+                    searchField: 'title',
+                    options: [
+                        @foreach($allFontsInFolder as $font)
+                            {id: {{$font->getInode()}}, title: '{{ stristr($font->getFilename(), '.', true)}}', font: '{{ stristr($font->getFilename(), '.', true) }}'},
+                        @endforeach
+                    ],
+                    render: {
+                        option: function(data, escape) {
+                            return  '<div>' +
+                                        '<span style="font-size: 1.3rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</span>' +
+                                    '</div>';
+                        },
+                        item: function(data, escape) {
+                            return  '<h4 style="font-size: 1.3rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</h4>';
+                        }
+                    }
+                });
+            </script>
         @endforeach
+        <script>
+            new TomSelect('#mass-event-location',{
+                valueField: 'font',
+                searchField: 'title',
+                options: [
+                    @foreach($allFontsInFolder as $font)
+                        {id: {{$font->getInode()}}, title: '{{ stristr($font->getFilename(), '.', true)}}', font: '{{ stristr($font->getFilename(), '.', true) }}'},
+                    @endforeach
+                ],
+                render: {
+                    option: function(data, escape) {
+                        return  '<div>' +
+                                    '<span style="font-size: 1.3rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</span>' +
+                                '</div>';
+                    },
+                    item: function(data, escape) {
+                        return  '<h4 style="font-size: 1.3rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</h4>';
+                    }
+                }
+            });
+            new TomSelect('#mass-event-date',{
+                valueField: 'font',
+                searchField: 'title',
+                options: [
+                    @foreach($allFontsInFolder as $font)
+                        {id: {{$font->getInode()}}, title: '{{ stristr($font->getFilename(), '.', true)}}', font: '{{ stristr($font->getFilename(), '.', true) }}'},
+                    @endforeach
+                ],
+                render: {
+                    option: function(data, escape) {
+                        return  '<div>' +
+                                    '<span style="font-size: 1.3rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</span>' +
+                                '</div>';
+                    },
+                    item: function(data, escape) {
+                        return  '<h4 style="font-size: 1.3rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</h4>';
+                    }
+                }
+            });
+        </script>
     </body>
 </html>
 

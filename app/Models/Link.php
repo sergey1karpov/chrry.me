@@ -66,78 +66,7 @@ class Link extends Model
      *
      * @return void
      *
-     * Добавление ссылки типа LINK
-     */
-    protected static function addPost(int $userId, Request $request) : void
-    {
-        $request->validate([
-            'title' => 'required|min:1|max:100',
-            'full_text' => 'nullable',
-            'photos[]' => 'nullable|image|mimes:jpeg,jpg,png|max:10000',
-            'link' => 'nullable|url',
-        ]);
-
-        if($request->check_last_link == 'penis') {
-            $lastLink = Link::where('user_id', $userId)->orderBy('created_at', 'desc')->first();
-            self::create([
-                'type' => 'POST',
-                'user_id' => $userId,
-                'title' => $request->title,
-                'full_text' => $request->full_text,
-                'link' => $request->link,
-                'photos' => isset($request->photos) ? self::addPhoto($request->photos, $request->type) : null,
-                'video' => $request->video,
-                'media' => $request->media,
-                'shadow' => $lastLink->shadow,
-                'rounded' => $lastLink->rounded,
-                'title_color' => $lastLink->title_color,
-                'background_color' => $lastLink->background_color,
-                'title_color_hex' => $lastLink->title_color_hex,
-                'background_color_hex' => $lastLink->background_color_hex,
-                'transparency' => $lastLink->transparency,
-                'pinned' => isset($request->pinned) ? 1 : 0,
-                'animation' => $request->animation,
-                'font' => $lastLink->font,
-                'place' => $request->place,
-                'animation' => $request->animation,
-                'font' => $lastLink->font,
-                'font_size' => $lastLink->font_size,
-            ]);
-        } else {
-            self::create([
-                'type' => 'POST',
-                'user_id' => $userId,
-                'title' => $request->title,
-                'full_text' => $request->full_text,
-                'link' => $request->link,
-                'photos' => isset($request->photos) ? self::addPhoto($request->photos, $request->type) : null,
-                'video' => $request->video,
-                'media' => $request->media,
-                'shadow' => $request->shadow,
-                'rounded' => $request->rounded,
-                'title_color' => $request->title_color,
-                'background_color' => Link::convertBackgroundColor($request->background_color),
-                'title_color_hex' => $request->title_color,
-                'background_color_hex' => $request->background_color,
-                'transparency' => $request->transparency,
-                'pinned' => isset($request->pinned) ? 1 : 0,
-                'animation' => $request->animation,
-                'font' => $request->font,
-                'place' => $request->place,
-                'animation' => $request->animation,
-                'font' => $request->font,
-                'font_size' => $request->font_size,
-            ]);
-        }
-    }
-
-    /**
-     * @param int $userId
-     * @param Request $request
-     *
-     * @return void
-     *
-     * Добавления ссылки типа POST
+     * Добавления ссылки типа LINK
      */
     protected static function addLink(int $userId, Request $request) : void
     {
@@ -169,7 +98,6 @@ class Link extends Model
                 'font' => $lastLink->font,
                 'place' => $request->place,
                 'animation' => $request->animation,
-                'font' => $lastLink->font,
                 'font_size' => $lastLink->font_size,
             ]);
             $user->links()->save($link);
@@ -189,10 +117,9 @@ class Link extends Model
                 'transparency' => $request->transparency,
                 'pinned' => isset($request->pinned) ? 1 : 0,
                 'animation' => $request->animation,
-                'font' => $request->font,
+                'font' => is_null($request->font) ? 'Inter' : $request->font,
                 'place' => $request->place,
                 'animation' => $request->animation,
-                'font' => $request->font,
                 'font_size' => $request->font_size,
             ]);
             $user->links()->save($link);
@@ -232,48 +159,7 @@ class Link extends Model
             'transparency' => isset($request->transparency) ? $request->transparency : $actualLink->transparency,
             'pinned' => isset($request->pinned) ? 1 : 0,
             'animation' => $request->animation,
-            'font' => $request->font,
-            'font_size' => $request->font_size,
-        ]);
-    }
-
-    /**
-     * @param int $userId
-     * @param int $link
-     * @param Request $request
-     *
-     * @return void
-     *
-     * Редактирование ссылки типа POST
-     */
-    protected static function editPost(int $userId, int $link, Request $request) : void
-    {
-        $request->validate([
-            'title' => 'required|min:1|max:100',
-            'full_text' => 'nullable',
-            'photos[]' => 'nullable|image|mimes:jpeg,jpg,png|max:10000',
-            'link' => 'nullable|url',
-        ]);
-
-        $link = Link::where('id', $link)->where('user_id', $userId)->firstOrFail();
-
-        self::where('id', $link->id)->where('user_id', $userId)->update([
-            'title' => $request->title,
-            'full_text' => $request->full_text,
-            'link' => $request->link,
-            'photos' => isset($request->photos) ? self::addPhoto($request->photos, $request->type) : $link->photos,
-            'video' => $request->video,
-            'media' => $request->media,
-            'shadow' => isset($request->shadow) ? $request->shadow : $link->shadow,
-            'rounded' => isset($request->rounded) ? $request->rounded : $link->rounded,
-            'title_color' => isset($request->title_color) ? $request->title_color : $link->title_color,
-            'background_color' => Link::convertBackgroundColor($request->background_color),
-            'title_color_hex' => isset($request->title_color_hex) ? $request->title_color_hex : $link->title_color_hex,
-            'background_color_hex' => isset($request->background_color) ? $request->background_color : $link->background_color_hex,
-            'transparency' => isset($request->transparency) ? $request->transparency : $link->transparency,
-            'pinned' => isset($request->pinned) ? 1 : 0,
-            'animation' => $request->animation,
-            'font' => $request->font,
+            'font' => isset($request->font) ? $request->font : $actualLink->font,
             'font_size' => $request->font_size,
         ]);
     }
@@ -336,16 +222,6 @@ class Link extends Model
             $image->save('../storage/app/public/'. Auth::user()->id. '/links'. $img->hashName());
             return '/'.$image->dirname . '/' . $image->basename;
         }
-
-        if($type == 'POST') {
-            $urls = [];
-            foreach($img as $photo) {
-                $img = Image::make($photo->getRealPath())->fit(500);
-                $img->save('../storage/app/public/'. Auth::user()->id. '/posts'. $photo->hashName());
-                $urls[] = '/'.$img->dirname . '/' . $img->basename;
-            }
-            return serialize($urls);
-        }
     }
 
     /**
@@ -360,9 +236,6 @@ class Link extends Model
     {
         if($request->type == 'LINK') {
             self::where('user_id', $id)->where('id', $link)->update(['photo' => null]);
-        }
-        if($request->type == 'POST') {
-            self::where('user_id', $id)->where('id', $link)->update(['photos' => null]);
         }
     }
 }

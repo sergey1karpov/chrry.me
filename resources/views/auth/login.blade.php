@@ -15,11 +15,32 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;600&display=swap" rel="stylesheet">
+        <style type="text/css">
+            html {
+                height: 100%;
+            }
+            body {
+                min-height: 100%;
+                background-color: #F8F9FB;
+            }
+            .section {
+                height: 100vh; /* высота секции равна высоте области просмотра */
+            }
+            @font-face {
+                font-family: FuturisVolumeC; /* Имя шрифта */
+                src: url({{asset('public/font/FuturisVolumeC.ttf')}}); /* Путь к файлу со шрифтом */
+            }
+        </style>
     </head>
     <body class="antialiased">
-        <div class="container">
-            <div class="d-flex align-items-center justify-content-center" style="margin-top: 50%">
-                <div class="col-11">
+        <div class="section d-flex align-items-center justify-content-center ms-4 me-4">
+            <div class="">
+                <div class="text-center">
+                    <a href="{{ route('welcome') }}">
+                        <img src="https://i.ibb.co/3dJD25v/new-logo.png" class="img-fluid">
+                    </a>    
+                </div>
+                <div class="col-12">
                     <x-guest-layout>
                         <x-auth-card>
                             <x-slot name="logo">
@@ -69,9 +90,11 @@
                                         </a>
                                     @endif
 
-                                    <button class="btn" style="font-family: 'Rubik', sans-serif; border: 0; margin-left: 14px; background-color: #f41b5a; color: white;">
-                                        {{ __('Войти') }}
-                                    </button>
+                                    <div class="d-grid mt-2">
+                                        <button class="btn" style="font-family: 'Rubik', sans-serif; border: 0; background-color: #e83100; color: white;">
+                                            {{ __('Войти') }}
+                                        </button>
+                                    </div>    
                                 </div>
                             </form>
                         </x-auth-card>

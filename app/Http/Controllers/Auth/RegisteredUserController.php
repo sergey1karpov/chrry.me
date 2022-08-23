@@ -21,8 +21,7 @@ class RegisteredUserController extends Controller
      */
     public function create()
     {
-        // return view('auth.register');
-        return abort(404);
+        return view('auth.register');
     }
 
     /**
@@ -35,26 +34,25 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
-        return abort(404);
-        // $request->validate([
-        //     'name' => ['required', 'string', 'max:100'],
-        //     'slug' => ['required', 'string', 'max:150'],
-        //     'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-        //     'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        // ]);
+        $request->validate([
+            'name' => ['required', 'string', 'max:100'],
+            'slug' => ['required', 'string', 'max:150'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
 
-        // $user = User::create([
-        //     'name' => $request->name,
-        //     'slug' => $request->slug,
-        //     'email' => $request->email,
-        //     'password' => Hash::make($request->password),
-        // ]);
+        $user = User::create([
+            'name' => $request->name,
+            'slug' => $request->slug,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
 
-        // event(new Registered($user));
+        event(new Registered($user));
 
-        // Auth::login($user);
+        Auth::login($user);
 
-        // return redirect()->route('editProfileForm', ['id' => Auth::user()->id]);
+        return redirect()->route('editProfileForm', ['id' => Auth::user()->id]);
 
     }
 }

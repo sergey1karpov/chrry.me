@@ -12,118 +12,106 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Overpass+Mono&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;600&display=swap" rel="stylesheet">
+        <style type="text/css">
+            html {
+                height: 100%;
+            }
+            body {
+                min-height: 100%;
+                background-color: #F8F9FB;
+            }
+            .section {
+                height: 100vh; /* высота секции равна высоте области просмотра */
+            }
+            @font-face {
+                font-family: FuturisVolumeC; /* Имя шрифта */
+                src: url({{asset('public/font/FuturisVolumeC.ttf')}}); /* Путь к файлу со шрифтом */
+            }
+        </style>
     </head>
     <body class="antialiased">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="{{ route('welcome') }}">
-                    <img src="https://i.ibb.co/T2r7Ymy/logo.png" class="img-fluid" style="width:27px">
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" style="border: 0">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav me-auto mb-lg-0">
-                        <li><a href="#" class="nav-link link-dark" style="font-family: 'Overpass Mono', monospace;">Блог</a></li>
-                        <li><a href="#" class="nav-link link-dark" style="font-family: 'Overpass Mono', monospace;">Инструкция</a></li>
-                        <li><a href="#" class="nav-link link-dark" style="font-family: 'Overpass Mono', monospace;">О Нас</a></li>
-                        <li><a href="#" class="nav-link link-dark" style="font-family: 'Overpass Mono', monospace;">Контакты</a></li>
-                        @if (Route::has('login'))
-                            @auth
-                                <li class="nav-item">
-                                    <a class="nav-link text-muted" aria-current="page" href="{{ route('userHomePage',  ['slug' => Auth::user()->slug]) }}" style="font-family: 'Overpass Mono', monospace;">Профиль</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-muted" aria-current="page" href="{{ route('editProfileForm',  ['id' => Auth::user()->id]) }}" style="font-family: 'Overpass Mono', monospace;">Настройки</a>
-                                </li>
-                                <li class="nav-item">
-                                    <form method="POST" action="{{ route('logout') }}">
-                                        @csrf
-                                        <button class="nav-link text-muted" style="border: 0; outline: none; background-color: white;" style="font-family: 'Overpass Mono', monospace;">Выйти</button>
-                                    </form>
-                                </li>
-                            @else
-                                <li class="nav-item">
-                                    <a class="nav-link text-muted" aria-current="page" href="{{ route('login') }}" style="font-family: 'Overpass Mono', monospace;">Войти</a>
-                                </li>
-                                @if (Route::has('register'))
-                                    <li class="nav-item">
-                                        <a class="nav-link text-muted" aria-current="page" href="{{ route('register') }}" style="font-family: 'Overpass Mono', monospace;">Регистрация</a>
-                                    </li>
-                                @endif
-                            @endauth
-                        @endif
-                    </ul>
+        <div class="section d-flex align-items-center justify-content-center ms-4 me-4">
+            <div class="" >
+                <div class="text-center">
+                    <a href="{{ route('welcome') }}">
+                        <img src="https://i.ibb.co/3dJD25v/new-logo.png" class="img-fluid">
+                    </a>    
                 </div>
+                <div class="col-12">
+                    <x-guest-layout>
+                        <x-auth-card>
+                            <x-slot name="logo">
+                                {{-- <a href="/">
+                                    <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+                                </a> --}}
+                            </x-slot>
+
+                            <!-- Validation Errors -->
+                            <x-auth-validation-errors class="mb-4" :errors="$errors" />
+
+                            <form method="POST" action="{{ route('register') }}" class="text-center">
+                                @csrf
+
+                                <!-- Name -->
+                                <div>
+                                    <x-label for="name" :value="__('Имя профиля')" style="font-family: 'Rubik', sans-serif;"/>
+
+                                    <x-input id="name" class="form-control" type="text" name="name" :value="old('name')" required style="border-radius: 0px; border-top: 0; border-left: 0; border-right: 0;" />
+                                </div>
+
+                                <!-- Name -->
+                                <div class="mt-4">
+                                    <x-label for="name" :value="__('Адрес страницы')" style="font-family: 'Rubik', sans-serif;"/>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon3" style="border-radius: 0px; border-top: 0; border-left: 0; border-right: 0; background-color: white;">chrry.me/</span>
+                                        <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="slug" :value="old('slug')" required style="border-radius: 0px; border-top: 0; border-left: 0; border-right: 0;">
+                                    </div>
+                                </div>
+
+                                <!-- Email Address -->
+                                <div class="mt-4">
+                                    <x-label for="email" :value="__('Ваша почта')" style="font-family: 'Rubik', sans-serif;"/>
+
+                                    <x-input id="email" class="form-control" type="email" name="email" :value="old('email')" required style="border-radius: 0px; border-top: 0; border-left: 0; border-right: 0;"/>
+                                </div>
+
+                                <!-- Password -->
+                                <div class="mt-4">
+                                    <x-label for="password" :value="__('Пароль')" style="font-family: 'Rubik', sans-serif;"/>
+
+                                    <x-input id="password" class="form-control"
+                                                    type="password"
+                                                    name="password"
+                                                    required autocomplete="new-password" style="border-radius: 0px; border-top: 0; border-left: 0; border-right: 0;"/>
+                                </div>
+
+                                <!-- Confirm Password -->
+                                <div class="mt-4">
+                                    <x-label for="password_confirmation" :value="__('Повторите пароль')" style="font-family: 'Rubik', sans-serif;"/>
+
+                                    <x-input id="password_confirmation" class="form-control"
+                                                    type="password"
+                                                    name="password_confirmation" required style="border-radius: 0px; border-top: 0; border-left: 0; border-right: 0;"/>
+                                </div>
+
+                                <div class="flex items-center justify-content-center mt-4">
+
+                                    <div class="d-grid ">
+                                        <x-button class="btn" style="font-family: 'Rubik', sans-serif; border: 0; background-color: #e83100; color: white;">
+                                            {{ __('Регистрация') }}
+                                        </x-button>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </x-auth-card>
+                    </x-guest-layout>
+                </div>    
             </div>
-        </nav>
-
-        <x-guest-layout>
-            <x-auth-card>
-                <x-slot name="logo">
-                    {{-- <a href="/">
-                        <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-                    </a> --}}
-                </x-slot>
-
-                <!-- Validation Errors -->
-                <x-auth-validation-errors class="mb-4" :errors="$errors" />
-
-                <form method="POST" action="{{ route('register') }}" class="text-center">
-                    @csrf
-
-                    <!-- Name -->
-                    <div>
-                        <x-label for="name" :value="__('Name')" style="font-family: 'Overpass Mono', monospace;"/>
-
-                        <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
-                    </div>
-
-                    <!-- Name -->
-                    <div class="mt-4">
-                        <x-label for="name" :value="__('Slug')" style="font-family: 'Overpass Mono', monospace;"/>
-
-                        <x-input id="slug" class="block mt-1 w-full" type="text" name="slug" :value="old('slug')" required autofocus />
-                    </div>
-
-                    <!-- Email Address -->
-                    <div class="mt-4">
-                        <x-label for="email" :value="__('Email')" style="font-family: 'Overpass Mono', monospace;"/>
-
-                        <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
-                    </div>
-
-                    <!-- Password -->
-                    <div class="mt-4">
-                        <x-label for="password" :value="__('Password')" style="font-family: 'Overpass Mono', monospace;"/>
-
-                        <x-input id="password" class="block mt-1 w-full"
-                                        type="password"
-                                        name="password"
-                                        required autocomplete="new-password" />
-                    </div>
-
-                    <!-- Confirm Password -->
-                    <div class="mt-4">
-                        <x-label for="password_confirmation" :value="__('Confirm Password')" style="font-family: 'Overpass Mono', monospace;"/>
-
-                        <x-input id="password_confirmation" class="block mt-1 w-full"
-                                        type="password"
-                                        name="password_confirmation" required />
-                    </div>
-
-                    <div class="flex items-center justify-content-center mt-4">
-                        <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}" style="font-family: 'Overpass Mono', monospace;">
-                            {{ __('Already registered?') }}
-                        </a>
-
-                        <x-button class="ml-4" style="font-family: 'Overpass Mono', monospace;">
-                            {{ __('Register') }}
-                        </x-button>
-                    </div>
-                </form>
-            </x-auth-card>
-        </x-guest-layout>
+        </div>        
     </body>
 </html>
 

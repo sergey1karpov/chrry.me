@@ -83,8 +83,8 @@
 				height:80px;
 			}
 			.img {
-			    width: 85px;
-			    height: 85px;
+			    width: 100px;
+			    height: 100px;
 			    border-radius: 50%;
 			    margin-right: 0;
 			    background-position: center center;
@@ -114,83 +114,83 @@
             }
             @font-face {
                 font-family: Oi; /* Имя шрифта */
-                src: url({{asset('public/fonts/Oi-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+                src: url({{asset('public/fonts/Oi.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
-                font-family: Rampart One; /* Имя шрифта */
-                src: url({{asset('public/fonts/RampartOne-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+                font-family: RampartOne; /* Имя шрифта */
+                src: url({{asset('public/fonts/RampartOne.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
                 font-family: Yomogi; /* Имя шрифта */
-                src: url({{asset('public/fonts/Yomogi-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+                src: url({{asset('public/fonts/Yomogi.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
-                font-family: Yuji Syuku; /* Имя шрифта */
-                src: url({{asset('public/fonts/YujiSyuku-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+                font-family: YujiSyuku; /* Имя шрифта */
+                src: url({{asset('public/fonts/YujiSyuku.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
-                font-family: Zen Kurenaido; /* Имя шрифта */
-                src: url({{asset('public/fonts/ZenKurenaido-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+                font-family: ZenKurenaido; /* Имя шрифта */
+                src: url({{asset('public/fonts/ZenKurenaido.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
                 font-family: Comforter; /* Имя шрифта */
-                src: url({{asset('public/fonts/Comforter-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+                src: url({{asset('public/fonts/Comforter.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
                 font-family: Murecho; /* Имя шрифта */
-                src: url({{asset('public/fonts/Murecho-VariableFont_wght.ttf')}}); /* Путь к файлу со шрифтом */
+                src: url({{asset('public/fonts/Murecho.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
-                font-family: Train One; /* Имя шрифта */
-                src: url({{asset('public/fonts/TrainOne-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+                font-family: TrainOne; /* Имя шрифта */
+                src: url({{asset('public/fonts/TrainOne.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
-                font-family: Alumni Sans; /* Имя шрифта */
-                src: url({{asset('public/fonts/AlumniSans-VariableFont_wght.ttf')}}); /* Путь к файлу со шрифтом */
+                font-family: AlumniSans; /* Имя шрифта */
+                src: url({{asset('public/fonts/AlumniSans.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
                 font-family: DotGothic16; /* Имя шрифта */
-                src: url({{asset('public/fonts/DotGothic16-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+                src: url({{asset('public/fonts/DotGothic16.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
-                font-family: Noto Sans Mono; /* Имя шрифта */
-                src: url({{asset('public/fonts/NotoSansMono-VariableFont_wdth,wght.ttf')}}); /* Путь к файлу со шрифтом */
+                font-family: NotoSansMono; /* Имя шрифта */
+                src: url({{asset('public/fonts/NotoSansMono.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
                 font-family: Podkova; /* Имя шрифта */
-                src: url({{asset('public/fonts/Podkova-VariableFont_wght.ttf')}}); /* Путь к файлу со шрифтом */
+                src: url({{asset('public/fonts/Podkova.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
-                font-family: Spectral SC; /* Имя шрифта */
-                src: url({{asset('public/fonts/SpectralSC-ExtraLight.ttf')}}); /* Путь к файлу со шрифтом */
+                font-family: SpectralSC; /* Имя шрифта */
+                src: url({{asset('public/fonts/SpectralSC.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
-                font-family: JetBrains Mono; /* Имя шрифта */
-                src: url({{asset('public/fonts/JetBrainsMono-VariableFont_wght.ttf')}}); /* Путь к файлу со шрифтом */
+                font-family: JetBrainsMono; /* Имя шрифта */
+                src: url({{asset('public/fonts/JetBrainsMono.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
                 font-family: Roboto; /* Имя шрифта */
-                src: url({{asset('public/fonts/Roboto-Light.ttf')}}); /* Путь к файлу со шрифтом */
+                src: url({{asset('public/fonts/Roboto.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
-                font-family: Open Sans; /* Имя шрифта */
-                src: url({{asset('public/fonts/OpenSans-VariableFont_wdth,wght.ttf')}}); /* Путь к файлу со шрифтом */
+                font-family: OpenSans; /* Имя шрифта */
+                src: url({{asset('public/fonts/OpenSans.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
                 font-family: Montserrat; /* Имя шрифта */
-                src: url({{asset('public/fonts/Montserrat-VariableFont_wght.ttf')}}); /* Путь к файлу со шрифтом */
+                src: url({{asset('public/fonts/Montserrat.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
-                font-family: Noto Sans; /* Имя шрифта */
-                src: url({{asset('public/fonts/NotoSans-Light.ttf')}}); /* Путь к файлу со шрифтом */
+                font-family: NotoSans; /* Имя шрифта */
+                src: url({{asset('public/fonts/NotoSans.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
-                font-family: Russo One; /* Имя шрифта */
-                src: url({{asset('public/fonts/RussoOne-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+                font-family: RussoOne; /* Имя шрифта */
+                src: url({{asset('public/fonts/RussoOne.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
-                font-family: Poiret One; /* Имя шрифта */
-                src: url({{asset('public/fonts/PoiretOne-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+                font-family: PoiretOne; /* Имя шрифта */
+                src: url({{asset('public/fonts/PoiretOne.ttf')}}); /* Путь к файлу со шрифтом */
             }
         </style>
     </head>
@@ -275,17 +275,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-6 text-center" data-bs-toggle="modal" data-bs-target="#exampleModalPost">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <h4 class="mt-4 text-center" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">@lang('app.post')</h4>
-                                            </div>
-                                            <div class="col-12">
-                                                <h4 class="mb-3 text-center" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">@lang('app.post_description')</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 text-center" data-bs-toggle="modal" data-bs-target="#exampleModalEvent">
+                                    <div class="col-6 text-center" data-bs-toggle="modal" data-bs-target="#exampleModalEvent">
                                         <div class="row">
                                             <div class="col-12">
                                                 <h4 class="mt-4 text-center" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">Мероприятие</h4>
@@ -336,7 +326,7 @@
 														<div class="col-12 d-flex align-items-center">
 															<div class="row">
 																<div class="col-12">
-																	<h4 class="mt-4 text-center" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">Ссылки\Посты</h4>
+																	<h4 class="mt-4 text-center" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">Ссылки</h4>
 																</div>
 																<div class="col-12">
 																	<h4 class="mb-3 text-center" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">Редактирование, удаление и просмотр статистики</h4>
@@ -376,57 +366,7 @@
 				</div>
 			</div>
 
-
-
-
-
-            <!-- БЛОК: Все ссылки -->
-			{{-- <div class="row" style="margin-right: 0">
-				<a class="" href="{{ route('allLinks', ['id' => Auth::user()->id]) }}" style="text-decoration: none; border: 0; padding: 0">
-					<div class="col-12">
-						<div class="row shadow" style="background-color: #fe948d">
-							<div class="col-4">
-								<div class="imgg m-5" style="background-image: url(https://i.ibb.co/k4ykGnT/xxxxx.png);"></div>
-							</div>
-							<div class="col-8 d-flex align-items-center">
-								<div class="row">
-									<div class="col-12">
-										<h4 class="mt-4 text-start" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">@lang('app.all_links')</h4>
-									</div>
-									<div class="col-12">
-										<h4 class="mb-3 text-start" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">@lang('app.all_links_description')</h4>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</a>
-			</div> --}}
-
-			<!-- БЛОК: Все мероприятия -->
-			{{-- <div class="row" style="margin-right: 0">
-				<a class="" href="{{ route('allEvents', ['id' => Auth::user()->id]) }}" style="text-decoration: none; border: 0; padding: 0">
-					<div class="col-12">
-						<div class="row shadow" style="background-color: #fe948d">
-							<div class="col-4">
-								<div class="imgg m-5" style="background-image: url(https://i.ibb.co/k4ykGnT/xxxxx.png);"></div>
-							</div>
-							<div class="col-8 d-flex align-items-center">
-								<div class="row">
-									<div class="col-12">
-										<h4 class="mt-4 text-start" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">Все мероприятия</h4>
-									</div>
-									<div class="col-12">
-										<h4 class="mb-3 text-start" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">Просмотр, редактирование и удаление мероприятий</h4>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</a>
-			</div> --}}
-
-            <!-- БЛОК: татистика профиля -->
+            <!-- БЛОК: cтатистика профиля -->
 			<div class="row" style="margin-right: 0">
 				<div class="col-12" data-bs-toggle="modal" data-bs-target="#exampleModalStat" style="padding-left: 7px; padding: 0">
 					<div class="row shadow" style="background-color: #fe7968">
@@ -501,32 +441,11 @@
 						    	<input type="text" class="form-control" name="title" placeholder="" maxlength="50">
 						    	<span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.m_text_link_span')</span>
 						    </div>
-                            <div class="mb- text-center d-flex justify-content-between">
-                                <div>
-                                    <select class="form-select" aria-label="Default select example" name="font">
-                                        <option selected value="Inter">Выбрать шрифт...</option>
-                                        <option style="font-family: Russo One" value="Russo One">Russo One Font</option>
-                                        <option style="font-family: Poiret One" value="Poiret One">Poiret One Font</option>
-                                        <option style="font-family: Noto Sans" value="Noto Sans">Noto Sans Font</option>
-                                        <option style="font-family: Montserrat" value="Montserrat">Montserrat Font</option>
-                                        <option style="font-family: Open Sans" value="Open Sans">Open Sans Font</option>
-                                        <option style="font-family: Roboto" value="Roboto">Roboto Font</option>
-                                        <option style="font-family: JetBrains Mono" value="JetBrains Mono">JetBrains Mono Font</option>
-                                        <option style="font-family: Spectral SC" value="Spectral SC">Spectral SC Font</option>
-                                        <option style="font-family: Podkova" value="Podkova">Podkova Font</option>
-                                        <option style="font-family: Noto Sans Mono" value="Noto Sans Mono">Noto Sans Mono Font</option>
-                                        <option style="font-family: DotGothic16" value="DotGothic16">DotGothic16 Font</option>
-                                        <option style="font-family: Alumni Sans" value="Alumni Sans">Alumni Sans Font</option>
-                                        <option style="font-family: Murecho" value="Murecho">Murecho Font</option>
-                                        <option style="font-family: Comforter" value="Comforter">Comforter Font</option>
-                                        <option style="font-family: Zen Kurenaido" value="Zen Kurenaido">Zen Kurenaido Font</option>
-                                        <option style="font-family: Yuji Syuku" value="Yuji Syuku">Yuji Syuku Font</option>
-                                        <option style="font-family: Yomogi" value="Yomogi">Yomogi Font</option>
-                                        <option style="font-family: Rampart One" value="Rampart One">Rampart One Font</option>
-                                        <option style="font-family: Oi" value="Oi">Oi Font</option>
-                                    </select>
+                            <div class="text-center row">
+                                <div class="col-9">
+                                    <select id="select-beast-empty-font" data-placeholder="Поиск шрифта..."  autocomplete="off" name="font"></select>
                                 </div>
-                                <div>
+                                <div class="col-3">
                                     <select class="form-select" aria-label="Default select example" name="font_size">
                                         <option value="0.9">1</option>
                                         <option value="1">2</option>
@@ -541,9 +460,8 @@
 						    	<input type="text" class="form-control" name="link">
 						    </div>
                             <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.m_icon')</label>
-                            <div class="mb-3">
-                                <select id="select-beast-empty" data-placeholder="Поиск иконки..."  autocomplete="off" name="icon">
-                                </select>
+                            <div class="mb-3 row">
+                                <select id="select-beast-empty" data-placeholder="Поиск иконки..."  autocomplete="off" name="icon"></select>
                                 <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.m_icon_description')</span>
                             </div>
                             <div class="mb-3" id="download-file">
@@ -626,166 +544,6 @@
 				</div>
 		  	</div>
 
-            <!-- Модалка для добавления поста -->
-            <div class="modal fade" id="exampleModalPost" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background-color: #1b1b1b" id="add-post-modal">
-                <div class="modal-dialog">
-
-                        <div class="modal-content text-center" style="background-color: white">
-                            <div class="modal-header">
-                                <h5 class="modal-title" style="font-family: 'Rubik', sans-serif;">@lang('app.p_add')</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-post-modal"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form action="{{ route('addLink', ['id' => Auth::user()->id]) }}" method="post" enctype="multipart/form-data" id="add-post">
-                                    @csrf @method('POST')
-                                    <input type="hidden" name="type" value="POST"> <!-- Тип ссылки -->
-                                    <div class="mb-3"> <!-- Заголовок -->
-                                        <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">@lang('app.p_title')</label>
-                                        <input type="text" class="form-control" name="title" id="title" placeholder="" maxlength="100">
-                                        <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_title_description')</span>
-                                    </div>
-                                    <div class="mb- text-center d-flex justify-content-between">
-                                        <div>
-                                            <select class="form-select" aria-label="Default select example" name="font">
-                                                <option selected value="Inter">Выбрать шрифт...</option>
-                                                <option style="font-family: Russo One" value="Russo One">Russo One Font</option>
-                                                <option style="font-family: Poiret One" value="Poiret One">Poiret One Font</option>
-                                                <option style="font-family: Noto Sans" value="Noto Sans">Noto Sans Font</option>
-                                                <option style="font-family: Montserrat" value="Montserrat">Montserrat Font</option>
-                                                <option style="font-family: Open Sans" value="Open Sans">Open Sans Font</option>
-                                                <option style="font-family: Roboto" value="Roboto">Roboto Font</option>
-                                                <option style="font-family: JetBrains Mono" value="JetBrains Mono">JetBrains Mono Font</option>
-                                                <option style="font-family: Spectral SC" value="Spectral SC">Spectral SC Font</option>
-                                                <option style="font-family: Podkova" value="Podkova">Podkova Font</option>
-                                                <option style="font-family: Noto Sans Mono" value="Noto Sans Mono">Noto Sans Mono Font</option>
-                                                <option style="font-family: DotGothic16" value="DotGothic16">DotGothic16 Font</option>
-                                                <option style="font-family: Alumni Sans" value="Alumni Sans">Alumni Sans Font</option>
-                                                <option style="font-family: Murecho" value="Murecho">Murecho Font</option>
-                                                <option style="font-family: Comforter" value="Comforter">Comforter Font</option>
-                                                <option style="font-family: Zen Kurenaido" value="Zen Kurenaido">Zen Kurenaido Font</option>
-                                                <option style="font-family: Yuji Syuku" value="Yuji Syuku">Yuji Syuku Font</option>
-                                                <option style="font-family: Yomogi" value="Yomogi">Yomogi Font</option>
-                                                <option style="font-family: Rampart One" value="Rampart One">Rampart One Font</option>
-                                                <option style="font-family: Oi" value="Oi">Oi Font</option>
-                                            </select>
-                                        </div>
-                                        <div>
-                                            <select class="form-select" aria-label="Default select example" name="font_size">
-                                                <option value="0.9">1</option>
-                                                <option value="1">2</option>
-                                                <option value="1.1">3</option>
-                                                <option value="1.2">4</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <label class="mb-3" style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Вы можете выбрать шрифт и его размер для текста вашей ссылки</label>
-                                    <div class="mb-3"> <!-- Полный текст -->
-                                        <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">@lang('app.p_text')</label>
-                                        <textarea class="form-control"  rows="3" name="full_text" id="full_text"></textarea>
-                                        <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_free_text')</span>
-                                    </div>
-                                    <div class="mb-3"> <!-- Ссылка на источник -->
-                                        <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.p_link')</label>
-                                        <input type="text" class="form-control" name="link" id="link">
-                                        <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_description_link')</span>
-                                    </div>
-                                    <div class="mb-3"> <!-- Фотографии -->
-                                        <div style="display: none" id="maxPhoto">
-                                            <p><h6>@lang('app.p_photos_rule')</h6></p>
-                                        </div>
-                                        <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.p_photos')</label>
-                                        <input type="file" class="form-control" id="inputGroupFile022" name="photos[]" accept=".png, .jpg, .jpeg" multiple>
-                                        <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_photos_description')</span>
-                                    </div>
-                                    <div class="mb-3"> <!-- Ссылка на видео -->
-                                        <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.p_video')</label>
-                                        <textarea class="form-control"  rows="2" name="video" id="video"></textarea>
-                                        <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_video_description')</span>
-                                    </div>
-                                    <div class="mb-4"> <!-- Ссылка на любое медиа -->
-                                        <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.p_media')</label>
-                                        <textarea class="form-control"  rows="2" name="media" id="media"></textarea>
-                                        <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_media_description')</span>
-                                    </div>
-                                    <label style="background-color: #ffbdb3" for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif; font-size: 0.7rem">Поставив здесь галочку, вам не нужно будет дальше заполнять форму и выбирать стиль ссылки, тк будет использован стиль вашей последней ссылки.</label>
-                                    <div class="mb-4 text-center" style="background-color: #ffbdb3">
-                                        <div class="form-check" style="background-color: #ffbdb3">
-                                            <input name="check_last_link" class="form-check-input" type="checkbox" value="penis" id="flexCheckDefault">
-                                            <label class="form-check-label" for="flexCheckDefault">
-                                                Использовать дизайн последней ссылки
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.p_title_color')</label>
-                                    <div class="mb-3 text-center d-flex justify-content-center"> <!-- выбор цвета на заголовок -->
-                                        <input type="color" class="form-control" id="exampleColorInput" value="#050507" title="Choose your color" name="title_color" style="height: 40px;"><br>
-                                        <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_title_color_def')</span>
-                                    </div>
-                                    <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.p_background_color')</label>
-                                    <div class="mb-3 text-center d-flex justify-content-center"> <!-- выбор цвета на фон -->
-                                        <input type="color" class="form-control " id="exampleColorInput" value="#ECECE2" title="Choose your color" name="background_color" style="height: 40px;">
-                                        <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_background_color_def')</span>
-                                    </div>
-                                    <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.p_transparency')</label>
-                                    <div class="mb-3 text-center d-flex justify-content-center"> <!-- выбор прозрачности фона -->
-                                        <input type="range" class="form-range" min="0.0" max="1.0" step="0.1" id="customRange2" name="transparency" value="1.0">
-                                    </div>
-                                    <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.p_shadow')</label>
-                                    <div class="mb-3 text-center d-flex justify-content-center"> <!-- Добавить тень -->
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="shadow" id="inlineRadio1" value="shadow-none">
-                                            <label class="form-check-label" for="inlineRadio1">none</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="shadow" id="inlineRadio2" value="shadow-sm">
-                                            <label class="form-check-label" for="inlineRadio2">sm</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="shadow" id="inlineRadio3" value="shadow">
-                                            <label class="form-check-label" for="inlineRadio3">md</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="shadow" id="inlineRadio3" value="shadow-lg">
-                                            <label class="form-check-label" for="inlineRadio3">lg</label>
-                                        </div>
-                                    </div>
-                                    <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.p_round')</label>
-                                    <div class="mb-3 text-center d-flex justify-content-center"> <!-- Добивить округление углов -->
-                                        <input type="range" class="form-range" min="1" max="50" step="1" id="customRange2" name="rounded" value="25">
-                                    </div>
-                                    <div class="loader" id="in-pogress" style="display: none;" class="mb-3">
-                                        {{-- <img src="https://f.hubspotusercontent40.net/hubfs/5621549/ping-pong-preloader-gif.gif" width="150">
-                                        <h5 style="font-family: 'Rubik', sans-serif; font-size: 1rem">Идет обработка изображений. Подождите...</h5> --}}
-                                    </div>
-
-                                    <div class="mb-3 text-center">
-                                        <div>
-                                            <select class="form-select" aria-label="Default select example" name="animation">
-                                                <option selected>Выбрать анимацию...</option>
-                                                <option value="animate__animated animate__pulse animate__infinite infinite">Pulse</option>
-                                                <option value="animate__animated animate__headShake animate__infinite infinite">Head Shake</option>
-                                            </select>
-                                        </div>
-                                        <label style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Вы можете выделить свою ссылку от остальных выбрав одну из анимаций</label>
-                                    </div>
-                                    <div class="mb-3 text-center">
-                                        <div class="form-check text-center">
-                                            <input name="pinned" class="form-check-input" type="checkbox" value="{{true}}" id="flexCheckDefault">
-                                            <label class="form-check-label" for="flexCheckDefault">
-                                                Закрепите ссылку и она всегда будет вверху списка
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="d-grid gap-2">
-                                        <button id="post-btn" type="submit" class="btn btn-primary">@lang('app.p_publish')</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-
-                </div>
-            </div>
-
             <!-- Модалка для добавления мероприятия -->
             <div class="modal fade" id="exampleModalEvent" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background-color: #1b1b1b" id="add-post-modal">
                 <div class="modal-dialog">
@@ -843,7 +601,7 @@
                                     <div class="mb-3"> <!-- Ссылка на любое медиа -->
                                         <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Плейлист</label>
                                         <textarea class="form-control"  rows="2" name="media" id="media"></textarea>
-                                        <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Что бы добавить плейлист, зайдите на сайт vk.com, выберите нужный вам плейлист и вставьте сюда ссылку на него. Доступные драйверы: VK.com</span>
+                                        <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Для добавления плейлиста, в это поле необходимо вставить его код</span>
                                     </div>
 
                                     <!-- Дизайн -->
@@ -863,37 +621,16 @@
                                     <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Шрифт, размер шрифта и цвет для города и локации</label>
                                     <div class="row mb-3">
                                     	<div class="col-6">
-                                    		<select class="form-select" aria-label="Default select example" name="location_font">
-                                                <option value="Inter">Выбрать шрифт...</option>
-                                                <option style="font-family: Russo One" value="Russo One">Russo One Font</option>
-                                                <option style="font-family: Poiret One" value="Poiret One">Poiret One Font</option>
-                                                <option style="font-family: Noto Sans" value="Noto Sans">Noto Sans Font</option>
-                                                <option style="font-family: Montserrat" value="Montserrat">Montserrat Font</option>
-                                                <option style="font-family: Open Sans" value="Open Sans">Open Sans Font</option>
-                                                <option style="font-family: Roboto" value="Roboto">Roboto Font</option>
-                                                <option style="font-family: JetBrains Mono" value="JetBrains Mono">JetBrains Mono Font</option>
-                                                <option style="font-family: Spectral SC" value="Spectral SC">Spectral SC Font</option>
-                                                <option style="font-family: Podkova" value="Podkova">Podkova Font</option>
-                                                <option style="font-family: Noto Sans Mono" value="Noto Sans Mono">Noto Sans Mono Font</option>
-                                                <option style="font-family: DotGothic16" value="DotGothic16">DotGothic16 Font</option>
-                                                <option style="font-family: Alumni Sans" value="Alumni Sans">Alumni Sans Font</option>
-                                                <option style="font-family: Murecho" value="Murecho">Murecho Font</option>
-                                                <option style="font-family: Comforter" value="Comforter">Comforter Font</option>
-                                                <option style="font-family: Zen Kurenaido" value="Zen Kurenaido">Zen Kurenaido Font</option>
-                                                <option style="font-family: Yuji Syuku" value="Yuji Syuku">Yuji Syuku Font</option>
-                                                <option style="font-family: Yomogi" value="Yomogi">Yomogi Font</option>
-                                                <option style="font-family: Rampart One" value="Rampart One">Rampart One Font</option>
-                                                <option style="font-family: Oi" value="Oi">Oi Font</option>
-                                            </select>
-                                    	</div>
-                                    	<div class="col-3">
-                                    		<select class="form-select" aria-label="Default select example" name="location_font_size">
+                                            <select id="select-beast-empty-post-location" data-placeholder="Поиск шрифта..."  autocomplete="off" name="location_font"></select>
+                                        </div>
+                                        <div class="col-3">
+                                            <select class="form-select" aria-label="Default select example" name="location_font_size">
                                                 <option value="0.9">1</option>
                                                 <option value="1">2</option>
                                                 <option value="1.1">3</option>
                                                 <option value="1.2">4</option>
                                             </select>
-                                    	</div>
+                                        </div>
                                     	<div class="col-3">
                                     		<input type="color" class="form-control" id="exampleColorInput" value="#050507" title="Choose your color" name="location_font_color" style="height: 40px;"><br>
                                     	</div>
@@ -902,37 +639,16 @@
                                     <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Шрифт, размер шрифта и цвет для даты и времени</label>
                                     <div class="row mb-3">
                                     	<div class="col-6">
-                                    		<select class="form-select" aria-label="Default select example" name="date_font">
-                                                <option value="Inter">Выбрать шрифт...</option>
-                                                <option style="font-family: Russo One" value="Russo One">Russo One Font</option>
-                                                <option style="font-family: Poiret One" value="Poiret One">Poiret One Font</option>
-                                                <option style="font-family: Noto Sans" value="Noto Sans">Noto Sans Font</option>
-                                                <option style="font-family: Montserrat" value="Montserrat">Montserrat Font</option>
-                                                <option style="font-family: Open Sans" value="Open Sans">Open Sans Font</option>
-                                                <option style="font-family: Roboto" value="Roboto">Roboto Font</option>
-                                                <option style="font-family: JetBrains Mono" value="JetBrains Mono">JetBrains Mono Font</option>
-                                                <option style="font-family: Spectral SC" value="Spectral SC">Spectral SC Font</option>
-                                                <option style="font-family: Podkova" value="Podkova">Podkova Font</option>
-                                                <option style="font-family: Noto Sans Mono" value="Noto Sans Mono">Noto Sans Mono Font</option>
-                                                <option style="font-family: DotGothic16" value="DotGothic16">DotGothic16 Font</option>
-                                                <option style="font-family: Alumni Sans" value="Alumni Sans">Alumni Sans Font</option>
-                                                <option style="font-family: Murecho" value="Murecho">Murecho Font</option>
-                                                <option style="font-family: Comforter" value="Comforter">Comforter Font</option>
-                                                <option style="font-family: Zen Kurenaido" value="Zen Kurenaido">Zen Kurenaido Font</option>
-                                                <option style="font-family: Yuji Syuku" value="Yuji Syuku">Yuji Syuku Font</option>
-                                                <option style="font-family: Yomogi" value="Yomogi">Yomogi Font</option>
-                                                <option style="font-family: Rampart One" value="Rampart One">Rampart One Font</option>
-                                                <option style="font-family: Oi" value="Oi">Oi Font</option>
-                                            </select>
-                                    	</div>
-                                    	<div class="col-3">
-                                    		<select class="form-select" aria-label="Default select example" name="date_font_size">
+                                            <select id="select-beast-empty-post-date" data-placeholder="Поиск шрифта..."  autocomplete="off" name="date_font"></select>
+                                        </div>
+                                        <div class="col-3">
+                                            <select class="form-select" aria-label="Default select example" name="date_font_size">
                                                 <option value="0.9">1</option>
                                                 <option value="1">2</option>
                                                 <option value="1.1">3</option>
                                                 <option value="1.2">4</option>
                                             </select>
-                                    	</div>
+                                        </div>
                                     	<div class="col-3">
                                     		<input type="color" class="form-control" id="exampleColorInput" value="#050507" title="Choose your color" name="date_font_color" style="height: 40px;"><br>
                                     	</div>
@@ -1265,11 +981,11 @@
         </script>
 
         <!-- Скрипт подгрузки иконок соц сетей -->
-
         <script>
             new TomSelect('#select-beast-empty',{
                 valueField: 'img',
                 searchField: 'title',
+                maxOptions: 3,
                 options: [
                     @foreach($allIconsInsideFolder as $icon)
                         {id: {{$icon->getInode()}}, title: '{{$icon->getFilename()}}', img: '{{'http://links/public/images/social/'.$icon->getFilename()}}'},
@@ -1285,6 +1001,94 @@
                     },
                     item: function(data, escape) {
                         return  '<img style="margin-right: 16px" width="30" src="' + escape(data.img) + '">' + '<span class="title">' + escape(data.title) + '</span>';
+                    }
+                }
+            });
+        </script>
+
+        {{-- Подгрузка шрифтов к LINK--}}
+        <script>
+            new TomSelect('#select-beast-empty-font',{
+                valueField: 'font',
+                searchField: 'title',
+                options: [
+                    @foreach($allFontsInFolder as $font)
+                        {id: {{$font->getInode()}}, title: '{{ stristr($font->getFilename(), '.', true)}}', font: '{{ stristr($font->getFilename(), '.', true) }}'},
+                    @endforeach
+                ],
+                render: {
+                    option: function(data, escape) {
+                        return  '<div>' +
+                                    '<span style="font-size: 1.3rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</span>' +
+                                '</div>';
+                    },
+                    item: function(data, escape) {
+                        return  '<h4 style="font-size: 1.3rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</h4>';
+                    }
+                }
+            });
+        </script>
+
+        {{-- Подгрузка шрифтов к POST--}}
+        <script>
+            new TomSelect('#select-beast-empty-post',{
+                valueField: 'font',
+                searchField: 'title',
+                options: [
+                    @foreach($allFontsInFolder as $font)
+                        {id: {{$font->getInode()}}, title: '{{ stristr($font->getFilename(), '.', true)}}', font: '{{ stristr($font->getFilename(), '.', true) }}'},
+                    @endforeach
+                ],
+                render: {
+                    option: function(data, escape) {
+                        return  '<div>' +
+                                    '<span style="font-size: 1.3rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</span>' +
+                                '</div>';
+                    },
+                    item: function(data, escape) {
+                        return  '<h4 style="font-size: 1.3rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</h4>';
+                    }
+                }
+            });
+        </script>
+
+        {{-- Подгрузка шрифтов к EVENT--}}
+        <script>
+            new TomSelect('#select-beast-empty-post-location',{
+                valueField: 'font',
+                searchField: 'title',
+                options: [
+                    @foreach($allFontsInFolder as $font)
+                        {id: {{$font->getInode()}}, title: '{{ stristr($font->getFilename(), '.', true)}}', font: '{{ stristr($font->getFilename(), '.', true) }}'},
+                    @endforeach
+                ],
+                render: {
+                    option: function(data, escape) {
+                        return  '<div>' +
+                                    '<span style="font-size: 1.3rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</span>' +
+                                '</div>';
+                    },
+                    item: function(data, escape) {
+                        return  '<h4 style="font-size: 1.3rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</h4>';
+                    }
+                }
+            });
+            new TomSelect('#select-beast-empty-post-date',{
+                valueField: 'font',
+                searchField: 'title',
+                options: [
+                    @foreach($allFontsInFolder as $font)
+                        {id: {{$font->getInode()}}, title: '{{ stristr($font->getFilename(), '.', true)}}', font: '{{ stristr($font->getFilename(), '.', true) }}'},
+                    @endforeach
+                ],
+                render: {
+                    option: function(data, escape) {
+                        return  '<div>' +
+                                    '<span style="font-size: 1.3rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</span>' +
+                                '</div>';
+                    },
+                    item: function(data, escape) {
+                        return  '<h4 style="font-size: 1.3rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</h4>';
                     }
                 }
             });

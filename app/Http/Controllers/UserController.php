@@ -66,7 +66,10 @@ class UserController extends Controller
             $icons = public_path('images/social');
             $allIconsInsideFolder = File::files($icons);
 
-            return view('user.edit-profile', compact('user', 'links', 'day', 'month', 'year', 'all', 'dayClick', 'monthClick', 'yearClick', 'allClick', 'allIconsInsideFolder'));
+            $fonts  = public_path('fonts');
+            $allFontsInFolder = File::files($fonts);
+
+            return view('user.edit-profile', compact('user', 'links', 'day', 'month', 'year', 'all', 'dayClick', 'monthClick', 'yearClick', 'allClick', 'allIconsInsideFolder', 'allFontsInFolder'));
         } else {
             return abort(404);
         }

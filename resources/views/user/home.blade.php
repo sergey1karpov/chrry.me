@@ -82,83 +82,83 @@
 			}
             @font-face {
                 font-family: Oi; /* Имя шрифта */
-                src: url({{asset('public/fonts/Oi-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+                src: url({{asset('public/fonts/Oi.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
-                font-family: Rampart One; /* Имя шрифта */
-                src: url({{asset('public/fonts/RampartOne-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+                font-family: RampartOne; /* Имя шрифта */
+                src: url({{asset('public/fonts/RampartOne.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
                 font-family: Yomogi; /* Имя шрифта */
-                src: url({{asset('public/fonts/Yomogi-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+                src: url({{asset('public/fonts/Yomogi.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
                 font-family: Yuji Syuku; /* Имя шрифта */
-                src: url({{asset('public/fonts/YujiSyuku-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+                src: url({{asset('public/fonts/YujiSyuku.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
-                font-family: Zen Kurenaido; /* Имя шрифта */
-                src: url({{asset('public/fonts/ZenKurenaido-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+                font-family: ZenKurenaido; /* Имя шрифта */
+                src: url({{asset('public/fonts/ZenKurenaido.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
                 font-family: Comforter; /* Имя шрифта */
-                src: url({{asset('public/fonts/Comforter-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+                src: url({{asset('public/fonts/Comforter.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
                 font-family: Murecho; /* Имя шрифта */
-                src: url({{asset('public/fonts/Murecho-VariableFont_wght.ttf')}}); /* Путь к файлу со шрифтом */
+                src: url({{asset('public/fonts/Murecho.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
-                font-family: Train One; /* Имя шрифта */
-                src: url({{asset('public/fonts/TrainOne-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+                font-family: TrainOne; /* Имя шрифта */
+                src: url({{asset('public/fonts/TrainOne.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
-                font-family: Alumni Sans; /* Имя шрифта */
-                src: url({{asset('public/fonts/AlumniSans-VariableFont_wght.ttf')}}); /* Путь к файлу со шрифтом */
+                font-family: AlumniSans; /* Имя шрифта */
+                src: url({{asset('public/fonts/AlumniSans.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
                 font-family: DotGothic16; /* Имя шрифта */
-                src: url({{asset('public/fonts/DotGothic16-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+                src: url({{asset('public/fonts/DotGothic16.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
-                font-family: Noto Sans Mono; /* Имя шрифта */
-                src: url({{asset('public/fonts/NotoSansMono-VariableFont_wdth,wght.ttf')}}); /* Путь к файлу со шрифтом */
+                font-family: NotoSansMono; /* Имя шрифта */
+                src: url({{asset('public/fonts/NotoSansMono.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
                 font-family: Podkova; /* Имя шрифта */
-                src: url({{asset('public/fonts/Podkova-VariableFont_wght.ttf')}}); /* Путь к файлу со шрифтом */
+                src: url({{asset('public/fonts/Podkova.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
-                font-family: Spectral SC; /* Имя шрифта */
-                src: url({{asset('public/fonts/SpectralSC-ExtraLight.ttf')}}); /* Путь к файлу со шрифтом */
+                font-family: SpectralSC; /* Имя шрифта */
+                src: url({{asset('public/fonts/SpectralSC.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
                 font-family: JetBrains Mono; /* Имя шрифта */
-                src: url({{asset('public/fonts/JetBrainsMono-VariableFont_wght.ttf')}}); /* Путь к файлу со шрифтом */
+                src: url({{asset('public/fonts/JetBrainsMono.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
                 font-family: Roboto; /* Имя шрифта */
-                src: url({{asset('public/fonts/Roboto-Light.ttf')}}); /* Путь к файлу со шрифтом */
+                src: url({{asset('public/fonts/Roboto.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
-                font-family: Open Sans; /* Имя шрифта */
-                src: url({{asset('public/fonts/OpenSans-VariableFont_wdth,wght.ttf')}}); /* Путь к файлу со шрифтом */
+                font-family: OpenSans; /* Имя шрифта */
+                src: url({{asset('public/fonts/OpenSans.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
                 font-family: Montserrat; /* Имя шрифта */
-                src: url({{asset('public/fonts/Montserrat-VariableFont_wght.ttf')}}); /* Путь к файлу со шрифтом */
+                src: url({{asset('public/fonts/Montserrat.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
-                font-family: Noto Sans; /* Имя шрифта */
-                src: url({{asset('public/fonts/NotoSans-Light.ttf')}}); /* Путь к файлу со шрифтом */
+                font-family: NotoSans; /* Имя шрифта */
+                src: url({{asset('public/fonts/NotoSans.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
-                font-family: Russo One; /* Имя шрифта */
-                src: url({{asset('public/fonts/RussoOne-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+                font-family: RussoOne; /* Имя шрифта */
+                src: url({{asset('public/fonts/RussoOne.ttf')}}); /* Путь к файлу со шрифтом */
             }
             @font-face {
-                font-family: Poiret One; /* Имя шрифта */
-                src: url({{asset('public/fonts/PoiretOne-Regular.ttf')}}); /* Путь к файлу со шрифтом */
+                font-family: PoiretOne; /* Имя шрифта */
+                src: url({{asset('public/fonts/PoiretOne.ttf')}}); /* Путь к файлу со шрифтом */
             }
         </style>
 
@@ -288,7 +288,9 @@
                                         <div class="container-fluid d-flex justify-content-center">
                                             @foreach($links as $link)
                                                 @if($link->icon)
-                                                    <img src="{{$link->icon}}" class="me-2 ms-2" style="width:40px;">
+                                                    <a href="{{$link->link}}">
+                                                        <img src="{{$link->icon}}" class="me-2 ms-2" style="width:40px; color:red">
+                                                    </a>
                                                 @endif
                                             @endforeach
                                         </div>
@@ -522,7 +524,7 @@
                                                     @endif
                                                 @elseif($link->type != 'POST')
                                                     @if($link->icon)
-                                                        <img src="{{$link->icon}}" style="width:48px; border-radius: {{$link->rounded}}px;">
+                                                        <img src="{{$link->icon}}" style="width:48px; border-radius: {{$link->rounded}}px;" >
                                                     @elseif($link->icon == false)
                                                         <img src="{{$link->photo}}" style="width:48px; border-radius: {{$link->rounded}}px;">
                                                     @endif
@@ -760,7 +762,9 @@
                                 <div class="container-fluid d-flex justify-content-center">
                                     @foreach($links as $link)
                                         @if($link->icon)
-                                            <img src="{{$link->icon}}" class="me-2 ms-2" style="width:40px;">
+                                            <a href="{{$link->link}}">
+                                                <img src="{{$link->icon}}" class="me-2 ms-2" style="width:40px;">
+                                            </a>
                                         @endif
                                     @endforeach
                                 </div>
@@ -768,7 +772,8 @@
                         @endif
                     @endif    
                 @endif
-            @endif    
+            @endif 
+            <div class="mb-3"></div>   
         @endif    
         {{-- <div class="mt-5 mb-3 text-center ">
             <img src="https://i.ibb.co/LnHC78h/2.png" class="img-fluid" width="100">
