@@ -23,7 +23,9 @@
             }
             body {
                 min-height: 100%;
-                background-color: #F8F9FB;
+                /*background-color: #F8F9FB;*/
+                background: rgb(255,0,0);
+                background: linear-gradient(0deg, rgba(255,0,0,0.4458158263305322) 0%, rgba(255,255,255,1) 100%);
             }
             .section {
                 height: 100vh; /* высота секции равна высоте области просмотра */

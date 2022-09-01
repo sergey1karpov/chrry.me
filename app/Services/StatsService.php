@@ -10,7 +10,13 @@ use App\Models\LinkStat;
 
 class StatsService
 {
-    public static function createUserStats(User $user) : void
+    /**
+     * @param User $user
+     * @return void
+     *
+     * Создание статистики по просмотрам профиля
+     */
+    public static function createUserStats(User $user)
     {
         // $response = Http::get('http://ip-api.com/php/' . $_SERVER['REMOTE_ADDR']);
         // $array = unserialize($response->body());
@@ -29,7 +35,13 @@ class StatsService
         }
     }
 
-    public static function clickLinkStatistic() : void
+    /**
+     * @param User $user
+     * @return void
+     *
+     * Создание статистики по кликам по ссылкам
+     */
+    public static function clickLinkStatistic()
     {
         // $response = Http::get('http://ip-api.com/php/' . $_POST['guest_ip']);
         // $data = unserialize($response->body());
@@ -54,7 +66,13 @@ class StatsService
         }
     }
 
-    public static function getUserStatsByDay(User $user) //Статистика за день
+    /**
+     * @param User $user
+     * @return array
+     *
+     * Return user profile stats for day
+     */
+    public static function getUserStatsByDay(User $user)
     {
         $data['stat'] = Stats::where('created_at', Carbon::today())->where('user_id', $user->id)->get();
         $data['uniqueCity'] = \DB::table('stats')->where('created_at', Carbon::today())->where('user_id', $user->id)->select('city', \DB::raw('COUNT(city) as count'))->orderByRaw('COUNT(city) DESC')->groupBy('city')->get(); //LIMIT ???
@@ -63,6 +81,12 @@ class StatsService
         return $data;
     }
 
+    /**
+     * @param User $user
+     * @return array
+     *
+     * Return user profile stats for month
+     */
     public static function getUserStatsByMonth(User $user) //Статистика за месяц
     {
         $data['stat'] = Stats::whereMonth('created_at', Carbon::now()->month)->where('user_id', $user->id)->get();
@@ -72,6 +96,12 @@ class StatsService
         return $data;
     }
 
+    /**
+     * @param User $user
+     * @return array
+     *
+     * Return user profile stats for year
+     */
     public static function getUserStatsByYear(User $user) //Статистика за год
     {
         $data['stat'] = Stats::whereYear('updated_at', Carbon::now()->year)->where('user_id', $user->id)->get();
@@ -81,6 +111,12 @@ class StatsService
         return $data;
     }
 
+    /**
+     * @param User $user
+     * @return array
+     *
+     * Return user profile stats for all time
+     */
     public static function getAllUserStats(User $user) //Вся стата
     {
         $data['stat'] = Stats::where('user_id', $user->id)->get();
@@ -90,8 +126,13 @@ class StatsService
         return $data;
     }
 
-    //Links
-
+    /**
+     * @param $user
+     * @param $link
+     * @return array
+     *
+     * Return stats for link by day
+     */
     public static function getUserLinkStatsByDay($user, $link) //Статистика за день
     {
         $data['stat'] = LinkStat::where('created_at', Carbon::today())->where('user_id', $user->id)->where('link_id', $link)->get();
@@ -101,6 +142,13 @@ class StatsService
         return $data;
     }
 
+    /**
+     * @param $user
+     * @param $link
+     * @return array
+     *
+     * Return stats for link by month
+     */
     public static function getUserLinkStatsByMonth(User $user, int $link)//Статистика за месяц
     {
         $data['stat'] = LinkStat::whereMonth('created_at', Carbon::now()->month)->where('user_id', $user->id)->where('link_id',  $link)->get();
@@ -110,6 +158,13 @@ class StatsService
         return $data;
     }
 
+    /**
+     * @param $user
+     * @param $link
+     * @return array
+     *
+     * Return stats for link by year
+     */
     public static function getUserLinkStatsByYear(User $user, int $link) //Статистика за год
     {
         $data['stat'] = LinkStat::whereYear('created_at', Carbon::now()->year)->where('user_id', $user->id)->where('link_id', $link)->get();
@@ -119,6 +174,13 @@ class StatsService
         return $data;
     }
 
+    /**
+     * @param $user
+     * @param $link
+     * @return array
+     *
+     * Return stats for link by for all time
+     */
     public static function getAllUserLinkStats(User $user, int $link) //Вся стата
     {
         $data['stat'] = LinkStat::where('user_id', $user->id)->where('link_id', $link)->get();

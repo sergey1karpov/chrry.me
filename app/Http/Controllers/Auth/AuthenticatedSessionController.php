@@ -32,8 +32,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        // return redirect()->intended(RouteServiceProvider::HOME); editProfileForm
-        // return redirect()->route('userHomePage', ['slug' => Auth::user()->slug]);
         return redirect()->route('editProfileForm', ['id' => Auth::user()->id]);
     }
 

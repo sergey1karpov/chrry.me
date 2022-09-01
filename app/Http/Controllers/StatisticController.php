@@ -12,7 +12,7 @@ class StatisticController extends Controller
      *
      * Сбор статистики по кликам по ссылкам
      */
-    public function clickLinkStatistic() : void
+    public function clickLinkStatistic()
     {
         StatsService::clickLinkStatistic();
     }
@@ -20,12 +20,11 @@ class StatisticController extends Controller
     /**
      * @param int $id
      * @param int $link
-     *
-     * @return mixed
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      *
      * Отображение статистики по кликам за день, месяц, год, всё время
      */
-    public function showClickLinkStatistic(int $id, int $link) : mixed
+    public function showClickLinkStatistic(int $id, int $link)
     {
         $user = User::where('id', $id)->firstOrFail();
 

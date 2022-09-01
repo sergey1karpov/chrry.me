@@ -12,6 +12,7 @@ use App\Models\Event;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Intervention\Image\ImageManagerStatic as Image;
 
 /**
  * [Description User]
@@ -41,6 +42,10 @@ class User extends Authenticatable
         'type',
         'show_social',
         'social',
+        'favicon',
+        'dayVsNight',
+        'vk_id',
+        'yandex_id'
     ];
 
     /**
@@ -76,27 +81,32 @@ class User extends Authenticatable
         return $this->hasMany(Event::class);
     }
 
-    public static function confirmNewUser(string $utag, $request) : void
+    /**
+     * @param string $utag
+     * @param $request
+     * @return void
+     *
+     * После первого скана метки, будет регистрация. Этот метот её обрабатывает
+     */
+    public static function confirmNewUser(string $utag, $request)
     {
-        self::where('utag', $utag)
-            ->update([
-                'name'      => $request->name,
-                'slug'      => $request->slug,
-                'email'     => $request->email,
-                'password'  => Hash::make($request->password),
-                'is_active' => 1,
-            ]);
+        self::where('utag', $utag)->update([
+            'name'      => $request->name,
+            'slug'      => $request->slug,
+            'email'     => $request->email,
+            'password'  => Hash::make($request->password),
+            'is_active' => 1,
+        ]);
     }
 
     /**
      * @param User $user
-     * @param mixed $request
-     *
+     * @param $request
      * @return void
      *
      * Изменение профиля пользователя
      */
-    protected static function editUserProfile(User $user, $request) : void
+    protected static function editUserProfile(User $user, $request)
     {
         self::where('id', $user->id)->update([
             'name'              => $request->name,
@@ -106,24 +116,31 @@ class User extends Authenticatable
             'description_color' => isset($request->description_color) ? $request->description_color : $user->description_color,
             'verify_color'      => isset($request->verify_color) ? $request->verify_color : $user->verify_color,
             'slug'              => isset($request->slug) ? $request->slug : $user->slug,
-            'avatar'            => isset($request->avatar) ? self::addPhotos($request->avatar) : $user->avatar,
-            'banner'            => isset($request->banner) ? self::addPhotos($request->banner) : $user->banner,
+            'avatar'            => isset($request->avatar) ? self::addPhotos($request->avatar, 'photo') : $user->avatar,
+            'banner'            => isset($request->banner) ? self::addPhotos($request->banner, 'photo') : $user->banner,
             'locale'            => $request->locale,
             'type'              => $request->type,
             'show_social'       => isset($request->show_social) ? $request->show_social : Auth::user()->show_social,
             'social'            => isset($request->social) ? $request->social : Auth::user()->social,
+            'favicon'           => isset($request->favicon) ? self::addPhotos($request->favicon, 'favicon') : $user->favicon,
         ]);
     }
 
     /**
-     * @param mixed $img
-     *
+     * @param $img
+     * @param string $type
      * @return string
      *
      * Метод добавления аватара и баннера для профиля
      */
-    public static function addPhotos($img) : string
+    public static function addPhotos($img, string $type) : string
     {
+        if($type == 'favicon') {
+            $image = Image::make($img->getRealPath())->fit(32);
+            $basePath = '../storage/app/public/'. Auth::user()->id. '/profile/';
+            $image->save($basePath . $img->hashName());
+            return '/'.$image->dirname . '/' . $image->basename;
+        }
         $path = Storage::putFile('public/' . Auth::user()->id . '/profile', $img);
         $strpos = strpos($path, '/');
         $mb_substr = mb_substr($path, $strpos);
@@ -131,3 +148,9 @@ class User extends Authenticatable
         return $url;
     }
 }
+
+
+
+
+
+

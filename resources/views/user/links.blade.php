@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <link rel="icon" type="image/x-icon" href="{{$user->favicon}}">
         <title>{{ $user->name }}</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
@@ -29,13 +30,14 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
 
-        {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> --}}
         <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js" integrity="sha256-6XMVI0zB8cRzfZjqKcD01PBsAy3FlDASrlC8SxCpInY=" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
 
         <link href="https://cdn.jsdelivr.net/npm/tom-select@2.0.3/dist/css/tom-select.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/tom-select@2.0.3/dist/js/tom-select.complete.min.js"></script>
+
+        @include('fonts.fonts')
 
         <style type="text/css">
         	body{
@@ -51,10 +53,6 @@
 			  color: #0062cc;
 			  /* border-bottom:2px solid #0062cc; */
 			}
-			.box{
-			    padding:60px 0px;
-			}
-
 			.box-part{
 			    background:#fcfcf9;
 			    border-radius:25;
@@ -64,24 +62,8 @@
 				-moz-box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.12);
 				box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.12);
 			}
-			.box-part2{
-			    background:#fcfcf9;
-			    border-radius:25;
-			    margin:8px 0px 0px 0px;
-			    -webkit-box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.12);
-				-moz-box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.12);
-				box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.12);
-			}
 			.text{
 			    margin:20px 0px;
-			}
-
-			.fa{
-			     color:#4183D7;
-			}
-			.rounded-circle{
-				width:80px;
-				height:80px;
 			}
 			.img {
 			    width: 25px;
@@ -103,89 +85,9 @@
 			    background-size: cover;
 			    background-repeat: no-repeat;
 			}
-            @font-face {
-                font-family: Oi; /* Имя шрифта */
-                src: url({{asset('public/fonts/Oi.ttf')}}); /* Путь к файлу со шрифтом */
-            }
-            @font-face {
-                font-family: RampartOne; /* Имя шрифта */
-                src: url({{asset('public/fonts/RampartOne.ttf')}}); /* Путь к файлу со шрифтом */
-            }
-            @font-face {
-                font-family: Yomogi; /* Имя шрифта */
-                src: url({{asset('public/fonts/Yomogi.ttf')}}); /* Путь к файлу со шрифтом */
-            }
-            @font-face {
-                font-family: YujiSyuku; /* Имя шрифта */
-                src: url({{asset('public/fonts/YujiSyuku.ttf')}}); /* Путь к файлу со шрифтом */
-            }
-            @font-face {
-                font-family: ZenKurenaido; /* Имя шрифта */
-                src: url({{asset('public/fonts/ZenKurenaido.ttf')}}); /* Путь к файлу со шрифтом */
-            }
-            @font-face {
-                font-family: Comforter; /* Имя шрифта */
-                src: url({{asset('public/fonts/Comforter.ttf')}}); /* Путь к файлу со шрифтом */
-            }
-            @font-face {
-                font-family: Murecho; /* Имя шрифта */
-                src: url({{asset('public/fonts/Murecho.ttf')}}); /* Путь к файлу со шрифтом */
-            }
-            @font-face {
-                font-family: TrainOne; /* Имя шрифта */
-                src: url({{asset('public/fonts/TrainOne.ttf')}}); /* Путь к файлу со шрифтом */
-            }
-            @font-face {
-                font-family: AlumniSans; /* Имя шрифта */
-                src: url({{asset('public/fonts/AlumniSans.ttf')}}); /* Путь к файлу со шрифтом */
-            }
-            @font-face {
-                font-family: DotGothic16; /* Имя шрифта */
-                src: url({{asset('public/fonts/DotGothic16.ttf')}}); /* Путь к файлу со шрифтом */
-            }
-            @font-face {
-                font-family: NotoSansMono; /* Имя шрифта */
-                src: url({{asset('public/fonts/NotoSansMono.ttf')}}); /* Путь к файлу со шрифтом */
-            }
-            @font-face {
-                font-family: Podkova; /* Имя шрифта */
-                src: url({{asset('public/fonts/Podkova.ttf')}}); /* Путь к файлу со шрифтом */
-            }
-            @font-face {
-                font-family: SpectralSC; /* Имя шрифта */
-                src: url({{asset('public/fonts/SpectralSC.ttf')}}); /* Путь к файлу со шрифтом */
-            }
-            @font-face {
-                font-family: JetBrainsMono; /* Имя шрифта */
-                src: url({{asset('public/fonts/JetBrainsMono.ttf')}}); /* Путь к файлу со шрифтом */
-            }
-            @font-face {
-                font-family: Roboto; /* Имя шрифта */
-                src: url({{asset('public/fonts/Roboto.ttf')}}); /* Путь к файлу со шрифтом */
-            }
-            @font-face {
-                font-family: OpenSans; /* Имя шрифта */
-                src: url({{asset('public/fonts/OpenSans.ttf')}}); /* Путь к файлу со шрифтом */
-            }
-            @font-face {
-                font-family: Montserrat; /* Имя шрифта */
-                src: url({{asset('public/fonts/Montserrat.ttf')}}); /* Путь к файлу со шрифтом */
-            }
-            @font-face {
-                font-family: NotoSans; /* Имя шрифта */
-                src: url({{asset('public/fonts/NotoSans.ttf')}}); /* Путь к файлу со шрифтом */
-            }
-            @font-face {
-                font-family: RussoOne; /* Имя шрифта */
-                src: url({{asset('public/fonts/RussoOne.ttf')}}); /* Путь к файлу со шрифтом */
-            }
-            @font-face {
-                font-family: PoiretOne; /* Имя шрифта */
-                src: url({{asset('public/fonts/PoiretOne.ttf')}}); /* Путь к файлу со шрифтом */
-            }
         </style>
     </head>
-    <body class="antialiased">
+    <body class="antialiased @if($user->dayVsNight) bg-dark text-white-50 @endif">
 
         <div class="container-fluid justify-content-center text-center">
             @if ($errors->any())
@@ -217,13 +119,13 @@
         </div>
 
         <div class="container-fluid" style="padding: 0">
-            <nav class="navbar navbar-expand-lg " style="background-color: #f1f2f2">
+            <nav class="navbar navbar-expand-lg @if($user->dayVsNight) bg-dark text-white-50 @endif" style="background-color: #f1f2f2">
                 <div class="container-fluid">
                     <a class="mb-1" href="{{ route('editProfileForm', ['id' => Auth::user()->id]) }}">
                         <img src="https://i.ibb.co/DM6hKmk/bbbbbbbbbbb.png" class="img-fluid" style="width:20px; border: 0">
                     </a>
                     <form class="" action="{{ route('searchLink', ['id' => Auth::user()->id]) }}">
-                        <input class="form-control me-2" type="search" placeholder="Поиск ссылок" aria-label="Search" name="search" style="height: 30px">
+                        <input class="form-control me-2 @if($user->dayVsNight) bg-secondary @endif" type="search" placeholder="Поиск ссылок" aria-label="Search" name="search" style="height: 30px">
                     </form>
                     <a class="" href="{{ route('userHomePage',  ['slug' => Auth::user()->slug]) }}" style="text-decoration: none; border: 0; padding: 0">
                         <div class="img" style="background-image: url({{$user->avatar}});"></div>
@@ -236,7 +138,7 @@
         <div class="container-fluid justify-content-center text-center">
             <div class="row" style="margin-top: px" >
                 <div class="col-12 mt-" data-bs-toggle="modal" data-bs-target="#exampleModalLink" style="padding-right: 0; padding-left: 0">
-					<div class="box-part text-center shadow-sm " style="margin: 0; background-color: #feae72">
+					<div class="box-part text-center shadow-sm @if($user->dayVsNight) bg-secondary text-white-50 @endif" style="margin: 0; background-color: #feae72">
 						<div class="title">
 							<h4 class="mt-2" style="font-family: 'Rubik', sans-serif; color: white">@lang('app.a_edit_links')</h4>
 						</div>
@@ -246,21 +148,21 @@
 					</div>
 				</div>
             </div>
-            <div class="modal fade" id="exampleModalLink" tabindex="-1" aria-labelledby="exampleModalLink" aria-hidden="true">
+            <div class="modal fade bg-dark" id="exampleModalLink" tabindex="-1" aria-labelledby="exampleModalLink" aria-hidden="true">
                 <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
+                    <div class="modal-content @if($user->dayVsNight) bg-dark text-white-50 @endif">
+                        <div class="modal-header @if($user->dayVsNight) bg-dark text-white-50 @endif">
                             <h5 class="modal-title" style="font-family: 'Rubik', sans-serif;">@lang('app.a_edit_links')</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body">
+                        <div class="modal-body @if($user->dayVsNight) bg-dark text-white-50 @endif">
                             <form action="{{ route('editAllLink', ['id' => Auth::user()->id]) }}" method="post" enctype="multipart/form-data">
                                 @csrf @method('PATCH')
                                 <div>
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.a_title')</label>
                                         <div class="mb-3 text-center d-flex justify-content-center">
-                                            <input type="color" class="form-control " id="exampleColorInput" value="" title="Choose your color" name="title_color" style="height: 40px;">
+                                            <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif" id="exampleColorInput" value="" title="Choose your color" name="title_color" style="height: 40px; border-radius: 0">
                                         </div>
                                     </div>
                                     <div class="text-center row">
@@ -268,7 +170,7 @@
                                             <select id="mass-edit" data-placeholder="Поиск шрифта..."  autocomplete="off" name="font"></select>
                                         </div>
                                         <div class="col-3">
-                                            <select class="form-select" aria-label="Default select example" name="font_size">
+                                            <select class="form-select @if($user->dayVsNight) bg-secondary @endif" aria-label="Default select example" name="font_size" style="height: 35px; border-radius: 0">
                                                 <option value="0.9">1</option>
                                                 <option value="1">2</option>
                                                 <option value="1.1">3</option>
@@ -280,7 +182,26 @@
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.a_back_color')</label>
                                         <div class="mb-3 text-center d-flex justify-content-center">
-                                            <input type="color" class="form-control " id="exampleColorInput" value="" title="Choose your color" name="background_color" style="height: 40px;">
+                                            <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif" id="exampleColorInput" value="" title="Choose your color" name="background_color" style="height: 40px; border-radius: 0">
+                                        </div>
+                                    </div>
+
+                                    <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Тень для текста</label>
+                                    <div class="mb-3 text-center row">
+                                        <div class="col-12">
+                                            <input type="color" class="block-input @if($user->dayVsNight) bg-secondary @endif form-control" id="exampleColorInput"  title="Choose your color" name="text_shadow_color" style="height: 40px; border-radius: 0"><br>
+                                        </div>
+                                        <div class="col-12">
+                                            <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Четкость тени</span>
+                                            <input type="range" class="form-range" min="0" max="10" step="1" id="customRange2" name="text_shadow_blur" >
+                                        </div>
+                                        <div class="col-12">
+                                            <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Смещение вниз</span>
+                                            <input type="range" class="form-range" min="0" max="10" step="1" id="customRange2" name="text_shadow_bottom">
+                                        </div>
+                                        <div class="col-12">
+                                            <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Сдвиг вправо</span>
+                                            <input type="range" class="form-range" min="0" max="10" step="1" id="customRange2" name="text_shadow_right">
                                         </div>
                                     </div>
 
@@ -311,7 +232,9 @@
                                         <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.a_round')</label><br>
                                         <input type="range" class="form-range" min="1" max="50" step="1" id="customRange2" name="rounded">
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Изменить</button>
+                                    <div class="grap-2 d-grid">
+                                        <button type="submit" class="btn btn-secondary" style="border-radius: 0">Изменить</button>
+                                    </div>
                                 </div>
                             </form>
                         </div>
@@ -319,6 +242,7 @@
                 </div>
             </div>
         </div>
+
         <!-- ЗАКРЕПЛЕННЫЕ  ссылки -->
         <table class="table" style="margin-bottom: 0">
             <tbody>
@@ -348,7 +272,7 @@
                                             </div>
                                             <div class=" col-10 text-center">
                                                 <div class="me-5 ms-5">
-                                                    <h4 class="" style="font-family: '{{$link->font}}', sans-serif; line-height: 1.5; font-size: {{$link->font_size}}rem; margin: 0;color: {{$link->title_color}}; @if($link->photo == '' && $link->photos == '') margin-top: 14px; margin-bottom: 14px @endif">{{$link->title}}</h4>
+                                                    <h4 class="" style="text-shadow:{{$link->text_shadow_right}}px {{$link->text_shadow_bottom}}px {{$link->text_shadow_blur}}px {{$link->text_shadow_color}} ;font-family: '{{$link->font}}', sans-serif; line-height: 1.5; font-size: {{$link->font_size}}rem; margin: 0;color: {{$link->title_color}}; @if($link->photo == '' && $link->photos == '') margin-top: 14px; margin-bottom: 14px @endif">{{$link->title}}</h4>
                                                 </div>
                                             </div>
                                             <div class="col-1">
@@ -356,7 +280,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="d-flex justify-content-between rounded-bottom rounded-3" style="padding: 0;">
+                                    <div class="d-flex justify-content-between rounded-bottom rounded-3 ms-4 me-4" style="padding: 0;">
                                         <div class="col-4 border-end " style="background-color: #f0eeef; box-shadow: 5px 0px 0px black;">
                                             <a href="{{ route('showClickLinkStatistic', ['id' => $user->id, 'link' => $link->id]) }}" style="text-decoration: none; color: black">
                                                 <button href="{{ route('showClickLinkStatistic', ['id' => $user->id, 'link' => $link->id]) }}" class="btn-sm" style="background-color: #f1f2f2; border: 0;">
@@ -380,15 +304,21 @@
                                     </div>
                                     <div class="modal fade" id="exampleModalEdit{{$link->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
+                                            <div class="modal-content @if($user->dayVsNight) bg-dark text-white-50 @endif">
+                                                <div class="modal-header @if($user->dayVsNight) bg-dark text-white-50 @endif">
                                                     <h5 class="modal-title" style="font-family: 'Rubik', sans-serif;">@lang('app.a_edit_link')</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
 
+                                                <div id="pin-icon-alert{{$link->id}}" style="display: none;" class="ms-2 me-2 mt-2">
+                                                    <div class="alert alert-dark" role="alert">
+                                                        Иконка удалена
+                                                    </div>
+                                                </div>
+
                                                 @if($link->icon == false)
                                                     @if($link->photo)
-                                                        <div class="mb-3">
+                                                        <div class="mb-3" id="photo-block{{$link->id}}">
                                                             <label for="exampleInputEmail1" class="form-label mt-3" style="font-family: 'Rubik', sans-serif;">@lang('app.a_now_link')</label><br>
                                                             <div class="row d-flex align-items-center justify-content-center">
                                                                 <div class="col-12">
@@ -397,15 +327,17 @@
                                                                 <div class="col-12 mt-2">
                                                                     <form action="{{ route('delPhoto', ['id' => Auth::user()->id, 'link' => $link->id]) }}" method="POST">
                                                                         @csrf @method('PATCH')
-                                                                        <input type="hidden" name="type" value="LINK">
-                                                                        <button class="btn btn-sm btn-danger">@lang('app.a_now_del')</button>
+                                                                        <input type="hidden" id="photoId{{$link->id}}" value="{{$link->id}}">
+                                                                        <input type="hidden" id="userId{{$link->id}}" value="{{$user->id}}">
+                                                                        <input type="hidden" id="isPhoto{{$link->id}}" value="{{$link->photo}}">
+                                                                        <button id="delete-pin-photo{{$link->id}}" class="btn btn-sm btn-danger">@lang('app.a_now_del')</button>
                                                                     </form>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     @endif
                                                 @elseif($link->icon)
-                                                    <div class="mb-3">
+                                                    <div id="icon-block{{$link->id}}" class="mb-3">
                                                         <label for="exampleInputEmail1" class="form-label mt-3" style="font-family: 'Rubik', sans-serif;">@lang('app.a_now_icon')</label><br>
                                                         <div class="row d-flex align-items-center justify-content-center">
                                                             <div class="col-12">
@@ -414,7 +346,10 @@
                                                             <div class="col-12 mt-2">
                                                                 <form action="{{ route('delLinkIcon', ['id' => Auth::user()->id, 'link' => $link->id]) }}" method="POST">
                                                                     @csrf @method('PATCH')
-                                                                    <button class="btn btn-sm btn-danger">@lang('app.a_now_del')</button>
+                                                                    <input type="hidden" id="linkId{{$link->id}}" value="{{$link->id}}">
+                                                                    <input type="hidden" id="userId{{$link->id}}" value="{{$user->id}}">
+                                                                    <input type="hidden" id="isIcon{{$link->id}}" value="{{$link->icon}}">
+                                                                    <button id="delete-pin-icon{{$link->id}}" class="btn btn-sm btn-danger">@lang('app.a_now_del')</button>
                                                                 </form>
                                                             </div>
                                                         </div>
@@ -428,7 +363,7 @@
                                                             <input type="hidden" name="type" value="LINK"> <!-- Тип ссылки -->
                                                             <div class="mb-3">
                                                                 <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.p_title')</label>
-                                                                <input type="text" class="form-control" name="title" placeholder="Моя красивая ссылка" maxlength="50" value="{{$link->title}}">
+                                                                <input type="text" class="form-control @if($user->dayVsNight) bg-secondary @endif" name="title" placeholder="Моя красивая ссылка" maxlength="50" value="{{$link->title}}" style="border-radius: 0">
                                                                 <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.m_text_link_span')</span>
                                                             </div>
                                                             <div class="text-center row">
@@ -436,7 +371,7 @@
                                                                     <select id="pinned-links{{$link->id}}" data-placeholder="Поиск шрифта..."  autocomplete="off" name="font"></select>
                                                                 </div>
                                                                 <div class="col-3">
-                                                                    <select class="form-select" aria-label="Default select example" name="font_size">
+                                                                    <select class="form-select @if($user->dayVsNight) bg-secondary @endif" aria-label="Default select example" name="font_size" style="height: 35px; border-radius: 0">
                                                                         <option @if($link->font_size == 0.9) selected @endif value="0.9">1</option>
                                                                         <option @if($link->font_size == 1) selected @endif value="1">2</option>
                                                                         <option @if($link->font_size == 1.1) selected @endif value="1.1">3</option>
@@ -447,27 +382,48 @@
                                                             <label class="mb-3" style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Вы можете выбрать шрифт и его размер для текста вашей ссылки</label>
                                                             <div class="mb-3">
                                                                 <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.m_insert_link')</label>
-                                                                <input type="text" class="form-control" name="link" placeholder="http://..." value="{{$link->link}}">
+                                                                <input type="text" class="form-control @if($user->dayVsNight) bg-secondary @endif" name="link" placeholder="http://..." value="{{$link->link}}" style="border-radius: 0">
                                                                 <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.a_edit_link')</span>
                                                             </div>
 
-                                                            <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.m_icon')</label>
-                                                            <div class="mb-3">
-                                                                <select id="select-beast-empty{{$link->id}}" data-placeholder="Поиск иконки..."  autocomplete="off" name="icon"></select>
-                                                                <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.m_icon_description')</span>
-                                                            </div>
-                                                            @if($link->icon == false)
-                                                                <div class="mb-3">
-                                                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.m_photo')</label>
-                                                                    <input type="file" class="form-control" id="inputGroupFile02" name="photo">
-                                                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.m_photo_description')</span>
+                                                            <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Тень для текста</label>
+                                                            <div class="mb-3 text-center row">
+                                                                <div class="col-12">
+                                                                    <input type="color" class="block-input @if($user->dayVsNight) bg-secondary @endif form-control" id="exampleColorInput" value="{{$link->text_shadow_color}}" title="Choose your color" name="text_shadow_color" style="height: 40px; border-radius: 0"><br>
                                                                 </div>
-                                                            @endif
+                                                                <div class="col-12">
+                                                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Четкость тени</span>
+                                                                    <input type="range" class="form-range" min="0" max="10" step="1" id="customRange2" name="text_shadow_blur" value="{{$link->text_shadow_blur}}">
+                                                                </div>
+                                                                <div class="col-12">
+                                                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Смещение вниз</span>
+                                                                    <input type="range" class="form-range" min="0" max="10" step="1" id="customRange2" name="text_shadow_bottom" value="{{$link->text_shadow_bottom}}">
+                                                                </div>
+                                                                <div class="col-12">
+                                                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Сдвиг вправо</span>
+                                                                    <input type="range" class="form-range" min="0" max="10" step="1" id="customRange2" name="text_shadow_right" value="{{$link->text_shadow_right}}">
+                                                                </div>
+                                                            </div>
+
+                                                            <div id="icon-block{{$link->id}}">
+                                                                <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.m_icon')</label>
+                                                                <div class="mb-3">
+                                                                    <select id="select-beast-empty{{$link->id}}" data-placeholder="Поиск иконки..."  autocomplete="off" name="icon"></select>
+                                                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.m_icon_description')</span>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="mb-3" id="upload-icon{{$link->id}}">
+                                                                <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.m_photo')</label>
+                                                                <input type="file" class="form-control @if($user->dayVsNight) bg-secondary @endif" id="inputGroupFile02" name="photo" style="border-radius: 0">
+                                                                <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.m_photo_description')</span>
+                                                            </div>
+
 
                                                             <div class="mb-3">
                                                                 <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.m_title_color')</label>
                                                                 <div class="mb-3 text-center d-flex justify-content-center">
-                                                                    <input type="color" class="form-control " id="exampleColorInput" value="{{$link->title_color_hex}}" title="Choose your color" name="title_color" style="height: 40px;">
+                                                                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif" id="exampleColorInput" value="{{$link->title_color_hex}}" title="Choose your color" name="title_color" style="height: 40px; border-radius: 0">
                                                                 </div>
                                                             </div>
 
@@ -475,7 +431,7 @@
                                                             <div class="mb-3">
                                                                 <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.m_background_color')</label>
                                                                 <div class="mb-3 text-center d-flex justify-content-center">
-                                                                    <input type="color" class="form-control " id="exampleColorInput" value="{{$link->background_color_hex}}" title="Choose your color" name="background_color" style="height: 40px;">
+                                                                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif" id="exampleColorInput" value="{{$link->background_color_hex}}" title="Choose your color" name="background_color" style="height: 40px; border-radius: 0">
                                                                 </div>
                                                             </div>
 
@@ -513,7 +469,7 @@
 
                                                             <div class="mb-3 text-center">
                                                                 <div>
-                                                                    <select class="form-select" aria-label="Default select example" name="animation">
+                                                                    <select class="form-select @if($user->dayVsNight) bg-secondary @endif" aria-label="Default select example" name="animation" style="border-radius: 0">
                                                                         <option >Выбрать анимацию...</option>
                                                                         <option @if($link->animation == 'animate__animated animate__pulse animate__infinite infinite') selected @endif value="animate__animated animate__pulse animate__infinite infinite">Pulse</option>
                                                                         <option @if($link->animation == 'animate__animated animate__headShake animate__infinite infinite') selected @endif value="animate__animated animate__headShake animate__infinite infinite">Head Shake</option>
@@ -529,8 +485,9 @@
                                                                     </label>
                                                                 </div>
                                                             </div>
-
-                                                            <button type="submit" class="btn btn-primary">@lang('app.a_edit')</button>
+                                                            <div class="d-grid grap-2">
+                                                            <button type="submit" class="btn btn-secondary" style="border-radius: 0">@lang('app.a_edit')</button>
+                                                            </div>
                                                         </div>
                                                     </form>
                                                 </div>
@@ -714,7 +671,7 @@
                                             </div>
                                             <div class=" col-10 text-center">
                                                 <div class="me-5 ms-5">
-                                                    <h4 class="" style="font-family: '{{$link->font}}', sans-serif; line-height: 1.5; font-size: {{$link->font_size}}rem; margin: 0;color: {{$link->title_color}}; @if($link->photo == '' && $link->photos == '') margin-top: 14px; margin-bottom: 14px @endif">{{$link->title}}</h4>
+                                                    <h4 class="" style="text-shadow:{{$link->text_shadow_right}}px {{$link->text_shadow_bottom}}px {{$link->text_shadow_blur}}px {{$link->text_shadow_color}} ;font-family: '{{$link->font}}', sans-serif; line-height: 1.5; font-size: {{$link->font_size}}rem; margin: 0;color: {{$link->title_color}}; @if($link->photo == '' && $link->photos == '') margin-top: 14px; margin-bottom: 14px @endif">{{$link->title}}</h4>
                                                 </div>
                                             </div>
                                             <div class="col-1">
@@ -722,7 +679,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="d-flex justify-content-between rounded-bottom rounded-3" style="padding: 0;">
+                                    <div class="d-flex justify-content-between rounded-bottom rounded-3 ms-4 me-4" style="padding: 0;">
                                         <div class="col-4 border-end " style="background-color: #f0eeef; box-shadow: 5px 0px 0px black;">
                                             <a href="{{ route('showClickLinkStatistic', ['id' => $user->id, 'link' => $link->id]) }}" style="text-decoration: none; color: black">
                                                 <button href="{{ route('showClickLinkStatistic', ['id' => $user->id, 'link' => $link->id]) }}" class="btn-sm" style="background-color: #f1f2f2; border: 0;">
@@ -744,17 +701,24 @@
                                             </form>
                                         </div>
                                     </div>
+
                                     <div class="modal fade" id="exampleModalEdit{{$link->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
+                                            <div class="modal-content @if($user->dayVsNight) bg-dark text-white-50 @endif">
+                                                <div class="modal-header @if($user->dayVsNight) bg-dark text-white-50 @endif">
                                                     <h5 class="modal-title" style="font-family: 'Rubik', sans-serif;">@lang('app.a_edit_link')</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
 
+                                                <div id="pin-icon-alert{{$link->id}}" style="display: none;" class="ms-2 me-2 mt-2">
+                                                    <div class="alert alert-dark" role="alert">
+                                                        Иконка удалена
+                                                    </div>
+                                                </div>
+
                                                 @if($link->icon == false)
                                                     @if($link->photo)
-                                                        <div class="mb-3">
+                                                        <div class="mb-3" id="photo-block{{$link->id}}">
                                                             <label for="exampleInputEmail1" class="form-label mt-3" style="font-family: 'Rubik', sans-serif;">@lang('app.a_now_link')</label><br>
                                                             <div class="row d-flex align-items-center justify-content-center">
                                                                 <div class="col-12">
@@ -763,15 +727,17 @@
                                                                 <div class="col-12 mt-2">
                                                                     <form action="{{ route('delPhoto', ['id' => Auth::user()->id, 'link' => $link->id]) }}" method="POST">
                                                                         @csrf @method('PATCH')
-                                                                        <input type="hidden" name="type" value="LINK">
-                                                                        <button class="btn btn-sm btn-danger">@lang('app.a_now_del')</button>
+                                                                        <input type="hidden" id="photoId{{$link->id}}" value="{{$link->id}}">
+                                                                        <input type="hidden" id="userId{{$link->id}}" value="{{$user->id}}">
+                                                                        <input type="hidden" id="isPhoto{{$link->id}}" value="{{$link->photo}}">
+                                                                        <button id="delete-pin-photo{{$link->id}}" class="btn btn-sm btn-danger">@lang('app.a_now_del')</button>
                                                                     </form>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     @endif
                                                 @elseif($link->icon)
-                                                    <div class="mb-3">
+                                                    <div id="icon-block{{$link->id}}" class="mb-3">
                                                         <label for="exampleInputEmail1" class="form-label mt-3" style="font-family: 'Rubik', sans-serif;">@lang('app.a_now_icon')</label><br>
                                                         <div class="row d-flex align-items-center justify-content-center">
                                                             <div class="col-12">
@@ -780,7 +746,10 @@
                                                             <div class="col-12 mt-2">
                                                                 <form action="{{ route('delLinkIcon', ['id' => Auth::user()->id, 'link' => $link->id]) }}" method="POST">
                                                                     @csrf @method('PATCH')
-                                                                    <button class="btn btn-sm btn-danger">@lang('app.a_now_del')</button>
+                                                                    <input type="hidden" id="linkId{{$link->id}}" value="{{$link->id}}">
+                                                                    <input type="hidden" id="userId{{$link->id}}" value="{{$user->id}}">
+                                                                    <input type="hidden" id="isIcon{{$link->id}}" value="{{$link->icon}}">
+                                                                    <button id="delete-pin-icon{{$link->id}}" class="btn btn-sm btn-danger">@lang('app.a_now_del')</button>
                                                                 </form>
                                                             </div>
                                                         </div>
@@ -794,7 +763,7 @@
                                                             <input type="hidden" name="type" value="LINK"> <!-- Тип ссылки -->
                                                             <div class="mb-3">
                                                                 <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.p_title')</label>
-                                                                <input type="text" class="form-control" name="title" placeholder="Моя красивая ссылка" maxlength="50" value="{{$link->title}}">
+                                                                <input type="text" class="form-control @if($user->dayVsNight) bg-secondary @endif" name="title" placeholder="Моя красивая ссылка" maxlength="50" value="{{$link->title}}" style="border-radius: 0">
                                                                 <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.m_text_link_span')</span>
                                                             </div>
                                                             <div class="text-center row">
@@ -802,7 +771,7 @@
                                                                     <select id="empty-links{{$link->id}}" data-placeholder="Поиск шрифта..."  autocomplete="off" name="font"></select>
                                                                 </div>
                                                                 <div class="col-3">
-                                                                    <select class="form-select" aria-label="Default select example" name="font_size">
+                                                                    <select class="form-select @if($user->dayVsNight) bg-secondary @endif" aria-label="Default select example" name="font_size" style="border-radius: 0; height: 35px">
                                                                         <option @if($link->font_size == 0.9) selected @endif value="0.9">1</option>
                                                                         <option @if($link->font_size == 1) selected @endif value="1">2</option>
                                                                         <option @if($link->font_size == 1.1) selected @endif value="1.1">3</option>
@@ -813,27 +782,47 @@
                                                             <label class="mb-3" style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Вы можете выбрать шрифт и его размер для текста вашей ссылки</label>
                                                             <div class="mb-3">
                                                                 <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.m_insert_link')</label>
-                                                                <input type="text" class="form-control" name="link" placeholder="http://..." value="{{$link->link}}">
+                                                                <input type="text" class="form-control @if($user->dayVsNight) bg-secondary @endif" name="link" placeholder="http://..." value="{{$link->link}}" style="border-radius: 0">
                                                                 <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.a_edit_link')</span>
                                                             </div>
 
-                                                            <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.m_icon')</label>
-                                                            <div class="mb-3">
-                                                                <select id="select-beast-empty{{$link->id}}" data-placeholder="Поиск иконки..."  autocomplete="off" name="icon"></select>
-                                                                <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.m_icon_description')</span>
-                                                            </div>
-                                                            @if($link->icon == false)
-                                                                <div class="mb-3">
-                                                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.m_photo')</label>
-                                                                    <input type="file" class="form-control" id="inputGroupFile02" name="photo">
-                                                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.m_photo_description')</span>
+                                                            <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Тень для текста</label>
+                                                            <div class="mb-3 text-center row">
+                                                                <div class="col-12">
+                                                                    <input type="color" class="block-input @if($user->dayVsNight) bg-secondary @endif form-control" id="exampleColorInput" value="{{$link->text_shadow_color}}" title="Choose your color" name="text_shadow_color" style="height: 40px; border-radius: 0"><br>
                                                                 </div>
-                                                            @endif
+                                                                <div class="col-12">
+                                                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Четкость тени</span>
+                                                                    <input type="range" class="form-range" min="0" max="10" step="1" id="customRange2" name="text_shadow_blur" value="{{$link->text_shadow_blur}}">
+                                                                </div>
+                                                                <div class="col-12">
+                                                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Смещение вниз</span>
+                                                                    <input type="range" class="form-range" min="0" max="10" step="1" id="customRange2" name="text_shadow_bottom" value="{{$link->text_shadow_bottom}}">
+                                                                </div>
+                                                                <div class="col-12">
+                                                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Сдвиг в право</span>
+                                                                    <input type="range" class="form-range" min="0" max="10" step="1" id="customRange2" name="text_shadow_right" value="{{$link->text_shadow_right}}">
+                                                                </div>
+                                                            </div>
+
+                                                            <div id="icon-block{{$link->id}}">
+                                                                <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.m_icon')</label>
+                                                                <div class="mb-3">
+                                                                    <select id="select-beast-empty{{$link->id}}" data-placeholder="Поиск иконки..."  autocomplete="off" name="icon"></select>
+                                                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.m_icon_description')</span>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="mb-3" id="upload-icon{{$link->id}}">
+                                                                <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.m_photo')</label>
+                                                                <input type="file" class="form-control @if($user->dayVsNight) bg-secondary @endif" id="inputGroupFile02" name="photo" style="border-radius: 0">
+                                                                <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.m_photo_description')</span>
+                                                            </div>
 
                                                             <div class="mb-3">
                                                                 <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.m_title_color')</label>
                                                                 <div class="mb-3 text-center d-flex justify-content-center">
-                                                                    <input type="color" class="form-control " id="exampleColorInput" value="{{$link->title_color_hex}}" title="Choose your color" name="title_color" style="height: 40px;">
+                                                                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif" id="exampleColorInput" value="{{$link->title_color_hex}}" title="Choose your color" name="title_color" style="height: 40px; border-radius: 0">
                                                                 </div>
                                                             </div>
 
@@ -841,7 +830,7 @@
                                                             <div class="mb-3">
                                                                 <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.m_background_color')</label>
                                                                 <div class="mb-3 text-center d-flex justify-content-center">
-                                                                    <input type="color" class="form-control " id="exampleColorInput" value="{{$link->background_color_hex}}" title="Choose your color" name="background_color" style="height: 40px;">
+                                                                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif" id="exampleColorInput" value="{{$link->background_color_hex}}" title="Choose your color" name="background_color" style="height: 40px; border-radius: 0">
                                                                 </div>
                                                             </div>
 
@@ -879,7 +868,7 @@
 
                                                             <div class="mb-3 text-center">
                                                                 <div>
-                                                                    <select class="form-select" aria-label="Default select example" name="animation">
+                                                                    <select class="form-select @if($user->dayVsNight) bg-secondary @endif" aria-label="Default select example" name="animation" style="border-radius: 0">
                                                                         <option >Выбрать анимацию...</option>
                                                                         <option @if($link->animation == 'animate__animated animate__pulse animate__infinite infinite') selected @endif value="animate__animated animate__pulse animate__infinite infinite">Pulse</option>
                                                                         <option @if($link->animation == 'animate__animated animate__headShake animate__infinite infinite') selected @endif value="animate__animated animate__headShake animate__infinite infinite">Head Shake</option>
@@ -895,8 +884,9 @@
                                                                     </label>
                                                                 </div>
                                                             </div>
-
-                                                            <button type="submit" class="btn btn-primary">@lang('app.a_edit')</button>
+                                                            <div class="grap-2 d-grid">
+                                                                <button type="submit" class="btn btn-secondary" style="border-radius: 0">@lang('app.a_edit')</button>
+                                                            </div>
                                                         </div>
                                                     </form>
                                                 </div>
@@ -1052,6 +1042,70 @@
         </table>
 
         @foreach($links as $link)
+            <!-- Удалить иконку или фотку у закрепки -->
+            <script type="text/javascript">
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                var isPhoto = $("#isPhoto{{$link->id}}").val();
+                if(isPhoto) {
+                    $("#icon-block{{$link->id}}").hide();
+                    $(document).ready(function () {
+                        $("body").on("click","#delete-pin-photo{{$link->id}}", function(e){
+                            e.preventDefault();
+
+                            var id = $("#userId{{$link->id}}").val();
+                            var link = $("#photoId{{$link->id}}").val();
+                            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+                            $.ajax({
+                                url: "/"+id+"/add-link/"+link+"/delete-photo",
+                                type: 'PATCH',
+                                data: {_token: CSRF_TOKEN},
+                                dataType: 'JSON',
+                                success: function (){
+                                    $("#photo-block{{$link->id}}").hide();
+                                    $("#icon-block{{$link->id}}").show();
+                                    setTimeout(function() { $("#pin-icon-alert{{$link->id}}").show('show'); }, 1000);
+
+                                    setTimeout(function() { $("#pin-icon-alert{{$link->id}}").hide('slow'); }, 2000);
+                                },
+                            });
+                        });
+                    });
+                }
+
+                var isIcon = $("#isIcon{{$link->id}}").val();
+                if(isIcon) {
+                    $("#upload-icon{{$link->id}}").hide();
+                    $(document).ready(function () {
+                        $("body").on("click","#delete-pin-icon{{$link->id}}", function(e){
+                            e.preventDefault();
+
+                            var id = $("#userId{{$link->id}}").val();
+                            var link = $("#linkId{{$link->id}}").val();
+                            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+                            $.ajax({
+                                url: "/"+id+"/add-link/"+link+"/delete-icon",
+                                type: 'PATCH',
+                                data: {_token: CSRF_TOKEN},
+                                dataType: 'JSON',
+                                success: function (){
+                                    $("#icon-block{{$link->id}}").hide();
+                                    $("#upload-icon{{$link->id}}").show();
+                                    $("#pin-icon-alert{{$link->id}}").show();
+
+                                    setTimeout(function() { $("#pin-icon-alert{{$link->id}}").hide('slow'); }, 2000);
+                                },
+                            });
+                        });
+                    });
+                }
+            </script>
             <script type="text/javascript">
                 $.ajaxSetup({
                 headers: {
@@ -1124,6 +1178,71 @@
 
         {{-- Закрепленные ссылки и посты--}}
         @foreach($pinnedLinks as $link)
+            <!-- Удалить иконку или фотку у закрепки -->
+            <script type="text/javascript">
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                var isPhoto = $("#isPhoto{{$link->id}}").val();
+                if(isPhoto) {
+                    $("#icon-block{{$link->id}}").hide();
+                    $(document).ready(function () {
+                        $("body").on("click","#delete-pin-photo{{$link->id}}", function(e){
+                            e.preventDefault();
+
+                            var id = $("#userId{{$link->id}}").val();
+                            var link = $("#photoId{{$link->id}}").val();
+                            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+                            $.ajax({
+                                url: "/"+id+"/add-link/"+link+"/delete-photo",
+                                type: 'PATCH',
+                                data: {_token: CSRF_TOKEN},
+                                dataType: 'JSON',
+                                success: function (){
+                                    $("#photo-block{{$link->id}}").hide();
+                                    $("#icon-block{{$link->id}}").show();
+                                    setTimeout(function() { $("#pin-icon-alert{{$link->id}}").show('show'); }, 1000);
+
+                                    setTimeout(function() { $("#pin-icon-alert{{$link->id}}").hide('slow'); }, 2000);
+                                },
+                            });
+                        });
+                    });
+                }
+
+                var isIcon = $("#isIcon{{$link->id}}").val();
+                if(isIcon) {
+                    $("#upload-icon{{$link->id}}").hide();
+                    $(document).ready(function () {
+                        $("body").on("click","#delete-pin-icon{{$link->id}}", function(e){
+                            e.preventDefault();
+
+                            var id = $("#userId{{$link->id}}").val();
+                            var link = $("#linkId{{$link->id}}").val();
+                            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+                            $.ajax({
+                                url: "/"+id+"/add-link/"+link+"/delete-icon",
+                                type: 'PATCH',
+                                data: {_token: CSRF_TOKEN},
+                                dataType: 'JSON',
+                                success: function (){
+                                    $("#icon-block{{$link->id}}").hide();
+                                    $("#upload-icon{{$link->id}}").show();
+                                    $("#pin-icon-alert{{$link->id}}").show();
+
+                                    setTimeout(function() { $("#pin-icon-alert{{$link->id}}").hide('slow'); }, 2000);
+                                },
+                            });
+                        });
+                    });
+                }
+            </script>
+
             <script>
                 new TomSelect('#select-beast-empty{{$link->id}}',{
                     valueField: 'img',
@@ -1151,6 +1270,7 @@
                 new TomSelect('#pinned-links{{$link->id}}',{
                     valueField: 'font',
                     searchField: 'title',
+                    maxOptions: 100,
                     options: [
                         @foreach($allFontsInFolder as $font)
                             {id: {{$font->getInode()}}, title: '{{ stristr($font->getFilename(), '.', true)}}', font: '{{ stristr($font->getFilename(), '.', true) }}'},
@@ -1159,32 +1279,11 @@
                     render: {
                         option: function(data, escape) {
                             return  '<div>' +
-                                        '<span style="font-size: 1.3rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</span>' +
+                                        '<span style="font-size: 1.6rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</span>' +
                                     '</div>';
                         },
                         item: function(data, escape) {
-                            return  '<h4 style="font-size: 1.3rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</h4>';
-                        }
-                    }
-                });
-            </script>
-            <script>
-                new TomSelect('#pinned-posts{{$link->id}}',{
-                    valueField: 'font',
-                    searchField: 'title',
-                    options: [
-                        @foreach($allFontsInFolder as $font)
-                            {id: {{$font->getInode()}}, title: '{{ stristr($font->getFilename(), '.', true)}}', font: '{{ stristr($font->getFilename(), '.', true) }}'},
-                        @endforeach
-                    ],
-                    render: {
-                        option: function(data, escape) {
-                            return  '<div>' +
-                                        '<span style="font-size: 1.3rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</span>' +
-                                    '</div>';
-                        },
-                        item: function(data, escape) {
-                            return  '<h4 style="font-size: 1.3rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</h4>';
+                            return  '<h4 style="font-size: 1.2rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</h4>';
                         }
                     }
                 });
@@ -1195,6 +1294,7 @@
                 new TomSelect('#empty-links{{$link->id}}',{
                     valueField: 'font',
                     searchField: 'title',
+                    maxOptions: 100,
                     options: [
                         @foreach($allFontsInFolder as $font)
                             {id: {{$font->getInode()}}, title: '{{ stristr($font->getFilename(), '.', true)}}', font: '{{ stristr($font->getFilename(), '.', true) }}'},
@@ -1203,58 +1303,38 @@
                     render: {
                         option: function(data, escape) {
                             return  '<div>' +
-                                        '<span style="font-size: 1.3rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</span>' +
+                                        '<span style="font-size: 1.6rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</span>' +
                                     '</div>';
                         },
                         item: function(data, escape) {
-                            return  '<h4 style="font-size: 1.3rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</h4>';
-                        }
-                    }
-                });
-            </script>
-            <script>
-                new TomSelect('#empty-posts{{$link->id}}',{
-                    valueField: 'font',
-                    searchField: 'title',
-                    options: [
-                        @foreach($allFontsInFolder as $font)
-                            {id: {{$font->getInode()}}, title: '{{ stristr($font->getFilename(), '.', true)}}', font: '{{ stristr($font->getFilename(), '.', true) }}'},
-                        @endforeach
-                    ],
-                    render: {
-                        option: function(data, escape) {
-                            return  '<div>' +
-                                        '<span style="font-size: 1.3rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</span>' +
-                                    '</div>';
-                        },
-                        item: function(data, escape) {
-                            return  '<h4 style="font-size: 1.3rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</h4>';
+                            return  '<h4 style="font-size: 1.2rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</h4>';
                         }
                     }
                 });
             </script>
         @endforeach
         <script>
-                new TomSelect('#mass-edit',{
-                    valueField: 'font',
-                    searchField: 'title',
-                    options: [
-                        @foreach($allFontsInFolder as $font)
-                            {id: {{$font->getInode()}}, title: '{{ stristr($font->getFilename(), '.', true)}}', font: '{{ stristr($font->getFilename(), '.', true) }}'},
-                        @endforeach
-                    ],
-                    render: {
-                        option: function(data, escape) {
-                            return  '<div>' +
-                                        '<span style="font-size: 1.3rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</span>' +
-                                    '</div>';
-                        },
-                        item: function(data, escape) {
-                            return  '<h4 style="font-size: 1.3rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</h4>';
-                        }
+            new TomSelect('#mass-edit',{
+                valueField: 'font',
+                searchField: 'title',
+                maxOptions: 100,
+                options: [
+                    @foreach($allFontsInFolder as $font)
+                        {id: {{$font->getInode()}}, title: '{{ stristr($font->getFilename(), '.', true)}}', font: '{{ stristr($font->getFilename(), '.', true) }}'},
+                    @endforeach
+                ],
+                render: {
+                    option: function(data, escape) {
+                        return  '<div>' +
+                                    '<span style="font-size: 1.6rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</span>' +
+                                '</div>';
+                    },
+                    item: function(data, escape) {
+                        return  '<h4 style="font-size: 1.2rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</h4>';
                     }
-                });
-            </script>
+                }
+            });
+        </script>
     </body>
 </html>
 

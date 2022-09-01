@@ -33,6 +33,7 @@ class UpdateRegisteruserRequest extends FormRequest
             'background_color' => 'nullable',
             'banner' => 'nullable|mimes:jpeg,png,jpg,gif|max:5000',
             'avatar' => 'nullable|mimes:jpeg,png,jpg,gif|max:5000',
+            'favicon' => 'nullable|mimes:jpeg,png,jpg,gif|max:5000',
             'locale' => 'nullable',
         ];
     }

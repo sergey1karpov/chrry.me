@@ -38,7 +38,7 @@
                 <div class="text-center">
                     <a href="{{ route('welcome') }}">
                         <img src="https://i.ibb.co/3dJD25v/new-logo.png" class="img-fluid">
-                    </a>    
+                    </a>
                 </div>
                 <div class="col-12">
                     <x-guest-layout>
@@ -94,11 +94,16 @@
                                         <button class="btn" style="font-family: 'Rubik', sans-serif; border: 0; background-color: #e83100; color: white;">
                                             {{ __('Войти') }}
                                         </button>
-                                    </div>    
+                                    </div>
                                 </div>
                             </form>
                         </x-auth-card>
                     </x-guest-layout>
+                </div>
+                <div class="mb-4 mt-4 text-sm text-gray-600 text-center" style="font-family: 'Overpass Mono', monospace;">
+                    <h1 class="display mb-3" style="font-size:1.1rem; font-family: 'Rubik', sans-serif;">Выполнить вход через одну из соц. сетей</h1>
+                    <a href="{{route('auth', ['social' => 'vk'])}}"><img src="https://cdn-icons-png.flaticon.com/512/145/145813.png" width="50"></a>
+                    <a href="{{route('auth', ['social' => 'yandex'])}}"><img src="https://monobit.ru/wp-content/uploads/2021/03/TtYT-Do9haj2FSn2BgK4u_7Rbm-Q2Q9huE1o4dPa74q9NUayDMm0_QVInoQWklXdWw-1.png" width="50"></a>
                 </div>
             </div>
         </div>

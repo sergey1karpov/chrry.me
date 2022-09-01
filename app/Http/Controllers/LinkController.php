@@ -8,69 +8,58 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Auth;
 
-/**
- * [Работа со ссылками/постами]
- */
 class LinkController extends Controller
 {
     /**
      * @param int $id
-     *
-     * @return mixed
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|never
      *
      * Возвращает страницу со всеми ссылками /links
      */
-    public function allLinks(int $id) : mixed
+    public function allLinks(int $id)
     {
-        if($id == Auth::user()->id) {
-            $user = User::where('id', $id)->firstOrFail();
-            $links = Link::where('user_id', $user->id)->where('pinned', false)->orderBy('position')->get();
-            $pinnedLinks = Link::where('user_id', $user->id)->where('pinned', true)->orderBy('position')->get();
-            $icons  = public_path('images/social');
-            $allIconsInsideFolder = File::files($icons);
-            $fonts  = public_path('fonts');
-            $allFontsInFolder = File::files($fonts);
-            return view('user.links', compact('user', 'links', 'allIconsInsideFolder','pinnedLinks', 'allFontsInFolder'));
-        } else {
-            return abort(404);
-        }
+        $user = User::where('id', $id)->firstOrFail();
+        $links = Link::where('user_id', $user->id)->where('pinned', false)->orderBy('position')->get();
+        $pinnedLinks = Link::where('user_id', $user->id)->where('pinned', true)->orderBy('position')->get();
+        $icons  = public_path('images/social');
+        $allIconsInsideFolder = File::files($icons);
+        $fonts  = public_path('fonts');
+        $allFontsInFolder = File::files($fonts);
+        return view('user.links', compact('user', 'links', 'allIconsInsideFolder','pinnedLinks', 'allFontsInFolder'));
     }
 
     /**
      * @param int $id
      * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|never
      *
-     * @return [type]
-     *
-     * Добавление ссылки или поста, в зависимости от значения $request->type
+     * Добавление ссылки
      */
     public function addLink(int $id, Request $request)
     {
-        if($id == Auth::user()->id) {
-            if($request->type == 'LINK') {
-                Link::addLink($id,$request);
-            }
-            return redirect()->back();
-        } else {
-            return abort(404);
-        }
+        $user = User::where('id', $id)->firstOrFail();
+        Link::addLink($user, $request);
+        return redirect()->back();
     }
 
     /**
      * @param int $id
-     * @param int $link
+     * @param int $linkId
      * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|never
      *
-     * @return [type]
-     *
-     * Редактирование ссылки или поста, в зависимости от $request->type
+     * Редактирование ссылки
      */
-    public function editLink(int $id, int $link, Request $request)
+    public function editLink(int $id, int $linkId, Request $request)
     {
-        if($id == Auth::user()->id) {
-            if($request->type == 'LINK') {
-                Link::editLink($id,$link,$request);
+        $link = Link::where('id', $linkId)->where('user_id', $id)->firstOrFail();
+        if($request->photo) {
+            if($link->photo != '') {
+                unlink(ltrim($link->photo, "/"."../"));
             }
+        }
+        if($link) {
+            Link::editLink($id, $link, $request);
             return redirect()->back();
         } else {
             return abort(404);
@@ -80,96 +69,72 @@ class LinkController extends Controller
     /**
      * @param int $id
      * @param Request $request
-     *
-     * @return [type]
+     * @return \Illuminate\Http\RedirectResponse|never
      *
      * Массовое изменение ссылок
      */
-    public function editAllLink(int $id, Request $request) : mixed
+    public function editAllLink(int $id, Request $request)
     {
-        if($id == Auth::user()->id) {
-            Link::editAll($id, $request);
-            return redirect()->back();
-        } else {
-            return abort(404);
-        }
-    }
-
-    /**
-     * @param mixed $id
-     * @param mixed $link
-     * @param Request $request
-     *
-     * @return [type]
-     *
-     * Удаление фотографий в ссылке и посте в зависимости от параметра $request->type
-     */
-    public function delPhoto($id, $link, Request $request) : mixed
-    {
-        if($id == Auth::user()->id) {
-            Link::delLinkPhoto($id, $link, $request);
-            return redirect()->back();
-        } else {
-            return abort(404);
-        }
-    }
-
-    /**
-     * @param mixed $id
-     * @param mixed $link
-     *
-     * @return [type]
-     *
-     * Удаление ссылки и поста
-     */
-    public function delLink($id, $link) : mixed
-    {
-        if($id == Auth::user()->id) {
-            Link::where('user_id', $id)->where('id', $link)->delete();
-            return redirect()->back();
-        } else {
-            return abort(404);
-        }
+        Link::editAll($id, $request);
+        return redirect()->back();
     }
 
     /**
      * @param int $id
      * @param int $link
+     * @return \Illuminate\Http\JsonResponse|never
      *
-     * @return mixed
-     *
-     * Удаление иконки ссылки
-     *
-     * P.S. передалать под фотографию
+     * Удаление фотографий в ссылке
      */
-    public function delLinkIcon(int $id, int $link) : mixed
+    public function delPhoto(int $id, int $link)
     {
-        if($id == Auth::user()->id) {
-            Link::where('id', $link)->update(['icon' => null]);
-            return redirect()->back();
-        } else {
-            return abort(404);
-        }
+        $delPhotoFromFolder = Link::where('id', $link)->firstOrFail();
+        unlink(ltrim($delPhotoFromFolder->photo, "/"."../"));
+        Link::where('user_id', $id)->where('id', $link)->update(['photo' => null]);
+        return response()->json('deleted');
     }
 
     /**
-     * @param mixed $id
+     * @param int $id
+     * @param int $link
+     * @return \Illuminate\Http\JsonResponse|never
      *
-     * @return [type]
+     * Удаление иконки ссылки
+     */
+    public function delLinkIcon(int $id, int $link)
+    {
+        Link::where('user_id', $id)->where('id', $link)->update(['icon' => null]);
+        return response()->json('deleted');
+    }
+
+    /**
+     * @param int $id
+     * @param int $link
+     * @return \Illuminate\Http\RedirectResponse|never
+     *
+     * Удаление ссылки и поста
+     */
+    public function delLink(int $id, int $link)
+    {
+        Link::where('user_id', $id)->where('id', $link)->delete();
+        return redirect()->back();
+    }
+
+    /**
+     * @param int $id
+     * @return void
      *
      * Сортировка ссылок на js
      */
-    public function sortLink(int $id) : void
+    public function sortLink(int $id)
     {
-        if($id == Auth::user()->id) {
-            if(isset($_POST['update'])) {
-                foreach($_POST['positions'] as $position) {
-                    $index = $position[0];
-                    $newPosition = $position[1];
-                    Link::where('user_id', $id)->where('id', $index)->update([
-                        'position' => $newPosition,
-                    ]);
-                }
+        if(isset($_POST['update'])) {
+            foreach($_POST['positions'] as $position) {
+                $index = $position[0];
+                $newPosition = $position[1];
+                Link::where('user_id', $id)->where('id', $index)->update([
+                    'position' => $newPosition,
+                ]);
             }
         }
     }
@@ -177,23 +142,19 @@ class LinkController extends Controller
     /**
      * @param int $id
      * @param Request $request
-     *
-     * @return mixed
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|never
      *
      * Laravel Scout search service
      */
-    public function searchLink(int $id, Request $request) : mixed
+    public function searchLink(int $id, Request $request)
     {
-        if($id == Auth::user()->id) {
-            $user = User::where('id', $id)->firstOrFail();
-            $links = Link::search($request->search)->where('user_id', $user->id)->orderBy('id', 'desc')->get();
-            $icons  = public_path('images/social');
-            $allIconsInsideFolder = File::files($icons);
-            $fonts  = public_path('fonts');
-            $allFontsInFolder = File::files($fonts);
-            return view('user.search', compact('user', 'links', 'allIconsInsideFolder', 'allFontsInFolder'));
-        } else {
-            return abort(404);
-        }
+        $user = User::where('id', $id)->firstOrFail();
+        $links = Link::search($request->search)->where('user_id', $user->id)->orderBy('id', 'desc')->get();
+        $icons  = public_path('images/social');
+        $allIconsInsideFolder = File::files($icons);
+        $fonts  = public_path('fonts');
+        $allFontsInFolder = File::files($fonts);
+        return view('user.search', compact('user', 'links', 'allIconsInsideFolder', 'allFontsInFolder'));
+
     }
 }
