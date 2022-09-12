@@ -318,7 +318,7 @@
                                                     <input type="hidden" name="type" value="LINK"> <!-- Тип ссылки -->
                                                     <div class="mb-3">
                                                         <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.p_title')</label>
-                                                        <input type="text" class="form-control @if($user->dayVsNight) bg-secondary @endif" name="title" placeholder="Моя красивая ссылка" maxlength="50" value="{{$link->title}}" style="border-radius: 0">
+                                                        <input type="text" class="form-control @if($user->dayVsNight) bg-secondary @endif" name="title" placeholder="Моя красивая ссылка" maxlength="100" value="{{$link->title}}" style="border-radius: 0">
                                                         <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.m_text_link_span')</span>
                                                     </div>
                                                     <div class="text-center row">
@@ -340,6 +340,16 @@
                                                         <input type="text" class="form-control @if($user->dayVsNight) bg-secondary @endif" name="link" placeholder="http://..." value="{{$link->link}}" style="border-radius: 0">
                                                         <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.a_edit_link')</span>
                                                     </div>
+
+                                                    <div class="mb-3 text-center">
+                                                        <div class="form-check text-center">
+                                                            <input name="bold" class="form-check-input" type="checkbox" value="{{true}}" id="flexCheckDefault" @if($link->bold == true) checked @endif>
+                                                            <label class="form-check-label" for="flexCheckDefault">
+                                                                Сделать текст ссылки жирным
+                                                            </label>
+                                                        </div>
+                                                    </div>
+
                                                     <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Тень для текста</label>
                                                     <div class="mb-3 text-center row">
                                                         <div class="col-12">
@@ -607,12 +617,12 @@
                         option: function(data, escape) {
                             return  '<table>' +
                                     '<tr>' +
-                                        '<img  width="90" src="' + escape(data.img) + '">' +
+                                        '<img style="background-color: #DCDCDC" width="90" src="' + escape(data.img) + '">' +
                                     '</tr>' +
                                 '</table>';
                         },
                         item: function(data, escape) {
-                            return  '<img style="margin-right: 16px" width="30" src="' + escape(data.img) + '">' + '<span class="title">' + escape(data.title) + '</span>';
+                            return  '<img style="margin-right: 16px; background-color: #DCDCDC" width="30" src="' + escape(data.img) + '">' + '<span class="title">' + escape(data.title) + '</span>';
                         }
                     }
                 });

@@ -299,23 +299,23 @@
                             <input type="hidden" name="type" value="LINK">
 		        			<div class="mb-3">
 						    	<label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">@lang('app.m_text_link')</label>
-						    	<input type="text" class="block-input @if($user->dayVsNight) bg-secondary @endif form-control" name="title" placeholder="" maxlength="50" style="border-radius: 0">
+						    	<input type="text" class="block-input @if($user->dayVsNight) bg-secondary @endif form-control" name="title" placeholder="" maxlength="100" style="border-radius: 0">
 						    	<span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.m_text_link_span')</span>
 						    </div>
 						    <div class="mb-3">
 						    	<label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.m_insert_link')</label>
 						    	<input type="text" class="block-input @if($user->dayVsNight) bg-secondary @endif form-control" name="link" style="border-radius: 0">
 						    </div>
-                            <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.m_icon')</label>
+                            <div class="mb-3" id="download-file">
+                                <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.m_photo')</label>
+                                <input type="file" class="block-input @if($user->dayVsNight) bg-secondary @endif form-control" id="inputGroupFile02" name="photo" accept=".jpg, .jpeg, .png, .gif" style="border-radius: 0">
+                                <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Вы можете прикрепить для своей ссылки любое изображение или гифку</span>
+                            </div>
+                            <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Прикрепить иконку</label>
                             <div class="mb-3 ">
                                 <select id="select-beast-empty" data-placeholder="Начните вводить название..."  autocomplete="off" name="icon"></select>
-                                <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Иконок в нашей базе очень много, так что просто начните вводить в поисковой строке то что вас интересует на русском или английском языке и результаты будут подгружаться</span>
+                                <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Если не хотите загружать картинку, можете выбрать иконку из нашей базы. Просто начните вводить нужное вам название, но будьте осторожны, размер иконок может не соответствовать размерам ссылок</span>
                             </div>
-                            <div class="mb-3" id="download-file">
-						    	<label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.m_photo')</label>
-						    	<input type="file" class="block-input @if($user->dayVsNight) bg-secondary @endif form-control" id="inputGroupFile02" name="photo" accept=".jpg, .jpeg, .png, .gif" style="border-radius: 0">
-						    	<span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.m_photo_description')</span>
-						    </div>
 
                             <hr>
                                 <div class="text-center">
@@ -349,6 +349,16 @@
                                     </div>
                                 </div>
                                 <label class="mb-3" style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Вы можете выбрать шрифт и его размер для текста вашей ссылки</label>
+
+                                <div class="mb-3 text-center">
+                                    <div class="form-check text-center">
+                                        <input name="bold" class="form-check-input" type="checkbox" value="{{true}}" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Сделать текст ссылки жирным
+                                        </label>
+                                    </div>
+                                </div>
+
                                 <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.m_title_color')</label>
                                 <div class="mb-3 text-center d-flex justify-content-center">
                                     <input type="color" class="block-input @if($user->dayVsNight) bg-secondary @endif form-control" id="exampleColorInput" value="#050507" title="Choose your color" name="title_color" style="height: 40px; border-radius: 0"><br>
@@ -404,7 +414,7 @@
                                 </div>
                                 <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.m_round')</label>
                                 <div class="mb-3 text-center d-flex justify-content-center">
-                                    <input type="range" class="form-range" min="1" max="50" step="1" id="customRange2" name="rounded" value="25">
+                                    <input type="range" class="form-range" min="1" max="50" step="1" id="customRange2" name="rounded" value="10">
                                 </div>
 
                                 <div class="mb-3 text-center">
@@ -450,11 +460,11 @@
                                     @csrf @method('POST')
                                     <span class="mb-1" style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Поля выделенные зеленым цветом обязательны к заполнению</span>
                                     <input type="hidden" name="type" value="EVENT"> <!-- Тип ссылки -->
-                                    <div class="mb-3"> <!-- Город -->
+                                    <div class="mb-1"> <!-- Город -->
                                         <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Город проведения</label>
                                         <input class="form-control" name="city" id="city" placeholder="Москва" style="background-color: #9bd77e; border-radius: 0">
                                     </div>
-                                    <div class="mb-3"> <!-- Локация -->
+                                    <div class="mb-1"> <!-- Локация -->
                                         <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Место проведения</label>
                                         <input class="form-control" name="location" id="full_text" placeholder="Название места проведения мероприятия" style="background-color: #9bd77e; border-radius: 0">
                                         <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Описание содержит до 255 символов</span>
@@ -533,6 +543,22 @@
                                                 <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif " id="exampleColorInput" value="#050507" title="Choose your color" name="location_font_color" style="height: 35px; border-radius: 0"><br>
                                             </div>
                                         </div>
+                                        <div class="mb-1 text-center">
+                                            <div class="form-check text-center">
+                                                <input name="bold_city" class="form-check-input" type="checkbox" value="{{true}}" id="flexCheckDefault">
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    Сделать название города жирным
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 text-center">
+                                            <div class="form-check text-center">
+                                                <input name="bold_location" class="form-check-input" type="checkbox" value="{{true}}" id="flexCheckDefault">
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    Сделать место проведения жирным
+                                                </label>
+                                            </div>
+                                        </div>
                                         <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Тень для города и локации</label>
                                         <div class="mb-3 text-center row">
                                             <div class="col-12">
@@ -567,6 +593,22 @@
                                             </div>
                                             <div class="col-3">
                                                 <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif " id="exampleColorInput" value="#050507" title="Choose your color" name="date_font_color" style="height: 35px; border-radius: 0"><br>
+                                            </div>
+                                        </div>
+                                        <div class="mb-1 text-center">
+                                            <div class="form-check text-center">
+                                                <input name="bold_date" class="form-check-input" type="checkbox" value="{{true}}" id="flexCheckDefault">
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    Сделать дату жирным
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 text-center">
+                                            <div class="form-check text-center">
+                                                <input name="bold_time" class="form-check-input" type="checkbox" value="{{true}}" id="flexCheckDefault">
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    Сделать время жирным
+                                                </label>
                                             </div>
                                         </div>
                                         <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Тень для даты и времени</label>
@@ -899,6 +941,36 @@
                                         <option @if($user->locale == 'en') selected @endif value="en">English</option>
                                     </select>
                                 </div>
+
+                                <div id="link_bar">
+                                    <div class=" mb-3">
+                                        <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Отображение бара с соц сетями</label>
+                                        <select name="social_links_bar" class="form-select @if($user->dayVsNight) bg-secondary @endif " aria-label="Default select example" style="border-radius: 0">
+                                            <option @if($user->social_links_bar == '1') selected @endif value="{{1}}">Включить</option>
+                                            <option @if($user->social_links_bar == '0') selected @endif value="{{0}}">Выключить</option>
+                                        </select>
+                                        <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Если у вас тип страницы "Ссылки", вы можете все свои ссылки с нашими иконками вынести в отдельный бар</span>
+                                    </div>
+
+                                    <div class=" mb-3">
+                                        <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Позиция бара с соц сетями</label>
+                                        <select name="links_bar_position" class="form-select @if($user->dayVsNight) bg-secondary @endif " aria-label="Default select example" style="border-radius: 0">
+                                            <option @if($user->links_bar_position == 'top') selected @endif value="top">Вверху</option>
+                                            <option @if($user->links_bar_position == 'bottom') selected @endif value="bottom">Внизу</option>
+                                        </select>
+                                        <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Вы можете выбрать где отобразить бар с сылками, вверху или внизу</span>
+                                    </div>
+                                </div>
+
+                                <div class=" mb-3">
+                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Показать логотип</label>
+                                    <select name="show_logo" class="form-select @if($user->dayVsNight) bg-secondary @endif " aria-label="Default select example" style="border-radius: 0">
+                                        <option @if($user->show_logo == '1') selected @endif value="{{1}}">Показать</option>
+                                        <option @if($user->show_logo == '0') selected @endif value="{{0}}">Отключить</option>
+                                    </select>
+                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Отображать наш логотип на странице или нет</span>
+                                </div>
+
                                 <div class=" mb-3">
                                     <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Тип страницы</label>
                                     <select id="type-profile" name="type" class="form-select @if($user->dayVsNight) bg-secondary @endif " aria-label="Default select example" style="border-radius: 0">
@@ -948,7 +1020,7 @@
                     alert("You can only upload a maximum of 2 files");
                     }
                 });
-            });​
+            });
         </script>
 
         <!-- Icons select loader -->
@@ -965,14 +1037,14 @@
                     option: function(data, escape) {
                         return  '<table>' +
                                     '<tr>' +
-                                        '<img width="90" src="' + escape(data.img) + '">' +
+                                        '<img style="background-color: #DCDCDC" width="90" src="' + escape(data.img) + '">' +
                                         '<h6>' + escape(data.title) + '</h6' +
                                     '</tr>' +
                                 '</table>';
 
                     },
                     item: function(data, escape) {
-                        return  '<img style="margin-right: 16px" width="30" src="' + escape(data.img) + '">' + '<span class="title">' + escape(data.title) + '</span>';
+                        return  '<img style="margin-right: 16px; background-color: #DCDCDC" width="30" src="' + escape(data.img) + '">' + '<span class="title">' + escape(data.title) + '</span>';
                     }
                 }
             });
@@ -1063,7 +1135,6 @@
             //Select page type
             $( document ).ready(function() {
             	var type = $('#type-profile').val();
-                console.log(type);
             	if(type == 'Links') {
             		$('#event-block').hide();
             	}
@@ -1077,6 +1148,25 @@
                     }
                     if($(this).val() == 'Links') {
                         $('#event-block').hide();
+                    }
+                });
+            });
+
+            $( document ).ready(function() {
+                var type = $('#type-profile').val();
+                if(type == 'Events') {
+                    $('#link_bar').hide();
+                }
+                if(type == 'Links') {
+                    $('#link_bar').show();
+                }
+                $('#type-profile').change(function(){
+                    $('#pp').html($(this).val());
+                    if($(this).val() == 'Events') {
+                        $('#link_bar').hide();
+                    }
+                    if($(this).val() == 'Links') {
+                        $('#link_bar').show();
                     }
                 });
             });

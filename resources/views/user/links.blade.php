@@ -11,9 +11,11 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Overpass+Mono&display=swap" rel="stylesheet">
+
         <link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;600&display=swap" rel="stylesheet">
@@ -28,7 +30,7 @@
 
 		<link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap" rel="stylesheet">
 
         <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js" integrity="sha256-6XMVI0zB8cRzfZjqKcD01PBsAy3FlDASrlC8SxCpInY=" crossorigin="anonymous"></script>
@@ -136,7 +138,7 @@
 
         <!-- Массовое изменение -->
         <div class="container-fluid justify-content-center text-center">
-            <div class="row" style="margin-top: px" >
+            <div class="row">
                 <div class="col-12 mt-" data-bs-toggle="modal" data-bs-target="#exampleModalLink" style="padding-right: 0; padding-left: 0">
 					<div class="box-part text-center shadow-sm @if($user->dayVsNight) bg-secondary text-white-50 @endif" style="margin: 0; background-color: #feae72">
 						<div class="title">
@@ -186,6 +188,15 @@
                                         </div>
                                     </div>
 
+                                    <div class="mb-3 text-center">
+                                        <div class="form-check text-center">
+                                            <input name="bold" class="form-check-input" type="checkbox" value="{{true}}" id="flexCheckDefault">
+                                            <label class="form-check-label" for="flexCheckDefault">
+                                                Сделать текст ссылки жирным
+                                            </label>
+                                        </div>
+                                    </div>
+
                                     <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Тень для текста</label>
                                     <div class="mb-3 text-center row">
                                         <div class="col-12">
@@ -193,15 +204,15 @@
                                         </div>
                                         <div class="col-12">
                                             <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Четкость тени</span>
-                                            <input type="range" class="form-range" min="0" max="10" step="1" id="customRange2" name="text_shadow_blur" >
+                                            <input type="range" class="form-range" min="0" max="10" step="1" id="customRange2" name="text_shadow_blur" value="0">
                                         </div>
                                         <div class="col-12">
                                             <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Смещение вниз</span>
-                                            <input type="range" class="form-range" min="0" max="10" step="1" id="customRange2" name="text_shadow_bottom">
+                                            <input type="range" class="form-range" min="0" max="10" step="1" id="customRange2" name="text_shadow_bottom" value="0">
                                         </div>
                                         <div class="col-12">
                                             <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Сдвиг вправо</span>
-                                            <input type="range" class="form-range" min="0" max="10" step="1" id="customRange2" name="text_shadow_right">
+                                            <input type="range" class="form-range" min="0" max="10" step="1" id="customRange2" name="text_shadow_right" value="0">
                                         </div>
                                     </div>
 
@@ -264,7 +275,7 @@
                                                     @endif
                                                 @elseif($link->type != 'POST')
                                                     @if($link->icon)
-                                                        <img src="{{$link->icon}}" style="width:50px; border-radius: {{$link->rounded}}px;">
+                                                        <img src="{{$link->icon}}" style="width:50px;">
                                                     @elseif($link->icon == false)
                                                         <img src="{{$link->photo}}" style="width:50px; border-radius: {{$link->rounded}}px;">
                                                     @endif
@@ -272,7 +283,7 @@
                                             </div>
                                             <div class=" col-10 text-center">
                                                 <div class="me-5 ms-5">
-                                                    <h4 class="" style="text-shadow:{{$link->text_shadow_right}}px {{$link->text_shadow_bottom}}px {{$link->text_shadow_blur}}px {{$link->text_shadow_color}} ;font-family: '{{$link->font}}', sans-serif; line-height: 1.5; font-size: {{$link->font_size}}rem; margin: 0;color: {{$link->title_color}}; @if($link->photo == '' && $link->photos == '') margin-top: 14px; margin-bottom: 14px @endif">{{$link->title}}</h4>
+                                                    <h4 class="" style="text-shadow:{{$link->text_shadow_right}}px {{$link->text_shadow_bottom}}px {{$link->text_shadow_blur}}px {{$link->text_shadow_color}} ;font-family: '{{$link->font}}', sans-serif; line-height: 1.5; font-size: {{$link->font_size}}rem; margin: 0;color: {{$link->title_color}}; @if($link->photo == '' && $link->photos == '') margin-top: 14px; margin-bottom: 14px @endif">@if($link->bold == true) <b> @endif{{$link->title}}@if($link->bold == true) </b> @endif</h4>
                                                 </div>
                                             </div>
                                             <div class="col-1">
@@ -363,7 +374,7 @@
                                                             <input type="hidden" name="type" value="LINK"> <!-- Тип ссылки -->
                                                             <div class="mb-3">
                                                                 <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.p_title')</label>
-                                                                <input type="text" class="form-control @if($user->dayVsNight) bg-secondary @endif" name="title" placeholder="Моя красивая ссылка" maxlength="50" value="{{$link->title}}" style="border-radius: 0">
+                                                                <input type="text" class="form-control @if($user->dayVsNight) bg-secondary @endif" name="title" placeholder="Моя красивая ссылка" maxlength="100" value="{{$link->title}}" style="border-radius: 0">
                                                                 <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.m_text_link_span')</span>
                                                             </div>
                                                             <div class="text-center row">
@@ -384,6 +395,15 @@
                                                                 <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.m_insert_link')</label>
                                                                 <input type="text" class="form-control @if($user->dayVsNight) bg-secondary @endif" name="link" placeholder="http://..." value="{{$link->link}}" style="border-radius: 0">
                                                                 <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.a_edit_link')</span>
+                                                            </div>
+
+                                                            <div class="mb-3 text-center">
+                                                                <div class="form-check text-center">
+                                                                    <input name="bold" class="form-check-input" type="checkbox" value="{{true}}" id="flexCheckDefault" @if($link->bold == true) checked @endif>
+                                                                    <label class="form-check-label" for="flexCheckDefault">
+                                                                        Сделать текст ссылки жирным
+                                                                    </label>
+                                                                </div>
                                                             </div>
 
                                                             <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Тень для текста</label>
@@ -653,25 +673,15 @@
                                     <div class="row card ms-1 me-1 {{$link->shadow}}" style="background-color:rgba({{$link->background_color}}, {{$link->transparency}}); border: 0; margin-top: 12px; border-radius: {{$link->rounded}}px; background-position: center;">
                                         <div class="d-flex align-items-center justify-content-start mt-1 mb-1" style="padding-left: 4px; padding-right: 4px">
                                             <div class="col-1">
-                                                @if($link->type == 'POST')
-                                                    @if($link->photos)
-                                                        @foreach(unserialize($link->photos) as $key => $photo)
-                                                            @if($key == 0)
-                                                                <img src="{{$photo}}" style="width:50px; border-radius: {{$link->rounded}}px;">
-                                                            @endif
-                                                        @endforeach
-                                                    @endif
-                                                @elseif($link->type != 'POST')
-                                                    @if($link->icon)
-                                                        <img src="{{$link->icon}}" style="width:50px; border-radius: {{$link->rounded}}px;">
-                                                    @elseif($link->icon == false)
-                                                        <img src="{{$link->photo}}" style="width:50px; border-radius: {{$link->rounded}}px;">
-                                                    @endif
+                                                @if($link->icon)
+                                                    <img src="{{$link->icon}}" style="width:50px;">
+                                                @elseif($link->icon == false)
+                                                    <img src="{{$link->photo}}" style="width:50px; border-radius: {{$link->rounded}}px;">
                                                 @endif
                                             </div>
                                             <div class=" col-10 text-center">
                                                 <div class="me-5 ms-5">
-                                                    <h4 class="" style="text-shadow:{{$link->text_shadow_right}}px {{$link->text_shadow_bottom}}px {{$link->text_shadow_blur}}px {{$link->text_shadow_color}} ;font-family: '{{$link->font}}', sans-serif; line-height: 1.5; font-size: {{$link->font_size}}rem; margin: 0;color: {{$link->title_color}}; @if($link->photo == '' && $link->photos == '') margin-top: 14px; margin-bottom: 14px @endif">{{$link->title}}</h4>
+                                                    <h4 class="" style="text-shadow:{{$link->text_shadow_right}}px {{$link->text_shadow_bottom}}px {{$link->text_shadow_blur}}px {{$link->text_shadow_color}} ;font-family: '{{$link->font}}', sans-serif; line-height: 1.5; font-size: {{$link->font_size}}rem; margin: 0;color: {{$link->title_color}}; @if($link->photo == '' && $link->photos == '') margin-top: 14px; margin-bottom: 14px @endif">@if($link->bold == true) <b> @endif{{$link->title}}@if($link->bold == true) </b> @endif</h4>
                                                 </div>
                                             </div>
                                             <div class="col-1">
@@ -763,7 +773,7 @@
                                                             <input type="hidden" name="type" value="LINK"> <!-- Тип ссылки -->
                                                             <div class="mb-3">
                                                                 <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.p_title')</label>
-                                                                <input type="text" class="form-control @if($user->dayVsNight) bg-secondary @endif" name="title" placeholder="Моя красивая ссылка" maxlength="50" value="{{$link->title}}" style="border-radius: 0">
+                                                                <input type="text" class="form-control @if($user->dayVsNight) bg-secondary @endif" name="title" placeholder="Моя красивая ссылка" maxlength="100" value="{{$link->title}}" style="border-radius: 0">
                                                                 <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.m_text_link_span')</span>
                                                             </div>
                                                             <div class="text-center row">
@@ -784,6 +794,15 @@
                                                                 <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.m_insert_link')</label>
                                                                 <input type="text" class="form-control @if($user->dayVsNight) bg-secondary @endif" name="link" placeholder="http://..." value="{{$link->link}}" style="border-radius: 0">
                                                                 <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.a_edit_link')</span>
+                                                            </div>
+
+                                                            <div class="mb-3 text-center">
+                                                                <div class="form-check text-center">
+                                                                    <input name="bold" class="form-check-input" type="checkbox" value="{{true}}" id="flexCheckDefault" @if($link->bold == true) checked @endif>
+                                                                    <label class="form-check-label" for="flexCheckDefault">
+                                                                        Сделать текст ссылки жирным
+                                                                    </label>
+                                                                </div>
                                                             </div>
 
                                                             <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Тень для текста</label>
@@ -1164,12 +1183,12 @@
                         option: function(data, escape) {
                             return  '<table>' +
                                         '<tr>' +
-                                            '<img  width="90" src="' + escape(data.img) + '">' +
+                                            '<img style="background-color: #DCDCDC" width="90" src="' + escape(data.img) + '">' +
                                         '</tr>' +
                                     '</table>';
                         },
                         item: function(data, escape) {
-                            return  '<img style="margin-right: 16px" width="30" src="' + escape(data.img) + '">' + '<span class="title">' + escape(data.title) + '</span>';
+                            return  '<img style="margin-right: 16px; background-color: #DCDCDC" width="30" src="' + escape(data.img) + '">' + '<span class="title">' + escape(data.title) + '</span>';
                         }
                     }
                 });
@@ -1256,12 +1275,12 @@
                         option: function(data, escape) {
                             return  '<table>' +
                                         '<tr>' +
-                                            '<img  width="90" src="' + escape(data.img) + '">' +
+                                            '<img style="background-color: #DCDCDC" width="90" src="' + escape(data.img) + '">' +
                                         '</tr>' +
                                     '</table>';
                         },
                         item: function(data, escape) {
-                            return  '<img style="margin-right: 16px" width="30" src="' + escape(data.img) + '">' + '<span class="title">' + escape(data.title) + '</span>';
+                            return  '<img style="margin-right: 16px; background-color: #DCDCDC" width="30" src="' + escape(data.img) + '">' + '<span class="title">' + escape(data.title) + '</span>';
                         }
                     }
                 });

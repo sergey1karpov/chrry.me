@@ -62,6 +62,10 @@ class Event extends Model
         'date_text_shadow_bottom',
         'date_text_shadow_right',
         'block_shadow',
+        'bold_city',
+        'bold_location',
+        'bold_date',
+        'bold_time',
     ];
 
     public static function createEvent(int $id, $request)
@@ -102,6 +106,11 @@ class Event extends Model
             'date_text_shadow_bottom'          => isset($request->check_last_event) ? $lastEvent->date_text_shadow_bottom : $request->date_text_shadow_bottom,
             'date_text_shadow_right' => isset($request->check_last_event) ? $lastEvent->date_text_shadow_right : $request->date_text_shadow_right,
             'block_shadow' => isset($request->check_last_event) ? $lastEvent->block_shadow : $request->block_shadow,
+
+            'bold_city' => isset($request->check_last_event) ? $lastEvent->bold_city : $request->bold_city,
+            'bold_location' => isset($request->check_last_event) ? $lastEvent->bold_location : $request->bold_location,
+            'bold_date' => isset($request->check_last_event) ? $lastEvent->bold_date : $request->bold_date,
+            'bold_time' => isset($request->check_last_event) ? $lastEvent->bold_time : $request->bold_time,
         ]);
     }
 
@@ -130,8 +139,6 @@ class Event extends Model
      */
     public static function editEvent(User $user, Event $event, $request)
     {
-//        dd($request);
-
         self::where('user_id', $user->id)->where('id', $event->id)->update([
             'title'       => $request->title,
             'description' => $request->description,
@@ -164,6 +171,11 @@ class Event extends Model
             'date_text_shadow_bottom'          => $request->date_text_shadow_bottom,
             'date_text_shadow_right' => $request->date_text_shadow_right,
             'block_shadow' => isset($request->block_shadow) ? $request->block_shadow : $event->shadow,
+
+            'bold_city' => $request->bold_city,
+            'bold_location' => $request->bold_location,
+            'bold_date' => $request->bold_date,
+            'bold_time' => $request->bold_time,
         ]);
     }
 
@@ -196,6 +208,10 @@ class Event extends Model
             'date_text_shadow_bottom'          => $request->date_text_shadow_bottom,
             'date_text_shadow_right' => $request->date_text_shadow_right,
             'block_shadow' => $request->block_shadow,
+            'bold_city' => $request->bold_city,
+            'bold_location' => $request->bold_location,
+            'bold_date' => $request->bold_date,
+            'bold_time' => $request->bold_time,
         ]);
     }
 

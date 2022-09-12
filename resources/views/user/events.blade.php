@@ -173,6 +173,22 @@
                                         <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif" id="exampleColorInput" title="Choose your color" name="location_font_color" style="height: 35px; border-radius: 0"><br>
                                     </div>
                                 </div>
+                                <div class="mb-1 text-center">
+                                    <div class="form-check text-center">
+                                        <input name="bold_city" class="form-check-input" type="checkbox" value="{{true}}" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Сделать название города жирным
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="mb-3 text-center">
+                                    <div class="form-check text-center">
+                                        <input name="bold_location" class="form-check-input" type="checkbox" value="{{true}}" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Сделать место проведения жирным
+                                        </label>
+                                    </div>
+                                </div>
                                 <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Тень для даты и времени</label>
                                 <div class="mb-3 text-center row">
                                     <div class="col-12">
@@ -207,6 +223,22 @@
                                     </div>
                                     <div class="col-3">
                                         <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif" id="exampleColorInput" title="Choose your color" name="date_font_color" style="height: 35px; border-radius: 0"><br>
+                                    </div>
+                                </div>
+                                <div class="mb-1 text-center">
+                                    <div class="form-check text-center">
+                                        <input name="bold_date" class="form-check-input" type="checkbox" value="{{true}}" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Сделать дату жирным
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="mb-3 text-center">
+                                    <div class="form-check text-center">
+                                        <input name="bold_time" class="form-check-input" type="checkbox" value="{{true}}" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Сделать время жирным
+                                        </label>
                                     </div>
                                 </div>
                                 <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Тень для даты и времени</label>
@@ -283,8 +315,8 @@
                                 <div class="row text-center">
                                     <div class="col-12 text-center mt-3 mb-3" style="padding: 0">
                                         <a href="#" style="color: black; text-decoration: none">
-                                            <p style="text-shadow:{{$event->location_text_shadow_right}}px {{$event->location_text_shadow_bottom}}px {{$event->location_text_shadow_blur}}px {{$event->location_text_shadow_color}} ;font-family: '{{$event->location_font}}', sans-serif; text-transform: uppercase; font-size: {{$event->location_font_size}}em; padding: 0; margin: 0; color: {{$event->location_font_color}}">{{$event->city}}, {{$event->location}}</p>
-                                            <p style="text-shadow:{{$event->date_text_shadow_right}}px {{$event->date_text_shadow_bottom}}px {{$event->date_text_shadow_blur}}px {{$event->date_text_shadow_color}} ;font-family: '{{$event->date_font}}', sans-serif; font-size: {{$event->date_font_size}}rem; margin-bottom: 0; color: {{$event->date_font_color}};">{{\Carbon\Carbon::parse($event->date)->format('d.m.Y')}}{{' @'.$event->time}}</p>
+                                            <p style="text-shadow:{{$event->location_text_shadow_blur}}px {{$event->location_text_shadow_bottom}}px {{$event->location_text_shadow_right}}px {{$event->location_text_shadow_color}} ;font-family: '{{$event->location_font}}', sans-serif; text-transform: uppercase; font-size: {{$event->location_font_size}}em; padding: 0; margin: 0; color: {{$event->location_font_color}}">@if($event->bold_city == true)<b>@endif{{$event->city}}@if($event->bold_city == true)</b>@endif, @if($event->bold_location == true)<b>@endif{{$event->location}}@if($event->bold_location == true)</b>@endif</p>
+                                            <p style="text-shadow:{{$event->date_text_shadow_blur}}px {{$event->date_text_shadow_bottom}}px {{$event->date_text_shadow_right}}px {{$event->date_text_shadow_color}} ;font-family: '{{$event->date_font}}', sans-serif; font-size: {{$event->date_font_size}}rem; margin-bottom: 0; color: {{$event->date_font_color}};">@if($event->bold_date == true)<b>@endif{{\Carbon\Carbon::parse($event->date)->format('d.m.Y')}}@if($event->bold_date == true)</b>@endif @if($event->bold_time == true)<b>@endif{{' @'.$event->time}}@if($event->bold_time == true)</b>@endif</p>
                                         </a>
                                     </div>
                                     <div class="d-flex justify-content-between rounded-bottom rounded-3">
@@ -399,6 +431,22 @@
                                             <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif" id="exampleColorInput" value="{{$event->location_font_color}}" title="Choose your color" name="location_font_color" style="height: 35px; border-radius: 0"><br>
                                         </div>
                                     </div>
+                                    <div class="mb-1 text-center">
+                                        <div class="form-check text-center">
+                                            <input name="bold_city" class="form-check-input" type="checkbox" value="{{true}}" id="flexCheckDefault" @if($event->bold_city == true) checked @endif>
+                                            <label class="form-check-label" for="flexCheckDefault">
+                                                Сделать название города жирным
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 text-center">
+                                        <div class="form-check text-center">
+                                            <input name="bold_location" class="form-check-input" type="checkbox" value="{{true}}" id="flexCheckDefault" @if($event->bold_location == true) checked @endif>
+                                            <label class="form-check-label" for="flexCheckDefault">
+                                                Сделать место проведения жирным
+                                            </label>
+                                        </div>
+                                    </div>
                                     <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Тень для города и локации</label>
                                     <div class="mb-3 text-center row">
                                         <div class="col-12">
@@ -433,6 +481,22 @@
                                         </div>
                                         <div class="col-3">
                                             <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif" id="exampleColorInput" value="{{$event->date_font_color}}" title="Choose your color" name="date_font_color" style="height: 35px; border-radius: 0"><br>
+                                        </div>
+                                    </div>
+                                    <div class="mb-1 text-center">
+                                        <div class="form-check text-center">
+                                            <input name="bold_date" class="form-check-input" type="checkbox" value="{{true}}" id="flexCheckDefault" @if($event->bold_date == true) checked @endif>
+                                            <label class="form-check-label" for="flexCheckDefault">
+                                                Сделать дату жирным
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 text-center">
+                                        <div class="form-check text-center">
+                                            <input name="bold_time" class="form-check-input" type="checkbox" value="{{true}}" id="flexCheckDefault" @if($event->bold_time == true) checked @endif>
+                                            <label class="form-check-label" for="flexCheckDefault">
+                                                Сделать время жирным
+                                            </label>
                                         </div>
                                     </div>
                                     <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Тень для даты и времени</label>

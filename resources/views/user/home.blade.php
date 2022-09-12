@@ -37,6 +37,10 @@
 
         <x-embed-styles />
 
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap" rel="stylesheet">
+
         @include('fonts.fonts')
 
         <style type="text/css">
@@ -60,6 +64,26 @@
 			    background-size: cover;
 			    background-repeat: no-repeat;
 			}
+            span{
+                font-size:15px;
+            }
+            a{
+                text-decoration:none;
+                color: #0062cc;
+                /* border-bottom:2px solid #0062cc; */
+            }
+            .box-part{
+                background:#fcfcf9;
+                border-radius:25;
+                padding:20px 10px;
+                margin:30px 0px;
+                -webkit-box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.12);
+                -moz-box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.12);
+                box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.12);
+            }
+            .text{
+                margin:20px 0px;
+            }
         </style>
 
     </head>
@@ -89,7 +113,7 @@
 			        <div class="d-flex justify-content-center">
                         <div class="img" style="background-image: url({{$user->avatar}});"></div>
                     </div>
-			        <h2 class="mt-4" style="font-family: 'Rubik', sans-serif; color: #464646; font-weight: 600 ; font-size: 1.2rem; @if($user->name_color) color: {{$user->name_color}}; @endif ">
+			        <h2 class="mt-4" style="font-family: 'Rubik', sans-serif; color: #464646; font-weight: 600 ; font-size: 20px; @if($user->name_color) color: {{$user->name_color}}; @endif ">
 			        	{{ $user->name }}
 			        	@if($user->verify == 1)
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-patch-check-fill mb-1" viewBox="0 0 16 16" style="color: {{$user->verify_color}}">
@@ -98,8 +122,9 @@
 			        	@endif
 			        </h2>
 			        @if($user->description)
-			        	<p style="font-family: 'Manrope', sans-serif; font-size: 0.8rem; @if($user->description_color) color: {{$user->description_color}}; @endif">{{ $user->description }}</p>
+			        	<p style="font-family: 'Rubik', sans-serif; font-size: 0.9rem; @if($user->description_color) color: {{$user->description_color}}; @endif">{{ $user->description }}</p>
 			        @endif
+
                     @if($user->type == 'Events')
                         @if($user->show_social == true)
                             @if($user->social == 'TOP')
@@ -108,8 +133,8 @@
                                         <div class="container-fluid d-flex justify-content-center">
                                             @foreach($links as $link)
                                                 @if($link->icon)
-                                                    <a href="{{$link->link}}">
-                                                        <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="width:40px; color:red">
+                                                    <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">
+                                                        <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="width:40px;">
                                                     </a>
                                                 @endif
                                             @endforeach
@@ -119,9 +144,31 @@
                             @endif
                         @endif
                     @endif
+
+                    @if($user->type == 'Links')
+                        @if($user->social_links_bar == 1)
+                            @if($user->links_bar_position == 'top')
+                                @if(count($links) > 0)
+                                    <nav class="navbar mt-2">
+                                        <div class="container-fluid d-flex justify-content-center">
+                                            @foreach($links as $link)
+                                                @if($link->icon)
+                                                    <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">
+                                                        <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="width:40px;">
+                                                    </a>
+                                                @endif
+                                            @endforeach
+                                        </div>
+                                    </nav>
+                                @endif
+                            @endif
+                        @endif
+                    @endif
+
 		      	</div>
 	    	</div>
 	    </div>
+
 
         <!-- ---------------------- -->
         <!-- Контент -->
@@ -135,106 +182,148 @@
                     @foreach($pinnedLinks as $link)
                         <tr data-index="{{$link->id}}" data-position="{{$link->position}}">
                             <td style="padding-left: 0; padding-right: 0; padding-bottom: 0; border: 0">
-                            <div class="container" style="padding-left:8px; padding-right:8px">
-                                <!-- Если тип ссылки POST ссылка не работает\не кликабельно -->
-                                @if($link->type != 'POST')<a href="{{$link->link}}" style="text-decoration:none" onclick="countRabbits{{$link->id}}()">@elseif($link->type == 'POST') <a style="text-decoration:none" onclick="countRabbits{{$link->id}}()"> @endif
-                                    <div class="@if($link->animation) {{$link->animation}} @endif row ms-1 me-1 card {{$link->shadow}}" style="background-color:rgba({{$link->background_color}}, {{$link->transparency}}); border: 0; margin-top: 8px; border-radius: {{$link->rounded}}px; background-position: center">
-                                        <div class="d-flex align-items-center justify-content-start mt-1 mb-1" style="padding-left: 4px; padding-right: 4px;">
-                                            <!-- Картинка -->
-                                            <div class="col-1">
-                                                @if($link->type == 'POST')
-                                                    @if($link->photos)
-                                                        @foreach(unserialize($link->photos) as $key => $photo)
-                                                            @if($key == 0)
-                                                                <img src="{{$photo}}" style="width:48px; border-radius: {{$link->rounded}}px;">
-                                                            @endif
-                                                        @endforeach
+                                <div class="container" style="padding-left:8px; padding-right:8px">
+                                    <!-- Если тип ссылки POST ссылка не работает\не кликабельно -->
+                                    @if($link->type != 'POST')<a href="{{$link->link}}" style="text-decoration:none" onclick="countRabbits{{$link->id}}()">@elseif($link->type == 'POST') <a style="text-decoration:none" onclick="countRabbits{{$link->id}}()"> @endif
+                                        <div class="@if($link->animation) {{$link->animation}} @endif row ms-1 me-1 card {{$link->shadow}}" style="background-color:rgba({{$link->background_color}}, {{$link->transparency}}); border: 0; margin-top: 8px; border-radius: {{$link->rounded}}px; background-position: center">
+                                            <div class="d-flex align-items-center justify-content-start mt-1 mb-1" style="padding-left: 4px; padding-right: 4px;">
+                                                <!-- Картинка -->
+                                                <div class="col-1">
+                                                    @if($link->type == 'POST')
+                                                        @if($link->photos)
+                                                            @foreach(unserialize($link->photos) as $key => $photo)
+                                                                @if($key == 0)
+                                                                    <img src="{{$photo}}" style="width:48px; border-radius: {{$link->rounded}}px;">
+                                                                @endif
+                                                            @endforeach
+                                                        @endif
+                                                    @elseif($link->type != 'POST')
+                                                        @if($link->icon)
+                                                            <img src="{{$link->icon}}" style="width:50px; ">
+                                                        @elseif($link->icon == false)
+                                                            <img src="{{$link->photo}}" style="color:red; width:50px; border-radius: {{$link->rounded}}px;">
+                                                        @endif
                                                     @endif
-                                                @elseif($link->type != 'POST')
-                                                    @if($link->icon)
-                                                        <img src="{{$link->icon}}" style="width:48px; border-radius: {{$link->rounded}}px;">
-                                                    @elseif($link->icon == false)
-                                                        <img src="{{$link->photo}}" style="color:red; width:48px; border-radius: {{$link->rounded}}px;">
+                                                </div>
+                                                <!-- Текст ссылки -->
+                                                <div class=" col-10 text-center">
+                                                    <div class="me-5 ms-5">
+                                                        <h4 style="text-shadow:{{$link->text_shadow_right}}px {{$link->text_shadow_bottom}}px {{$link->text_shadow_blur}}px {{$link->text_shadow_color}} ;font-family: '{{$link->font}}', sans-serif; line-height: 1.3; font-size: {{$link->font_size}}rem; margin-top: 2px; margin-bottom: 0; color: {{$link->title_color}};">@if($link->bold == true) <b> @endif{{$link->title}}@if($link->bold == true) </b> @endif</h4>
+                                                    </div>
+                                                </div>
+                                                <!-- Пустой div -->
+                                                <div class="col-1">
+                                                    @if(Auth::check())
+                                                        @if(Auth::user()->id == $user->id)
+                                                            <div id="up" class="imgg" style="background-image: url(https://i.ibb.co/VLbJkrG/dots.png);">
+                                                                <img src="https://cdn3.iconfinder.com/data/icons/office-outline-15/64/Office_Icon_Set_Outline-10-512.png" width="20">
+                                                            </div>
+                                                        @endif
                                                     @endif
-                                                @endif
-                                            </div>
-                                            <!-- Текст ссылки -->
-                                            <div class=" col-10 text-center">
-                                                <div class="me-5 ms-5">
-                                                    <h4 class="" style="text-shadow:{{$link->text_shadow_right}}px {{$link->text_shadow_bottom}}px {{$link->text_shadow_blur}}px {{$link->text_shadow_color}} ;font-family: '{{$link->font}}', sans-serif; line-height: 1.5; font-size: {{$link->font_size}}rem; margin: 0;color: {{$link->title_color}}; @if($link->photo == '' && $link->photos == '') margin-top: 14px; margin-bottom: 14px @endif">{{$link->title}}</h4>
                                                 </div>
                                             </div>
-                                            <!-- Пустой div -->
-                                            <div class="col-1">
-                                                @if(Auth::check())
-                                                    @if(Auth::user()->id == $user->id)
-                                                        <div id="up" class="imgg" style="background-image: url(https://i.ibb.co/VLbJkrG/dots.png);">
-                                                            <img src="https://cdn3.iconfinder.com/data/icons/office-outline-15/64/Office_Icon_Set_Outline-10-512.png" width="20">
-                                                        </div>
-                                                    @endif
-                                                @endif
-                                            </div>
                                         </div>
-                                    </div>
-                                @if($link->type != 'POST')</a>@endif
-                            </div>
+                                    @if($link->type != 'POST')</a>@endif
+                                </div>
                     @endforeach
                 </tbody>
             </table>
             <!-- ---------------------- -->
             <!-- Обычные ссылки -->
             <!-- ---------------------- -->
-            <table class="table">
-                <tbody>
+            @if($user->social_links_bar == 0)
+                <table class="table">
+                    <tbody>
                     @foreach($links as $link)
                         <tr data-index="{{$link->id}}" data-position="{{$link->position}}">
                             <td style="padding-left: 0; padding-right: 0; padding-bottom: 0; border: 0">
-                            <div class="container" style="padding-left:8px; padding-right:8px">
-                                <!-- Если тип ссылки POST ссылка не работает\не кликабельно -->
-                                @if($link->type != 'POST')<a href="{{$link->link}}" style="text-decoration:none" onclick="countRabbits{{$link->id}}()">@elseif($link->type == 'POST') <a style="text-decoration:none" onclick="countRabbits{{$link->id}}()"> @endif
-                                    <div class="@if($link->animation) {{$link->animation}} @endif row ms-1 me-1 card {{$link->shadow}}" style="background-color:rgba({{$link->background_color}}, {{$link->transparency}}); border: 0; margin-top: 8px; border-radius: {{$link->rounded}}px; background-position: center">
-                                        <div class="d-flex align-items-center justify-content-start mt-1 mb-1" style="padding-left: 4px; padding-right: 4px;">
-                                            <!-- Картинка -->
-                                            <div class="col-1">
-                                                @if($link->type == 'POST')
-                                                    @if($link->photos)
-                                                        @foreach(unserialize($link->photos) as $key => $photo)
-                                                            @if($key == 0)
-                                                                <img src="{{$photo}}" style="width:48px; border-radius: {{$link->rounded}}px;">
-                                                            @endif
-                                                        @endforeach
-                                                    @endif
-                                                @elseif($link->type != 'POST')
+                                <div class="container" style="padding-left:8px; padding-right:8px">
+                                    <!-- Если тип ссылки POST ссылка не работает\не кликабельно -->
+                                    <a href="{{$link->link}}" style="text-decoration:none" onclick="countRabbits{{$link->id}}()">
+                                        <div class="@if($link->animation) {{$link->animation}} @endif row ms-1 me-1 card {{$link->shadow}}" style="background-color:rgba({{$link->background_color}}, {{$link->transparency}}); border: 0; margin-top: 8px; border-radius: {{$link->rounded}}px; background-position: center">
+                                            <div class="d-flex align-items-center justify-content-start mt-1 mb-1" style="padding-left: 4px; padding-right: 4px;">
+                                                <!-- Картинка -->
+                                                <div class="col-1">
                                                     @if($link->icon)
-                                                        <img src="{{$link->icon}}" style="width:48px; border-radius: {{$link->rounded}}px;" >
-                                                    @elseif($link->icon == false)
-                                                        <img src="{{$link->photo}}" style="width:48px; border-radius: {{$link->rounded}}px;">
+                                                        <img src="{{$link->icon}}" style="width:50px;">
+                                                    @elseif($link->photo)
+                                                        <img src="{{$link->photo}}" style="width:50px; border-radius: {{$link->rounded}}px;">
+                                                    @else
+                                                        <img src="https://digiltable.com/wp-content/uploads/edd/2021/09/Sexy-lady-logo-Pornhub-logo.png" style="width:50px; border-radius: {{$link->rounded}}px; opacity: 0;">
                                                     @endif
-                                                @endif
-                                            </div>
-                                            <!-- Текст ссылки -->
-                                            <div class=" col-10 text-center">
-                                                <div class="me-5 ms-5">
-                                                    <h4 class="" style="text-shadow:{{$link->text_shadow_right}}px {{$link->text_shadow_bottom}}px {{$link->text_shadow_blur}}px {{$link->text_shadow_color}} ;font-family: '{{$link->font}}', sans-serif; line-height: 1.5; font-size: {{$link->font_size}}rem; margin: 0;color: {{$link->title_color}}; @if($link->photo == '' && $link->photos == '') margin-top: 14px; margin-bottom: 14px @endif">{{$link->title}}</h4>
+                                                </div>
+                                                <!-- Текст ссылки -->
+                                                <div class="col-10 text-center d-flex align-items-center justify-content-center">
+                                                    <div class="me-5 ms-5">
+                                                        <h4 style="text-shadow:{{$link->text_shadow_right}}px {{$link->text_shadow_bottom}}px {{$link->text_shadow_blur}}px {{$link->text_shadow_color}} ;font-family: '{{$link->font}}', sans-serif; line-height: 1.3; font-size: {{$link->font_size}}rem; margin-top: 2px; margin-bottom: 0; color: {{$link->title_color}};">@if($link->bold == true) <b> @endif{{$link->title}}@if($link->bold == true) </b> @endif</h4>
+                                                    </div>
+                                                </div>
+                                                <!-- Пустой div -->
+                                                <div class="col-1">
+                                                    @if(Auth::check())
+                                                        @if(Auth::user()->id == $user->id)
+                                                            <div id="up" class="imgg" style="background-image: url(https://i.ibb.co/VLbJkrG/dots.png);">
+                                                                <img src="https://i.ibb.co/VLbJkrG/dots.png" width="20">
+                                                            </div>
+                                                        @endif
+                                                    @endif
                                                 </div>
                                             </div>
-                                            <!-- Пустой div -->
-                                            <div class="col-1">
-                                                @if(Auth::check())
-                                                    @if(Auth::user()->id == $user->id)
-                                                        <div id="up" class="imgg" style="background-image: url(https://i.ibb.co/VLbJkrG/dots.png);">
-                                                            <img src="https://i.ibb.co/VLbJkrG/dots.png" width="20">
-                                                        </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            @elseif($user->social_links_bar == 1)
+                <table class="table">
+                    <tbody>
+                    @foreach($linksWithoutBar as $link)
+                        <tr data-index="{{$link->id}}" data-position="{{$link->position}}">
+                            <td style="padding-left: 0; padding-right: 0; padding-bottom: 0; border: 0">
+                                <div class="container" style="padding-left:8px; padding-right:8px">
+                                    <!-- Если тип ссылки POST ссылка не работает\не кликабельно -->
+                                    <a href="{{$link->link}}" style="text-decoration:none" onclick="countRabbits{{$link->id}}()">
+                                        <div class="@if($link->animation) {{$link->animation}} @endif row ms-1 me-1 card {{$link->shadow}}" style="background-color:rgba({{$link->background_color}}, {{$link->transparency}}); border: 0; margin-top: 8px; border-radius: {{$link->rounded}}px; background-position: center">
+                                            <div class="d-flex align-items-center justify-content-start mt-1 mb-1" style="padding-left: 4px; padding-right: 4px;">
+                                                <!-- Картинка -->
+                                                <div class="col-1">
+                                                    @if($link->icon)
+                                                        <img src="{{$link->icon}}" style="width:50px; border-radius: {{$link->rounded}}px;">
+                                                    @elseif($link->photo)
+                                                        <img src="{{$link->photo}}" style="width:50px; border-radius: {{$link->rounded}}px;">
+                                                    @else
+                                                        <img src="https://digiltable.com/wp-content/uploads/edd/2021/09/Sexy-lady-logo-Pornhub-logo.png" style="width:50px; border-radius: {{$link->rounded}}px; opacity: 0;">
                                                     @endif
-                                                @endif
+                                                </div>
+                                                <!-- Текст ссылки -->
+                                                <div class="col-10 text-center d-flex align-items-center justify-content-center">
+                                                    <div class="me-5 ms-5">
+                                                        <h4 style="text-shadow:{{$link->text_shadow_right}}px {{$link->text_shadow_bottom}}px {{$link->text_shadow_blur}}px {{$link->text_shadow_color}} ;font-family: '{{$link->font}}', sans-serif; line-height: 1.3; font-size: {{$link->font_size}}rem; margin-top: 2px; margin-bottom: 0; color: {{$link->title_color}};">@if($link->bold == true) <b> @endif{{$link->title}}@if($link->bold == true) </b> @endif</h4>
+                                                    </div>
+                                                </div>
+                                                <!-- Пустой div -->
+                                                <div class="col-1">
+                                                    @if(Auth::check())
+                                                        @if(Auth::user()->id == $user->id)
+                                                            <div id="up" class="imgg" style="background-image: url(https://i.ibb.co/VLbJkrG/dots.png);">
+                                                                <img src="https://i.ibb.co/VLbJkrG/dots.png" width="20">
+                                                            </div>
+                                                        @endif
+                                                    @endif
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                @if($link->type != 'POST')</a>@endif
-                            </div>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
                     @endforeach
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            @endif
         <!-- ---------------------- -->
         <!-- Мероприятия -->
         <!-- ---------------------- -->
@@ -248,8 +337,8 @@
                                     <div class="row text-center">
                                         <div class="col-12 text-center mt-3 mb-3" style="padding: 0">
                                             <a href="#" style="color: black; text-decoration: none">
-                                                <p style="text-shadow:{{$event->location_text_shadow_blur}}px {{$event->location_text_shadow_bottom}}px {{$event->location_text_shadow_right}}px {{$event->location_text_shadow_color}} ;font-family: '{{$event->location_font}}', sans-serif; text-transform: uppercase; font-size: {{$event->location_font_size}}em; padding: 0; margin: 0; color: {{$event->location_font_color}}">{{$event->city}}, {{$event->location}}</p>
-                                                <p style="text-shadow:{{$event->date_text_shadow_blur}}px {{$event->date_text_shadow_bottom}}px {{$event->date_text_shadow_right}}px {{$event->date_text_shadow_color}} ;font-family: '{{$event->date_font}}', sans-serif; font-size: {{$event->date_font_size}}rem; margin-bottom: 0; color: {{$event->date_font_color}};">{{\Carbon\Carbon::parse($event->date)->format('d.m.Y')}}{{' @'.$event->time}}</p>
+                                                <p style="text-shadow:{{$event->location_text_shadow_blur}}px {{$event->location_text_shadow_bottom}}px {{$event->location_text_shadow_right}}px {{$event->location_text_shadow_color}} ;font-family: '{{$event->location_font}}', sans-serif; text-transform: uppercase; font-size: {{$event->location_font_size}}em; padding: 0; margin: 0; color: {{$event->location_font_color}}">@if($event->bold_city == true)<b>@endif{{$event->city}}@if($event->bold_city == true)</b>@endif, @if($event->bold_location == true)<b>@endif{{$event->location}}@if($event->bold_location == true)</b>@endif</p>
+                                                <p style="text-shadow:{{$event->date_text_shadow_blur}}px {{$event->date_text_shadow_bottom}}px {{$event->date_text_shadow_right}}px {{$event->date_text_shadow_color}} ;font-family: '{{$event->date_font}}', sans-serif; font-size: {{$event->date_font_size}}rem; margin-bottom: 0; color: {{$event->date_font_color}};">@if($event->bold_date == true)<b>@endif{{\Carbon\Carbon::parse($event->date)->format('d.m.Y')}}@if($event->bold_date == true)</b>@endif @if($event->bold_time == true)<b>@endif{{' @'.$event->time}}@if($event->bold_time == true)</b>@endif</p>
                                             </a>
                                         </div>
                                     </div>
@@ -300,6 +389,9 @@
                     </div>
                 @endforeach
             </div>
+            <!-- ---------------------- -->
+            <!-- Соц сети для типа Events -->
+            <!-- ---------------------- -->
             @if($user->type == 'Events')
                 @if($user->show_social == true)
                     @if($user->social == 'DOWN')
@@ -308,7 +400,7 @@
                                 <div class="container-fluid d-flex justify-content-center">
                                     @foreach($links as $link)
                                         @if($link->icon)
-                                            <a href="{{$link->link}}">
+                                            <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">
                                                 <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="width:40px;">
                                             </a>
                                         @endif
@@ -321,14 +413,52 @@
             @endif
             <div class="mb-3"></div>
         @endif
+
+        <!-- ---------------------- -->
+        <!-- Соц сети для типа Links -->
+        <!-- ---------------------- -->
+        @if($user->type == 'Links')
+            @if($user->social_links_bar == 1)
+                @if($user->links_bar_position == 'bottom')
+                    @if(count($links) > 0)
+                        <nav class="navbar mt-5 mb-4">
+                            <div class="container-fluid d-flex justify-content-center">
+                                @foreach($links as $link)
+                                    @if($link->icon)
+                                        <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">
+                                            <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="width:40px;">
+                                        </a>
+                                    @endif
+                                @endforeach
+                            </div>
+                        </nav>
+                    @endif
+                @endif
+            @endif
+        @endif
+
+        @if($user->show_logo == true)
+            <div class="container-fluid justify-content-center text-center mb-4 " style="margin-top: 70px">
+                <div class="d-flex justify-content-center text-center">
+                    <div class="text-center" style="margin-top: 25px">
+                        <div class="d-flex justify-content-center">
+                            <a href="{{ route('welcome') }}" style="border-bottom: none">
+                                <img src="https://i.ibb.co/3dJD25v/new-logo.png" class="img-fluid" width="110">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
     </body>
 
+    {{--    Move   --}}
     @foreach($links as $link)
         <script type="text/javascript">
             $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
             });
 
             $(document).ready(function () {
@@ -364,6 +494,53 @@
                         positions: positions
                     }, success: function (response) {
                             console.log(response);
+                    }
+                });
+            }
+        </script>
+    @endforeach
+
+    @foreach($linksWithoutBar as $link)
+        <script type="text/javascript">
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $(document).ready(function () {
+                $('table tbody').sortable({
+                    // delay:2000,
+                    handle:'#up',
+                    update: function (event, ui) {
+                        $(this).children().each(function (index) {
+                            if ($(this).attr('data-position') != (index+1)) {
+                                $(this).attr('data-position', (index+1)).addClass('updated');
+                            }
+                        });
+
+                        saveNewPositions();
+                    }
+                });
+            });
+
+            function saveNewPositions() {
+                var userId = {{$user->id}};
+                var positions = [];
+                $('.updated').each(function () {
+                    positions.push([$(this).attr('data-index'), $(this).attr('data-position')]);
+                    $(this).removeClass('updated');
+                });
+
+                $.ajax({
+                    url: userId + "/ppp/sort",
+                    method: 'POST',
+                    dataType: 'text',
+                    data: {
+                        update: 1,
+                        positions: positions
+                    }, success: function (response) {
+                        console.log(response);
                     }
                 });
             }
@@ -417,6 +594,7 @@
         </script>
     @endforeach
 
+    {{--    Stats   --}}
     @foreach($links as $link)
         <script type="text/javascript">
             $.ajaxSetup({
@@ -468,7 +646,7 @@
             }
         </script>
     @endforeach
-
+    {{--    Stats   --}}
 </html>
 
 

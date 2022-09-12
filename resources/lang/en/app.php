@@ -18,7 +18,7 @@ return [
 
     'm_add_link' => 'Add link',
     'm_text_link' => 'Link text',
-    'm_text_link_span' => 'Title can be up to 50 characters',
+    'm_text_link_span' => 'Title can be up to 100 characters',
     'm_insert_link' => 'Insert link',
     'm_icon' => 'Icon',
     'm_icon_description' => 'You can choose an icon from our database for your link',

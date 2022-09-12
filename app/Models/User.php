@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\File;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Link;
 use App\Models\Event;
@@ -45,7 +46,10 @@ class User extends Authenticatable
         'favicon',
         'dayVsNight',
         'vk_id',
-        'yandex_id'
+        'yandex_id',
+        'social_links_bar',
+        'show_logo',
+        'links_bar_position',
     ];
 
     /**
@@ -123,6 +127,9 @@ class User extends Authenticatable
             'show_social'       => isset($request->show_social) ? $request->show_social : Auth::user()->show_social,
             'social'            => isset($request->social) ? $request->social : Auth::user()->social,
             'favicon'           => isset($request->favicon) ? self::addPhotos($request->favicon, 'favicon') : $user->favicon,
+            'social_links_bar'  => $request->social_links_bar,
+            'show_logo'         => $request->show_logo,
+            'links_bar_position' => $request->links_bar_position,
         ]);
     }
 
@@ -136,8 +143,12 @@ class User extends Authenticatable
     public static function addPhotos($img, string $type) : string
     {
         if($type == 'favicon') {
+            $basePath = '../storage/app/public/' . Auth::user()->id . '/';
+            if (!File::exists($basePath)) {
+                File::makeDirectory($basePath, 0777,true);
+            }
+
             $image = Image::make($img->getRealPath())->fit(32);
-            $basePath = '../storage/app/public/'. Auth::user()->id. '/profile/';
             $image->save($basePath . $img->hashName());
             return '/'.$image->dirname . '/' . $image->basename;
         }

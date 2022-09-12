@@ -12,6 +12,7 @@ use App\Http\Requests\LinkRequest;
 use App\Http\Requests\PostRequest;
 use Laravel\Scout\Searchable;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class Link extends Model
 {
@@ -49,6 +50,7 @@ class Link extends Model
         'text_shadow_blur',
         'text_shadow_bottom',
         'text_shadow_right',
+        'bold',
     ];
 
     /**
@@ -84,7 +86,7 @@ class Link extends Model
     protected static function addLink(User $user, Request $request)
     {
         $request->validate([
-            'title' => 'min:1|max:50',
+            'title' => 'min:1|max:255',
             'link'  => 'required|url',
             'photo' => 'nullable|mimes:jpeg,png,jpg,gif|max:5000',
         ]);
@@ -113,6 +115,7 @@ class Link extends Model
             'text_shadow_blur'     => isset($request->check_last_link) ? $lastLink->text_shadow_blur : $request->text_shadow_blur,
             'text_shadow_bottom'   => isset($request->check_last_link) ? $lastLink->text_shadow_bottom : $request->text_shadow_bottom,
             'text_shadow_right'    => isset($request->check_last_link) ? $lastLink->text_shadow_right : $request->text_shadow_right,
+            'bold'                 => isset($request->check_last_link) ? $lastLink->bold : $request->bold,
         ]);
 
         $user->links()->save($link);
@@ -129,7 +132,7 @@ class Link extends Model
     protected static function editLink(int $userId, Link $link, Request $request)
     {
         $request->validate([
-            'title' => 'min:1|max:50',
+            'title' => 'min:1|max:100',
             'link'  => 'required|url',
             'photo' => 'nullable|mimes:jpeg,png,jpg,gif|max:5000',
         ]);
@@ -154,6 +157,7 @@ class Link extends Model
             'text_shadow_blur'     => $request->text_shadow_blur,
             'text_shadow_bottom'   => $request->text_shadow_bottom,
             'text_shadow_right'    => $request->text_shadow_right,
+            'bold'                 => $request->bold,
         ]);
     }
 
@@ -174,12 +178,13 @@ class Link extends Model
             'transparency'         => $request->transparency,
             'shadow'               => $request->shadow,
             'rounded'              => $request->rounded,
-            'font'                 => $request->font,
+            'font'                 => isset($request->font) ? $request->font : 'Inter',
             'font_size'            => $request->font_size,
             'text_shadow_color'    => $request->text_shadow_color,
             'text_shadow_blur'     => $request->text_shadow_blur,
             'text_shadow_bottom'   => $request->text_shadow_bottom,
             'text_shadow_right'    => $request->text_shadow_right,
+            'bold'                 => $request->bold,
         ]);
     }
 
@@ -212,10 +217,16 @@ class Link extends Model
                 $path = Storage::putFile('public/' . Auth::user()->id, $img);
                 return '../storage/app/'.$path;
             }
-            $image = Image::make($img->getRealPath())->fit(200);
+
             $basePath = '../storage/app/public/' . Auth::user()->id . '/links/';
+            if (!File::exists($basePath)) {
+                File::makeDirectory($basePath, 0777,true);
+            }
+
+            $image = Image::make($img->getRealPath())->fit(200);
             $image->save($basePath . '/' .$img->hashName());
             return '/'.$image->dirname . '/' . $image->basename;
         }
     }
 }
+

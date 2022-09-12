@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Link;
 use App\Models\User;
 use App\Models\Event;
 use Illuminate\Support\Facades\Auth;
@@ -26,10 +27,13 @@ class UserController extends Controller
         $user = User::where('slug', $slug)->firstOrFail();
         $links = \DB::table('links')->where('user_id', $user->id)->where('pinned', false)->orderBy('position')->get();
         $pinnedLinks = \DB::table('links')->where('user_id', $user->id)->where('pinned', true)->orderBy('position')->get();
+
+        $linksWithoutBar = \DB::table('links')->where('type', 'LINK')->where('user_id', $user->id)->where('icon', null)->orderBy('position')->get();
+
         $events = Event::where('user_id', $user->id)->orderBy('date')->get();
         StatsService::createUserStats($user);
         Carbon::setLocale('ru');
-        return view('user.home', compact('user', 'links', 'pinnedLinks', 'events'));
+        return view('user.home', compact('user', 'links', 'pinnedLinks', 'events', 'linksWithoutBar'));
     }
 
     /**
