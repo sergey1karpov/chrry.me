@@ -1289,7 +1289,7 @@
                 new TomSelect('#pinned-links{{$link->id}}',{
                     valueField: 'font',
                     searchField: 'title',
-                    maxOptions: 100,
+                    maxOptions: 150,
                     options: [
                         @foreach($allFontsInFolder as $font)
                             {id: {{$font->getInode()}}, title: '{{ stristr($font->getFilename(), '.', true)}}', font: '{{ stristr($font->getFilename(), '.', true) }}'},
@@ -1313,7 +1313,7 @@
                 new TomSelect('#empty-links{{$link->id}}',{
                     valueField: 'font',
                     searchField: 'title',
-                    maxOptions: 100,
+                    maxOptions: 150,
                     options: [
                         @foreach($allFontsInFolder as $font)
                             {id: {{$font->getInode()}}, title: '{{ stristr($font->getFilename(), '.', true)}}', font: '{{ stristr($font->getFilename(), '.', true) }}'},
@@ -1336,7 +1336,7 @@
             new TomSelect('#mass-edit',{
                 valueField: 'font',
                 searchField: 'title',
-                maxOptions: 100,
+                maxOptions: 150,
                 options: [
                     @foreach($allFontsInFolder as $font)
                         {id: {{$font->getInode()}}, title: '{{ stristr($font->getFilename(), '.', true)}}', font: '{{ stristr($font->getFilename(), '.', true) }}'},

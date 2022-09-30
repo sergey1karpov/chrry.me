@@ -89,18 +89,6 @@
         src: url({{asset('public/fonts/AntiqueTitulGr.ttf')}}); /* Путь к файлу со шрифтом */
     }
     @font-face {
-        font-family: BosaNovaCpsBrk; /* Имя шрифта */
-        src: url({{asset('public/fonts/BosaNovaCpsBrk.ttf')}}); /* Путь к файлу со шрифтом */
-    }
-    @font-face {
-        font-family: JasperCapsOtlNr; /* Имя шрифта */
-        src: url({{asset('public/fonts/JasperCapsOtlNr.ttf')}}); /* Путь к файлу со шрифтом */
-    }
-    @font-face {
-        font-family: ModernoDcFr; /* Имя шрифта */
-        src: url({{asset('public/fonts/ModernoDcFr.ttf')}}); /* Путь к файлу со шрифтом */
-    }
-    @font-face {
         font-family: Antikvar; /* Имя шрифта */
         src: url({{asset('public/fonts/Antikvar.ttf')}}); /* Путь к файлу со шрифтом */
     }
@@ -127,14 +115,6 @@
     @font-face {
         font-family: Catallina; /* Имя шрифта */
         src: url({{asset('public/fonts/Catallina.ttf')}}); /* Путь к файлу со шрифтом */
-    }
-    @font-face {
-        font-family: China; /* Имя шрифта */
-        src: url({{asset('public/fonts/China.ttf')}}); /* Путь к файлу со шрифтом */
-    }
-    @font-face {
-        font-family: ComicCat; /* Имя шрифта */
-        src: url({{asset('public/fonts/ComicCat.ttf')}}); /* Путь к файлу со шрифтом */
     }
     @font-face {
         font-family: DamnNoisyKids; /* Имя шрифта */
@@ -209,18 +189,6 @@
         src: url({{asset('public/fonts/LeoHand.ttf')}}); /* Путь к файлу со шрифтом */
     }
     @font-face {
-        font-family: LetteraTrentadue; /* Имя шрифта */
-        src: url({{asset('public/fonts/LetteraTrentadue.ttf')}}); /* Путь к файлу со шрифтом */
-    }
-    @font-face {
-        font-family: LidiaCyr; /* Имя шрифта */
-        src: url({{asset('public/fonts/LidiaCyr.ttf')}}); /* Путь к файлу со шрифтом */
-    }
-    @font-face {
-        font-family: LidiaC; /* Имя шрифта */
-        src: url({{asset('public/fonts/LidiaC.ttf')}}); /* Путь к файлу со шрифтом */
-    }
-    @font-face {
         font-family: ljTurtlesTMNT; /* Имя шрифта */
         src: url({{asset('public/fonts/ljTurtlesTMNT.ttf')}}); /* Путь к файлу со шрифтом */
     }
@@ -255,10 +223,6 @@
     @font-face {
         font-family: Optimus; /* Имя шрифта */
         src: url({{asset('public/fonts/Optimus.ttf')}}); /* Путь к файлу со шрифтом */
-    }
-    @font-face {
-        font-family: PatsySans; /* Имя шрифта */
-        src: url({{asset('public/fonts/PatsySans.ttf')}}); /* Путь к файлу со шрифтом */
     }
     @font-face {
         font-family: Plainot; /* Имя шрифта */
@@ -321,10 +285,6 @@
         src: url({{asset('public/fonts/Veles.ttf')}}); /* Путь к файлу со шрифтом */
     }
     @font-face {
-        font-family: Viza; /* Имя шрифта */
-        src: url({{asset('public/fonts/Viza.ttf')}}); /* Путь к файлу со шрифтом */
-    }
-    @font-face {
         font-family: WindCTT; /* Имя шрифта */
         src: url({{asset('public/fonts/WindCTT.ttf')}}); /* Путь к файлу со шрифтом */
     }
@@ -339,6 +299,198 @@
     @font-face {
         font-family: Zero5; /* Имя шрифта */
         src: url({{asset('public/fonts/Zero5.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+
+
+
+
+    @font-face {
+        font-family: Danger; /* Имя шрифта */
+        src: url({{asset('public/fonts/Danger.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: Dirty_Headline; /* Имя шрифта */
+        src: url({{asset('public/fonts/Dirty_Headline.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: Discharge_Pro; /* Имя шрифта */
+        src: url({{asset('public/fonts/Discharge_Pro.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: Display3DOTF; /* Имя шрифта */
+        src: url({{asset('public/fonts/Display3DOTF.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: DS_Dots; /* Имя шрифта */
+        src: url({{asset('public/fonts/DS_Dots.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: DS_Kork; /* Имя шрифта */
+        src: url({{asset('public/fonts/DS_Kork.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: DS-Brushes; /* Имя шрифта */
+        src: url({{asset('public/fonts/DS-Brushes.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: DS-Crystal; /* Имя шрифта */
+        src: url({{asset('public/fonts/DS-Crystal.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: DublonC-Bold; /* Имя шрифта */
+        src: url({{asset('public/fonts/DublonC-Bold.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: eyelevation_pro; /* Имя шрифта */
+        src: url({{asset('public/fonts/eyelevation_pro.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: FD_median; /* Имя шрифта */
+        src: url({{asset('public/fonts/FD_median.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: Gagarin_Star_Mix_Cyrillic; /* Имя шрифта */
+        src: url({{asset('public/fonts/Gagarin_Star_Mix_Cyrillic.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: Glasoor_FF_4F; /* Имя шрифта */
+        src: url({{asset('public/fonts/Glasoor_FF_4F.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: Inky; /* Имя шрифта */
+        src: url({{asset('public/fonts/Inky.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: Insurgent_Pro; /* Имя шрифта */
+        src: url({{asset('public/fonts/Insurgent_Pro.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: Intro_Rust_G_Base_2_Line; /* Имя шрифта */
+        src: url({{asset('public/fonts/Intro_Rust_G_Base_2_Line.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: Ireland; /* Имя шрифта */
+        src: url({{asset('public/fonts/Ireland.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: Kaaos_Pro; /* Имя шрифта */
+        src: url({{asset('public/fonts/Kaaos_Pro.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: KB_Band; /* Имя шрифта */
+        src: url({{asset('public/fonts/KB_Band.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: KB-Tranceform; /* Имя шрифта */
+        src: url({{asset('public/fonts/KB-Tranceform.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: Kids52; /* Имя шрифта */
+        src: url({{asset('public/fonts/Kids52.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: LayertNoise; /* Имя шрифта */
+        src: url({{asset('public/fonts/LayertNoise.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: LikeABeer; /* Имя шрифта */
+        src: url({{asset('public/fonts/LikeABeer.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: MB_Think_Twice; /* Имя шрифта */
+        src: url({{asset('public/fonts/MB_Think_Twice.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: Mefestico; /* Имя шрифта */
+        src: url({{asset('public/fonts/Mefestico.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: MetalLord; /* Имя шрифта */
+        src: url({{asset('public/fonts/MetalLord.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: Misirlou; /* Имя шрифта */
+        src: url({{asset('public/fonts/Misirlou.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: NiseSega_Cyrillic; /* Имя шрифта */
+        src: url({{asset('public/fonts/NiseSega_Cyrillic.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: PFFuelPro; /* Имя шрифта */
+        src: url({{asset('public/fonts/PFFuelPro.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: PFOnlineThreePro-Double; /* Имя шрифта */
+        src: url({{asset('public/fonts/PFOnlineThreePro-Double.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: Rostov; /* Имя шрифта */
+        src: url({{asset('public/fonts/Rostov.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: team; /* Имя шрифта */
+        src: url({{asset('public/fonts/team.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: The_Crew_Pro; /* Имя шрифта */
+        src: url({{asset('public/fonts/The_Crew_Pro.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: Typingrad; /* Имя шрифта */
+        src: url({{asset('public/fonts/Typingrad.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: Upheaval_Pro; /* Имя шрифта */
+        src: url({{asset('public/fonts/Upheaval_Pro.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: VAIO_CON_DIOS; /* Имя шрифта */
+        src: url({{asset('public/fonts/VAIO_CON_DIOS.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: VAL_Stencil_cyr-lat; /* Имя шрифта */
+        src: url({{asset('public/fonts/VAL_Stencil_cyr-lat.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: Velvet_Drop2; /* Имя шрифта */
+        src: url({{asset('public/fonts/Velvet_Drop2.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: Veselka_4F; /* Имя шрифта */
+        src: url({{asset('public/fonts/Veselka_4F.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: Crackman; /* Имя шрифта */
+        src: url({{asset('public/fonts/Crackman.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: COLORADOIOI; /* Имя шрифта */
+        src: url({{asset('public/fonts/COLORADOIOI.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: Colo-Pro; /* Имя шрифта */
+        src: url({{asset('public/fonts/Colo-Pro.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: Capture_it; /* Имя шрифта */
+        src: url({{asset('public/fonts/Capture_it.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: BERNIER_Distressed; /* Имя шрифта */
+        src: url({{asset('public/fonts/BERNIER_Distressed.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: beer_money; /* Имя шрифта */
+        src: url({{asset('public/fonts/beer_money.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: AA_Neon; /* Имя шрифта */
+        src: url({{asset('public/fonts/AA_Neon.ttf')}}); /* Путь к файлу со шрифтом */
+    }
+    @font-face {
+        font-family: AA_Duke; /* Имя шрифта */
+        src: url({{asset('public/fonts/AA_Duke.ttf')}}); /* Путь к файлу со шрифтом */
     }
 
 </style>

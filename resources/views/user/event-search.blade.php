@@ -497,6 +497,7 @@
         new TomSelect('#select-beast-empty-post-location{{$event->id}}',{
             valueField: 'font',
             searchField: 'title',
+            maxOptions: 150,
             options: [
                     @foreach($allFontsInFolder as $font)
                 {id: {{$font->getInode()}}, title: '{{ stristr($font->getFilename(), '.', true)}}', font: '{{ stristr($font->getFilename(), '.', true) }}'},
@@ -516,6 +517,7 @@
         new TomSelect('#select-beast-empty-post-date{{$event->id}}',{
             valueField: 'font',
             searchField: 'title',
+            maxOptions: 150,
             options: [
                     @foreach($allFontsInFolder as $font)
                 {id: {{$font->getInode()}}, title: '{{ stristr($font->getFilename(), '.', true)}}', font: '{{ stristr($font->getFilename(), '.', true) }}'},
@@ -538,6 +540,7 @@
     new TomSelect('#mass-event-location',{
         valueField: 'font',
         searchField: 'title',
+        maxOptions: 150,
         options: [
                 @foreach($allFontsInFolder as $font)
             {id: {{$font->getInode()}}, title: '{{ stristr($font->getFilename(), '.', true)}}', font: '{{ stristr($font->getFilename(), '.', true) }}'},
@@ -557,6 +560,7 @@
     new TomSelect('#mass-event-date',{
         valueField: 'font',
         searchField: 'title',
+        maxOptions: 150,
         options: [
                 @foreach($allFontsInFolder as $font)
             {id: {{$font->getInode()}}, title: '{{ stristr($font->getFilename(), '.', true)}}', font: '{{ stristr($font->getFilename(), '.', true) }}'},
