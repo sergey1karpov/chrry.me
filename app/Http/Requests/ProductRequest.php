@@ -1,0 +1,37 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class ProductRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, mixed>
+     */
+    public function rules()
+    {
+        return [
+            'title' => 'required|min:3|max:255',
+            'description' => 'required|min:3|max:255',
+            'main_photo' => 'required|mimes:jpeg,png,jpg,gif|max:5000',
+            'additional_photos' => 'nullable|array|max:5',
+            'additional_photos.*' => 'nullable|mimes:jpeg,png,jpg,gif|max:5000',
+            'price' => 'required|integer',
+            'count_products' => 'integer',
+            'visible' => 'required|boolean',
+        ];
+    }
+}

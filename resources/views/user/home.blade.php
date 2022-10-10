@@ -412,8 +412,70 @@
                 @endif
             @endif
             <div class="mb-3"></div>
-        @endif
 
+        <!-- ---------------------- -->
+        <!-- Магазин -->
+        <!-- ---------------------- -->
+        @elseif($user->type == 'Market')
+            <div class="mt-3">
+                @foreach($products as $product)
+                    <section style="background-color: #eee;" data-bs-toggle="modal" data-bs-target="#productModal{{$product->id}}">
+                        <div class="container mt-3">
+                            <div class="row justify-content-center">
+                                <div class="col-md-8 col-lg-6 col-xl-4">
+                                    <div class="card text-black">
+                                        <i class="fab fa-apple fa-lg pt-3 pb-1 px-3"></i>
+                                        <img src="{{$product->main_photo}}"
+                                             class="card-img-top" alt="Apple Computer" />
+                                        <div class="card-body">
+                                            <div class="text-center">
+                                                <h5 class="card-title">{{$product->title}}</h5>
+                                                <p class="text-muted mb-4">{{$product->description}}R</p>
+                                            </div>
+                                            <div class="d-flex justify-content-between total font-weight-bold mt-4">
+                                                <span>Цена</span><span><b>{{$product->price}}</b> рублей</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <div class="modal fade" id="productModal{{$product->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">{{$product->title}}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="card text-black" style="border:none">
+                                        <i class="fab fa-apple fa-lg pt-3 pb-1 px-3"></i>
+                                        <img src="{{$product->main_photo}}"
+                                             class="card-img-top" alt="Apple Computer" />
+                                        <div class="card-body" style="padding: 0">
+                                            <div class="text-center">
+                                                <h5 class="card-title">{{$product->title}}</h5>
+                                                <p class="text-muted mb-4">{{$product->description}}</p>
+                                                @if($product->full_description)
+                                                    <p class="mb-4">{{$product->full_description}}</p>
+                                                @endif
+                                            </div>
+                                            <div class="d-flex justify-content-between total font-weight-bold mt-5">
+                                                <span>Цена</span><span><b>{{$product->price}}</b> рублей</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-grid gap-2 mt-3">
+                                        <button class="btn btn-primary" type="button">Купить</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        @endif
         <!-- ---------------------- -->
         <!-- Соц сети для типа Links -->
         <!-- ---------------------- -->

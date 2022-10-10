@@ -28,12 +28,16 @@ class UserController extends Controller
         $links = \DB::table('links')->where('user_id', $user->id)->where('pinned', false)->orderBy('position')->get();
         $pinnedLinks = \DB::table('links')->where('user_id', $user->id)->where('pinned', true)->orderBy('position')->get();
 
+
+        $products = $user->products;
+
+
         $linksWithoutBar = \DB::table('links')->where('type', 'LINK')->where('user_id', $user->id)->where('icon', null)->orderBy('position')->get();
 
         $events = Event::where('user_id', $user->id)->orderBy('date')->get();
         StatsService::createUserStats($user);
         Carbon::setLocale('ru');
-        return view('user.home', compact('user', 'links', 'pinnedLinks', 'events', 'linksWithoutBar'));
+        return view('user.home', compact('user', 'links', 'pinnedLinks', 'events', 'linksWithoutBar', 'products'));
     }
 
     /**

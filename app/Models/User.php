@@ -85,6 +85,11 @@ class User extends Authenticatable
         return $this->hasMany(Event::class);
     }
 
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+
     /**
      * @param string $utag
      * @param $request
@@ -152,7 +157,7 @@ class User extends Authenticatable
             $image->save($basePath . $img->hashName());
             return '/'.$image->dirname . '/' . $image->basename;
         }
-        $path = Storage::putFile('public/' . Auth::user()->id . '/profile', $img);
+        $path = Storage::putFile('public/' . Auth::user()->id, $img);
         $strpos = strpos($path, '/');
         $mb_substr = mb_substr($path, $strpos);
         $url = '../storage/app/public'.$mb_substr;

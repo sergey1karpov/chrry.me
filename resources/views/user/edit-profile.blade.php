@@ -48,7 +48,6 @@
 
     </head>
     <body class="antialiased">
-
     	<div class="container-fluid justify-content-center text-center">
 
             <!-- Отображение валидационных ошибок -->
@@ -106,7 +105,7 @@
 				</a>
 			</div>
 
-            <!-- БЛОК: Добавить ссылку или пост -->
+            <!-- БЛОК: Добавить ссылку -->
             <div class="row" style="margin-right: 0">
 				<div class="col-12" style="padding-right: 7px; padding: 0">
 					<div class="block1 row d-flex justify-content-start shadow @if($user->dayVsNight) bg-dark @endif" style="background-color: #ffbdb3">
@@ -143,6 +142,16 @@
                                             </div>
                                             <div class="col-12">
                                                 <h4 class="block1-text mb-3 text-center @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">Добавьте свое мероприятие. Для отображения мероприятий нужно поменять тип страницы на "Афиша"</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 text-center" data-bs-toggle="modal" data-bs-target="#exampleModalProduct">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <h4 class="block1-text mt-4 text-center @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">Продукт</h4>
+                                            </div>
+                                            <div class="col-12">
+                                                <h4 class="block1-text mb-3 text-center @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">Добавьте товар в свой магазин</h4>
                                             </div>
                                         </div>
                                     </div>
@@ -214,6 +223,26 @@
 											</a>
 										</div>
                             		</div>
+                                    <div class="col-6 text-center">
+                                        <div class="row" >
+                                            <a href="{{ route('allProducts', ['id' => Auth::user()->id]) }}" style="text-decoration: none; border: 0; padding: 0">
+                                                <div class="col-12">
+                                                    <div class="sub-block1 row @if($user->dayVsNight) bg-secondary  @endif" style="background-color: #fe948d; height: 130px; margin: 0;">
+                                                        <div class="col-12 ">
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <h4 class="block1-text mt-4 text-center @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">Продукты</h4>
+                                                                </div>
+                                                                <div class="col-12">
+                                                                    <h4 class="block1-text text-center @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">Редактирование, удаление и статистика по вашим товарам</h4>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
                             	</div>
 
                             </div>
@@ -686,6 +715,67 @@
                 </div>
             </div>
 
+            <!-- Модалка для добавления продуктов -->
+            <div class="modal fade" id="exampleModalProduct" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background-color: #1b1b1b">
+                <div class="modal-dialog">
+                    <div class="block-modal modal-content text-center @if($user->dayVsNight) bg-dark text-white-50 @endif">
+                        <div class="modal-header">
+                            <h5 class="modal-title" style="font-family: 'Rubik', sans-serif;">Добавить продукт</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{{ route('addProduct', ['id' => Auth::user()->id]) }}" method="post" enctype="multipart/form-data">
+                                @csrf @method('POST')
+                                <input type="hidden" name="user" value="{{$user->id}}">
+                                <div class="mb-1"> <!-- Название продукта -->
+                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Название продукта</label>
+                                    <input class="form-control" name="title" id="title" placeholder="Прокладки женские" style="background-color: #9bd77e; border-radius: 0">
+                                </div>
+                                <div class="mb-3"> <!-- Описание события -->
+                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Описание</label>
+                                    <textarea class="form-control @if($user->dayVsNight) bg-secondary @endif "  rows="3" name="description" id="full_text" style="border-radius: 0"></textarea>
+                                </div>
+                                <div class="mb-3"> <!-- Полное описание -->
+                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Развернутое описание</label>
+                                    <textarea class="form-control @if($user->dayVsNight) bg-secondary @endif "  rows="3" name="full_description" id="count_products" style="border-radius: 0"></textarea>
+                                </div>
+                                <div class="mb-3"> <!-- Фото продукта -->
+                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Основное фото</label>
+                                    <input type="file" class="form-control" id="inputGroupFile022" name="main_photo" accept=".png, .jpg, .jpeg" style="background-color: #9bd77e; border-radius: 0">
+                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Мы принимаем картинки jpeg, jpg, png формата.</span>
+                                </div>
+                                <div class="mb-3"> <!-- Дополнительные фото -->
+                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Дополнительные фото</label>
+                                    <input type="file" class="form-control" id="inputGroupFile022" name="additional_photos[]" accept=".png, .jpg, .jpeg" style="border-radius: 0" multiple="multiple">
+                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Мы принимаем картинки jpeg, jpg, png формата.</span>
+                                </div>
+{{--                                <div class="mb-3"> <!-- Кол-во товаров в наличии -->--}}
+{{--                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Кол-во товаров в наличии</label>--}}
+{{--                                    <input name="count_products" class="form-control" style="background-color: #9bd77e; border-radius: 0">--}}
+{{--                                </div>--}}
+                                <div class="mb-3"> <!-- Описание события -->
+                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Цена за единицу товара</label>
+                                    <input name="price" class="form-control" style="background-color: #9bd77e; border-radius: 0">
+                                </div>
+                                <div class="mb-3 text-center" >
+                                    <div class="ms-2 form-check" style="padding: 0">
+                                        <div class="form-check form-switch mb-3">
+                                            <input name="visible" class="form-check-input" type="checkbox" value="{{true}}" id="design-link-e">
+                                            <label class="form-check-label" for="flexCheckDefault">
+                                                Сделать продукт видимым для всех
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="d-grid gap-2">
+                                    <button type="submit" class="btn btn-secondary" style="border-radius: 0">@lang('app.m_add_link')</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
 
             <!-- Модалка для статистики по профилю -->
             <div class="modal fade" id="exampleModalStat" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background-color: #1b1b1b">
@@ -977,6 +1067,7 @@
                                         <option selected>Выберите тип страницы</option>
                                         <option @if($user->type == 'Links') selected @endif value="Links">Ссылки</option>
                                         <option @if($user->type == 'Events') selected @endif value="Events">Афиша</option>
+                                        <option @if($user->type == 'Market') selected @endif value="Market">Магазин</option>
                                     </select>
                                 </div>
                                 <div id="event-block" style="display:none">
@@ -1216,7 +1307,6 @@
                 $("body").on("click","#delete-banner", function(e){
                     e.preventDefault();
                     var type = $("#type-banner").val();
-                    console.log(type);
                     var id = $(this).data('id');
                     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
                     $.ajax({
@@ -1243,7 +1333,6 @@
                 $("body").on("click","#delete-avatar", function(e){
                     e.preventDefault();
                     var type = $("#type-avatar").val();
-                    console.log(type);
                     var id = $(this).data('id');
                     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
                     $.ajax({

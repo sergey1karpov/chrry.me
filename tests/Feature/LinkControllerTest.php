@@ -7,6 +7,7 @@ use App\Models\Link;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Illuminate\Support\Facades\App;
 use Tests\TestCase;
 use Illuminate\Http\Request;
 
@@ -64,6 +65,7 @@ class LinkControllerTest extends TestCase
 
     public function test_add_new_link(): void
     {
+        $this->withoutExceptionHandling();
         $user = User::factory(['slug' => 'some_slug', 'is_active' => true])->create();
 
         $this->actingAs($user);
@@ -83,6 +85,7 @@ class LinkControllerTest extends TestCase
 
     public function test_edit_link(): void
     {
+        $this->withoutExceptionHandling();
         $user = User::factory(['slug' => 'some_slug', 'is_active' => true,])->create();
 
         $link = Link::factory(['user_id' => $user->id])->create();
@@ -100,6 +103,7 @@ class LinkControllerTest extends TestCase
 
     public function test_mass_edit_links()
     {
+        $this->withoutExceptionHandling();
         $user = User::factory(['slug' => 'some_slug', 'is_active' => true,])->create();
 
         Link::factory(10, ['user_id' => $user->id])->create();
@@ -120,6 +124,7 @@ class LinkControllerTest extends TestCase
 
     public function test_delete_link()
     {
+        $this->withoutExceptionHandling();
         $user = User::factory(['slug' => 'some_slug', 'is_active' => true,])->create();
 
         $link = Link::factory(['user_id' => $user->id])->create();
@@ -131,6 +136,7 @@ class LinkControllerTest extends TestCase
 
     public function test_search_link()
     {
+        App::setLocale('RU');
         $user = User::factory(['slug' => 'some_slug', 'is_active' => true,])->create();
 
         Link::factory(20, ['user_id' => $user->id])->create();

@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Services\UploadPhotoService;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use App\Models\User;
@@ -17,7 +19,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(UploadPhotoService::class, function() {
+            return new UploadPhotoService(request()->request->get('user'));
+        });
     }
 
     /**

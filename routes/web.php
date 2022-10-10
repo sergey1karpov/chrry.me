@@ -1,8 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\VkAuthController;
-use App\Http\Controllers\YandexAuthController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LinkController;
@@ -37,7 +36,7 @@ Route::patch('cc/{utag}/registered', [UserController::class, 'editNewUser'])->na
 /**
  * Личный кабинет пользователя
  */
-Route::middleware(['locale', 'userCheck'])->group(function () {
+Route::middleware(['locale', 'userCheck', 'web'])->group(function () {
     /**
      * Маршруты для работы со статистикой
      */
@@ -74,6 +73,15 @@ Route::middleware(['locale', 'userCheck'])->group(function () {
     Route::delete('/{id}/events/{event}/delete', [EventController::class, 'deleteEvent'])->name('deleteEvent');
     Route::get('/{id}/search-event', [EventController::class, 'searchEvent'])->name('searchEvent');
     Route::patch('/{id}/events/edit', [EventController::class, 'editAllEvent'])->name('editAllEvent');
+    /**
+     * Маршруты для работы с продуктами
+     */
+    Route::get('/{id}/products', [ProductController::class, 'allProducts'])->name('allProducts');
+    Route::post('/{id}/add-product', [ProductController::class, 'addProduct'])->name('addProduct');
+    Route::get('/{id}/edit-product/{product}/show', [ProductController::class, 'showProduct'])->name('showProduct');
+    Route::patch('/{id}/edit-product/{product}/edit', [ProductController::class, 'editProduct'])->name('editProduct');
+    Route::patch('/{id}/delete-photo/{product}/delete', [ProductController::class, 'deleteAdditionalPhoto'])->name('deleteAdditionalPhoto');
+    Route::delete('/{id}/delete-pproduct/{product}/delete', [ProductController::class, 'deleteProduct'])->name('deleteProduct');
 });
 
 /**
