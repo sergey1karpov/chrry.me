@@ -28,6 +28,7 @@ class ProductController extends Controller
     public function addProduct(int $id, ProductRequest $request, Product $product)
     {
         $product->storeProduct($id, $request, $this->uploadService);
+
         return redirect()->back();
     }
 
@@ -40,6 +41,7 @@ class ProductController extends Controller
     public function allProducts(int $userId)
     {
         $user = User::find($userId);
+
         return view('product.products', [
            'user' => $user,
            'products' => $user->products,
@@ -49,6 +51,7 @@ class ProductController extends Controller
     public function showProduct(int $id, Product $product)
     {
         $user = User::findOrFail($id);
+
         return view('product.editProduct', compact('user', 'product'));
     }
 
@@ -63,26 +66,36 @@ class ProductController extends Controller
     public function editProduct(int $userId, Product $product, Request $request)
     {
         $product->patchProduct($userId, $product, $request, $this->uploadService);
+
         return redirect()->back();
     }
 
     /**
+     * Удаление дополнительных фотографий
+     *
      * @param int $userId
      * @param Product $product
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
-     *
-     * Drop additional photo
      */
     public function deleteAdditionalPhoto(int $userId, Product $product, Request $request)
     {
-        $product->dropAdditionalPhoto($userId, $product, $request->photo, $this->uploadService);
+        $product->dropAdditionalPhoto($product, $request->photo, $this->uploadService);
+
         return redirect()->back();
     }
 
+    /**
+     * Удалить продукт
+     *
+     * @param int $userId
+     * @param Product $product
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function deleteProduct(int $userId, Product $product)
     {
-        $product->dropProduct($userId, $product, $this->uploadService);
+        $product->dropProduct($product, $this->uploadService);
+
         return redirect()->back();
     }
 }

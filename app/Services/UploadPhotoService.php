@@ -17,20 +17,19 @@ class UploadPhotoService
      * string $path - Путь по которому нужно сохранить фото
      * int $size - Расширение фотографии(Например 500px x 500px),
      * bool $drop - Нужно ли перед загрузкой новой фотографии удалить старую. Используется при обновлении модели.
-     * string $imagePath - Название файла который нужно удалить
+     * string $dropImagePath - Название файла который нужно удалить
      *
      * @param array|UploadedFile $ph
      * @param string $path
      * @param int $size
      * @param bool|null $drop
-     * @param string|null $imagePath
-     *
+     * @param string|null $dropImagePath
      * @return string
      */
-    public function uploader(array|UploadedFile $ph, string $path, int $size, bool $drop = null, string $imagePath = null): string
+    public function uploader(array|UploadedFile $ph, string $path, int $size, bool $drop = null, string $dropImagePath = null): string
     {
-        if(true == $drop && $imagePath != null) {
-            $this->dropImg($path, $imagePath);
+        if(true == $drop && $dropImagePath != null) {
+            $this->dropImg($dropImagePath);
         }
 
         $this->createPath($path);
@@ -38,7 +37,7 @@ class UploadPhotoService
         if($ph instanceof UploadedFile) {
             $image = Image::make($ph->getRealPath())->fit($size);
             $image->save($path . '/' .$ph->hashName());
-            return '/'.$image->dirname . '/' . $image->basename;
+            return $image->dirname . '/' . $image->basename;
         }
         if(count($ph) > 0) {
             $ph_array = [];
@@ -46,7 +45,7 @@ class UploadPhotoService
             foreach ($ph as $p) {
                 $image = Image::make($p->getRealPath())->fit($size);
                 $image->save($path . '/' .$p->hashName());
-                $ph_array[] = '/'.$image->dirname . '/' . $image->basename;
+                $ph_array[] = $image->dirname . '/' . $image->basename;
             }
 
             return serialize($ph_array);
@@ -67,14 +66,13 @@ class UploadPhotoService
     }
 
     /**
-     * @param string $path
      * @param string $imagePath
      * @return void
      *
      * Delete product image
      */
-    public function dropImg(string $path, string $imagePath)
+    public function dropImg(string $imagePath)
     {
-        unlink($path . $imagePath);
+        unlink($imagePath);
     }
 }

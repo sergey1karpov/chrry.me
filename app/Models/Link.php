@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Services\ColorConvertor;
+use App\Services\ColorConvertorService;
+use App\Services\UploadPhotoService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -73,33 +76,44 @@ class Link extends Model
     }
 
     /**
-     * @param \App\Models\User $user
-     * @param Request $request
-     * @return void
+     * Путь по которому сохраняются фотографии для ссылок
      *
-     * Добавления ссылки
+     * @param int $id
+     * @return string
      */
-    protected static function addLink(User $user, Request $request)
+    public function imgPath(int $id): string
     {
-        $request->validate([
-            'title' => 'min:1|max:255',
-            'link'  => 'required|url',
-            'photo' => 'nullable|mimes:jpeg,png,jpg,gif|max:5000',
-        ]);
+        return '../storage/app/public/' . $id . '/links/';
+    }
 
-        $lastLink = Link::where('user_id', $user->id)->orderBy('created_at', 'desc')->first();
+    /**
+     * Добавление ссылки
+     *
+     * @param int $userId
+     * @param LinkRequest $request
+     * @param UploadPhotoService $uploadService
+     * @return void
+     */
+    public function addLink(int $userId, LinkRequest $request, UploadPhotoService $uploadService)
+    {
+        $lastLink = Link::where('user_id', $userId)->orderBy('created_at', 'desc')->first();
 
-        $link = new self([
+        Link::create([
             'type'      => 'LINK',
+            'user_id'   => Auth::user()->id,
             'title'     => $request->title,
             'link'      => $request->link,
-            'photo'     => isset($request->photo) ? self::addPhoto($request->photo, $request->type) : null,
+            'photo'     => isset($request->photo) ?
+                $uploadService->uploader($request->photo, $this->imgPath($userId), 200) :
+                null,
             'pinned'    => isset($request->pinned) ? 1 : 0,
             'icon'      => $request->icon,
             'animation' => $request->animation,
-            //Design fields
+
             'title_color'          => isset($request->check_last_link) ? $lastLink->title_color : $request->title_color,
-            'background_color'     => isset($request->check_last_link) ? $lastLink->background_color : self::convertBackgroundColor($request->background_color),
+            'background_color'     => isset($request->check_last_link) ?
+                $lastLink->background_color :
+                ColorConvertorService::convertBackgroundColor($request->background_color),
             'title_color_hex'      => isset($request->check_last_link) ? $lastLink->title_color_hex : $request->title_color,
             'background_color_hex' => isset($request->check_last_link) ? $lastLink->background_color_hex : $request->background_color,
             'shadow'               => isset($request->check_last_link) ? $lastLink->shadow : $request->shadow,
@@ -113,36 +127,33 @@ class Link extends Model
             'text_shadow_right'    => isset($request->check_last_link) ? $lastLink->text_shadow_right : $request->text_shadow_right,
             'bold'                 => isset($request->check_last_link) ? $lastLink->bold : $request->bold,
         ]);
-
-        $user->links()->save($link);
     }
 
     /**
+     * Изменить ссылку
+     *
      * @param int $userId
      * @param Link $link
-     * @param Request $request
+     * @param LinkRequest $request
+     * @param UploadPhotoService $uploadService
      * @return void
-     *
-     * Редактирование ссылки
      */
-    protected static function editLink(int $userId, Link $link, Request $request)
+    public function editLink(int $userId, Link $link, LinkRequest $request, UploadPhotoService $uploadService)
     {
-        $request->validate([
-            'title' => 'min:1|max:100',
-            'link'  => 'required|url',
-            'photo' => 'nullable|mimes:jpeg,png,jpg,gif|max:5000',
-        ]);
-
-        self::where('id', $link->id)->where('user_id', $userId)->update([
+        Link::where('id', $link->id)->where('user_id', $userId)->update([
             'title'                => $request->title,
             'link'                 => $request->link,
             'shadow'               => $request->shadow,
             'rounded'              => $request->rounded,
             'title_color'          => isset($request->title_color) ? $request->title_color : $link->title_color,
-            'background_color'     => isset($request->background_color) ? self::convertBackgroundColor($request->background_color) : $link->background_color,
+            'background_color'     => isset($request->background_color) ?
+                ColorConvertorService::convertBackgroundColor($request->background_color) :
+                $link->background_color,
             'title_color_hex'      => $request->title_color,
             'background_color_hex' => $request->background_color,
-            'photo'                => isset($request->photo) ? self::addPhoto($request->photo, $request->type) : $link->photo,
+            'photo'                => isset($request->photo) ?
+                $uploadService->uploader($request->photo, $this->imgPath($userId), 200, true, $link->photo) :
+                $link->photo,
             'icon'                 => isset($request->icon) ? $request->icon : $link->icon,
             'transparency'         => isset($request->transparency) ? $request->transparency : $link->transparency,
             'pinned'               => isset($request->pinned) ? 1 : 0,
@@ -158,17 +169,17 @@ class Link extends Model
     }
 
     /**
-     * @param int $id
+     * Массовое изменение ссылок
+     *
+     * @param int $userId
      * @param Request $request
      * @return void
-     *
-     * Массовое изменение ссылок
      */
-    public static function editAll(int $id, Request $request) : void
+    public function editAll(int $userId, Request $request) : void
     {
-        self::where('user_id', $id)->update([
+        Link::where('user_id', $userId)->update([
             'title_color'          => $request->title_color,
-            'background_color'     => Link::convertBackgroundColor($request->background_color),
+            'background_color'     => ColorConvertorService::convertBackgroundColor($request->background_color),
             'background_color_hex' => $request->background_color,
             'title_color_hex'      => $request->title_color,
             'transparency'         => $request->transparency,
@@ -185,44 +196,34 @@ class Link extends Model
     }
 
     /**
-     * @param $color
-     * @return string
+     * Удаление прикрепленного изображения
      *
-     * Возвращает цвет, конвертируемый в формат hex
+     * @param int $userId
+     * @param Link $link
+     * @param UploadPhotoService $uploadService
+     * @return void
      */
-    public static function convertBackgroundColor($color)
+    public function deleteLinkImage(int $userId, Link $link, UploadPhotoService $uploadService)
     {
-        list($r, $g, $b) = sscanf($color, "#%02x%02x%02x");
-        return $r.', '.$g.', '.$b;
+        $uploadService->dropImg($link->photo);
+
+        Link::where('user_id', $userId)->update([
+            'photo' => '',
+        ]);
     }
 
     /**
-     * @param $img
-     * @param string $type
-     * @return string|void
+     * Удаление ссылки
      *
-     * * Проверяем по типу type
-     *
-     * Если приходит gif, то просто загружаем в каталог, если img, то сперва обрезаем до 200х200
-     * с помощью Intervention, затем сохраняем. В обоих случаях обратно получаем строку.
+     * @param Link $link
+     * @param UploadPhotoService $uploadService
+     * @return void
      */
-    protected static function addPhoto($img, string $type)
+    public function dropLink(Link $link, UploadPhotoService $uploadService)
     {
-        if($type == 'LINK') {
-            if($img->getClientOriginalExtension() == 'gif') {
-                $path = Storage::putFile('public/' . Auth::user()->id, $img);
-                return '../storage/app/'.$path;
-            }
+        $uploadService->dropImg($link->photo);
 
-            $basePath = '../storage/app/public/' . Auth::user()->id . '/links/';
-            if (!File::exists($basePath)) {
-                File::makeDirectory($basePath, 0777,true);
-            }
-
-            $image = Image::make($img->getRealPath())->fit(200);
-            $image->save($basePath . '/' .$img->hashName());
-            return '/'.$image->dirname . '/' . $image->basename;
-        }
+        $link->delete();
     }
 }
 

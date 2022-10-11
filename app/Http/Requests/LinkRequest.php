@@ -24,16 +24,9 @@ class LinkRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'min:1|max:50',
-            'link' => 'required|url',
-            'title_color' => 'nullable',
-            'background_color' => 'nullable',
-            'icon' => 'nullable',
-            'photo' => 'nullable|mimes:jpeg,png,jpg,gif|max:3000',
-            'shadow' => 'nullable',
-            'rounded' => 'nullable',
-            'transparency' => 'nullable',
-            'check_last_link' => 'nullable',
+            'title' => 'min:1|max:100',
+            'link'  => 'required|url',
+            'photo' => 'nullable|mimes:jpeg,png,jpg,gif|max:5000',
         ];
     }
 }

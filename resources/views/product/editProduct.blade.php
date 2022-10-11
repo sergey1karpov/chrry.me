@@ -136,7 +136,7 @@
             <div class="row">
                 @foreach(unserialize($product->additional_photos) as $ph)
                     <div class="col mb-2">
-                        <img class="rounded" src="{{$ph}}" width="100">
+                        <img class="rounded" src="{{'/'.$ph}}" width="100">
                         <form action="{{ route('deleteAdditionalPhoto', ['id' => $user->id, 'product' => $product->id]) }}" method="POST"> @csrf @method('PATCH')
                             <input type="hidden" value="{{$ph}}" name="photo">
                             <button class="btn-sm" style="background-color: #f1f2f2; border: none">

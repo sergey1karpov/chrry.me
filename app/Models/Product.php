@@ -13,6 +13,9 @@ class Product extends Model
 {
     use HasFactory;
 
+    /**
+     * Максимальное колличество дополнительных фото у продукта
+     */
     const TOTAL_PRODUCT_PHOTOS = 5;
 
     protected $fillable = [
@@ -29,28 +32,29 @@ class Product extends Model
 
     protected $guarded = [];
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     *
-     * Relation with User::class
-     */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * Путь по которому сохраняются фотографии для продукта
+     *
+     * @param int $id
+     * @return string
+     */
     public function imgPath(int $id): string
     {
         return '../storage/app/public/' . $id . '/products/';
     }
 
     /**
+     * Добавить продукт в базу данных
+     *
      * @param int $userId
      * @param ProductRequest $request
      * @param UploadPhotoService $uploadService
      * @return void
-     *
-     * Store product in db
      */
     public function storeProduct(int $userId, ProductRequest $request, UploadPhotoService $uploadService): void
     {
@@ -83,8 +87,6 @@ class Product extends Model
      */
     public function patchProduct(int $userId, Product $product, Request $request, UploadPhotoService $uploadService)
     {
-        $imagePath = substr(strrchr($product->main_photo, "/"), 1);
-
         if($request->additional_photos) {
             $fn = $this->checkCountAdditionalPhotosInProduct($product, $request->additional_photos, $this->imgPath($userId), $uploadService);
             if($fn !== null) {
@@ -93,7 +95,7 @@ class Product extends Model
         }
 
         if($request->main_photo) {
-            $product->main_photo = $uploadService->uploader($request->main_photo, $this->imgPath($userId), 500, true, $imagePath);
+            $product->main_photo = $uploadService->uploader($request->main_photo, $this->imgPath($userId), 500, true, $product->main_photo);
         }
 
         $product->title = $request->title;
@@ -148,7 +150,6 @@ class Product extends Model
     }
 
     /**
-     * @param $userId
      * @param Product $product
      * @param string $photo
      * @param UploadPhotoService $service
@@ -156,34 +157,27 @@ class Product extends Model
      *
      * Delete additional photo in product
      */
-    public function dropAdditionalPhoto($userId, Product $product, string $photo, UploadPhotoService $service)
+    public function dropAdditionalPhoto(Product $product, string $photo, UploadPhotoService $service)
     {
         $photoArray = unserialize($product->additional_photos);
         $findImagePosition = array_search($photo, $photoArray);
         unset($photoArray[$findImagePosition]);
 
-        $imagePath = substr(strrchr($photo, "/"), 1);
-        $service->dropImg($this->imgPath($userId), $imagePath);
+        $service->dropImg($photo);
 
         $product->additional_photos = serialize($photoArray);
         $product->save();
     }
 
-    public function dropProduct(int $userId, Product $product, UploadPhotoService $service)
+    public function dropProduct(Product $product, UploadPhotoService $service)
     {
         $photoArray = unserialize($product->additional_photos);
-        $photoNames = [];
 
         foreach($photoArray as $ph) {
-            $photoNames[] = substr(strrchr($ph, "/"), 1);
+            $service->dropImg($ph);
         }
 
-        foreach ($photoNames as $imagePath) {
-            $service->dropImg($this->imgPath($userId), $imagePath);
-        }
-
-        $main_photo = substr(strrchr($product->main_photo, "/"), 1);
-        $service->dropImg($this->imgPath($userId), $main_photo);
+        $service->dropImg($product->main_photo);
 
         $product->delete();
     }

@@ -2,19 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LinkRequest;
 use App\Models\Link;
 use App\Models\User;
-use Illuminate\Http\Request;
+use App\Services\UploadPhotoService;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class LinkController extends Controller
 {
+    public $uploadService;
+
+    public function __construct(UploadPhotoService $uploadService)
+    {
+        $this->uploadService = $uploadService;
+    }
+
     /**
+     * Возвращает страницу со всеми ссылками /links
+     *
      * @param int $id
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|never
-     *
-     * Возвращает страницу со всеми ссылками /links
      */
     public function allLinks(int $id)
     {
@@ -29,94 +37,89 @@ class LinkController extends Controller
     }
 
     /**
-     * @param int $id
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse|never
-     *
      * Добавление ссылки
+     *
+     * @param int $userId
+     * @param Link $link
+     * @param LinkRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function addLink(int $id, Request $request)
+    public function addLink(int $userId, Link $link, LinkRequest $request)
     {
-        $user = User::where('id', $id)->firstOrFail();
-        Link::addLink($user, $request);
+        $link->addLink($userId, $request, $this->uploadService);
+
         return redirect()->back();
     }
 
     /**
-     * @param int $id
-     * @param int $linkId
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse|never
+     * Изменить ссылку
      *
-     * Редактирование ссылки
+     * @param int $userId
+     * @param Link $link
+     * @param LinkRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function editLink(int $id, int $linkId, Request $request)
+    public function editLink(int $userId, Link $link, LinkRequest $request)
     {
-        $link = Link::where('id', $linkId)->where('user_id', $id)->firstOrFail();
-        if($request->photo) {
-            if($link->photo != '') {
-                unlink(ltrim($link->photo, "/"."../"));
-            }
-        }
-        if($link) {
-            Link::editLink($id, $link, $request);
-            return redirect()->back();
-        } else {
-            return abort(404);
-        }
-    }
+        $link->editLink($userId, $link, $request, $this->uploadService);
 
-    /**
-     * @param int $id
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse|never
-     *
-     * Массовое изменение ссылок
-     */
-    public function editAllLink(int $id, Request $request)
-    {
-        Link::editAll($id, $request);
         return redirect()->back();
     }
 
     /**
-     * @param int $id
-     * @param int $link
-     * @return \Illuminate\Http\JsonResponse|never
+     * Изменить все ссылки
      *
-     * Удаление фотографий в ссылке
+     * @param int $userId
+     * @param Link $link
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function delPhoto(int $id, int $link)
+    public function editAllLink(int $userId, Link $link, Request $request)
     {
-        $delPhotoFromFolder = Link::where('id', $link)->firstOrFail();
-        unlink(ltrim($delPhotoFromFolder->photo, "/"."../"));
-        Link::where('user_id', $id)->where('id', $link)->update(['photo' => null]);
+        $link->editAll($userId, $request);
+
+        return redirect()->back();
+    }
+
+    /**
+     * Удалить прикрепленное изображение у ссылки
+     *
+     * @param int $userId
+     * @param Link $link
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function delPhoto(int $userId, Link $link)
+    {
+        $link->deleteLinkImage($userId, $link, $this->uploadService);
+
         return response()->json('deleted');
     }
 
     /**
-     * @param int $id
-     * @param int $link
-     * @return \Illuminate\Http\JsonResponse|never
-     *
      * Удаление иконки ссылки
+     *
+     * @param int $id
+     * @param int $link
+     * @return \Illuminate\Http\JsonResponse|never
      */
-    public function delLinkIcon(int $id, int $link)
+    public function delLinkIcon(int $userId, int $link)
     {
-        Link::where('user_id', $id)->where('id', $link)->update(['icon' => null]);
+        Link::where('user_id', $userId)->where('id', $link)->update(['icon' => null]);
+
         return response()->json('deleted');
     }
 
     /**
-     * @param int $id
-     * @param int $link
-     * @return \Illuminate\Http\RedirectResponse|never
+     * Удаление ссылки
      *
-     * Удаление ссылки и поста
+     * @param int $userId
+     * @param Link $link
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function delLink(int $id, int $link)
+    public function delLink(int $userId, Link $link)
     {
-        Link::where('user_id', $id)->where('id', $link)->delete();
+        $link->dropLink($link, $this->uploadService);
+
         return redirect()->back();
     }
 

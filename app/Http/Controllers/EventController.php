@@ -2,27 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\UploadPhotoService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use App\Models\Event;
-use App\Models\Link;
 use App\Models\User;
 use App\Http\Requests\EventRequest;
 use Illuminate\Support\Facades\File;
 
 class EventController extends Controller
 {
+    public $uploadService;
+
+    public function __construct(UploadPhotoService $uploadService)
+    {
+        $this->uploadService = $uploadService;
+    }
+
     /**
+     * Добавление мероприятия
+     *
      * @param int $id
+     * @param Event $event
      * @param EventRequest $request
      * @return \Illuminate\Http\RedirectResponse
-     *
-     * Добавляет новое мероприятие
      */
-    public function addEvent(int $id, EventRequest $request)
+    public function addEvent(int $id, Event $event, EventRequest $request)
     {
-        Event::createEvent($id, $request);
+        $event->createEvent($id, $request, $this->uploadService);
+
         return redirect()->back();
     }
 
@@ -39,25 +46,20 @@ class EventController extends Controller
         $allFontsInFolder = File::files($fonts);
         $events = Event::where('user_id', $id)->orderBy('date')->get();
         return view('user.events', compact('user', 'events', 'allFontsInFolder'));
-
     }
 
     /**
+     * Изменить мероприятие
+     *
      * @param int $id
-     * @param int $event
+     * @param Event $event
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
-     *
-     * Изменение мероприятия
      */
-    public function editEvent(int $id, int $event, Request $request)
+    public function editEvent(int $id, Event $event, Request $request)
     {
-        $user = User::where('id', $id)->firstOrFail();
-        $event = Event::where('user_id', $id)->where('id', $event)->firstOrFail();
-        if($request->banner) {
-            unlink(ltrim($event->banner, "/"."../"));
-        }
-        Event::editEvent($user, $event, $request);
+        $event->editEvent($id, $event, $request, $this->uploadService);
+
         return redirect()->back();
     }
 
@@ -68,34 +70,34 @@ class EventController extends Controller
      *
      * Ручное удаление мероприятия
      */
-    public function deleteEvent(int $id, int $event)
+    public function deleteEvent(int $id, Event $event)
     {
-        $deleteEvent = Event::where('user_id', $id)->where('id', $event)->firstOrFail();
-        unlink(ltrim($deleteEvent->banner, "/"."../"));
-        Event::where('user_id', $id)->where('id', $event)->delete();
+        $event->dropEvent($event, $this->uploadService);
+
         return redirect()->back();
     }
 
     /**
+     * Массовое изменение мероприятий
+     *
      * @param int $id
+     * @param Event $event
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
-     *
-     * Изменение всех мероприятий
      */
-    public function editAllEvent(int $id, Request $request)
+    public function editAllEvent(int $id, Event $event, Request $request)
     {
-        $user = User::where('id', $id)->firstOrFail();
-        Event::editAll($user, $request);
+        $event->editAll($id, $request);
+
         return redirect()->back();
     }
 
     /**
+     * Laravel Scout поиск мероприятий
+     *
      * @param int $id
      * @param Request $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|never
-     *
-     * Laravel Scout поиск мероприятий
      */
     public function searchEvent(int $id, Request $request)
     {

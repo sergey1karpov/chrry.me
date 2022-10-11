@@ -315,8 +315,8 @@
                                 <div class="row text-center">
                                     <div class="col-12 text-center mt-3 mb-3" style="padding: 0">
                                         <a href="#" style="color: black; text-decoration: none">
-                                            <p style="text-shadow:{{$event->location_text_shadow_blur}}px {{$event->location_text_shadow_bottom}}px {{$event->location_text_shadow_right}}px {{$event->location_text_shadow_color}} ;font-family: '{{$event->location_font}}', sans-serif; text-transform: uppercase; font-size: {{$event->location_font_size}}em; padding: 0; margin: 0; color: {{$event->location_font_color}}">@if($event->bold_city == true)<b>@endif{{$event->city}}@if($event->bold_city == true)</b>@endif, @if($event->bold_location == true)<b>@endif{{$event->location}}@if($event->bold_location == true)</b>@endif</p>
-                                            <p style="text-shadow:{{$event->date_text_shadow_blur}}px {{$event->date_text_shadow_bottom}}px {{$event->date_text_shadow_right}}px {{$event->date_text_shadow_color}} ;font-family: '{{$event->date_font}}', sans-serif; font-size: {{$event->date_font_size}}rem; margin-bottom: 0; color: {{$event->date_font_color}};">@if($event->bold_date == true)<b>@endif{{\Carbon\Carbon::parse($event->date)->format('d.m.Y')}}@if($event->bold_date == true)</b>@endif @if($event->bold_time == true)<b>@endif{{' @'.$event->time}}@if($event->bold_time == true)</b>@endif</p>
+                                            <p style="text-shadow:{{$event->location_text_shadow_right}}px {{$event->location_text_shadow_bottom}}px {{$event->location_text_shadow_blur}}px {{$event->location_text_shadow_color}} ;font-family: '{{$event->location_font}}', sans-serif; text-transform: uppercase; font-size: {{$event->location_font_size}}em; padding: 0; margin: 0; color: {{$event->location_font_color}}">@if($event->bold_city == true)<b>@endif{{$event->city}}@if($event->bold_city == true)</b>@endif, @if($event->bold_location == true)<b>@endif{{$event->location}}@if($event->bold_location == true)</b>@endif</p>
+                                            <p style="text-shadow:{{$event->date_text_shadow_right}}px {{$event->date_text_shadow_bottom}}px {{$event->date_text_shadow_blur}}px {{$event->date_text_shadow_color}} ;font-family: '{{$event->date_font}}', sans-serif; font-size: {{$event->date_font_size}}rem; margin-bottom: 0; color: {{$event->date_font_color}};">@if($event->bold_date == true)<b>@endif{{\Carbon\Carbon::parse($event->date)->format('d.m.Y')}}@if($event->bold_date == true)</b>@endif @if($event->bold_time == true)<b>@endif{{' @'.$event->time}}@if($event->bold_time == true)</b>@endif</p>
                                         </a>
                                     </div>
                                     <div class="d-flex justify-content-between rounded-bottom rounded-3">
@@ -350,13 +350,6 @@
                                         <div class="col-12">
                                             <img class="rounded-3 img-fluid" src="{{$event->banner}}" style="width:250px;">
                                         </div>
-{{--                                        <div class="col-12 mt-2">--}}
-{{--                                            <form action="{{ route('deleteBanner', ['id' => Auth::user()->id, 'event' => $event->id]) }}" method="POST">--}}
-{{--                                                @csrf @method('PATCH')--}}
-{{--                                                <input type="hidden" name="type" value="LINK">--}}
-{{--                                                <button class="btn btn-sm btn-danger mt-2">@lang('app.a_now_del')</button>--}}
-{{--                                            </form>--}}
-{{--                                        </div>--}}
                                     </div>
                                 </div>
                             @endif

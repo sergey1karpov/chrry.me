@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Http\Requests\EventRequest;
+use App\Services\ColorConvertorService;
+use App\Services\UploadPhotoService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 use Laravel\Scout\Searchable;
 
 class Event extends Model
@@ -68,9 +71,29 @@ class Event extends Model
         'bold_time',
     ];
 
-    public static function createEvent(int $id, $request)
+    /**
+     * Возвращает путь по которому сохраняются изображения для Event
+     *
+     * @param int $id
+     * @return string
+     */
+    public function imgPath(int $id): string
+    {
+        return '../storage/app/public/' . $id . '/events/';
+    }
+
+    /**
+     * Добавление нового мероприятия
+     *
+     * @param int $id
+     * @param EventRequest $request
+     * @param UploadPhotoService $uploadService
+     * @return void
+     */
+    public function createEvent(int $id, EventRequest $request, UploadPhotoService $uploadService): void
     {
         $lastEvent = Event::where('user_id', $id)->orderBy('created_at', 'desc')->first();
+
         Event::create([
             'title'       => $request->title,
             'city'        => $request->city,
@@ -78,13 +101,13 @@ class Event extends Model
             'location'    => $request->location,
             'time'        => $request->time,
             'date'        => $request->date,
-            'banner'      => self::addBanner($request->banner),
+            'banner'      => $uploadService->uploader($request->banner, $this->imgPath($id), 500),
             'video'       => $request->video,
             'media'       => $request->media,
             'tickets'     => $request->tickets,
             'user_id'     => Auth::user()->id,
             'link_id'     => 1,
-            //Design fields
+
             'location_font'         => isset($request->check_last_event) ? $lastEvent->location_font : $request->location_font,
             'location_font_size'    => isset($request->check_last_event) ? $lastEvent->location_font_size : $request->location_font_size,
             'location_font_color'   => isset($request->check_last_event) ? $lastEvent->location_font_color : $request->location_font_color,
@@ -92,65 +115,51 @@ class Event extends Model
             'date_font_size'        => isset($request->check_last_event) ? $lastEvent->date_font_size : $request->date_font_size,
             'date_font_color'       => isset($request->check_last_event) ? $lastEvent->date_font_color : $request->date_font_color,
             'transparency'          => isset($request->check_last_event) ? $lastEvent->transparency : $request->transparency,
-            'background_color_rgba' => isset($request->check_last_event) ? $lastEvent->background_color_rgba : Link::convertBackgroundColor($request->background_color_hex),
+            'background_color_rgba' => isset($request->check_last_event) ? $lastEvent->background_color_rgba : ColorConvertorService::convertBackgroundColor($request->background_color_hex),
             'background_color_hex'  => isset($request->check_last_event) ? $lastEvent->background_color_hex : $request->background_color_hex,
             'event_animation'       => $request->event_animation,
             'event_round'           => isset($request->check_last_event) ? $lastEvent->event_round : $request->event_round,
-
-            'location_text_shadow_color'         => isset($request->check_last_event) ? $lastEvent->location_text_shadow_color : $request->location_text_shadow_color,
-            'location_text_shadow_blur'    => isset($request->check_last_event) ? $lastEvent->location_text_shadow_blur : $request->location_text_shadow_blur,
-            'location_text_shadow_bottom'   => isset($request->check_last_event) ? $lastEvent->location_text_shadow_bottom : $request->location_text_shadow_bottom,
-            'location_text_shadow_right'             => isset($request->check_last_event) ? $lastEvent->location_text_shadow_right : $request->location_text_shadow_right,
-            'date_text_shadow_color'        => isset($request->check_last_event) ? $lastEvent->date_text_shadow_color : $request->date_text_shadow_color,
+            'location_text_shadow_color'  => isset($request->check_last_event) ? $lastEvent->location_text_shadow_color : $request->location_text_shadow_color,
+            'location_text_shadow_blur'   => isset($request->check_last_event) ? $lastEvent->location_text_shadow_blur : $request->location_text_shadow_blur,
+            'location_text_shadow_bottom' => isset($request->check_last_event) ? $lastEvent->location_text_shadow_bottom : $request->location_text_shadow_bottom,
+            'location_text_shadow_right'  => isset($request->check_last_event) ? $lastEvent->location_text_shadow_right : $request->location_text_shadow_right,
+            'date_text_shadow_color'      => isset($request->check_last_event) ? $lastEvent->date_text_shadow_color : $request->date_text_shadow_color,
             'date_text_shadow_blur'       => isset($request->check_last_event) ? $lastEvent->date_text_shadow_blur : $request->date_text_shadow_blur,
-            'date_text_shadow_bottom'          => isset($request->check_last_event) ? $lastEvent->date_text_shadow_bottom : $request->date_text_shadow_bottom,
-            'date_text_shadow_right' => isset($request->check_last_event) ? $lastEvent->date_text_shadow_right : $request->date_text_shadow_right,
-            'block_shadow' => isset($request->check_last_event) ? $lastEvent->block_shadow : $request->block_shadow,
-
-            'bold_city' => isset($request->check_last_event) ? $lastEvent->bold_city : $request->bold_city,
+            'date_text_shadow_bottom'     => isset($request->check_last_event) ? $lastEvent->date_text_shadow_bottom : $request->date_text_shadow_bottom,
+            'date_text_shadow_right'      => isset($request->check_last_event) ? $lastEvent->date_text_shadow_right : $request->date_text_shadow_right,
+            'block_shadow'                => isset($request->check_last_event) ? $lastEvent->block_shadow : $request->block_shadow,
+            'bold_city'     => isset($request->check_last_event) ? $lastEvent->bold_city : $request->bold_city,
             'bold_location' => isset($request->check_last_event) ? $lastEvent->bold_location : $request->bold_location,
-            'bold_date' => isset($request->check_last_event) ? $lastEvent->bold_date : $request->bold_date,
-            'bold_time' => isset($request->check_last_event) ? $lastEvent->bold_time : $request->bold_time,
+            'bold_date'     => isset($request->check_last_event) ? $lastEvent->bold_date : $request->bold_date,
+            'bold_time'     => isset($request->check_last_event) ? $lastEvent->bold_time : $request->bold_time,
         ]);
     }
 
     /**
-     * @param $banner
-     * @return string
+     * Изменить мероприятие
      *
-     * Загрузка афиши
-     */
-    public static function addBanner($banner)
-    {
-        $path = Storage::putFile('public/' . Auth::user()->id . '/event', $banner);
-        $strpos = strpos($path, '/');
-        $mb_substr = mb_substr($path, $strpos);
-        $url = '../storage/app/public'.$mb_substr;
-        return $url;
-    }
-
-    /**
-     * @param User $user
+     * @param int $id
      * @param Event $event
-     * @param $request
+     * @param Request $request
+     * @param UploadPhotoService $uploadService
      * @return void
-     *
-     * Изменение мероприятия
      */
-    public static function editEvent(User $user, Event $event, $request)
+    public function editEvent(int $id, Event $event, Request $request, UploadPhotoService $uploadService)
     {
-        self::where('user_id', $user->id)->where('id', $event->id)->update([
+        Event::where('id', $event->id)->update([
             'title'       => $request->title,
             'description' => $request->description,
             'city'        => $request->city,
             'location'    => $request->location,
             'time'        => $request->time,
             'date'        => isset($request->date) ? $request->date : $event->date,
-            'banner'      => isset($request->banner) ? self::addBanner($request->banner) : $event->banner,
+            'banner'      => isset($request->banner) ?
+                $uploadService->uploader($request->banner, $this->imgPath($id), 500, true, $event->banner) :
+                $event->banner,
             'video'       => $request->video,
             'media'       => $request->media,
             'tickets'     => $request->tickets,
-            //Design fields
+
             'location_font'         => isset($request->location_font) ? $request->location_font : $event->location_font,
             'location_font_size'    => $request->location_font_size,
             'location_font_color'   => $request->location_font_color,
@@ -158,37 +167,36 @@ class Event extends Model
             'date_font_size'        => $request->date_font_size,
             'date_font_color'       => $request->date_font_color,
             'transparency'          => $request->transparency,
-            'background_color_rgba' => Link::convertBackgroundColor($request->background_color_hex),
+            'background_color_rgba' => ColorConvertorService::convertBackgroundColor($request->background_color_hex),
             'background_color_hex'  => $request->background_color_hex,
             'event_animation'       => $request->event_animation,
             'event_round'           => $request->event_round,
-            'location_text_shadow_color'         => $request->location_text_shadow_color,
-            'location_text_shadow_blur'    => $request->location_text_shadow_blur,
-            'location_text_shadow_bottom'   => $request->location_text_shadow_bottom,
-            'location_text_shadow_right'             => $request->location_text_shadow_right,
-            'date_text_shadow_color'        => $request->date_text_shadow_color,
+            'location_text_shadow_color'  => $request->location_text_shadow_color,
+            'location_text_shadow_blur'   => $request->location_text_shadow_blur,
+            'location_text_shadow_bottom' => $request->location_text_shadow_bottom,
+            'location_text_shadow_right'  => $request->location_text_shadow_right,
+            'date_text_shadow_color'      => $request->date_text_shadow_color,
             'date_text_shadow_blur'       => $request->date_text_shadow_blur,
-            'date_text_shadow_bottom'          => $request->date_text_shadow_bottom,
-            'date_text_shadow_right' => $request->date_text_shadow_right,
-            'block_shadow' => isset($request->block_shadow) ? $request->block_shadow : $event->shadow,
-
-            'bold_city' => $request->bold_city,
+            'date_text_shadow_bottom'     => $request->date_text_shadow_bottom,
+            'date_text_shadow_right'      => $request->date_text_shadow_right,
+            'block_shadow'                => isset($request->block_shadow) ? $request->block_shadow : $event->shadow,
+            'bold_city'     => $request->bold_city,
             'bold_location' => $request->bold_location,
-            'bold_date' => $request->bold_date,
-            'bold_time' => $request->bold_time,
+            'bold_date'     => $request->bold_date,
+            'bold_time'     => $request->bold_time,
         ]);
     }
 
     /**
-     * @param User $user
-     * @param $request
-     * @return void
-     *
      * Массовое изменение мероприятий
+     *
+     * @param int $id
+     * @param Request $request
+     * @return void
      */
-    public static function editAll(User $user, $request)
+    public function editAll(int $id, Request $request)
     {
-        self::where('user_id', $user->id)->update([
+        Event::where('user_id', $id)->update([
             'location_font'         => $request->location_font,
             'location_font_size'    => $request->location_font_size,
             'location_font_color'   => $request->location_font_color,
@@ -196,23 +204,36 @@ class Event extends Model
             'date_font_size'        => $request->date_font_size,
             'date_font_color'       => $request->date_font_color,
             'transparency'          => $request->transparency,
-            'background_color_rgba' => Link::convertBackgroundColor($request->background_color_hex),
+            'background_color_rgba' => ColorConvertorService::convertBackgroundColor($request->background_color_hex),
             'background_color_hex'  => $request->background_color_hex,
             'event_round'           => $request->event_round,
-            'location_text_shadow_color'         => $request->location_text_shadow_color,
-            'location_text_shadow_blur'    => $request->location_text_shadow_blur,
-            'location_text_shadow_bottom'   => $request->location_text_shadow_bottom,
-            'location_text_shadow_right'             => $request->location_text_shadow_right,
-            'date_text_shadow_color'        => $request->date_text_shadow_color,
+            'location_text_shadow_color'  => $request->location_text_shadow_color,
+            'location_text_shadow_blur'   => $request->location_text_shadow_blur,
+            'location_text_shadow_bottom' => $request->location_text_shadow_bottom,
+            'location_text_shadow_right'  => $request->location_text_shadow_right,
+            'date_text_shadow_color'      => $request->date_text_shadow_color,
             'date_text_shadow_blur'       => $request->date_text_shadow_blur,
-            'date_text_shadow_bottom'          => $request->date_text_shadow_bottom,
+            'date_text_shadow_bottom'     => $request->date_text_shadow_bottom,
             'date_text_shadow_right' => $request->date_text_shadow_right,
-            'block_shadow' => $request->block_shadow,
-            'bold_city' => $request->bold_city,
-            'bold_location' => $request->bold_location,
-            'bold_date' => $request->bold_date,
-            'bold_time' => $request->bold_time,
+            'block_shadow'           => $request->block_shadow,
+            'bold_city'              => $request->bold_city,
+            'bold_location'          => $request->bold_location,
+            'bold_date'              => $request->bold_date,
+            'bold_time'              => $request->bold_time,
         ]);
     }
 
+    /**
+     * Удаление мероприятия
+     *
+     * @param Event $event
+     * @param UploadPhotoService $uploadService
+     * @return void
+     */
+    public function dropEvent(Event $event, UploadPhotoService $uploadService)
+    {
+        $uploadService->dropImg($event->banner);
+
+        $event->delete();
+    }
 }
