@@ -137,10 +137,10 @@
                         <div class="col-4">
                             <img src="{{$product->main_photo}}" width="150" class="img-fluid" alt="...">
                         </div>
-                        <div class="col-8">
+                        <div class="col-8 @if($user->dayVsNight) bg-secondary @endif">
                             <div class="card-body">
-                                <h5 class="card-title">{{$product->title}}</h5>
-                                <p class="card-text">{{$product->description}}</p>
+                                <h5 class="card-title @if($user->dayVsNight) text-white-50 @endif">{{$product->title}}</h5>
+                                <p class="card-text @if($user->dayVsNight) text-white-50 @endif">{{$product->description}}</p>
                             </div>
                         </div>
                     </div>

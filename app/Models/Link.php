@@ -2,20 +2,14 @@
 
 namespace App\Models;
 
-use App\Services\ColorConvertor;
 use App\Services\ColorConvertorService;
 use App\Services\UploadPhotoService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
-use Intervention\Image\ImageManagerStatic as Image;
-use App\Models\User;
 use App\Http\Requests\LinkRequest;
-use App\Http\Requests\PostRequest;
 use Laravel\Scout\Searchable;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
 
 class Link extends Model
 {
