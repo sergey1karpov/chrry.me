@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -26,12 +27,15 @@ require __DIR__.'/auth.php';
  * Карточка пользователя
  */
 Route::get('/{slug}', [UserController::class, 'userHomePage'])->name('userHomePage');
+Route::get('/{slug}/item-{product}', [ProductController::class, 'showProductDetails'])->name('showProductDetails');
 
 /**
  * Маршруты для функционала с nfc
  */
 Route::get('cc/{utag}', [UserController::class, 'editNewUserForm'])->name('editNewUserForm');
 Route::patch('cc/{utag}/registered', [UserController::class, 'editNewUser'])->name('editNewUser');
+
+Route::post('/{id}/order/{product}', [OrderController::class, 'sendOrder'])->name('sendOrder');
 
 /**
  * Личный кабинет пользователя
@@ -81,7 +85,13 @@ Route::middleware(['locale', 'userCheck', 'web'])->group(function () {
     Route::get('/{id}/edit-product/{product}/show', [ProductController::class, 'showProduct'])->name('showProduct');
     Route::patch('/{id}/edit-product/{product}/edit', [ProductController::class, 'editProduct'])->name('editProduct');
     Route::patch('/{id}/delete-photo/{product}/delete', [ProductController::class, 'deleteAdditionalPhoto'])->name('deleteAdditionalPhoto');
-    Route::delete('/{id}/delete-pproduct/{product}/delete', [ProductController::class, 'deleteProduct'])->name('deleteProduct');
+    Route::delete('/{id}/delete-product/{product}/delete', [ProductController::class, 'deleteProduct'])->name('deleteProduct');
+    Route::post('{id}/product/sort', [ProductController::class, 'sortProduct'])->name('sortProduct');
+    /**
+     * Маршруты для работы с заявками
+     */
+    Route::get('/{id}/orders', [OrderController::class, 'orders'])->name('orders');
+    Route::post('/{id}/orders/{order}/order-processing', [OrderController::class, 'orderProcessing'])->name('orderProcessing');
 });
 
 /**

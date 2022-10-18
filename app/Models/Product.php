@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Requests\OrderProductRequest;
 use App\Http\Requests\ProductRequest;
 use App\Services\UploadPhotoService;
 use Illuminate\Http\Request;
@@ -27,6 +28,9 @@ class Product extends Model
         'type',
         'full_description',
         'additional_photos',
+        'link_to_shop',
+        'link_to_shop_text',
+        'link_to_order_text',
     ];
 
     protected $guarded = [];
@@ -71,6 +75,10 @@ class Product extends Model
         $product->count_products = $request->count_products;
         $product->visible = isset($request->visible) ? 1 : 0;
         $product->type = 'Market';
+
+        $product->link_to_shop = $request->link_to_shop;
+        $product->link_to_shop_text = $request->link_to_shop_text;
+        $product->link_to_order_text = $request->link_to_order_text;
 
         $user->products()->save($product);
     }
@@ -168,6 +176,13 @@ class Product extends Model
         $product->save();
     }
 
+    /**
+     * Удаление продукта с фотографиями
+     *
+     * @param Product $product
+     * @param UploadPhotoService $service
+     * @return void
+     */
     public function dropProduct(Product $product, UploadPhotoService $service)
     {
         $photoArray = unserialize($product->additional_photos);

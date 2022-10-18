@@ -108,6 +108,20 @@
         <!-- Карточка юзера -->
         <!-- ---------------------- -->
         <div class="container-fluid justify-content-center text-center mb-2">
+
+            @if ($message = Session::get('success'))
+                <div class="row">
+                    <div class="col-12" style="padding: 0">
+                        <div class="alert alert-info alert-dismissible fade show" role="alert" style="margin: 0;">
+                            <div class="title">
+                                <span style="font-family: 'Rubik', sans-serif; font-size: 100%; line-height: 16px; display:block; color: white;">{{$message}}</span>
+                            </div>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
 	        <div class="d-flex justify-content-center text-center">
 		      	<div class="text-center" style="margin-top: 25px">
 			        <div class="d-flex justify-content-center">
@@ -126,6 +140,26 @@
 			        @endif
 
                     @if($user->type == 'Events')
+                        @if($user->show_social == true)
+                            @if($user->social == 'TOP')
+                                @if(count($links) > 0)
+                                    <nav class="navbar mt-2">
+                                        <div class="container-fluid d-flex justify-content-center">
+                                            @foreach($links as $link)
+                                                @if($link->icon)
+                                                    <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">
+                                                        <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="width:40px;">
+                                                    </a>
+                                                @endif
+                                            @endforeach
+                                        </div>
+                                    </nav>
+                                @endif
+                            @endif
+                        @endif
+                    @endif
+
+                    @if($user->type == 'Market')
                         @if($user->show_social == true)
                             @if($user->social == 'TOP')
                                 @if(count($links) > 0)
@@ -419,12 +453,11 @@
         @elseif($user->type == 'Market')
             <div class="mt-3">
                 @foreach($products as $product)
-                    <section style="background-color: #eee;" data-bs-toggle="modal" data-bs-target="#productModal{{$product->id}}">
-                        <div class="container mt-3">
+                    <section data-bs-toggle="modal" data-bs-target="#productModal{{$product->id}}">
+                        <div class="container mt-2">
                             <div class="row justify-content-center">
                                 <div class="col-md-8 col-lg-6 col-xl-4">
-                                    <div class="card text-black">
-                                        <i class="fab fa-apple fa-lg pt-3 pb-1 px-3"></i>
+                                    <div class="card text-black shadow-sm mb-3 bg-body rounded">
                                         <img src="{{$product->main_photo}}"
                                              class="card-img-top" alt="Apple Computer" />
                                         <div class="card-body">
@@ -467,7 +500,16 @@
                                         </div>
                                     </div>
                                     <div class="d-grid gap-2 mt-3">
-                                        <button class="btn btn-primary" type="button">Купить</button>
+                                        @if($product->link_to_shop)
+                                            <a class="btn btn-primary" href="{{$product->link_to_shop}}">
+                                                {{$product->link_to_shop_text}}
+                                            </a>
+                                        @endif
+                                        @if($product->link_to_order_text)
+                                            <a class="btn btn-primary" href="{{ route('showProductDetails', ['slug' => $user->slug, 'product' => $product->id]) }}">
+                                                {{$product->link_to_order_text}}
+                                            </a>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -475,6 +517,25 @@
                     </div>
                 @endforeach
             </div>
+            @if($user->type == 'Market')
+                @if($user->show_social == true)
+                    @if($user->social == 'DOWN')
+                        @if(count($links) > 0)
+                            <nav class="navbar mt-4">
+                                <div class="container-fluid d-flex justify-content-center">
+                                    @foreach($links as $link)
+                                        @if($link->icon)
+                                            <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">
+                                                <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="width:40px;">
+                                            </a>
+                                        @endif
+                                    @endforeach
+                                </div>
+                            </nav>
+                        @endif
+                    @endif
+                @endif
+            @endif
         @endif
         <!-- ---------------------- -->
         <!-- Соц сети для типа Links -->

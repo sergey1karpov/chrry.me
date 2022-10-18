@@ -130,48 +130,104 @@
             </nav>
         </div>
 
-        <div class="mt-3">
-            @foreach($products as $product)
-                <div class="card mb-2 ms-2 me-2 shadow-sm" style="border: none; border-radius: 0">
-                    <div class="row g-0">
-                        <div class="col-4">
-                            <img src="{{$product->main_photo}}" width="150" class="img-fluid" alt="...">
-                        </div>
-                        <div class="col-8 @if($user->dayVsNight) bg-secondary @endif">
-                            <div class="card-body">
-                                <h5 class="card-title @if($user->dayVsNight) text-white-50 @endif">{{$product->title}}</h5>
-                                <p class="card-text @if($user->dayVsNight) text-white-50 @endif">{{$product->description}}</p>
+        <table class="table">
+            <tbody>
+                @foreach($products as $product)
+                    <tr data-index="{{$product->id}}" data-position="{{$product->position}}">
+                        <td style="padding-left: 0; padding-right: 0; padding-bottom: 0; border: 0">
+
+                            <div class="mt-3" id="up">
+                                <div class="card mb-2 ms-2 me-2 shadow-sm" style="border: none; border-radius: 0">
+                                    <div class="row g-0">
+                                        <div class="col-4">
+                                            <img src="{{$product->main_photo}}" width="150" class="img-fluid" alt="...">
+                                        </div>
+                                        <div class="col-8 @if($user->dayVsNight) bg-secondary @endif">
+                                            <div class="card-body">
+                                                <h5 class="card-title @if($user->dayVsNight) text-white-50 @endif">{{$product->title}}</h5>
+                                                <p class="card-text @if($user->dayVsNight) text-white-50 @endif">{{$product->description}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between rounded-bottom rounded-3" style="padding: 0;">
+                                        <div class="col-4 border-end text-center" style="background-color: #f0eeef; box-shadow: 5px 0px 0px black;">
+                                            <a href="#" style="text-decoration: none; color: black">
+                                                <button href="#" class="btn-sm" style="background-color: #f1f2f2; border: 0;">
+                                                    Статистика
+                                                </button>
+                                            </a>
+                                        </div>
+                                        <div class="col-4 border-end text-center" style="background-color: #f0eeef; box-shadow: 5px 0px 0px black;">
+                                            <a href="{{route('showProduct', ['id' => $user->id, 'product' => $product->id])}}">
+                                                <button class="btn-sm" style="background-color: #f1f2f2; border: 0;">
+                                                    Изменить
+                                                </button>
+                                            </a>
+                                        </div>
+                                        <div class="col-4 text-center" style="background-color: #FD5D5B; ">
+                                            <form action="{{ route('deleteProduct', ['id' => $user->id, 'product' => $product->id]) }}" method="POST">
+                                                @csrf @method('DELETE')
+                                                <button class="btn-sm" style="background-color: #FD5D5B; border: 0;">
+                                                    Удалить
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-between rounded-bottom rounded-3" style="padding: 0;">
-                        <div class="col-4 border-end text-center" style="background-color: #f0eeef; box-shadow: 5px 0px 0px black;">
-                            <a href="#" style="text-decoration: none; color: black">
-                                <button href="#" class="btn-sm" style="background-color: #f1f2f2; border: 0;">
-                                    Статистика
-                                </button>
-                            </a>
-                        </div>
-                        <div class="col-4 border-end text-center" style="background-color: #f0eeef; box-shadow: 5px 0px 0px black;">
-                            <a href="{{route('showProduct', ['id' => $user->id, 'product' => $product->id])}}">
-                                <button class="btn-sm" style="background-color: #f1f2f2; border: 0;">
-                                    Изменить
-                                </button>
-                            </a>
-                        </div>
-                        <div class="col-4 text-center" style="background-color: #FD5D5B; ">
-                            <form action="{{ route('deleteProduct', ['id' => $user->id, 'product' => $product->id]) }}" method="POST">
-                                @csrf @method('DELETE')
-                                <button class="btn-sm" style="background-color: #FD5D5B; border: 0;">
-                                    Удалить
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        </div>
+
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
     </body>
+
+    @foreach($products as $product)
+        <script type="text/javascript">
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $(document).ready(function () {
+                $('table tbody').sortable({
+                    handle:'#up',
+                    update: function (event, ui) {
+                        $(this).children().each(function (index) {
+                            if ($(this).attr('data-position') != (index+1)) {
+                                $(this).attr('data-position', (index+1)).addClass('updated');
+                            }
+                        });
+
+                        saveNewPositions();
+                    }
+                });
+            });
+
+            function saveNewPositions() {
+                var positions = [];
+                $('.updated').each(function () {
+                    positions.push([$(this).attr('data-index'), $(this).attr('data-position')]);
+                    $(this).removeClass('updated');
+                });
+
+                $.ajax({
+                    url: "product/sort",
+                    method: 'POST',
+                    dataType: 'text',
+                    data: {
+                        update: 1,
+                        positions: positions
+                    }, success: function (response) {
+                        console.log(response);
+                    }
+                });
+            }
+        </script>
+    @endforeach
+
 </html>
 
 

@@ -18,20 +18,23 @@ class StatsService
      */
     public static function createUserStats(User $user)
     {
-        // $response = Http::get('http://ip-api.com/php/' . $_SERVER['REMOTE_ADDR']);
-        // $array = unserialize($response->body());
+//        $response = Http::get('http://ip-api.com/php/' . $_SERVER['REMOTE_ADDR']);
+//        $data = unserialize($response->body());
 
-        $stat = Stats::where('guest_ip', $_SERVER['REMOTE_ADDR'])->where('created_at', Carbon::today())->where('user_id', $user->id)->first();
-        if(false == $stat) {
-            $stats = new Stats();
-            $stats->user_id    = $user->id;
-            $stats->guest_ip   = $_SERVER['REMOTE_ADDR'];
-            $stats->created_at = Carbon::today();
-            // $stats->city = $array['city'];
-            // $stats->country = $array['country'];
-            // $stats->country_code = $array['countryCode'];
+        $stat = Stats::where('guest_ip', $_SERVER['REMOTE_ADDR'])
+            ->where('created_at', Carbon::today())
+            ->where('user_id', $user->id)
+            ->first();
 
-            $stats->save();
+        if(null == $stat) {
+            $profileStat = new Stats();
+            $profileStat->user_id = $user->id;
+            $profileStat->guest_ip = $_SERVER['REMOTE_ADDR'];
+            $profileStat->created_at = Carbon::today();
+//            $profileStat->city = $data['city'];
+//            $profileStat->country = $data['country'];
+//            $profileStat->country_code = $data['country'];
+            $profileStat->save();
         }
     }
 
@@ -43,10 +46,14 @@ class StatsService
      */
     public static function clickLinkStatistic()
     {
-        // $response = Http::get('http://ip-api.com/php/' . $_POST['guest_ip']);
-        // $data = unserialize($response->body());
+//        $response = Http::get('http://ip-api.com/php/' . $_POST['guest_ip']);
+//        $data = unserialize($response->body());
 
-        $stat = LinkStat::where('guest_ip', $_POST['guest_ip'])->where('created_at', Carbon::today())->where('user_id', $_POST['user_id'])->where('link_id', $_POST['link_id'])->first();
+        $stat = LinkStat::where('guest_ip', $_POST['guest_ip'])
+            ->where('created_at', Carbon::today())
+            ->where('user_id', $_POST['user_id'])
+            ->where('link_id', $_POST['link_id'])
+            ->first();
 
         if(false == $stat) {
             $func = $_POST['func'];
@@ -57,36 +64,24 @@ class StatsService
                 $linkStat->link_id = $_POST['link_id'];
                 $linkStat->guest_ip = $_POST['guest_ip'];
                 $linkStat->created_at = Carbon::today();
-                // $linkStat->city = $data['city'];
-                // $linkStat->country = $data['country'];
-                // $linkStat->country_code = $data['countryCode'];
+//                $linkStat->city = $data['city'];
+//                $linkStat->country = $data['country'];
+//                $linkStat->country_code = $data['countryCode'];
                 $linkStat->save();
 
             }
         }
     }
 
-    /**
-     * @param User $user
-     * @return array
-     *
-     * Return user profile stats for day
-     */
     public static function getUserStatsByDay(User $user)
     {
-        $data['stat'] = Stats::where('created_at', Carbon::today())->where('user_id', $user->id)->get();
-        $data['uniqueCity'] = \DB::table('stats')->where('created_at', Carbon::today())->where('user_id', $user->id)->select('city', \DB::raw('COUNT(city) as count'))->orderByRaw('COUNT(city) DESC')->groupBy('city')->get(); //LIMIT ???
-        $data['uniqueCountry'] = \DB::table('stats')->where('created_at', Carbon::today())->where('user_id', $user->id)->select('country', \DB::raw('COUNT(country) as count'))->orderByRaw('COUNT(country) DESC')->groupBy('country')->get();
+        $data['stat'] = Stats::todayUser(Carbon::today(), $user->id)->get();
+        $data['uniqueCity'] = Stats::todayUser(Carbon::today(), $user->id)->count('city')->get();
+        $data['uniqueCountry'] = Stats::todayUser(Carbon::today(), $user->id)->count('country')->get();
 
         return $data;
     }
 
-    /**
-     * @param User $user
-     * @return array
-     *
-     * Return user profile stats for month
-     */
     public static function getUserStatsByMonth(User $user) //Статистика за месяц
     {
         $data['stat'] = Stats::whereMonth('created_at', Carbon::now()->month)->where('user_id', $user->id)->get();

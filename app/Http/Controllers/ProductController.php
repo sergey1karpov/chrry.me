@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\NotLinkProductException;
+use App\Http\Requests\OrderProductRequest;
 use App\Http\Requests\ProductRequest;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
 use App\Services\UploadPhotoService;
@@ -42,15 +45,14 @@ class ProductController extends Controller
     {
         $user = User::find($userId);
 
-        return view('product.products', [
-           'user' => $user,
-           'products' => $user->products,
-        ]);
+        $products = Product::where('user_id', $userId)->orderBy('position')->get();
+
+        return view('product.products', compact('user', 'products'));
     }
 
-    public function showProduct(int $id, Product $product)
+    public function showProduct(int $userId, Product $product)
     {
-        $user = User::findOrFail($id);
+        $user = User::findOrFail($userId);
 
         return view('product.editProduct', compact('user', 'product'));
     }
@@ -97,6 +99,40 @@ class ProductController extends Controller
         $product->dropProduct($product, $this->uploadService);
 
         return redirect()->back();
+    }
+
+    /**
+     * Показать продукт и форму для отправки заявки
+     *
+     * @param $slug
+     * @param $product
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|void
+     */
+    public function showProductDetails($slug, $product) {
+
+        $user = User::where('slug', $slug)->first();
+
+        $product = Product::where('user_id', $user->id)->where('id', $product)->first();
+
+        if($product->link_to_order_text) {
+            return view('product.showProduct', compact('user', 'product'));
+        } else {
+            abort(404);
+        }
+
+    }
+
+    public function sortProduct(int $id)
+    {
+        if(isset($_POST['update'])) {
+            foreach($_POST['positions'] as $position) {
+                $index = $position[0];
+                $newPosition = $position[1];
+                Product::where('user_id', $id)->where('id', $index)->update([
+                    'position' => $newPosition,
+                ]);
+            }
+        }
     }
 }
 

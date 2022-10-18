@@ -87,6 +87,11 @@ class User extends Authenticatable
         return $this->hasMany(Product::class);
     }
 
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
     public function imgPath(int $id): string
     {
         return '../storage/app/public/' . $id;

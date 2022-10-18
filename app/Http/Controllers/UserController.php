@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Link;
+use App\Models\Product;
 use App\Models\User;
 use App\Models\Event;
 use App\Services\UploadPhotoService;
@@ -19,14 +20,14 @@ class UserController extends Controller
 {
     public function __construct(private UploadPhotoService $uploadService) {}
 
-
     public function userHomePage(string $slug)
     {
         $user = User::where('slug', $slug)->firstOrFail();
         $links = \DB::table('links')->where('user_id', $user->id)->where('pinned', false)->orderBy('position')->get();
         $pinnedLinks = \DB::table('links')->where('user_id', $user->id)->where('pinned', true)->orderBy('position')->get();
 
-        $products = $user->products;
+        $products = Product::where('user_id', $user->id)->orderBy('position')->get();
+
         $linksWithoutBar = \DB::table('links')->where('type', 'LINK')->where('user_id', $user->id)->where('icon', null)->orderBy('position')->get();
 
         $events = Event::where('user_id', $user->id)->orderBy('date')->get();
@@ -37,7 +38,6 @@ class UserController extends Controller
 
         return view('user.home', compact('user', 'links', 'pinnedLinks', 'events', 'linksWithoutBar', 'products'));
     }
-
 
     public function editProfileForm(int $id)
     {

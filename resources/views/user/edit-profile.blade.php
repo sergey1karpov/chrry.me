@@ -162,6 +162,31 @@
 				</div>
 			</div>
 
+            <!-- БЛОК: Заказы -->
+            @if($user->type == 'Market')
+                <div class="row" style="margin-right: 0">
+                    <div class="col-12" style="padding-right: 7px; padding: 0">
+                        <a href="{{ route('orders', ['id' => $user->id]) }}">
+                            <div class="block1 row shadow @if($user->dayVsNight) bg-dark @endif" style="background-color: #ec4f43">
+                                <div class="col-4">
+                                    <div class="imgg m-5" style="background-image: url(https://i.ibb.co/3vmRBDy/vvvvvvvv.png);"></div>
+                                </div>
+                                <div class="col-8 d-flex align-items-center">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h4 class="block1-text mt-4 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">Заказы {{count($user->orders)}}</h4>
+                                        </div>
+                                        <div class="col-12">
+                                            <h4 class="block1-text mb-3 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">В этом разделе находятся все ваши заказы</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            @endif
+
 			<!-- БЛОК: Все материалы -->
             <div class="row" style="margin-right: 0">
 				<div class="col-12" style="padding-right: 7px; padding: 0">
@@ -768,6 +793,20 @@
                                     </div>
                                 </div>
 
+                                {{-- Market buttons --}}
+                                <div class="mb-3"> <!-- Название продукта -->
+                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Ссылка на товар</label>
+                                    <input class="form-control mb-1" name="link_to_shop" id="title" placeholder="Ozon, Wildberries и тд..." style="border-radius: 0">
+
+                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Текст для ссылки на товар</label>
+                                    <input class="form-control" name="link_to_shop_text" id="title" placeholder="Купить на Ozon" style="border-radius: 0">
+                                </div>
+                                <div class="mb-3"> <!-- Название продукта -->
+                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Текст для кнопки заказа</label>
+                                    <input class="form-control" name="link_to_order_text" id="title" placeholder="Напишите мне для заказа" style="border-radius: 0">
+                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Покупать заполняет форму и заявка на товар\услугу появится в вашем личном кабинете</span>
+                                </div>
+
                                 <div class="d-grid gap-2">
                                     <button type="submit" class="btn btn-secondary" style="border-radius: 0">@lang('app.m_add_link')</button>
                                 </div>
@@ -1103,16 +1142,16 @@
 
 
         <!-- ХЗ блять че это? -->
-        <script>
-            $(function(){
-                $("input[type='submit']").click(function(){
-                    var $fileUpload = $("input[type='file']");
-                    if (parseInt($fileUpload.get(0).files.length)>2){
-                    alert("You can only upload a maximum of 2 files");
-                    }
-                });
-            });
-        </script>
+{{--        <script>--}}
+{{--            $(function(){--}}
+{{--                $("input[type='submit']").click(function(){--}}
+{{--                    var $fileUpload = $("input[type='file']");--}}
+{{--                    if (parseInt($fileUpload.get(0).files.length)>2){--}}
+{{--                    alert("You can only upload a maximum of 2 files");--}}
+{{--                    }--}}
+{{--                });--}}
+{{--            });--}}
+{{--        </script>--}}
 
         <!-- Icons select loader -->
         <script>
@@ -1229,12 +1268,12 @@
             	if(type == 'Links') {
             		$('#event-block').hide();
             	}
-            	if(type == 'Events') {
+            	if(type == 'Events' || type == 'Market') {
             		$('#event-block').show();
             	}
                 $('#type-profile').change(function(){
                     $('#pp').html($(this).val());
-                    if($(this).val() == 'Events') {
+                    if($(this).val() == 'Events' || $(this).val() == 'Market') {
                         $('#event-block').show();
                     }
                     if($(this).val() == 'Links') {
@@ -1243,24 +1282,24 @@
                 });
             });
 
-            $( document ).ready(function() {
-                var type = $('#type-profile').val();
-                if(type == 'Events') {
-                    $('#link_bar').hide();
-                }
-                if(type == 'Links') {
-                    $('#link_bar').show();
-                }
-                $('#type-profile').change(function(){
-                    $('#pp').html($(this).val());
-                    if($(this).val() == 'Events') {
-                        $('#link_bar').hide();
-                    }
-                    if($(this).val() == 'Links') {
-                        $('#link_bar').show();
-                    }
-                });
-            });
+            // $( document ).ready(function() {
+            //     var type = $('#type-profile').val();
+            //     if(type == 'Events') {
+            //         $('#link_bar').hide();
+            //     }
+            //     if(type == 'Links') {
+            //         $('#link_bar').show();
+            //     }
+            //     $('#type-profile').change(function(){
+            //         $('#pp').html($(this).val());
+            //         if($(this).val() == 'Events') {
+            //             $('#link_bar').hide();
+            //         }
+            //         if($(this).val() == 'Links') {
+            //             $('#link_bar').show();
+            //         }
+            //     });
+            // });
 
         </script>
 
