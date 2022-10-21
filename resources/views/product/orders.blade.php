@@ -89,7 +89,7 @@
 
 <div class="me-2 ms-2 rounded">
     @foreach($orders as $order)
-        <div class="card mb-2 ms-2 me-2 shadow position-relative" style="border: none;" data-bs-toggle="modal" data-bs-target="#order{{$order->id}}">
+        <div class="card mb-2 ms-2 me-2 shadow position-relative mt-3" style="border: none;" data-bs-toggle="modal" data-bs-target="#order{{$order->id}}">
             @if(!$order->processed)
             <span class="position-absolute top-100 start-50 translate-middle badge rounded-pill bg-success shadow">Новый заказ <span class="visually-hidden">непрочитанные сообщения</span></span>
             @elseif($order->processed)
@@ -109,9 +109,9 @@
         </div>
 
         <div class="modal fade" id="order{{$order->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="block-modal modal-content text-center @if($user->dayVsNight) bg-dark text-white-50 @endif shadow" style="border: 0">
-                    <div class="modal-body ">
+            <div class="modal-dialog" style="margin: 0">
+                <div class="block-modal modal-content text-center @if($user->dayVsNight) bg-dark text-white-50 @endif shadow" style="border: 0; border-radius: 0">
+                    <div class="modal-body " style="border-radius: 0">
                         <div class="text-right"> <i class="fa fa-close close" data-dismiss="modal"></i> </div>
                         <div class="p-1">
                             <h5 class="text-uppercase">{{$order->client_name}}</h5>

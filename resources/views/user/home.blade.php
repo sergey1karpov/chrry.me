@@ -223,20 +223,12 @@
                                             <div class="d-flex align-items-center justify-content-start mt-1 mb-1" style="padding-left: 4px; padding-right: 4px;">
                                                 <!-- Картинка -->
                                                 <div class="col-1">
-                                                    @if($link->type == 'POST')
-                                                        @if($link->photos)
-                                                            @foreach(unserialize($link->photos) as $key => $photo)
-                                                                @if($key == 0)
-                                                                    <img src="{{$photo}}" style="width:48px; border-radius: {{$link->rounded}}px;">
-                                                                @endif
-                                                            @endforeach
-                                                        @endif
-                                                    @elseif($link->type != 'POST')
-                                                        @if($link->icon)
-                                                            <img src="{{$link->icon}}" style="width:50px; ">
-                                                        @elseif($link->icon == false)
-                                                            <img src="{{$link->photo}}" style="color:red; width:50px; border-radius: {{$link->rounded}}px;">
-                                                        @endif
+                                                    @if($link->icon)
+                                                        <img src="{{$link->icon}}" style="width:50px;">
+                                                    @elseif($link->photo)
+                                                        <img src="{{$link->photo}}" style="width:50px; border-radius: {{$link->rounded}}px;">
+                                                    @else
+                                                        <img src="https://digiltable.com/wp-content/uploads/edd/2021/09/Sexy-lady-logo-Pornhub-logo.png" style="width:50px; border-radius: {{$link->rounded}}px; opacity: 0;">
                                                     @endif
                                                 </div>
                                                 <!-- Текст ссылки -->
@@ -371,8 +363,8 @@
                                     <div class="row text-center">
                                         <div class="col-12 text-center mt-3 mb-3" style="padding: 0">
                                             <a href="#" style="color: black; text-decoration: none">
-                                                <p style="text-shadow:{{$event->location_text_shadow_blur}}px {{$event->location_text_shadow_bottom}}px {{$event->location_text_shadow_right}}px {{$event->location_text_shadow_color}} ;font-family: '{{$event->location_font}}', sans-serif; text-transform: uppercase; font-size: {{$event->location_font_size}}em; padding: 0; margin: 0; color: {{$event->location_font_color}}">@if($event->bold_city == true)<b>@endif{{$event->city}}@if($event->bold_city == true)</b>@endif, @if($event->bold_location == true)<b>@endif{{$event->location}}@if($event->bold_location == true)</b>@endif</p>
-                                                <p style="text-shadow:{{$event->date_text_shadow_blur}}px {{$event->date_text_shadow_bottom}}px {{$event->date_text_shadow_right}}px {{$event->date_text_shadow_color}} ;font-family: '{{$event->date_font}}', sans-serif; font-size: {{$event->date_font_size}}rem; margin-bottom: 0; color: {{$event->date_font_color}};">@if($event->bold_date == true)<b>@endif{{\Carbon\Carbon::parse($event->date)->format('d.m.Y')}}@if($event->bold_date == true)</b>@endif @if($event->bold_time == true)<b>@endif{{' @'.$event->time}}@if($event->bold_time == true)</b>@endif</p>
+                                                <p style="text-shadow:{{$event->location_text_shadow_right}}px {{$event->location_text_shadow_bottom}}px {{$event->location_text_shadow_blur}}px {{$event->location_text_shadow_color}} ;font-family: '{{$event->location_font}}', sans-serif; text-transform: uppercase; font-size: {{$event->location_font_size}}em; padding: 0; margin: 0; color: {{$event->location_font_color}}">@if($event->bold_city == true)<b>@endif{{$event->city}}@if($event->bold_city == true)</b>@endif, @if($event->bold_location == true)<b>@endif{{$event->location}}@if($event->bold_location == true)</b>@endif</p>
+                                                <p style="text-shadow:{{$event->date_text_shadow_right}}px {{$event->date_text_shadow_bottom}}px {{$event->date_text_shadow_blur}}px {{$event->date_text_shadow_color}} ;font-family: '{{$event->date_font}}', sans-serif; font-size: {{$event->date_font_size}}rem; margin-bottom: 0; color: {{$event->date_font_color}};">@if($event->bold_date == true)<b>@endif{{\Carbon\Carbon::parse($event->date)->format('d.m.Y')}}@if($event->bold_date == true)</b>@endif @if($event->bold_time == true)<b>@endif{{' @'.$event->time}}@if($event->bold_time == true)</b>@endif</p>
                                             </a>
                                         </div>
                                     </div>

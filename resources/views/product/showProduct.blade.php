@@ -46,6 +46,13 @@
     <script src="{{asset('public/js/moment.js')}}" type="text/javascript"></script>
     <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
 
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+    <script>
+        function onSubmit(token) {
+            document.getElementById("order-form").submit();
+        }
+    </script>
+
     @include('fonts.fonts')
     <style type="text/css">
         body{
@@ -86,6 +93,14 @@
 
     <body class="antialiased">
 
+        <nav class="navbar navbar-expand-lg fixed-top">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{{ route('userHomePage', ['slug' => $user->slug]) }}">
+                    <img src="https://i.ibb.co/DM6hKmk/bbbbbbbbbbb.png" class="img-fluid mb-4" style="width:20px">
+                </a>
+            </div>
+        </nav>
+
         <div class="mt-4 mb-4 rounded text-center">
             <p class="card-text" style="font-size: 15px">Заполните форму для заказа товара\услуги</p>
         </div>
@@ -106,7 +121,7 @@
         </div>
 
         <div class="me-3 ms-3 mt-4 text-center">
-            <form action="{{route('sendOrder', ['id' => $user->id, 'product' => $product->id])}}" method="POST"> @CSRF @method('POST')
+            <form action="{{route('sendOrder', ['id' => $user->id, 'product' => $product->id])}}" method="POST" id="order-form"> @CSRF @method('POST')
                 <div class="mb-3">
                     <input type="text" name="client_name" class="form-control shadow" id="exampleInputEmail1" aria-describedby="emailHelp" style="border: 0">
                     <div id="emailHelp" class="form-text">Ваше имя\фамилия</div>
@@ -124,7 +139,11 @@
                     <div id="emailHelp" class="form-text">Примечание к заказу</div>
                 </div>
                 <div class="d-grid gap-2">
-                    <button class="btn btn-primary" type="submit">Отправить</button>
+                    <button class="g-recaptcha btn btn-primary"
+                            data-sitekey="6LdjE5siAAAAAFns6LrPthCLLu4niq3WG_coMFJA"
+                            data-callback='onSubmit'
+                            data-action='submit'
+                    type="submit">Submit</button>
                 </div>
             </form>
         </div>

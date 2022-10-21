@@ -224,22 +224,38 @@
                         <input type="range" class="form-range" min="0.0" max="1.0" step="0.1" id="customRange2" name="transparency" value="1.0">
                     </div>
                     <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.m_shadow')</label>
-                    <div class="mb-3 text-center d-flex justify-content-between">
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input shadow" type="radio" name="shadow" id="inlineRadio1" value="shadow-none" style="border: 0">
-                            <label class="form-check-label" for="inlineRadio1" style="font-size: 0.8rem">Без тени</label>
+                    <div class="mb-3 text-center">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input shadow" type="radio" name="shadow" id="inlineRadio1" value="shadow-none" style="border: 0">
+                                        <label class="form-check-label" for="inlineRadio1" style="font-size: 0.8rem">Без тени</label>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input shadow" type="radio" name="shadow" id="inlineRadio2" value="shadow-sm" style="border: 0">
+                                        <label class="form-check-label" for="inlineRadio2" style="font-size: 0.8rem">Маленькая</label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input shadow" type="radio" name="shadow" id="inlineRadio2" value="shadow-sm" style="border: 0">
-                            <label class="form-check-label" for="inlineRadio2" style="font-size: 0.8rem">Маленькая</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input shadow" type="radio" name="shadow" id="inlineRadio3" value="shadow" style="border: 0">
-                            <label class="form-check-label" for="inlineRadio3" style="font-size: 0.8rem">Средняя</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input shadow" type="radio" name="shadow" id="inlineRadio3" value="shadow-lg" style="border: 0">
-                            <label class="form-check-label" for="inlineRadio3" style="font-size: 0.8rem">Большая</label>
+                        <div class="col-12 mt-2">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input shadow" type="radio" name="shadow" id="inlineRadio3" value="shadow" style="border: 0">
+                                        <label class="form-check-label" for="inlineRadio3" style="font-size: 0.8rem">Средняя</label>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input shadow" type="radio" name="shadow" id="inlineRadio3" value="shadow-lg" style="border: 0">
+                                        <label class="form-check-label" for="inlineRadio3" style="font-size: 0.8rem">Большая</label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.m_round')</label>

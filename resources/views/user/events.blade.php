@@ -126,7 +126,7 @@
                         <img src="https://i.ibb.co/DM6hKmk/bbbbbbbbbbb.png" class="img-fluid" style="width:20px; border: 0">
                     </a>
                     <form class="" action="{{ route('searchEvent', ['id' => Auth::user()->id]) }}">
-                        <input class="form-control me-2" type="search" placeholder="Поиск ссылок" aria-label="Search" name="search" style="height: 30px">
+                        <input class="form-control me-2" type="search" placeholder="Поиск мероприятий" aria-label="Search" name="search" style="height: 30px">
                     </form>
                     <a class="" href="{{ route('userHomePage',  ['slug' => Auth::user()->slug]) }}" style="text-decoration: none; border: 0; padding: 0">
                         <div class="img" style="background-image: url({{$user->avatar}});"></div>
@@ -151,7 +151,7 @@
             </div>
             <div class="modal fade bg-dark" id="exampleModalLink" tabindex="-1" aria-labelledby="exampleModalLink" aria-hidden="true">
                 <div class="modal-dialog" style="margin: 0">
-                    <div class="modal-content @if($user->dayVsNight) bg-dark text-white-50 @endif">
+                    <div class="modal-content @if($user->dayVsNight) bg-dark text-white-50 @endif" style="border-radius: 0">
                         <div class="modal-header @if($user->dayVsNight) bg-dark text-white-50 @endif">
                             <h5 class="modal-title" style="font-family: 'Rubik', sans-serif;">Изменить все мероприятия</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -279,22 +279,38 @@
                                 </div>
 
                                 <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Тень для блока мероприятия</label>
-                                <div class="mb-3 text-center d-flex justify-content-between">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input shadow" type="radio" name="block_shadow" id="inlineRadio1" value="shadow-none" style="border: 0">
-                                        <label class="form-check-label" for="inlineRadio1" style="font-size: 0.8rem">Без тени</label>
+                                <div class="mb-3 mt-2 text-center">
+                                    <div class="col-12">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input shadow" type="radio" name="block_shadow" id="inlineRadio1" value="shadow-none" style="border: 0">
+                                                    <label class="form-check-label" for="inlineRadio1" style="font-size: 0.8rem">Без тени</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input shadow" type="radio" name="block_shadow" id="inlineRadio2" value="shadow-sm" style="border: 0">
+                                                    <label class="form-check-label" for="inlineRadio2" style="font-size: 0.8rem">Маленькая</label>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input shadow" type="radio" name="block_shadow" id="inlineRadio2" value="shadow-sm" style="border: 0">
-                                        <label class="form-check-label" for="inlineRadio2" style="font-size: 0.8rem">Маленькая</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input shadow" type="radio" name="block_shadow" id="inlineRadio3" value="shadow" style="border: 0">
-                                        <label class="form-check-label" for="inlineRadio3" style="font-size: 0.8rem">Средняя</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input shadow" type="radio" name="block_shadow" id="inlineRadio3" value="shadow-lg" style="border: 0">
-                                        <label class="form-check-label" for="inlineRadio3" style="font-size: 0.8rem">Большая</label>
+                                    <div class="col-12 mt-2">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input shadow" type="radio" name="block_shadow" id="inlineRadio3" value="shadow" style="border: 0">
+                                                    <label class="form-check-label" for="inlineRadio3" style="font-size: 0.8rem">Средняя</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input shadow" type="radio" name="block_shadow" id="inlineRadio3" value="shadow-lg" style="border: 0">
+                                                    <label class="form-check-label" for="inlineRadio3" style="font-size: 0.8rem">Большая</label>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -341,7 +357,7 @@
                 </div>
                 <div class="modal fade" id="eventModal{{$event->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" style="margin: 0">
-                        <div class="modal-content @if($user->dayVsNight) bg-dark text-white-50 @endif">
+                        <div class="modal-content @if($user->dayVsNight) bg-dark text-white-50 @endif" style="border-radius: 0">
                             <div class="modal-header @if($user->dayVsNight) bg-dark text-white-50 @endif" style="background-color: #f1f2f2">
                                 <h5 class="modal-title" id="exampleModalLabel">Изменить мероприятие</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -530,22 +546,38 @@
                                     </div>
 
                                     <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Тень для блока мероприятия</label>
-                                    <div class="mb-3 text-center d-flex justify-content-center">
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input shadow" type="radio" name="block_shadow" id="inlineRadio1" value="shadow-none"  @if($event->block_shadow == 'shadow-none') checked @endif style="border: 0">
-                                            <label class="form-check-label" for="inlineRadio1" style="font-size: 0.8rem">Без тени</label>
+                                    <div class="mb-3 mt-2 text-center">
+                                        <div class="col-12">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input shadow" type="radio" name="block_shadow" id="inlineRadio1" value="shadow-none" @if($event->block_shadow == 'shadow-none') checked @endif style="border: 0">
+                                                        <label class="form-check-label" for="inlineRadio1" style="font-size: 0.8rem">Без тени</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input shadow" type="radio" name="block_shadow" id="inlineRadio2" value="shadow-sm" @if($event->block_shadow == 'shadow-sm') checked @endif style="border: 0">
+                                                        <label class="form-check-label" for="inlineRadio2" style="font-size: 0.8rem">Маленькая</label>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input shadow" type="radio" name="block_shadow" id="inlineRadio2" value="shadow-sm"  @if($event->block_shadow == 'shadow-sm') checked @endif style="border: 0">
-                                            <label class="form-check-label" for="inlineRadio2" style="font-size: 0.8rem">Маленькая</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input shadow" type="radio" name="block_shadow" id="inlineRadio3" value="shadow"  @if($event->block_shadow == 'shadow') checked @endif style="border: 0">
-                                            <label class="form-check-label" for="inlineRadio3" style="font-size: 0.8rem">Средняя</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input shadow" type="radio" name="block_shadow" id="inlineRadio3" value="shadow-lg"  @if($event->block_shadow == 'shadow-lg') checked @endif style="border: 0">
-                                            <label class="form-check-label" for="inlineRadio3" style="font-size: 0.8rem">Большая</label>
+                                        <div class="col-12 mt-2">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input shadow" type="radio" name="block_shadow" id="inlineRadio3" value="shadow" @if($event->block_shadow == 'shadow') checked @endif style="border: 0">
+                                                        <label class="form-check-label" for="inlineRadio3" style="font-size: 0.8rem">Средняя</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input shadow" type="radio" name="block_shadow" id="inlineRadio3" value="shadow-lg" @if($event->block_shadow == 'shadow-lg') checked @endif style="border: 0">
+                                                        <label class="form-check-label" for="inlineRadio3" style="font-size: 0.8rem">Большая</label>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -559,7 +591,6 @@
                                         </div>
                                         <label style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Анимация для мероприятия</label>
                                     </div>
-
 
                                     <div class="d-grid gap-2">
                                         <button id="post-btn" type="submit" class="btn btn-secondary" style="border: 0">Изменить</button>

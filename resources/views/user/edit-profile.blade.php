@@ -384,13 +384,13 @@
             <!-- Модалка для статистики по профилю -->
             <div class="modal fade" id="exampleModalStat" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background-color: #1b1b1b">
                 <div class="modal-dialog" style="margin: 0">
-                    <div class="block-modal modal-content text-center @if($user->dayVsNight) bg-dark text-white-50 @endif">
+                    <div class="block-modal modal-content text-center @if($user->dayVsNight) bg-dark text-white-50 @endif" style="border-radius: 0">
                     <div class="block-modal modal-header @if($user->dayVsNight) bg-dark text-white-50 @endif">
                         <h5 class="modal-title" id="exampleModalLabel">Просмотры профиля</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body" style="padding: 0">
-                        <div class="block-modal accordion @if($user->dayVsNight) bg-dark text-white-50 @endif" id="accordionExample">
+                        <div class="block-modal accordion @if($user->dayVsNight) bg-dark text-white-50 @endif" id="accordionExample" >
                             <div class="block-modal accordion-item @if($user->dayVsNight) bg-dark text-white-50 @endif">
                                 <h2 class="accordion-header" id="headingOne">
                                     <button class="block-modal accordion-button @if($user->dayVsNight) bg-dark text-white-50 @endif" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -520,7 +520,7 @@
 			<!-- Модалка для редактирования профиля -->
 			<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background-color: #1b1b1b">
 		  		<div class="modal-dialog" style="margin: 0">
-				    <div class="block-modal modal-content text-center @if($user->dayVsNight) bg-dark text-white-50 @endif">
+				    <div class="block-modal modal-content text-center @if($user->dayVsNight) bg-dark text-white-50 @endif" style="border-radius: 0">
 				    	<div class="modal-header">
 				        	<h5 class="modal-title" style="font-family: 'Rubik', sans-serif;">@lang('app.p_edit')</h5>
 				        	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
