@@ -112,6 +112,19 @@
                     </div>
                 </div>
             @endif
+
+                @if ($message = Session::get('success'))
+                    <div class="row">
+                        <div class="col-12" style="padding: 0">
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert" style="margin: 0; background-color: #469597">
+                                <div class="title">
+                                    <span style="font-family: 'Rubik', sans-serif; font-size: 80%; line-height: 16px; display:block; color: white;">- {{$message}}</span>
+                                </div>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        </div>
+                    </div>
+                @endif
         </div>
 
         <div class="container-fluid" style="padding: 0">
@@ -120,7 +133,7 @@
                     <a class="mb-1" href="{{ route('editProfileForm', ['id' => Auth::user()->id]) }}">
                         <img src="https://i.ibb.co/DM6hKmk/bbbbbbbbbbb.png" class="img-fluid" style="width:20px; border: 0">
                     </a>
-                    <form class="" action="{{ route('searchEvent', ['id' => Auth::user()->id]) }}">
+                    <form class="" action="{{ route('searchProducts', ['id' => Auth::user()->id]) }}">
                         <input class="form-control me-2" type="search" placeholder="Поиск товаров" aria-label="Search" name="search" style="height: 30px">
                     </form>
                     <a class="" href="{{ route('userHomePage',  ['slug' => Auth::user()->slug]) }}" style="text-decoration: none; border: 0; padding: 0">
@@ -130,27 +143,31 @@
             </nav>
         </div>
 
+        <div class="text-center ms-3 ml-3 mt-2 mb-2">
+            <label style="font-family: 'Rubik', sans-serif; font-size: 12px">Если хотите поменять продукты местами, дотроньтесь до изображения нужного вам продукта и перенесите его на нужную позицию</label>
+        </div>
+
         <table class="table">
             <tbody>
                 @foreach($products as $product)
                     <tr data-index="{{$product->id}}" data-position="{{$product->position}}">
                         <td style="padding-left: 0; padding-right: 0; padding-bottom: 0; border: 0">
 
-                            <div class="mt-3" id="up">
-                                <div class="card mb-2 ms-2 me-2 shadow-sm" style="border: none; border-radius: 0">
-                                    <div class="row g-0">
-                                        <div class="col-4">
-                                            <img src="{{$product->main_photo}}" width="150" class="img-fluid" alt="...">
+                            <div class="mt-">
+                                <div class="card mb-2 ms-2 me-2 shadow" style="border: none;">
+                                    <div class="row g-0" style="border-radius: 5px;">
+                                        <div class="col-3">
+                                            <img src="{{$product->main_photo}}" width="100" class="img-fluid" id="up" style="border-top-left-radius: 5px;">
                                         </div>
-                                        <div class="col-8 @if($user->dayVsNight) bg-secondary @endif">
-                                            <div class="card-body">
-                                                <h5 class="card-title @if($user->dayVsNight) text-white-50 @endif">{{$product->title}}</h5>
-                                                <p class="card-text @if($user->dayVsNight) text-white-50 @endif">{{$product->description}}</p>
+                                        <div class="col-9 @if($user->dayVsNight) bg-secondary @endif">
+                                            <div class="card-body p-2">
+                                                <h5 class="card-title @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; font-size: 15px"><b>Название:</b> {{$product->title}}</h5>
+                                                <h5 class="card-title @if($user->dayVsNight) text-white-50 @endif" style="margin-bottom: 0; font-family: 'Rubik', sans-serif; font-size: 13px"><b>Создано:</b> {{$product->created_at}}</h5>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="d-flex justify-content-between rounded-bottom rounded-3" style="padding: 0;">
-                                        <div class="col-4 border-end text-center" style="background-color: #f0eeef; box-shadow: 5px 0px 0px black;">
+                                    <div class="d-flex justify-content-between" style="padding: 0; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;">
+                                        <div class="col-4 border-end text-center" style="background-color: #f0eeef; box-shadow: 5px 0px 0px black; border-bottom-left-radius: 5px;">
                                             <a href="#" style="text-decoration: none; color: black">
                                                 <button href="#" class="btn-sm" style="background-color: #f1f2f2; border: 0;">
                                                     Статистика
@@ -164,7 +181,7 @@
                                                 </button>
                                             </a>
                                         </div>
-                                        <div class="col-4 text-center" style="background-color: #FD5D5B; ">
+                                        <div class="col-4 text-center" style="background-color: #FD5D5B; border-bottom-right-radius: 5px;">
                                             <form action="{{ route('deleteProduct', ['id' => $user->id, 'product' => $product->id]) }}" method="POST">
                                                 @csrf @method('DELETE')
                                                 <button class="btn-sm" style="background-color: #FD5D5B; border: 0;">

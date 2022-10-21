@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exceptions\NotLinkProductException;
 use App\Http\Requests\OrderProductRequest;
 use App\Http\Requests\ProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
@@ -18,6 +19,13 @@ class ProductController extends Controller
     public function __construct(UploadPhotoService $uploadService)
     {
         $this->uploadService = $uploadService;
+    }
+
+    public function createProductForm(int $userId)
+    {
+        $user = User::findOrFail($userId);
+
+        return view('product.add-product', compact('user'));
     }
 
     /**
@@ -65,11 +73,11 @@ class ProductController extends Controller
      *
      * Patch product
      */
-    public function editProduct(int $userId, Product $product, Request $request)
+    public function editProduct(int $userId, Product $product, UpdateProductRequest $request)
     {
         $product->patchProduct($userId, $product, $request, $this->uploadService);
 
-        return redirect()->back();
+        return redirect()->route('allProducts', ['id' => $userId])->with('success',$product->title . '" успешно обновлен!');
     }
 
     /**
@@ -120,6 +128,15 @@ class ProductController extends Controller
             abort(404);
         }
 
+    }
+
+    public function searchProducts(int $userId, Request $request)
+    {
+        $user = User::where('id', $userId)->firstOrFail();
+
+        $products = Product::search($request->search)->where('user_id', $user->id)->orderBy('id', 'desc')->get();
+
+        return view('product.search', compact('user', 'products'));
     }
 
     public function sortProduct(int $id)

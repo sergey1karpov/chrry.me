@@ -117,10 +117,10 @@
 <div class="container-fluid" style="padding: 0">
     <nav class="navbar navbar-expand-lg @if($user->dayVsNight) bg-dark text-white-50 @endif" style="background-color: #f1f2f2">
         <div class="container-fluid">
-            <a class="mb-1" href="{{ route('editProfileForm', ['id' => Auth::user()->id]) }}">
+            <a class="mb-1" href="{{ route('allProducts', ['id' => Auth::user()->id]) }}">
                 <img src="https://i.ibb.co/DM6hKmk/bbbbbbbbbbb.png" class="img-fluid" style="width:20px; border: 0">
             </a>
-            <form class="" action="{{ route('searchEvent', ['id' => Auth::user()->id]) }}">
+            <form class="" action="{{ route('searchProducts', ['id' => Auth::user()->id]) }}">
                 <input class="form-control me-2" type="search" placeholder="Поиск товаров" aria-label="Search" name="search" style="height: 30px">
             </form>
             <a class="" href="{{ route('userHomePage',  ['slug' => Auth::user()->slug]) }}" style="text-decoration: none; border: 0; padding: 0">
@@ -129,18 +129,18 @@
         </div>
     </nav>
 </div>
-<div class="mt-3 ms-2 me-2 mb-3 ">
+<div class="mt-3 ms-3 me-3 mb-3 ">
     <div class="text-center">
         <label for="exampleInputEmail1" class="form-label mb-3" style="font-family: 'Rubik', sans-serif; ">Прикрепленные к товару изображения</label>
         @if($product->additional_photos)
-            <div class="row">
+            <div class="row" style="margin: 0">
                 @foreach(unserialize($product->additional_photos) as $ph)
                     <div class="col mb-2">
-                        <img class="rounded" src="{{'/'.$ph}}" width="100">
+                        <img class="rounded shadow" src="{{'/'.$ph}}" width="100">
                         <form action="{{ route('deleteAdditionalPhoto', ['id' => $user->id, 'product' => $product->id]) }}" method="POST"> @csrf @method('PATCH')
                             <input type="hidden" value="{{$ph}}" name="photo">
-                            <button class="btn-sm" style="background-color: #f1f2f2; border: none">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Delete-button.svg/862px-Delete-button.svg.png" width="15">
+                            <button class="btn-sm" style="background-color: rgba(28,28,28,0); border: none">
+                                <img class="shadow" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Delete-button.svg/862px-Delete-button.svg.png" width="15">
                             </button>
                         </form>
                     </div>
@@ -152,44 +152,64 @@
         <form action="{{ route('editProduct', ['id' => $user->id, 'product' => $product->id]) }}" method="post" enctype="multipart/form-data">
             @csrf @method('PATCH')
             <input type="hidden" name="user" value="{{$user->id}}">
-            <div class="mb-1"> <!-- Название продукта -->
-                <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Название продукта</label>
-                <input class="form-control" name="title" id="title" value="{{$product->title}}" style="background-color: #9bd77e; border-radius: 0">
+            <div class="mb-3"> <!-- Название продукта -->
+                <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Название товара\услуги</label>
+                <input class="form-control @if($user->dayVsNight) bg-secondary @endif shadow" name="title" id="title" placeholder="" style="border: 0" maxlength="100" value="{{$product->title}}">
+                <label style="font-family: 'Rubik', sans-serif; font-size: 12px">Максимум 100 символов</label>
             </div>
             <div class="mb-3"> <!-- Описание события -->
                 <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Описание</label>
-                <textarea class="form-control @if($user->dayVsNight) bg-secondary @endif "  rows="3" name="description" id="full_text" style="border-radius: 0">{{$product->description}}</textarea>
+                <textarea class="form-control @if($user->dayVsNight) bg-secondary @endif shadow"  rows="3" name="description" id="full_text" style="border: 0" maxlength="255">{{$product->description}}</textarea>
+                <label class="mt-1" style="font-family: 'Rubik', sans-serif; font-size: 12px">Краткое описание товара\услуги для карточки на главную. Максимум 255 символов</label>
             </div>
             <div class="mb-3"> <!-- Полное описание -->
                 <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Развернутое описание</label>
-                <textarea class="form-control @if($user->dayVsNight) bg-secondary @endif "  rows="3" name="full_description" id="count_products" style="border-radius: 0">{{$product->full_description}}</textarea>
+                <textarea class="form-control @if($user->dayVsNight) bg-secondary @endif shadow"  rows="3" name="full_description" id="count_products" style="border: 0" maxlength="2500">{{$product->full_description}}</textarea>
+                <label style="font-family: 'Rubik', sans-serif; font-size: 12px">Полное описание товара\услуги. Максимум 2500 символов</label>
             </div>
             <div class="mb-3"> <!-- Фото продукта -->
                 <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Основное фото</label>
-                <input type="file" class="form-control" id="inputGroupFile022" name="main_photo" value="{{$product->main_photo}}" accept=".png, .jpg, .jpeg" style="background-color: #9bd77e; border-radius: 0">
-                <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Мы принимаем картинки jpeg, jpg, png формата.</span>
+                <input type="file" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow" id="inputGroupFile022" name="main_photo" accept=".png, .jpg, .jpeg" style="border: 0">
+                <label style="font-family: 'Rubik', sans-serif; font-size: 12px">Мы принимаем картинки jpeg, jpg, png формата.</label>
             </div>
             <div class="mb-2"> <!-- Дополнительные фото -->
                 <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Дополнительные фото</label>
-                <input type="file" class="form-control" id="inputGroupFile022" name="additional_photos[]" accept=".png, .jpg, .jpeg" style="border-radius: 0" multiple="multiple">
+                <input type="file" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow" id="inputGroupFile022" name="additional_photos[]" accept=".png, .jpg, .jpeg"  multiple="multiple" style="border: 0">
+                <label style="font-family: 'Rubik', sans-serif; font-size: 12px">Мы принимаем картинки jpeg, jpg, png формата.</label>
             </div>
             <div class="mb-3"> <!-- Описание события -->
-                <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Цена за единицу товара</label>
-                <input name="price" class="form-control" value="{{$product->price}}" style="background-color: #9bd77e; border-radius: 0">
+                <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">* Цена за единицу товара</label>
+                <input name="price" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow" style="border: 0" value="{{$product->price}}">
+                <label style="font-family: 'Rubik', sans-serif; font-size: 12px">Стоимость товара\услуги в рублях</label>
             </div>
+
+            {{-- Market buttons --}}
+            <div class="mb-3"> <!-- Название продукта -->
+                <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Ссылка на товар</label>
+                <input class="form-control mb-1 @if($user->dayVsNight) bg-secondary @endif shadow" name="link_to_shop" id="title" placeholder="Ozon, Wildberries и тд..." style="border: 0" value="{{$product->link_to_shop}}">
+                <label style="font-family: 'Rubik', sans-serif; font-size: 12px">Разместите ссылку на ваш товар\услугу которая продаётся на другой площадке</label>
+
+                <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Текст для ссылки на товар</label>
+                <input class="form-control mt-2 @if($user->dayVsNight) bg-secondary @endif shadow" name="link_to_shop_text" id="title" placeholder="Купить на Ozon" style="border: 0" value="{{$product->link_to_shop_text}}">
+                <label style="font-family: 'Rubik', sans-serif; font-size: 12px">Вы можете указать название для кнопки на ресурс с товаром</label>
+            </div>
+            <div class="mb-3"> <!-- Название продукта -->
+                <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Текст для кнопки заказа</label>
+                <input class="form-control @if($user->dayVsNight) bg-secondary @endif shadow" name="link_to_order_text" id="title" placeholder="Напишите мне для заказа" style="border: 0" value="{{$product->link_to_order_text}}">
+                <label style="font-family: 'Rubik', sans-serif; font-size: 12px">Укажите название для кнопки, если собираетесь принимать заявки через наш сервис.</label>
+            </div>
+
             <div class="mb-3 text-center" >
                 <div class="ms-2 form-check" style="padding: 0">
                     <div class="form-check form-switch mb-3">
-                        <input @if($product->visible == true) checked @endif name="visible" class="form-check-input" type="checkbox" value="{{true}}" id="design-link-e">
-                        <label class="form-check-label" for="flexCheckDefault">
-                            Сделать продукт видимым для всех
-                        </label>
+                        <input @if($product->visible == true) checked @endif name="visible" class="form-check-input @if($user->dayVsNight) bg-secondary @endif shadow" type="checkbox" value="{{true}}" id="design-link-e">
+                        <label style="font-family: 'Rubik', sans-serif; font-size: 12px">Если хотите что бы после публикации ваш товар был видим для всех пользователей, щелкните тут</label>
                     </div>
                 </div>
             </div>
 
             <div class="d-grid gap-2">
-                <button type="submit" class="btn btn-secondary" style="border-radius: 0">Изменить</button>
+                <button type="submit" class="btn btn-secondary">Изменить</button>
             </div>
         </form>
     </div>

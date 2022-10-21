@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LinkRequest;
+use App\Http\Requests\UpdateLinkRequest;
 use App\Models\Link;
 use App\Models\User;
 use App\Services\UploadPhotoService;
@@ -36,6 +37,18 @@ class LinkController extends Controller
         return view('user.links', compact('user', 'links', 'allIconsInsideFolder','pinnedLinks', 'allFontsInFolder'));
     }
 
+    public function createLinkForm(int $userId)
+    {
+        $user = User::findOrFail($userId);
+
+        $icons  = public_path('images/social');
+        $allIconsInsideFolder = File::files($icons);
+        $fonts  = public_path('fonts');
+        $allFontsInFolder = File::files($fonts);
+
+        return view('link.add-link', compact('user', 'allIconsInsideFolder', 'allFontsInFolder'));
+    }
+
     /**
      * Добавление ссылки
      *
@@ -59,7 +72,7 @@ class LinkController extends Controller
      * @param LinkRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function editLink(int $userId, Link $link, LinkRequest $request)
+    public function editLink(int $userId, Link $link, UpdateLinkRequest $request)
     {
         $link->editLink($userId, $link, $request, $this->uploadService);
 

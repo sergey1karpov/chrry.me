@@ -88,72 +88,72 @@
 
 			<!-- БЛОК: Ссылка на профиль -->
 			<div class="row">
-				<a class="" href="{{ route('userHomePage',  ['slug' => Auth::user()->slug]) }}" style="text-decoration: none; border: 0; padding: 0">
+				<a href="{{ route('userHomePage',  ['slug' => Auth::user()->slug]) }}" style="text-decoration: none; border: 0; padding: 0">
 					<div class="col-12">
-						<div class="block1 box-part text-center shadow @if($user->dayVsNight) bg-dark @endif" style="margin: 0; background-color: #ffe0db">
+						<div class="block1 box-part text-center @if($user->dayVsNight) bg-dark @endif" style="margin: 0; background-color: #f26868">
 							<div class="d-flex justify-content-center">
                                 <div class="img" style="background-image: url({{$user->avatar}});"></div>
                             </div>
 							<div class="title">
-								<h4 class="mt-3 block1-text @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: #464646; font-weight: 600 ;">{{ $user->name }}</h4>
+								<h4 class="mt-4 block1-text @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: #fefafa; font-weight: 600 ; margin-bottom: 0">{{ $user->name }}</h4>
 							</div>
-							<div class="text mb-1">
-							    <span class="block1-text @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; font-size: 75%; line-height: 16px; display:block; color: #464646;">@lang('app.profile_link')</span>
-						    </div>
 						</div>
 					</div>
 				</a>
 			</div>
 
             <!-- БЛОК: Добавить ссылку -->
-            <div class="row" style="margin-right: 0">
+            <div class="row" style="margin-right: 0; margin-top:1px">
 				<div class="col-12" style="padding-right: 7px; padding: 0">
-					<div class="block1 row d-flex justify-content-start shadow @if($user->dayVsNight) bg-dark @endif" style="background-color: #ffbdb3">
-						<div class="col-4" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-							<div class="imgg m-5" style="background-image: url(https://i.ibb.co/SvCxHnG/zzzzz.png);"></div>
+					<div class="block1 row d-flex justify-content-start @if($user->dayVsNight) bg-dark @endif" style="background-color: #f26868">
+                        <div class="col-4" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+							<div class="m-5" style="background-image: url(https://i.ibb.co/0YjgHJp/add-effect2.png); width: 60px;height: 60px;margin-right: 0;background-position: center center;-wekit-background-size: cover;background-size: cover;background-repeat: no-repeat;"></div>
 						</div>
 						<div class="col-8 d-flex align-items-center" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
 							<div class="row">
 								<div class="col-12">
-									<h4 class="block1-text mt-4 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">@lang('app.add_link')</h4>
+									<h4 class="block1-text mt-4 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: #fefafa; font-weight: 600 ;">Добавить ссылку</h4>
 								</div>
 								<div class="col-12">
-									<h4 class="block1-text mb-3 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">В этом разделе можно добавить мультиссылку или мероприятие.</h4>
+									<h4 class="block1-text mb-3 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: #fefafa; font-size: 0.7rem">Здесь вы можете добавить ссылки на внешний ресурс, управлять ими и отслеживать статистику по кликам</h4>
 								</div>
 							</div>
 						</div>
                         <div class="collapse" id="collapseExample" style="padding: 0; border-radius: 0">
-                            <div class="sub-block1 card card-body @if($user->dayVsNight) bg-secondary  @endif" style="background-color: #ffbdb3; border: 0; padding-left: 28px; padding-bottom: 0; padding-top: 0; border-radius: 0">
+                            <div class="sub-block1 card card-body @if($user->dayVsNight) bg-secondary  @endif" style="background-color: #f38864; border: 0; padding-left: 28px; padding-bottom: 0; padding-top: 0; border-radius: 0;">
                                 <div class="row d-flex justify-content-center">
-                                    <div class="col-6 text-center" data-bs-toggle="modal" data-bs-target="#exampleModalLink">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <h4 class="block1-text mt-4 text-center @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">@lang('app.link')</h4>
-                                            </div>
-                                            <div class="col-12">
-                                                <h4 class="block1-text mb-3 text-center @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">Самая простая мультиссылка на внешний ресурс.</h4>
-                                            </div>
-                                        </div>
+                                    <div class="col-4" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="padding-left: 0">
+                                        <div class="m-5" style="background-image: url(https://i.ibb.co/L1WBCWC/click-user.png); width: 60px;height: 60px;margin-right: 0;background-position: center center;-wekit-background-size: cover;background-size: cover;background-repeat: no-repeat;"></div>
                                     </div>
-                                    <div class="col-6 text-center" data-bs-toggle="modal" data-bs-target="#exampleModalEvent">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <h4 class="block1-text mt-4 text-center @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">Мероприятие</h4>
+                                    <div class="col-8 d-flex align-items-center" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="padding-left: 0">
+                                        <a href="{{ route('createLinkForm', ['id' => $user->id]) }}" style="border: 0">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <h4 class="block1-text mt-4 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">Создать</h4>
+                                                </div>
+                                                <div class="col-12">
+                                                    <h4 class="block1-text mb-3 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">Добавьте новую ссылку используя по максимум возможности кастомизации</h4>
+                                                </div>
                                             </div>
-                                            <div class="col-12">
-                                                <h4 class="block1-text mb-3 text-center @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">Добавьте свое мероприятие. Для отображения мероприятий нужно поменять тип страницы на "Афиша"</h4>
-                                            </div>
-                                        </div>
+                                        </a>
                                     </div>
-                                    <div class="col-6 text-center" data-bs-toggle="modal" data-bs-target="#exampleModalProduct">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <h4 class="block1-text mt-4 text-center @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">Продукт</h4>
+                                </div>
+                                <hr style="margin: 0">
+                                <div class="row d-flex justify-content-center">
+                                    <div class="col-4" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="padding-left: 0">
+                                        <div class="m-5" style="background-image: url(https://i.ibb.co/w67K8xY/controls.png); width: 60px;height: 60px;margin-right: 0;background-position: center center;-wekit-background-size: cover;background-size: cover;background-repeat: no-repeat;"></div>
+                                    </div>
+                                    <div class="col-8 d-flex align-items-center" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="padding-left: 0">
+                                        <a href="{{ route('allLinks', ['id' => $user->id]) }}" style="border: 0">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <h4 class="block1-text mt-4 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">Управление ссылками</h4>
+                                                </div>
+                                                <div class="col-12">
+                                                    <h4 class="block1-text mb-3 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">Изменение и удаление ссылок, смена позиций, просмотр статистики по кликам</h4>
+                                                </div>
                                             </div>
-                                            <div class="col-12">
-                                                <h4 class="block1-text mb-3 text-center @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">Добавьте товар в свой магазин</h4>
-                                            </div>
-                                        </div>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -162,105 +162,80 @@
 				</div>
 			</div>
 
-            <!-- БЛОК: Заказы -->
+            <!-- БЛОК: Магазин -->
             @if($user->type == 'Market')
-                <div class="row" style="margin-right: 0">
+                <div class="row" style="margin-right: 0; margin-top:1px">
                     <div class="col-12" style="padding-right: 7px; padding: 0">
-                        <a href="{{ route('orders', ['id' => $user->id]) }}">
-                            <div class="block1 row shadow @if($user->dayVsNight) bg-dark @endif" style="background-color: #ec4f43">
-                                <div class="col-4">
-                                    <div class="imgg m-5" style="background-image: url(https://i.ibb.co/3vmRBDy/vvvvvvvv.png);"></div>
-                                </div>
-                                <div class="col-8 d-flex align-items-center">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <h4 class="block1-text mt-4 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">Заказы {{count($user->orders)}}</h4>
-                                        </div>
-                                        <div class="col-12">
-                                            <h4 class="block1-text mb-3 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">В этом разделе находятся все ваши заказы</h4>
-                                        </div>
+                        <div class="block1 row d-flex justify-content-start shadow @if($user->dayVsNight) bg-dark @endif" style="background-color: #f26868">
+                            <div class="col-4" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExampleShop">
+                                <div class="m-5" style="background-image: url(https://i.ibb.co/0cLpTTx/shopping-bag.png); width: 60px;height: 60px;margin-right: 0;background-position: center center;-wekit-background-size: cover;background-size: cover;background-repeat: no-repeat;"></div>
+                            </div>
+                            <div class="col-8 d-flex align-items-center" data-bs-toggle="collapse" href="#collapseExampleShop" role="button" aria-expanded="false" aria-controls="collapseExampleShop">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h4 class="block1-text mt-4 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">Магазин</h4>
+                                    </div>
+                                    <div class="col-12">
+                                        <h4 class="block1-text mb-3 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">Добавление\изменение товара, управление товарами, прием заказов</h4>
                                     </div>
                                 </div>
                             </div>
-                        </a>
-                    </div>
-                </div>
-            @endif
-
-			<!-- БЛОК: Все материалы -->
-            <div class="row" style="margin-right: 0">
-				<div class="col-12" style="padding-right: 7px; padding: 0">
-					<div class="block1 row d-flex justify-content-start shadow @if($user->dayVsNight) bg-dark @endif" style="background-color: #fe948d">
-						<div class="col-4" data-bs-toggle="collapse" href="#collapseExample1" role="button" aria-expanded="false" aria-controls="collapseExample1">
-							<div class="imgg m-5" style="background-image: url(https://i.ibb.co/k4ykGnT/xxxxx.png);"></div>
-						</div>
-						<div class="col-8 d-flex align-items-center" data-bs-toggle="collapse" href="#collapseExample1" role="button" aria-expanded="false" aria-controls="collapseExample1">
-							<div class="row">
-								<div class="col-12">
-									<h4  class="block1-text mt-4 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">Все материалы</h4>
-								</div>
-								<div class="col-12">
-									<h4  class="block1-text mb-3 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">В этом разделе находятся все созданные вами мультиссылки и мероприятия. Здесь вы можете их редактировать, удалять, менять местами и смотреть статистику по кликам</h4>
-								</div>
-							</div>
-						</div>
-                        <div class="collapse" id="collapseExample1" style="padding: 0; border-radius: 0">
-                            <div class="sub-block1 card card-body @if($user->dayVsNight) bg-secondary  @endif" style="background-color: #fe948d; border: 0; padding-left: 28px; padding-bottom: 0; padding-top: 0; border-radius: 0">
-
-                            	<div class="row d-flex justify-content-center">
-                            		<div class="col-6 text-center">
-                            			<div class="row" >
-											<a href="{{ route('allLinks', ['id' => Auth::user()->id]) }}" style="text-decoration: none; border: 0; padding: 0">
-												<div class="col-12">
-													<div class="sub-block1 row @if($user->dayVsNight) bg-secondary  @endif" style="background-color: #fe948d; height: 130px; margin: 0;">
-														<div class="col-12 ">
-															<div class="row">
-																<div class="col-12">
-																	<h4 class="block1-text mt-4 text-center @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">Ссылки</h4>
-																</div>
-																<div class="col-12">
-																	<h4 class="block1-text mb- text-center @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">Редактирование, удаление, смена позиций и просмотр статистики по ссылкам</h4>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</a>
-										</div>
-                            		</div>
-                            		<div class="col-6 text-center">
-                            			<div class="row" >
-											<a href="{{ route('allEvents', ['id' => Auth::user()->id]) }}" style="text-decoration: none; border: 0; padding: 0">
-												<div class="col-12">
-													<div class="sub-block1 row @if($user->dayVsNight) bg-secondary  @endif" style="background-color: #fe948d; height: 130px; margin: 0;">
-														<div class="col-12 ">
-															<div class="row">
-																<div class="col-12">
-																	<h4 class="block1-text mt-4 text-center @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">Мероприятия</h4>
-																</div>
-																<div class="col-12">
-																	<h4 class="block1-text text-center @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">Редактирование и удаление созданных вами мероприятий</h4>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</a>
-										</div>
-                            		</div>
-                                    <div class="col-6 text-center">
-                                        <div class="row" >
-                                            <a href="{{ route('allProducts', ['id' => Auth::user()->id]) }}" style="text-decoration: none; border: 0; padding: 0">
-                                                <div class="col-12">
-                                                    <div class="sub-block1 row @if($user->dayVsNight) bg-secondary  @endif" style="background-color: #fe948d; height: 130px; margin: 0;">
-                                                        <div class="col-12 ">
-                                                            <div class="row">
-                                                                <div class="col-12">
-                                                                    <h4 class="block1-text mt-4 text-center @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">Продукты</h4>
-                                                                </div>
-                                                                <div class="col-12">
-                                                                    <h4 class="block1-text text-center @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">Редактирование, удаление и статистика по вашим товарам</h4>
-                                                                </div>
+                            <div class="collapse" id="collapseExampleShop" style="padding: 0; border-radius: 0">
+                                <div class="sub-block1 card card-body @if($user->dayVsNight) bg-secondary  @endif" style="background-color: #f38864; border: 0; padding-left: 28px; padding-bottom: 0; padding-top: 0; border-radius: 0">
+                                    <div class="row d-flex justify-content-center">
+                                        <div class="col-12 text-center" >
+                                            <a href="{{ route('createProductForm', ['id' => $user->id]) }}">
+                                                <div class="row d-flex justify-content-center">
+                                                    <div class="col-4"  href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="padding-left: 0">
+                                                        <div class="m-5" style="background-image: url(https://i.ibb.co/yFYsThg/packaging.png); width: 60px;height: 60px;margin-right: 0;background-position: center center;-wekit-background-size: cover;background-size: cover;background-repeat: no-repeat;"></div>
+                                                    </div>
+                                                    <div class="col-8 d-flex align-items-center"  href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="padding-left: 0">
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <h4 class="block1-text mt-4 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">Добавить товар</h4>
+                                                            </div>
+                                                            <div class="col-12">
+                                                                <h4 class="block1-text mb-3 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">Добавьте товар или услугу и выберите способ продажи</h4>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <hr style="margin: 0">
+                                        <div class="col-12 text-center" >
+                                            <a href="{{ route('allProducts', ['id' => $user->id]) }}">
+                                                <div class="row d-flex justify-content-center">
+                                                    <div class="col-4"  href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="padding-left: 0">
+                                                        <div class="m-5" style="background-image: url(https://i.ibb.co/4ZCq7w4/product.png); width: 60px;height: 60px;margin-right: 0;background-position: center center;-wekit-background-size: cover;background-size: cover;background-repeat: no-repeat;"></div>
+                                                    </div>
+                                                    <div class="col-8 d-flex align-items-center" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="padding-left: 0">
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <h4 class="block1-text mt-4 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">Все товары</h4>
+                                                            </div>
+                                                            <div class="col-12">
+                                                                <h4 class="block1-text mb-3 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">Изменение и удаление товаров, просмотр статистики по кликам</h4>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <hr style="margin: 0">
+                                        <div class="col-12 text-center">
+                                            <a href="{{ route('orders', ['id' => $user->id]) }}">
+                                                <div class="row d-flex justify-content-center">
+                                                    <div class="col-4" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="padding-left: 0">
+                                                        <div class="m-5" style="background-image: url(https://i.ibb.co/HX3jwS4/agreement.png); width: 60px;height: 60px;margin-right: 0;background-position: center center;-wekit-background-size: cover;background-size: cover;background-repeat: no-repeat;"></div>
+                                                    </div>
+                                                    <div class="col-8 d-flex align-items-center" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="padding-left: 0">
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <h4 class="block1-text mt-4 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">Заказы</h4>
+                                                            </div>
+                                                            <div class="col-12">
+                                                                <h4 class="block1-text mb-3 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">Управляйте своими заказами</h4>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -268,20 +243,87 @@
                                             </a>
                                         </div>
                                     </div>
-                            	</div>
-
+                                </div>
                             </div>
                         </div>
-					</div>
-				</div>
-			</div>
+                    </div>
+                </div>
+            @endif
+
+            <!-- БЛОК: Афиша -->
+            @if($user->type == 'Events')
+                <div class="row" style="margin-right: 0; margin-top:1px">
+                    <div class="col-12" style="padding-right: 7px; padding: 0">
+                        <div class="block1 row d-flex justify-content-start shadow @if($user->dayVsNight) bg-dark @endif" style="background-color: #f26868">
+                            <div class="col-4" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExampleShop">
+                                <div class="m-5" style="background-image: url(https://i.ibb.co/mBScLGM/poster.png); width: 60px;height: 60px;margin-right: 0;background-position: center center;-wekit-background-size: cover;background-size: cover;background-repeat: no-repeat;"></div>
+                            </div>
+                            <div class="col-8 d-flex align-items-center" data-bs-toggle="collapse" href="#collapseExampleShop" role="button" aria-expanded="false" aria-controls="collapseExampleShop">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h4 class="block1-text mt-4 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">Афиша</h4>
+                                    </div>
+                                    <div class="col-12">
+                                        <h4 class="block1-text mb-3 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">Добавьте список своих мероприятий и поделитесь ссылкой на свою страницу с друзьями</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="collapse" id="collapseExampleShop" style="padding: 0; border-radius: 0">
+                                <div class="sub-block1 card card-body @if($user->dayVsNight) bg-secondary  @endif" style="background-color: #f38864; border: 0; padding-left: 28px; padding-bottom: 0; padding-top: 0; border-radius: 0">
+                                    <div class="row d-flex justify-content-center">
+                                        <div class="col-12 text-center">
+                                            <a href="{{ route('createEventForm', ['id' => $user->id]) }}" style="border: 0">
+                                                <div class="row d-flex justify-content-center">
+                                                    <div class="col-4" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="padding-left: 0">
+                                                        <div class="m-5" style="background-image: url(https://i.ibb.co/j87C6VH/add-calendar.png); width: 60px;height: 60px;margin-right: 0;background-position: center center;-wekit-background-size: cover;background-size: cover;background-repeat: no-repeat;"></div>
+                                                    </div>
+                                                    <div class="col-8 d-flex align-items-center" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="padding-left: 0">
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <h4 class="block1-text mt-4 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">Создать</h4>
+                                                            </div>
+                                                            <div class="col-12">
+                                                                <h4 class="block1-text mb-3 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">Создайте новое мероприятие, загрузите афишу, выберите день, дату и поделитесь с друзьями</h4>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <hr style="margin: 0">
+                                        <div class="col-12 text-center" >
+                                            <a href="{{ route('allEvents', ['id' => $user->id]) }}" style="border: 0">
+                                                <div class="row d-flex justify-content-center">
+                                                    <div class="col-4" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="padding-left: 0">
+                                                        <div class="m-5" style="background-image: url(https://i.ibb.co/1772vHL/event.png); width: 60px;height: 60px;margin-right: 0;background-position: center center;-wekit-background-size: cover;background-size: cover;background-repeat: no-repeat;"></div>
+                                                    </div>
+                                                    <div class="col-8 d-flex align-items-center" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="padding-left: 0">
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <h4 class="block1-text mt-4 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">Все мероприятия</h4>
+                                                            </div>
+                                                            <div class="col-12">
+                                                                <h4 class="block1-text mb-3 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">Изменение и удаление мероприятий</h4>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
 
             <!-- БЛОК: cтатистика профиля -->
-			<div class="row" style="margin-right: 0">
+			<div class="row" style="margin-right: 0; margin-top: 1px">
 				<div class="col-12" data-bs-toggle="modal" data-bs-target="#exampleModalStat" style="padding-left: 7px; padding: 0">
-					<div class="block1 row shadow @if($user->dayVsNight) bg-dark @endif" style="background-color: #fe7968">
+					<div class="block1 row shadow @if($user->dayVsNight) bg-dark @endif" style="background-color: #f26868">
 						<div class="col-4">
-							<div class="imgg m-5" style="background-image: url(https://i.ibb.co/djxLR3S/ccccc.png);"></div>
+							<div class="m-5" style="background-image: url(https://i.ibb.co/tXgvrWw/statistics-graph.png); width: 60px;height: 60px;margin-right: 0;background-position: center center;-wekit-background-size: cover;background-size: cover;background-repeat: no-repeat;"></div>
 						</div>
 						<div class="col-8 d-flex align-items-center">
 							<div class="row">
@@ -298,11 +340,11 @@
 			</div>
 
             <!-- БЛОК: Настройки -->
-			<div class="row" style="margin-right: 0">
+			<div class="row" style="margin-right: 0; margin-top: 1px">
 				<div class="col-12" data-bs-toggle="modal" data-bs-target="#exampleModal" style="padding-right: 7px; padding: 0">
-					<div class="block1 row shadow @if($user->dayVsNight) bg-dark @endif" style="background-color: #ec4f43">
+					<div class="block1 row shadow @if($user->dayVsNight) bg-dark @endif" style="background-color: #f26868">
 						<div class="col-4">
-							<div class="imgg m-5" style="background-image: url(https://i.ibb.co/3vmRBDy/vvvvvvvv.png);"></div>
+							<div class="m-5" style="background-image: url(https://i.ibb.co/7vrtV67/settings-1.png); width: 60px;height: 60px;margin-right: 0;background-position: center center;-wekit-background-size: cover;background-size: cover;background-repeat: no-repeat;"></div>
 						</div>
 						<div class="col-8 d-flex align-items-center">
 							<div class="row">
@@ -319,7 +361,7 @@
 			</div>
 
             <!-- БЛОК: Выход -->
-			<div class="row" >
+			<div class="row" style=" margin-top: 1px">
                 <div class="col-12" style="padding-right: 7px; padding: 0">
 					<div class="block1 box-part text-center shadow-sm @if($user->dayVsNight) bg-dark @endif" style="margin: 0; background-color: white; padding-top: 10px; padding-bottom: 10px">
                         <div class="d-flex justify-content-between text-center">
@@ -339,486 +381,9 @@
 				</div>
             </div>
 
-            <!-- Модалка для добавления ссылок -->
-			<div class="modal fade" id="exampleModalLink" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background-color: #1b1b1b">
-		  		<div class="modal-dialog">
-				    <div class="block-modal modal-content text-center @if($user->dayVsNight) bg-dark text-white-50 @endif">
-				    	<div class="modal-header">
-				        	<h5 class="modal-title" style="font-family: 'Rubik', sans-serif;">Добавить ссылку</h5>
-				        	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				      	</div>
-				      	<div class="modal-body">
-				        <form action="{{ route('addLink', ['id' => Auth::user()->id]) }}" method="post" enctype="multipart/form-data">
-			        		@csrf @method('POST')
-                            <input type="hidden" name="type" value="LINK">
-		        			<div class="mb-3">
-						    	<label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">@lang('app.m_text_link')</label>
-						    	<input type="text" class="block-input @if($user->dayVsNight) bg-secondary @endif form-control" name="title" placeholder="" maxlength="100" style="border-radius: 0">
-						    	<span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.m_text_link_span')</span>
-						    </div>
-						    <div class="mb-3">
-						    	<label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.m_insert_link')</label>
-						    	<input type="text" class="block-input @if($user->dayVsNight) bg-secondary @endif form-control" name="link" style="border-radius: 0">
-						    </div>
-                            <div class="mb-3" id="download-file">
-                                <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.m_photo')</label>
-                                <input type="file" class="block-input @if($user->dayVsNight) bg-secondary @endif form-control" id="inputGroupFile02" name="photo" accept=".jpg, .jpeg, .png, .gif" style="border-radius: 0">
-                                <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Вы можете прикрепить для своей ссылки любое изображение или гифку</span>
-                            </div>
-                            <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Прикрепить иконку</label>
-                            <div class="mb-3 ">
-                                <select id="select-beast-empty" data-placeholder="Начните вводить название..."  autocomplete="off" name="icon"></select>
-                                <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Если не хотите загружать картинку, можете выбрать иконку из нашей базы. Просто начните вводить нужное вам название, но будьте осторожны, размер иконок может не соответствовать размерам ссылок</span>
-                            </div>
-
-                            <hr>
-                                <div class="text-center">
-                                    Дизайн ссылки
-                                </div>
-                            <hr>
-
-                            <div class="mb-3 text-center" >
-                                <div class="ms-2 form-check" style="padding: 0">
-                                    <div class="form-check form-switch mb-3">
-                                        <input name="check_last_link" class="form-check-input " type="checkbox" value="penis" id="design-link">
-                                        <label class="form-check-label" for="flexCheckDefault">
-                                            @lang('app.last_style_2')
-                                        </label>
-                                    </div>
-                                </div>
-                                <label for="exampleInputEmail1" class="form-label " style="font-family: 'Rubik', sans-serif; font-size: 0.7rem">Этот переключатель поможет вам скопировать дизайн вашей последней созданной ссылки, что бы не нужно было самому заполнять ввсе параметры опять</label>
-                            </div>
-                            <div id="design-block">
-                                <div class="text-center row">
-                                    <div class="col-9">
-                                        <select id="select-beast-empty-font" data-placeholder="Поиск шрифта..."  autocomplete="off" name="font"></select>
-                                    </div>
-                                    <div class="col-3">
-                                        <select class="block-input @if($user->dayVsNight) bg-secondary @endif form-select" aria-label="Default select example" name="font_size" style="border-radius: 0; height: 35px">
-                                            <option value="0.9">1</option>
-                                            <option value="1">2</option>
-                                            <option value="1.1">3</option>
-                                            <option value="1.2">4</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <label class="mb-3" style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Вы можете выбрать шрифт и его размер для текста вашей ссылки</label>
-
-                                <div class="mb-3 text-center">
-                                    <div class="form-check text-center">
-                                        <input name="bold" class="form-check-input" type="checkbox" value="{{true}}" id="flexCheckDefault">
-                                        <label class="form-check-label" for="flexCheckDefault">
-                                            Сделать текст ссылки жирным
-                                        </label>
-                                    </div>
-                                </div>
-
-                                <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.m_title_color')</label>
-                                <div class="mb-3 text-center d-flex justify-content-center">
-                                    <input type="color" class="block-input @if($user->dayVsNight) bg-secondary @endif form-control" id="exampleColorInput" value="#050507" title="Choose your color" name="title_color" style="height: 40px; border-radius: 0"><br>
-                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.m_title_color_description')</span>
-                                </div>
-
-                                <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Тень для текста</label>
-                                <div class="mb-3 text-center row">
-                                    <div class="col-12">
-                                        <input type="color" class="block-input @if($user->dayVsNight) bg-secondary @endif form-control" id="exampleColorInput" value="#050507" title="Choose your color" name="text_shadow_color" style="height: 40px; border-radius: 0"><br>
-                                    </div>
-                                    <div class="col-12">
-                                        <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Четкость тени</span>
-                                        <input type="range" class="form-range" min="0" max="10" step="1" id="customRange2" name="text_shadow_blur" value="0">
-                                    </div>
-                                    <div class="col-12">
-                                        <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Смещение вниз</span>
-                                        <input type="range" class="form-range" min="0" max="10" step="1" id="customRange2" name="text_shadow_bottom" value="0">
-                                    </div>
-                                    <div class="col-12">
-                                        <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Сдвиг вправо</span>
-                                        <input type="range" class="form-range" min="0" max="10" step="1" id="customRange2" name="text_shadow_right" value="0">
-                                    </div>
-                                </div>
-
-                                <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.m_background_color')</label>
-                                <div class="mb-3 text-center d-flex justify-content-center">
-                                    <input type="color" class="form-control block-input @if($user->dayVsNight) bg-secondary @endif " id="exampleColorInput" value="#ECECE2" title="Choose your color" name="background_color" style="height: 40px; border-radius: 0">
-                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.m_background_color_description')</span>
-                                </div>
-                                <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.m_transparency')</label>
-                                <div class="mb-3 text-center d-flex justify-content-center">
-                                    <input type="range" class="form-range" min="0.0" max="1.0" step="0.1" id="customRange2" name="transparency" value="1.0">
-                                </div>
-                                <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.m_shadow')</label>
-                                <div class="mb-3 text-center d-flex justify-content-center">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="shadow" id="inlineRadio1" value="shadow-none">
-                                        <label class="form-check-label" for="inlineRadio1">none</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="shadow" id="inlineRadio2" value="shadow-sm">
-                                        <label class="form-check-label" for="inlineRadio2">sm</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="shadow" id="inlineRadio3" value="shadow">
-                                        <label class="form-check-label" for="inlineRadio3">md</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="shadow" id="inlineRadio3" value="shadow-lg">
-                                        <label class="form-check-label" for="inlineRadio3">lg</label>
-                                    </div>
-                                </div>
-                                <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.m_round')</label>
-                                <div class="mb-3 text-center d-flex justify-content-center">
-                                    <input type="range" class="form-range" min="1" max="50" step="1" id="customRange2" name="rounded" value="10">
-                                </div>
-
-                                <div class="mb-3 text-center">
-                                    <div>
-                                        <select class="block-input @if($user->dayVsNight) bg-secondary @endif form-select" aria-label="Default select example" name="animation" style="border-radius: 0">
-                                            <option selected>Выбрать анимацию...</option>
-                                            <option value="animate__animated animate__pulse animate__infinite infinite">Pulse</option>
-                                            <option value="animate__animated animate__headShake animate__infinite infinite">Head Shake</option>
-                                        </select>
-                                    </div>
-                                    <label style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Вы можете выделить свою ссылку от остальных выбрав одну из анимаций</label>
-                                </div>
-                            </div>
-                            <div class="mb-3 text-center">
-                                <div class="form-check text-center">
-                                    <input name="pinned" class="form-check-input" type="checkbox" value="{{true}}" id="flexCheckDefault">
-                                    <label class="form-check-label" for="flexCheckDefault">
-                                        Закрепите ссылку и она всегда будет вверху списка
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div class="d-grid gap-2">
-                                <button type="submit" class="btn btn-secondary" style="border-radius: 0">@lang('app.m_add_link')</button>
-                              </div>
-							</div>
-				        </form>
-				    </div>
-				</div>
-		  	</div>
-
-            <!-- Модалка для добавления мероприятия -->
-            <div class="modal fade" id="exampleModalEvent" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background-color: #1b1b1b" id="add-post-modal">
-                <div class="modal-dialog">
-
-                    <div class="block-modal modal-content text-center @if($user->dayVsNight) bg-dark text-white-50 @endif">
-                            <div class="modal-header">
-                                <h5 class="modal-title" style="font-family: 'Rubik', sans-serif;">Добавить событие</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-post-modal"></button>
-                            </div>
-                            <div class="modal-body p-2">
-                                <form action="{{ route('addEvent', ['id' => Auth::user()->id]) }}" method="post" enctype="multipart/form-data" id="add-post">
-                                    @csrf @method('POST')
-                                    <span class="mb-1" style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Поля выделенные зеленым цветом обязательны к заполнению</span>
-                                    <input type="hidden" name="type" value="EVENT"> <!-- Тип ссылки -->
-                                    <div class="mb-1"> <!-- Город -->
-                                        <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Город проведения</label>
-                                        <input class="form-control" name="city" id="city" placeholder="Москва" style="background-color: #9bd77e; border-radius: 0">
-                                    </div>
-                                    <div class="mb-1"> <!-- Локация -->
-                                        <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Место проведения</label>
-                                        <input class="form-control" name="location" id="full_text" placeholder="Название места проведения мероприятия" style="background-color: #9bd77e; border-radius: 0">
-                                        <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Описание содержит до 255 символов</span>
-                                    </div>
-                                    <div class="mb-3"> <!-- Дата и время -->
-                                    	<div class="row">
-                                    		<div class="col-7">
-                                    			<label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Дата</label>
-												<input id="startDate" name="date" class="form-control" type="date" style="background-color: #9bd77e; border-radius: 0" />
-                                    		</div>
-                                    		<div class="col-5">
-                                    			<label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Время</label>
-                                        		<input type="text" class="form-control" name="time" id="timepicker" placeholder="21:30" maxlength="255" style="background-color: #9bd77e; border-radius: 0">
-                                    		</div>
-                                    	</div>
-                                    </div>
-                                    <div class="mb-3"> <!-- Описание события -->
-                                        <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Описание</label>
-                                        <textarea class="form-control @if($user->dayVsNight) bg-secondary @endif "  rows="3" name="description" id="full_text" style="border-radius: 0"></textarea>
-                                        <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Описание содержит до 2500 символов</span>
-                                    </div>
-                                    <div class="mb-3"> <!-- Баннер события -->
-                                        <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Афиша</label>
-                                        <input type="file" class="form-control" id="inputGroupFile022" name="banner" accept=".png, .jpg, .jpeg" style="background-color: #9bd77e; border-radius: 0">
-                                        <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Мы принимаем картинки jpeg, jpg, png формата.</span>
-                                    </div>
-                                    <div class="mb-3"> <!-- Покупка билетов -->
-                                        <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Ссылка на продажу билетов</label>
-                                        <input class="form-control @if($user->dayVsNight) bg-secondary @endif " name="tickets" id="full_text" placeholder="" style="border-radius: 0;">
-                                    </div>
-                                    <div class="mb-3"> <!-- Ссылка на видео -->
-                                        <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.p_video')</label>
-                                        <textarea class="form-control @if($user->dayVsNight) bg-secondary @endif "  rows="2" name="video" id="video" style="border-radius: 0"></textarea>
-                                        <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_video_description')</span>
-                                    </div>
-                                    <div class="mb-3"> <!-- Ссылка на любое медиа -->
-                                        <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Плейлист</label>
-                                        <textarea class="form-control @if($user->dayVsNight) bg-secondary @endif "  rows="2" name="media" id="media" style="border-radius: 0"></textarea>
-                                        <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Для добавления плейлиста, в это поле необходимо вставить его код</span>
-                                    </div>
-
-                                    <!-- Дизайн -->
-                                    <hr>
-                                        <div class="text-center">
-                                            Дизайн мероприятия
-                                        </div>
-                                    <hr>
-
-                                    <div class="mb-3 text-center" >
-                                        <div class="ms-2 form-check" style="padding: 0">
-                                            <div class="form-check form-switch mb-3">
-                                                <input name="check_last_event" class="form-check-input" type="checkbox" value="penis" id="design-link-e">
-                                                <label class="form-check-label" for="flexCheckDefault">
-                                                    @lang('app.last_style_2')
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <label for="exampleInputEmail1" class="form-label " style="font-family: 'Rubik', sans-serif; font-size: 0.7rem">Этот переключатель поможет вам скопировать дизайн последнего созданного вами мероприятия, что бы не нужно было самому заполнять ввсе параметры опять</label>
-                                    </div>
-
-                                    <div id="design-block-e">
-                                        <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Шрифт, размер шрифта и цвет для города и локации</label>
-                                        <div class="row mb-">
-                                            <div class="col-6">
-                                                <select id="select-beast-empty-post-location" data-placeholder="Поиск шрифта..."  autocomplete="off" name="location_font"></select>
-                                            </div>
-                                            <div class="col-3">
-                                                <select class="form-select @if($user->dayVsNight) bg-secondary @endif " aria-label="Default select example" name="location_font_size" style="border-radius: 0; height: 35px;">
-                                                    <option value="0.9">1</option>
-                                                    <option value="1">2</option>
-                                                    <option value="1.1">3</option>
-                                                    <option value="1.2">4</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-3">
-                                                <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif " id="exampleColorInput" value="#050507" title="Choose your color" name="location_font_color" style="height: 35px; border-radius: 0"><br>
-                                            </div>
-                                        </div>
-                                        <div class="mb-1 text-center">
-                                            <div class="form-check text-center">
-                                                <input name="bold_city" class="form-check-input" type="checkbox" value="{{true}}" id="flexCheckDefault">
-                                                <label class="form-check-label" for="flexCheckDefault">
-                                                    Сделать название города жирным
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 text-center">
-                                            <div class="form-check text-center">
-                                                <input name="bold_location" class="form-check-input" type="checkbox" value="{{true}}" id="flexCheckDefault">
-                                                <label class="form-check-label" for="flexCheckDefault">
-                                                    Сделать место проведения жирным
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Тень для города и локации</label>
-                                        <div class="mb-3 text-center row">
-                                            <div class="col-12">
-                                                <input type="color" class="block-input @if($user->dayVsNight) bg-secondary @endif form-control" id="exampleColorInput"  title="Choose your color" name="location_text_shadow_color" style="height: 40px; border-radius: 0"><br>
-                                            </div>
-                                            <div class="col-12">
-                                                <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Размытие тени</span>
-                                                <input type="range" class="form-range" min="0" max="10" step="1" id="customRange2" name="location_text_shadow_blur" value="0">
-                                            </div>
-                                            <div class="col-12">
-                                                <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Смещение вниз</span>
-                                                <input type="range" class="form-range" min="0" max="10" step="1" id="customRange2" name="location_text_shadow_bottom" value="0">
-                                            </div>
-                                            <div class="col-12">
-                                                <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Сдвиг в право</span>
-                                                <input type="range" class="form-range" min="0" max="10" step="1" id="customRange2" name="location_text_shadow_right" value="0">
-                                            </div>
-                                        </div>
-
-                                        <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Шрифт, размер шрифта и цвет для даты и времени</label>
-                                        <div class="row mb-">
-                                            <div class="col-6">
-                                                <select id="select-beast-empty-post-date" data-placeholder="Поиск шрифта..."  autocomplete="off" name="date_font"></select>
-                                            </div>
-                                            <div class="col-3">
-                                                <select class="form-select @if($user->dayVsNight) bg-secondary @endif " aria-label="Default select example" name="date_font_size" style="border-radius: 0; height: 35px;">
-                                                    <option value="0.9">1</option>
-                                                    <option value="1">2</option>
-                                                    <option value="1.1">3</option>
-                                                    <option value="1.2">4</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-3">
-                                                <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif " id="exampleColorInput" value="#050507" title="Choose your color" name="date_font_color" style="height: 35px; border-radius: 0"><br>
-                                            </div>
-                                        </div>
-                                        <div class="mb-1 text-center">
-                                            <div class="form-check text-center">
-                                                <input name="bold_date" class="form-check-input" type="checkbox" value="{{true}}" id="flexCheckDefault">
-                                                <label class="form-check-label" for="flexCheckDefault">
-                                                    Сделать дату жирным
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 text-center">
-                                            <div class="form-check text-center">
-                                                <input name="bold_time" class="form-check-input" type="checkbox" value="{{true}}" id="flexCheckDefault">
-                                                <label class="form-check-label" for="flexCheckDefault">
-                                                    Сделать время жирным
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Тень для даты и времени</label>
-                                        <div class="mb-3 text-center row">
-                                            <div class="col-12">
-                                                <input type="color" class="block-input @if($user->dayVsNight) bg-secondary @endif form-control" id="exampleColorInput"  title="Choose your color" name="date_text_shadow_color" style="height: 40px; border-radius: 0"><br>
-                                            </div>
-                                            <div class="col-12">
-                                                <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Размытие тени</span>
-                                                <input type="range" class="form-range" min="0" max="10" step="1" id="customRange2" name="date_text_shadow_blur" value="0">
-                                            </div>
-                                            <div class="col-12">
-                                                <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Смещение вниз</span>
-                                                <input type="range" class="form-range" min="0" max="10" step="1" id="customRange2" name="date_text_shadow_bottom" value="0">
-                                            </div>
-                                            <div class="col-12">
-                                                <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Сдвиг в право</span>
-                                                <input type="range" class="form-range" min="0" max="10" step="1" id="customRange2" name="date_text_shadow_right" value="0">
-                                            </div>
-                                        </div>
-
-                                        <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Выбор фонового цвета и прозрачности</label>
-                                        <div class="row mb-3">
-                                            <div class="col-3">
-                                                <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif " id="exampleColorInput" value="#ECECE2" title="Choose your color" name="background_color_hex" style="height: 40px; border-radius: 0">
-                                            </div>
-                                            <div class="col-9">
-                                                <input type="range" class="form-range" min="0.0" max="1.0" step="0.1" id="customRange2" name="transparency" value="1.0">
-                                            </div>
-                                        </div>
-
-                                        <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.p_round')</label>
-                                        <div class="mb-3 text-center d-flex justify-content-center"> <!-- Добивить округление углов -->
-                                            <input type="range" class="form-range" min="1" max="50" step="1" id="customRange2" name="event_round" value="25">
-                                        </div>
-
-                                        <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Тень для блока мероприятия</label>
-                                        <div class="mb-3 text-center d-flex justify-content-center">
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="block_shadow" id="inlineRadio1" value="shadow-none">
-                                                <label class="form-check-label" for="inlineRadio1">none</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="block_shadow" id="inlineRadio2" value="shadow-sm">
-                                                <label class="form-check-label" for="inlineRadio2">sm</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="block_shadow" id="inlineRadio3" value="shadow">
-                                                <label class="form-check-label" for="inlineRadio3">md</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="block_shadow" id="inlineRadio3" value="shadow-lg">
-                                                <label class="form-check-label" for="inlineRadio3">lg</label>
-                                            </div>
-                                        </div>
-
-                                        <div class="mb-3 text-center">
-                                            <div>
-                                                <select class="form-select @if($user->dayVsNight) bg-secondary @endif " aria-label="Default select example" name="event_animation" style="border-radius: 0">
-                                                    <option selected>Выбрать анимацию...</option>
-                                                    <option value="animate__animated animate__pulse animate__infinite infinite">Pulse</option>
-                                                    <option value="animate__animated animate__headShake animate__infinite infinite">Head Shake</option>
-                                                </select>
-                                            </div>
-                                            <label style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Анимация для мероприятия</label>
-                                        </div>
-                                    </div>
-                                    <div class="d-grid gap-2">
-                                        <button id="post-btn" type="submit" class="btn btn-secondary" style="border-radius: 0">Добавить</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-
-                </div>
-            </div>
-
-            <!-- Модалка для добавления продуктов -->
-            <div class="modal fade" id="exampleModalProduct" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background-color: #1b1b1b">
-                <div class="modal-dialog">
-                    <div class="block-modal modal-content text-center @if($user->dayVsNight) bg-dark text-white-50 @endif">
-                        <div class="modal-header">
-                            <h5 class="modal-title" style="font-family: 'Rubik', sans-serif;">Добавить продукт</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form action="{{ route('addProduct', ['id' => Auth::user()->id]) }}" method="post" enctype="multipart/form-data">
-                                @csrf @method('POST')
-                                <input type="hidden" name="user" value="{{$user->id}}">
-                                <div class="mb-1"> <!-- Название продукта -->
-                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Название продукта</label>
-                                    <input class="form-control" name="title" id="title" placeholder="Прокладки женские" style="background-color: #9bd77e; border-radius: 0">
-                                </div>
-                                <div class="mb-3"> <!-- Описание события -->
-                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Описание</label>
-                                    <textarea class="form-control @if($user->dayVsNight) bg-secondary @endif "  rows="3" name="description" id="full_text" style="border-radius: 0"></textarea>
-                                </div>
-                                <div class="mb-3"> <!-- Полное описание -->
-                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Развернутое описание</label>
-                                    <textarea class="form-control @if($user->dayVsNight) bg-secondary @endif "  rows="3" name="full_description" id="count_products" style="border-radius: 0"></textarea>
-                                </div>
-                                <div class="mb-3"> <!-- Фото продукта -->
-                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Основное фото</label>
-                                    <input type="file" class="form-control" id="inputGroupFile022" name="main_photo" accept=".png, .jpg, .jpeg" style="background-color: #9bd77e; border-radius: 0">
-                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Мы принимаем картинки jpeg, jpg, png формата.</span>
-                                </div>
-                                <div class="mb-3"> <!-- Дополнительные фото -->
-                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Дополнительные фото</label>
-                                    <input type="file" class="form-control" id="inputGroupFile022" name="additional_photos[]" accept=".png, .jpg, .jpeg" style="border-radius: 0" multiple="multiple">
-                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Мы принимаем картинки jpeg, jpg, png формата.</span>
-                                </div>
-{{--                                <div class="mb-3"> <!-- Кол-во товаров в наличии -->--}}
-{{--                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Кол-во товаров в наличии</label>--}}
-{{--                                    <input name="count_products" class="form-control" style="background-color: #9bd77e; border-radius: 0">--}}
-{{--                                </div>--}}
-                                <div class="mb-3"> <!-- Описание события -->
-                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Цена за единицу товара</label>
-                                    <input name="price" class="form-control" style="background-color: #9bd77e; border-radius: 0">
-                                </div>
-                                <div class="mb-3 text-center" >
-                                    <div class="ms-2 form-check" style="padding: 0">
-                                        <div class="form-check form-switch mb-3">
-                                            <input name="visible" class="form-check-input" type="checkbox" value="{{true}}" id="design-link-e">
-                                            <label class="form-check-label" for="flexCheckDefault">
-                                                Сделать продукт видимым для всех
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {{-- Market buttons --}}
-                                <div class="mb-3"> <!-- Название продукта -->
-                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Ссылка на товар</label>
-                                    <input class="form-control mb-1" name="link_to_shop" id="title" placeholder="Ozon, Wildberries и тд..." style="border-radius: 0">
-
-                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Текст для ссылки на товар</label>
-                                    <input class="form-control" name="link_to_shop_text" id="title" placeholder="Купить на Ozon" style="border-radius: 0">
-                                </div>
-                                <div class="mb-3"> <!-- Название продукта -->
-                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">Текст для кнопки заказа</label>
-                                    <input class="form-control" name="link_to_order_text" id="title" placeholder="Напишите мне для заказа" style="border-radius: 0">
-                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Покупать заполняет форму и заявка на товар\услугу появится в вашем личном кабинете</span>
-                                </div>
-
-                                <div class="d-grid gap-2">
-                                    <button type="submit" class="btn btn-secondary" style="border-radius: 0">@lang('app.m_add_link')</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
             <!-- Модалка для статистики по профилю -->
             <div class="modal fade" id="exampleModalStat" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background-color: #1b1b1b">
-                <div class="modal-dialog ">
+                <div class="modal-dialog" style="margin: 0">
                     <div class="block-modal modal-content text-center @if($user->dayVsNight) bg-dark text-white-50 @endif">
                     <div class="block-modal modal-header @if($user->dayVsNight) bg-dark text-white-50 @endif">
                         <h5 class="modal-title" id="exampleModalLabel">Просмотры профиля</h5>
@@ -954,13 +519,13 @@
 
 			<!-- Модалка для редактирования профиля -->
 			<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background-color: #1b1b1b">
-		  		<div class="modal-dialog">
+		  		<div class="modal-dialog" style="margin: 0">
 				    <div class="block-modal modal-content text-center @if($user->dayVsNight) bg-dark text-white-50 @endif">
 				    	<div class="modal-header">
 				        	<h5 class="modal-title" style="font-family: 'Rubik', sans-serif;">@lang('app.p_edit')</h5>
 				        	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				      	</div>
-				      	<div class="modal-body">
+				      	<div class="modal-body" style="background-color: #f1f2f2">
 
 				      		@if($user->avatar)
                                 <div class="" id="delete-favicon-avatar">
@@ -1011,60 +576,59 @@
 					        	@csrf @method('PATCH')
 							  	<div class="mb-3">
 							    	<label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.p_name')</label>
-							    	<input value="{{$user->name}}" type="text" class="form-control @if($user->dayVsNight) bg-secondary @endif " id="exampleInputEmail1" aria-describedby="emailHelp" name="name" placeholder="{{$user->name}}" maxlength="100" style="border-radius: 0">
+							    	<input value="{{$user->name}}" type="text" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow" id="exampleInputEmail1" aria-describedby="emailHelp" name="name" placeholder="{{$user->name}}" maxlength="100" style="border: 0">
 							    	<span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_name_descr')</span>
 							  	</div>
 							  	<label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.p_name_color')</label>
 							  	<div class="mb-3 text-center d-flex justify-content-center">
-									<input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif " id="exampleColorInput" value="{{$user->name_color}}" title="Choose your color" name="name_color" style="height: 40px; border-radius: 0">
+									<input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" id="exampleColorInput" value="{{$user->name_color}}" title="Choose your color" name="name_color" style="height: 35px; border: 0">
 									<span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_n_def')</span>
 							  	</div>
 							  	<label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.page_adress')</label>
 							  	<div class="input-group mb-3 text-center">
-  									<span class="input-group-text" id="basic-addon3">chrry.me/</span>
-  									<input placeholder="{{$user->slug}}" type="text" class="form-control @if($user->dayVsNight) bg-secondary @endif " id="basic-url" aria-describedby="basic-addon3" name="slug" description="{{$user->slug}}" maxlength="150" style="border-radius: 0">
-  									<label style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.page_adress_descr')</label>
+  									<span class="input-group-text shadow" id="basic-addon3" style="border: 0">chrry.me/</span>
+  									<input placeholder="{{$user->slug}}" type="text" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow" id="basic-url" aria-describedby="basic-addon3" name="slug" description="{{$user->slug}}" maxlength="150" style="border: 0">
+  									<span class="mt-1" style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.page_adress_descr')</span>
 								</div>
 							  	<div class="mb-3 text-center">
 							    	<label for="exampleFormControlTextarea1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.page_descr')</label>
-				  					<textarea class="form-control @if($user->dayVsNight) bg-secondary @endif " id="exampleFormControlTextarea1" rows="3" name="description" maxlength="150" style="border-radius: 0">{{$user->description}}</textarea>
+				  					<textarea class="form-control @if($user->dayVsNight) bg-secondary @endif shadow" id="exampleFormControlTextarea1" rows="3" name="description" maxlength="150" style="border: 0">{{$user->description}}</textarea>
 				  					<span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_page_descr_descr')</span>
 							  	</div>
 							  	<label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.p_color_descr')</label>
 							  	<div class="mb-3 text-center d-flex justify-content-center">
-									<input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif " id="exampleColorInput" value="{{$user->description_color}}" title="Choose your color" name="description_color" style="height: 40px; border-radius: 0">
+									<input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" id="exampleColorInput" value="{{$user->description_color}}" title="Choose your color" name="description_color" style="height: 35px; border: 0">
 									<span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_color_descr_def')</span>
 							  	</div>
 							  	@if($user->verify == 1)
 								  	<label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.verif_icon_color')</label>
 								  	<div class="mb-3 text-center d-flex justify-content-center">
-										<input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif " id="exampleColorInput" value="{{$user->verify_color}}" title="Choose your color" name="verify_color" style="height: 40px; border-radius: 0">
+										<input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" id="exampleColorInput" value="{{$user->verify_color}}" title="Choose your color" name="verify_color" style="height: 35px; border: 0">
 										<span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_v_i_c_def')</span>
 								  	</div>
 							  	@endif
 							  	<label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.p_background_color')</label><br>
-							  	<label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif; font-size:0.7rem">@lang('app.p_background_color')</label>
 							  	<div class="mb-3 text-center d-flex justify-content-center">
-									<input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif " id="exampleColorInput" value="{{$user->background_color}}" title="Choose your color" name="background_color" style="height: 40px; border-radius: 0">
+									<input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" id="exampleColorInput" value="{{$user->background_color}}" title="Choose your color" name="background_color" style="height: 35px; border: 0">
 							  	</div>
 							  	<label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.p_download_ava')</label>
 							  	<div class="input-group mb-3">
-							  		<input type="file" class="form-control @if($user->dayVsNight) bg-secondary @endif " id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" name="avatar" style="border-radius: 0">
+							  		<input type="file" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" name="avatar" style="border: 0">
 							  		<span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_download_ava_rules')</span>
 								</div>
 								<label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.p_background_img')</label>
 							  	<div class="input-group mb-3">
-							  		<input type="file" class="form-control @if($user->dayVsNight) bg-secondary @endif " id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" name="banner" style="border-radius: 0">
+							  		<input type="file" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" name="banner" style="border: 0">
 							  		<span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_background_img_descr')</span>
 								</div>
                                 <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Загрузить фавикон</label>
                                 <div class="input-group mb-3">
-                                    <input type="file" class="form-control @if($user->dayVsNight) bg-secondary @endif " id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" name="favicon" style="border-radius: 0">
+                                    <input type="file" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" name="favicon" style="border: 0">
                                     <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Малюсенькая картинка, которая будет отображаться в верху браузера. Обычно её размер 32х32 пикселя</span>
                                 </div>
                                 <div class=" mb-3">
                                     <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.p_select_lang')</label>
-                                    <select name="locale" class="form-select @if($user->dayVsNight) bg-secondary @endif " aria-label="Default select example" style="border-radius: 0">
+                                    <select name="locale" class="form-select @if($user->dayVsNight) bg-secondary @endif shadow" aria-label="Default select example" style="border: 0">
                                         <option selected>@lang('app.p_select')</option>
                                         <option @if($user->locale == 'ru') selected @endif value="ru">Русский</option>
                                         <option @if($user->locale == 'en') selected @endif value="en">English</option>
@@ -1074,7 +638,7 @@
                                 <div id="link_bar">
                                     <div class=" mb-3">
                                         <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Отображение бара с соц сетями</label>
-                                        <select name="social_links_bar" class="form-select @if($user->dayVsNight) bg-secondary @endif " aria-label="Default select example" style="border-radius: 0">
+                                        <select name="social_links_bar" class="form-select @if($user->dayVsNight) bg-secondary @endif shadow" aria-label="Default select example" style="border: 0">
                                             <option @if($user->social_links_bar == '1') selected @endif value="{{1}}">Включить</option>
                                             <option @if($user->social_links_bar == '0') selected @endif value="{{0}}">Выключить</option>
                                         </select>
@@ -1083,7 +647,7 @@
 
                                     <div class=" mb-3">
                                         <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Позиция бара с соц сетями</label>
-                                        <select name="links_bar_position" class="form-select @if($user->dayVsNight) bg-secondary @endif " aria-label="Default select example" style="border-radius: 0">
+                                        <select name="links_bar_position" class="form-select @if($user->dayVsNight) bg-secondary @endif shadow" aria-label="Default select example" style="border: 0">
                                             <option @if($user->links_bar_position == 'top') selected @endif value="top">Вверху</option>
                                             <option @if($user->links_bar_position == 'bottom') selected @endif value="bottom">Внизу</option>
                                         </select>
@@ -1093,7 +657,7 @@
 
                                 <div class=" mb-3">
                                     <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Показать логотип</label>
-                                    <select name="show_logo" class="form-select @if($user->dayVsNight) bg-secondary @endif " aria-label="Default select example" style="border-radius: 0">
+                                    <select name="show_logo" class="form-select @if($user->dayVsNight) bg-secondary @endif shadow" aria-label="Default select example" style="border: 0">
                                         <option @if($user->show_logo == '1') selected @endif value="{{1}}">Показать</option>
                                         <option @if($user->show_logo == '0') selected @endif value="{{0}}">Отключить</option>
                                     </select>
@@ -1102,7 +666,7 @@
 
                                 <div class=" mb-3">
                                     <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Тип страницы</label>
-                                    <select id="type-profile" name="type" class="form-select @if($user->dayVsNight) bg-secondary @endif " aria-label="Default select example" style="border-radius: 0">
+                                    <select id="type-profile" name="type" class="form-select @if($user->dayVsNight) bg-secondary @endif shadow" aria-label="Default select example" style="border: 0">
                                         <option selected>Выберите тип страницы</option>
                                         <option @if($user->type == 'Links') selected @endif value="Links">Ссылки</option>
                                         <option @if($user->type == 'Events') selected @endif value="Events">Афиша</option>
@@ -1112,7 +676,7 @@
                                 <div id="event-block" style="display:none">
                                 	<div class=" mb-3">
 	                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Отображение иконок соц сетей</label>
-	                                    <select name="show_social" class="form-select @if($user->dayVsNight) bg-secondary @endif " aria-label="Default select example" style="border-radius: 0">
+	                                    <select name="show_social" class="form-select @if($user->dayVsNight) bg-secondary @endif shadow" aria-label="Default select example" style="border: 0">
 	                                        <option selected>Показать иконки соц. сетей или нет</option>
 	                                        <option @if($user->show_social == true) selected @endif value="1">Показать</option>
 	                                        <option @if($user->show_social == false) selected @endif value="0">Нет</option>
@@ -1121,7 +685,7 @@
 	                                </div>
 	                                <div class=" mb-3">
 	                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Место положение иконок</label>
-	                                    <select name="social" class="form-select @if($user->dayVsNight) bg-secondary @endif " aria-label="Default select example" style="border-radius: 0">
+	                                    <select name="social" class="form-select @if($user->dayVsNight) bg-secondary @endif shadow" aria-label="Default select example" style="border: 0">
 	                                        <option selected>Показать иконки соц. сетей или нет</option>
 	                                        <option @if($user->social == 'TOP') selected @endif value="TOP">Вверху</option>
 	                                        <option @if($user->social == 'DOWN') selected @endif value="DOWN">Внизу</option>
@@ -1130,7 +694,7 @@
 	                                </div>
                                 </div>
                                 <div class="d-grid gap-2">
-								  	<button type="submit" class="btn btn-secondary mb-1 mt-3" style="font-family: 'Rubik', sans-serif; border-radius: 0; color: white">@lang('app.p_edit_prof')</button>
+								  	<button type="submit" class="btn btn-secondary mb-1 mt-3" style="font-family: 'Rubik', sans-serif; border: 0; color: white">@lang('app.p_edit_prof')</button>
 								</div>
 							</form>
 				      	</div>
@@ -1138,71 +702,6 @@
 		  		</div>
 			</div>
     	</div>
-
-
-
-        <!-- ХЗ блять че это? -->
-{{--        <script>--}}
-{{--            $(function(){--}}
-{{--                $("input[type='submit']").click(function(){--}}
-{{--                    var $fileUpload = $("input[type='file']");--}}
-{{--                    if (parseInt($fileUpload.get(0).files.length)>2){--}}
-{{--                    alert("You can only upload a maximum of 2 files");--}}
-{{--                    }--}}
-{{--                });--}}
-{{--            });--}}
-{{--        </script>--}}
-
-        <!-- Icons select loader -->
-        <script>
-            new TomSelect('#select-beast-empty',{
-                valueField: 'img',
-                searchField: 'title',
-                options: [
-                    @foreach($allIconsInsideFolder as $icon)
-                        {id: {{$icon->getInode()}}, title: '{{substr($icon->getFilename(), 0, strrpos($icon->getFilename(),'.'))}}', img: '{{'http://links/public/images/social/'.$icon->getFilename()}}'},
-                    @endforeach
-                ],
-                render: {
-                    option: function(data, escape) {
-                        return  '<table>' +
-                                    '<tr>' +
-                                        '<img style="background-color: #DCDCDC" width="90" src="' + escape(data.img) + '">' +
-                                        '<h6>' + escape(data.title) + '</h6' +
-                                    '</tr>' +
-                                '</table>';
-
-                    },
-                    item: function(data, escape) {
-                        return  '<img style="margin-right: 16px; background-color: #DCDCDC" width="30" src="' + escape(data.img) + '">' + '<span class="title">' + escape(data.title) + '</span>';
-                    }
-                }
-            });
-        </script>
-
-        {{-- Fonts select loader for Links--}}
-        <script>
-            new TomSelect('#select-beast-empty-font',{
-                valueField: 'font',
-                searchField: 'title',
-                maxOptions: 150,
-                options: [
-                    @foreach($allFontsInFolder as $font)
-                        {id: {{$font->getInode()}}, title: '{{ stristr($font->getFilename(), '.', true)}}', font: '{{ stristr($font->getFilename(), '.', true) }}'},
-                    @endforeach
-                ],
-                render: {
-                    option: function(data, escape) {
-                        return  '<div>' +
-                                    '<span style="font-size: 1.6rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</span>' +
-                                '</div>';
-                    },
-                    item: function(data, escape) {
-                        return  '<h4 style="font-size: 1.2rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</h4>';
-                    }
-                }
-            });
-        </script>
 
         {{-- Fonts select loader for Events--}}
         <script>

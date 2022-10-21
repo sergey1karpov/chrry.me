@@ -24,16 +24,16 @@ class UpdateRegisteruserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'nullable|min:3|max:100',
+            'name' => 'required|min:3|max:100',
             'slug' => 'nullable|unique:users|min:3|max:150|alpha_dash',
             'description' => 'nullable|max:150',
             'name_color' => 'nullable',
             'description_color' => 'nullable',
             'verify_color' => 'nullable',
             'background_color' => 'nullable',
-            'banner' => 'nullable|mimes:jpeg,png,jpg,gif|max:5000',
-            'avatar' => 'nullable|mimes:jpeg,png,jpg,gif|max:5000',
-            'favicon' => 'nullable|mimes:jpeg,png,jpg,gif|max:5000',
+            'banner' => 'nullable|mimes:jpeg,png,jpg,gif|max:10000',
+            'avatar' => 'nullable|mimes:jpeg,png,jpg,gif|max:10000',
+            'favicon' => 'nullable|mimes:jpeg,png,jpg,gif|max:10000',
             'locale' => 'nullable',
             'social' => 'nullable',
         ];

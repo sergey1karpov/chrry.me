@@ -4,14 +4,16 @@ namespace App\Models;
 
 use App\Http\Requests\OrderProductRequest;
 use App\Http\Requests\ProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 use App\Services\UploadPhotoService;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Product extends Model
 {
-    use HasFactory;
+    use HasFactory, Searchable;
 
     /**
      * Максимальное колличество дополнительных фото у продукта
@@ -34,6 +36,19 @@ class Product extends Model
     ];
 
     protected $guarded = [];
+
+    public function searchableAs()
+    {
+        return 'products_index';
+    }
+
+    public function toSearchableArray()
+    {
+        return [
+            'id'    => $this->id,
+            'title' => $this->title,
+        ];
+    }
 
     public function user()
     {
@@ -92,12 +107,17 @@ class Product extends Model
      *
      * Update product
      */
-    public function patchProduct(int $userId, Product $product, Request $request, UploadPhotoService $uploadService)
+    public function patchProduct(int $userId, Product $product, UpdateProductRequest $request, UploadPhotoService $uploadService)
     {
         if($request->additional_photos) {
             $fn = $this->checkCountAdditionalPhotosInProduct($product, $request->additional_photos, $this->imgPath($userId), $uploadService);
             if($fn !== null) {
-                return redirect()->back()->with('count', 'Максимальное кол-во дополнительных фотографий 5 шт. Вы можете загрузить ' . $fn . ' фотографии для текущего товара');
+                return redirect()
+                    ->route('showProduct', ['id' => $userId, 'product' => $product])
+                    ->with(
+                        'count',
+                        'Максимальное кол-во дополнительных фотографий 5 шт. Вы можете загрузить ' . $fn . ' фотографии для текущего товара'
+                    );
             }
         }
 
@@ -105,9 +125,10 @@ class Product extends Model
             $product->main_photo = $uploadService->uploader($request->main_photo, $this->imgPath($userId), 500, true, $product->main_photo);
         }
 
-        $product->title = $request->title;
-        $product->description = $request->description;
-        $product->price = $request->price;
+        $product->title = isset($request->title) ? $request->title :  $product->title;
+        $product->description = isset($request->description) ? $request->description : $product->description;
+        $product->full_description = $request->full_description;
+        $product->price = isset($request->price)  ? $request->price : $product->price;
         $product->visible = isset($request->visible) ? 1 : 0;
         $product->type = 'Market';
 

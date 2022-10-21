@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Requests\UpdateLinkRequest;
 use App\Services\ColorConvertorService;
 use App\Services\UploadPhotoService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -132,11 +133,11 @@ class Link extends Model
      * @param UploadPhotoService $uploadService
      * @return void
      */
-    public function editLink(int $userId, Link $link, LinkRequest $request, UploadPhotoService $uploadService)
+    public function editLink(int $userId, Link $link, UpdateLinkRequest $request, UploadPhotoService $uploadService)
     {
         Link::where('id', $link->id)->where('user_id', $userId)->update([
-            'title'                => $request->title,
-            'link'                 => $request->link,
+            'title'                => isset($request->title) ? $request->title : $link->title,
+            'link'                 => isset($request->link) ? $request->link : $link->link,
             'shadow'               => $request->shadow,
             'rounded'              => $request->rounded,
             'title_color'          => isset($request->title_color) ? $request->title_color : $link->title_color,

@@ -87,6 +87,10 @@
 			    background-size: cover;
 			    background-repeat: no-repeat;
 			}
+            .ts-control {
+                border: 0;
+                box-shadow: 0px 1px 10px 2px rgba(0, 0, 0, 0.2);
+            }
         </style>
     </head>
     <body class="antialiased @if($user->dayVsNight) bg-dark text-white-50 @endif">
@@ -139,7 +143,7 @@
         <!-- Массовое изменение -->
         <div class="container-fluid justify-content-center text-center">
             <div class="row">
-                <div class="col-12 mt-" data-bs-toggle="modal" data-bs-target="#exampleModalLink" style="padding-right: 0; padding-left: 0">
+                <div class="col-12" data-bs-toggle="modal" data-bs-target="#exampleModalLink" style="padding-right: 0; padding-left: 0">
 					<div class="box-part text-center shadow-sm @if($user->dayVsNight) bg-secondary text-white-50 @endif" style="margin: 0; background-color: #feae72">
 						<div class="title">
 							<h4 class="mt-2" style="font-family: 'Rubik', sans-serif; color: white">@lang('app.a_edit_links')</h4>
@@ -151,8 +155,8 @@
 				</div>
             </div>
             <div class="modal fade bg-dark" id="exampleModalLink" tabindex="-1" aria-labelledby="exampleModalLink" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content @if($user->dayVsNight) bg-dark text-white-50 @endif">
+                <div class="modal-dialog" style="margin: 0">
+                    <div class="modal-content @if($user->dayVsNight) bg-dark text-white-50 @endif" style="background-color: #f1f2f2">
                         <div class="modal-header @if($user->dayVsNight) bg-dark text-white-50 @endif">
                             <h5 class="modal-title" style="font-family: 'Rubik', sans-serif;">@lang('app.a_edit_links')</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -164,7 +168,7 @@
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.a_title')</label>
                                         <div class="mb-3 text-center d-flex justify-content-center">
-                                            <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif" id="exampleColorInput" value="" title="Choose your color" name="title_color" style="height: 40px; border-radius: 0">
+                                            <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" id="exampleColorInput" value="" title="Choose your color" name="title_color" style="height: 36px; border: 0">
                                         </div>
                                     </div>
                                     <div class="text-center row">
@@ -172,7 +176,7 @@
                                             <select id="mass-edit" data-placeholder="Поиск шрифта..."  autocomplete="off" name="font"></select>
                                         </div>
                                         <div class="col-3">
-                                            <select class="form-select @if($user->dayVsNight) bg-secondary @endif" aria-label="Default select example" name="font_size" style="height: 35px; border-radius: 0">
+                                            <select class="form-select @if($user->dayVsNight) bg-secondary @endif shadow" aria-label="Default select example" name="font_size" style="height: 34px; border: 0">
                                                 <option value="0.9">1</option>
                                                 <option value="1">2</option>
                                                 <option value="1.1">3</option>
@@ -184,14 +188,14 @@
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.a_back_color')</label>
                                         <div class="mb-3 text-center d-flex justify-content-center">
-                                            <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif" id="exampleColorInput" value="" title="Choose your color" name="background_color" style="height: 40px; border-radius: 0">
+                                            <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" id="exampleColorInput" value="" title="Choose your color" name="background_color" style="height: 35px; border: 0">
                                         </div>
                                     </div>
 
                                     <div class="mb-3 text-center">
-                                        <div class="form-check text-center">
-                                            <input name="bold" class="form-check-input" type="checkbox" value="{{true}}" id="flexCheckDefault">
-                                            <label class="form-check-label" for="flexCheckDefault">
+                                        <div class="form-check form-switch text-center">
+                                            <input name="bold" class="form-check-input shadow" type="checkbox" value="{{true}}" id="flexCheckDefault" style="border: 0">
+                                            <label class="form-check-label" for="flexCheckDefault" style="font-family: 'Rubik', sans-serif;">
                                                 Сделать текст ссылки жирным
                                             </label>
                                         </div>
@@ -200,7 +204,7 @@
                                     <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Тень для текста</label>
                                     <div class="mb-3 text-center row">
                                         <div class="col-12">
-                                            <input type="color" class="block-input @if($user->dayVsNight) bg-secondary @endif form-control" id="exampleColorInput"  title="Choose your color" name="text_shadow_color" style="height: 40px; border-radius: 0"><br>
+                                            <input type="color" class="block-input @if($user->dayVsNight) bg-secondary @endif form-control shadow p-1" id="exampleColorInput"  title="Choose your color" name="text_shadow_color" style="height: 36px; border: 0"><br>
                                         </div>
                                         <div class="col-12">
                                             <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Четкость тени</span>
@@ -217,26 +221,28 @@
                                     </div>
 
                                     <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.a_trans')</label>
-                                    <div class="mb- text-center d-flex justify-content-center">
+                                    <div class="mb- text-center d-flex justify-content-between">
                                         <input type="range" class="form-range" min="0.0" max="1.0" step="0.1" id="customRange2" name="transparency">
                                     </div>
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.a_shadow')</label><br>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="shadow" id="inlineRadio1" value="shadow-none">
-                                            <label class="form-check-label" for="inlineRadio1">none</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="shadow" id="inlineRadio2" value="shadow-sm" >
-                                            <label class="form-check-label" for="inlineRadio2">sm</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="shadow" id="inlineRadio3" value="shadow" >
-                                            <label class="form-check-label" for="inlineRadio3">md</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="shadow" id="inlineRadio3" value="shadow-lg" >
-                                            <label class="form-check-label" for="inlineRadio3">lg</label>
+                                        <div class="mb-3 text-center d-flex justify-content-between">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input shadow" type="radio" name="shadow" id="inlineRadio1" value="shadow-none" style="border: 0">
+                                                <label class="form-check-label" for="inlineRadio1" style="font-size: 0.8rem">Без тени</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input shadow" type="radio" name="shadow" id="inlineRadio2" value="shadow-sm" style="border: 0">
+                                                <label class="form-check-label" for="inlineRadio2" style="font-size: 0.8rem">Маленькая</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input shadow" type="radio" name="shadow" id="inlineRadio3" value="shadow" style="border: 0">
+                                                <label class="form-check-label" for="inlineRadio3" style="font-size: 0.8rem">Средняя</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input shadow" type="radio" name="shadow" id="inlineRadio3" value="shadow-lg" style="border: 0">
+                                                <label class="form-check-label" for="inlineRadio3" style="font-size: 0.8rem">Большая</label>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="mb-3">
@@ -244,7 +250,7 @@
                                         <input type="range" class="form-range" min="1" max="50" step="1" id="customRange2" name="rounded">
                                     </div>
                                     <div class="grap-2 d-grid">
-                                        <button type="submit" class="btn btn-secondary" style="border-radius: 0">Изменить</button>
+                                        <button type="submit" class="btn btn-secondary" style="border: 0">Изменить</button>
                                     </div>
                                 </div>
                             </form>
@@ -291,8 +297,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="d-flex justify-content-between rounded-bottom rounded-3 ms-4 me-4" style="padding: 0;">
-                                        <div class="col-4 border-end " style="background-color: #f0eeef; box-shadow: 5px 0px 0px black;">
+                                    <div class="d-flex justify-content-between rounded-bottom rounded-3" style="padding: 0; margin-right: 30px; margin-left: 30px">
+                                        <div class="col-4 border-end " style="background-color: #f0eeef; box-shadow: 5px 0px 0px black; border-bottom-left-radius: 5px;">
                                             <a href="{{ route('showClickLinkStatistic', ['id' => $user->id, 'link' => $link->id]) }}" style="text-decoration: none; color: black">
                                                 <button href="{{ route('showClickLinkStatistic', ['id' => $user->id, 'link' => $link->id]) }}" class="btn-sm" style="background-color: #f1f2f2; border: 0;">
                                                     @lang('app.s_stats')
@@ -304,7 +310,7 @@
                                                 @lang('app.a_edit')
                                             </button>
                                         </div>
-                                        <div class="col-4" style="background-color: #f1f2f2; ">
+                                        <div class="col-4" style="background-color: #f1f2f2; border-bottom-right-radius: 5px;">
                                             <form action="{{ route('delLink', ['id' => Auth::user()->id, 'link' => $link->id]) }}" method="POST">
                                                 @csrf @method('DELETE')
                                                 <button class="btn-sm" style="background-color: #f0eeef; border: 0;">
@@ -314,10 +320,10 @@
                                         </div>
                                     </div>
                                     <div class="modal fade" id="exampleModalEdit{{$link->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
+                                        <div class="modal-dialog" style="margin: 0">
                                             <div class="modal-content @if($user->dayVsNight) bg-dark text-white-50 @endif">
                                                 <div class="modal-header @if($user->dayVsNight) bg-dark text-white-50 @endif">
-                                                    <h5 class="modal-title" style="font-family: 'Rubik', sans-serif;">@lang('app.a_edit_link')</h5>
+                                                    <h5 class="modal-title" style="font-family: 'Rubik', sans-serif;">Изменить ссылку</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
 
@@ -367,14 +373,14 @@
                                                     </div>
                                                 @endif
 
-                                                <div class="modal-body">
+                                                <div class="modal-body @if($user->dayVsNight) bg-dark text-white-50 @endif" style="background-color: #f1f2f2">
                                                     <form action="{{ route('editLink', ['id' => Auth::user()->id, 'link' => $link->id]) }}" method="post" enctype="multipart/form-data">
                                                         @csrf @method('PATCH')
                                                         <div>
                                                             <input type="hidden" name="type" value="LINK"> <!-- Тип ссылки -->
                                                             <div class="mb-3">
                                                                 <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.p_title')</label>
-                                                                <input type="text" class="form-control @if($user->dayVsNight) bg-secondary @endif" name="title" placeholder="Моя красивая ссылка" maxlength="100" value="{{$link->title}}" style="border-radius: 0">
+                                                                <input type="text" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow" name="title" placeholder="" maxlength="100" value="{{$link->title}}" style="border: 0">
                                                                 <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.m_text_link_span')</span>
                                                             </div>
                                                             <div class="text-center row">
@@ -382,7 +388,7 @@
                                                                     <select id="pinned-links{{$link->id}}" data-placeholder="Поиск шрифта..."  autocomplete="off" name="font"></select>
                                                                 </div>
                                                                 <div class="col-3">
-                                                                    <select class="form-select @if($user->dayVsNight) bg-secondary @endif" aria-label="Default select example" name="font_size" style="height: 35px; border-radius: 0">
+                                                                    <select class="form-select @if($user->dayVsNight) bg-secondary @endif shadow" aria-label="Default select example" name="font_size" style="height: 35px; border: 0">
                                                                         <option @if($link->font_size == 0.9) selected @endif value="0.9">1</option>
                                                                         <option @if($link->font_size == 1) selected @endif value="1">2</option>
                                                                         <option @if($link->font_size == 1.1) selected @endif value="1.1">3</option>
@@ -390,17 +396,17 @@
                                                                     </select>
                                                                 </div>
                                                             </div>
-                                                            <label class="mb-3" style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Вы можете выбрать шрифт и его размер для текста вашей ссылки</label>
+                                                            <label class="mb-3 mt-1" style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Вы можете выбрать шрифт и его размер для текста вашей ссылки</label>
                                                             <div class="mb-3">
                                                                 <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.m_insert_link')</label>
-                                                                <input type="text" class="form-control @if($user->dayVsNight) bg-secondary @endif" name="link" placeholder="http://..." value="{{$link->link}}" style="border-radius: 0">
+                                                                <input type="text" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow" name="link" placeholder="http://..." value="{{$link->link}}" style="border: 0">
                                                                 <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.a_edit_link')</span>
                                                             </div>
 
                                                             <div class="mb-3 text-center">
-                                                                <div class="form-check text-center">
-                                                                    <input name="bold" class="form-check-input" type="checkbox" value="{{true}}" id="flexCheckDefault" @if($link->bold == true) checked @endif>
-                                                                    <label class="form-check-label" for="flexCheckDefault">
+                                                                <div class="form-check form-switch text-center">
+                                                                    <input name="bold" class="form-check-input shadow" type="checkbox" value="{{true}}" id="flexCheckDefault" @if($link->bold == true) checked @endif style="border: 0">
+                                                                    <label class="form-check-label" for="flexCheckDefault" style="font-family: 'Rubik', sans-serif;">
                                                                         Сделать текст ссылки жирным
                                                                     </label>
                                                                 </div>
@@ -409,7 +415,7 @@
                                                             <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Тень для текста</label>
                                                             <div class="mb-3 text-center row">
                                                                 <div class="col-12">
-                                                                    <input type="color" class="block-input @if($user->dayVsNight) bg-secondary @endif form-control" id="exampleColorInput" value="{{$link->text_shadow_color}}" title="Choose your color" name="text_shadow_color" style="height: 40px; border-radius: 0"><br>
+                                                                    <input type="color" class="block-input @if($user->dayVsNight) bg-secondary @endif form-control shadow p-1" id="exampleColorInput" value="{{$link->text_shadow_color}}" title="Choose your color" name="text_shadow_color" style="height: 35px; border: 0"><br>
                                                                 </div>
                                                                 <div class="col-12">
                                                                     <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Четкость тени</span>
@@ -435,7 +441,7 @@
 
                                                             <div class="mb-3" id="upload-icon{{$link->id}}">
                                                                 <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.m_photo')</label>
-                                                                <input type="file" class="form-control @if($user->dayVsNight) bg-secondary @endif" id="inputGroupFile02" name="photo" style="border-radius: 0">
+                                                                <input type="file" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow" id="inputGroupFile02" name="photo" style="border: 0">
                                                                 <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.m_photo_description')</span>
                                                             </div>
 
@@ -443,7 +449,7 @@
                                                             <div class="mb-3">
                                                                 <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.m_title_color')</label>
                                                                 <div class="mb-3 text-center d-flex justify-content-center">
-                                                                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif" id="exampleColorInput" value="{{$link->title_color_hex}}" title="Choose your color" name="title_color" style="height: 40px; border-radius: 0">
+                                                                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" id="exampleColorInput" value="{{$link->title_color_hex}}" title="Choose your color" name="title_color" style="height: 35px; border: 0">
                                                                 </div>
                                                             </div>
 
@@ -451,33 +457,35 @@
                                                             <div class="mb-3">
                                                                 <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.m_background_color')</label>
                                                                 <div class="mb-3 text-center d-flex justify-content-center">
-                                                                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif" id="exampleColorInput" value="{{$link->background_color_hex}}" title="Choose your color" name="background_color" style="height: 40px; border-radius: 0">
+                                                                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" id="exampleColorInput" value="{{$link->background_color_hex}}" title="Choose your color" name="background_color" style="height: 35px; border: 0">
                                                                 </div>
                                                             </div>
 
 
                                                             <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.m_transparency')</label>
-                                                            <div class="mb- text-center d-flex justify-content-center">
+                                                            <div class="mb- text-center d-flex justify-content-between">
                                                                 <input type="range" class="form-range" min="0.0" max="1.0" step="0.1" id="customRange2" name="transparency" value="{{$link->transparency}}">
                                                             </div>
 
                                                             <div class="mb-3">
                                                                 <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.m_shadow')</label><br>
-                                                                <div class="form-check form-check-inline">
-                                                                    <input class="form-check-input" type="radio" name="shadow" id="inlineRadio1" value="shadow-none" @if($link->shadow == 'shadow-none') checked @endif>
-                                                                    <label class="form-check-label" for="inlineRadio1">none</label>
-                                                                </div>
-                                                                <div class="form-check form-check-inline">
-                                                                    <input class="form-check-input" type="radio" name="shadow" id="inlineRadio2" value="shadow-sm" @if($link->shadow == 'shadow-sm') checked @endif>
-                                                                    <label class="form-check-label" for="inlineRadio2">sm</label>
-                                                                </div>
-                                                                <div class="form-check form-check-inline">
-                                                                    <input class="form-check-input" type="radio" name="shadow" id="inlineRadio3" value="shadow" @if($link->shadow == 'shadow') checked @endif>
-                                                                    <label class="form-check-label" for="inlineRadio3">md</label>
-                                                                </div>
-                                                                <div class="form-check form-check-inline">
-                                                                    <input class="form-check-input" type="radio" name="shadow" id="inlineRadio3" value="shadow-lg" @if($link->shadow == 'shadow-lg') checked @endif>
-                                                                    <label class="form-check-label" for="inlineRadio3">lg</label>
+                                                                <div class="mb-3 text-center d-flex justify-content-between">
+                                                                    <div class="form-check form-check-inline">
+                                                                        <input class="form-check-input shadow" type="radio" name="shadow" id="inlineRadio1" value="shadow-none" @if($link->shadow == 'shadow-none') checked @endif style="border: 0">
+                                                                        <label class="form-check-label" for="inlineRadio1" style="font-size: 0.8rem">Без тени</label>
+                                                                    </div>
+                                                                    <div class="form-check form-check-inline">
+                                                                        <input class="form-check-input shadow" type="radio" name="shadow" id="inlineRadio2" value="shadow-sm" @if($link->shadow == 'shadow-sm') checked @endif style="border: 0">
+                                                                        <label class="form-check-label" for="inlineRadio2" style="font-size: 0.8rem">Маленькая</label>
+                                                                    </div>
+                                                                    <div class="form-check form-check-inline">
+                                                                        <input class="form-check-input shadow" type="radio" name="shadow" id="inlineRadio3" value="shadow" @if($link->shadow == 'shadow') checked @endif style="border: 0">
+                                                                        <label class="form-check-label" for="inlineRadio3" style="font-size: 0.8rem">Средняя</label>
+                                                                    </div>
+                                                                    <div class="form-check form-check-inline">
+                                                                        <input class="form-check-input shadow" type="radio" name="shadow" id="inlineRadio3" value="shadow-lg" @if($link->shadow == 'shadow-lg') checked @endif style="border: 0">
+                                                                        <label class="form-check-label" for="inlineRadio3" style="font-size: 0.8rem">Большая</label>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                             <div class="mb-3">
@@ -489,24 +497,24 @@
 
                                                             <div class="mb-3 text-center">
                                                                 <div>
-                                                                    <select class="form-select @if($user->dayVsNight) bg-secondary @endif" aria-label="Default select example" name="animation" style="border-radius: 0">
+                                                                    <select class="form-select @if($user->dayVsNight) bg-secondary @endif shadow" aria-label="Default select example" name="animation" style="border: 0">
                                                                         <option >Выбрать анимацию...</option>
                                                                         <option @if($link->animation == 'animate__animated animate__pulse animate__infinite infinite') selected @endif value="animate__animated animate__pulse animate__infinite infinite">Pulse</option>
                                                                         <option @if($link->animation == 'animate__animated animate__headShake animate__infinite infinite') selected @endif value="animate__animated animate__headShake animate__infinite infinite">Head Shake</option>
                                                                     </select>
                                                                 </div>
-                                                                <label style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Вы можете выделить свою ссылку от остальных выбрав одну из анимаций</label>
+                                                                <label class="mt-1" style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Вы можете выделить свою ссылку от остальных выбрав одну из анимаций</label>
                                                             </div>
                                                             <div class="mb-3 text-center">
-                                                                <div class="form-check text-center">
-                                                                    <input @if($link->pinned == 1) checked @endif name="pinned" class="form-check-input" type="checkbox" value="{{true}}" id="flexCheckDefault">
+                                                                <div class="form-check switch-form text-center">
+                                                                    <input @if($link->pinned == 1) checked @endif name="pinned" class="form-check-input shadow" type="checkbox" value="{{true}}" id="flexCheckDefault" style="border: 0">
                                                                     <label class="form-check-label" for="flexCheckDefault">
                                                                         Закрепите ссылку и она всегда будет вверху списка
                                                                     </label>
                                                                 </div>
                                                             </div>
                                                             <div class="d-grid grap-2">
-                                                            <button type="submit" class="btn btn-secondary" style="border-radius: 0">@lang('app.a_edit')</button>
+                                                                <button type="submit" class="btn btn-secondary" style="border: 0">@lang('app.a_edit')</button>
                                                             </div>
                                                         </div>
                                                     </form>
@@ -518,146 +526,6 @@
                             </div>
                         </td>
                     </tr>
-                    @if($link->type == 'POST')
-                    <div class="modal fade" id="exampleModalPost{{$link->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background-color: #1b1b1b">
-                        <div class="modal-dialog">
-                        <div class="modal-content text-center" style="background-color: #FBF6EA">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" style="font-family: 'Rubik', sans-serif;">@lang('app.a_edit_post')</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                @if($link->photos)
-                                    <div class="mb-3">
-                                        <label for="exampleInputEmail1" class="form-label mt-3" style="font-family: 'Rubik', sans-serif;">@lang('app.a_now_link')</label><br>
-                                        <div class="">
-                                            <div class="col-12">
-                                                @foreach(unserialize($link->photos) as $photo)
-                                                    <img class="rounded-3 mt-2" src="{{$photo}}" style="width:50px;">
-                                                @endforeach
-                                            </div>
-                                            <div class="col-12 mt-2">
-                                                <form action="{{ route('delPhoto', ['id' => Auth::user()->id, 'link' => $link->id]) }}" method="POST">
-                                                    @csrf @method('PATCH')
-                                                    <input type="hidden" name="type" value="POST">
-                                                    <button class="btn btn-sm btn-danger">@lang('app.a_now_del')</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endif
-                                <div class="modal-body">
-                                    <form action="{{ route('editLink', ['id' => Auth::user()->id, 'link' => $link->id]) }}" method="post" enctype="multipart/form-data">
-                                        @csrf @method('PATCH')
-                                        <input type="hidden" value="POST" name="type"> <!-- Тип ссылки -->
-                                        <div class="mb-3"> <!-- Заголовок -->
-                                            <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">@lang('app.p_title')</label>
-                                            <input type="text" class="form-control" name="title" maxlength="100" value="{{$link->title}}">
-                                            <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_title_description')</span>
-                                        </div>
-                                        <div class="text-center row">
-                                            <div class="col-9">
-                                                <select id="pinned-posts{{$link->id}}" data-placeholder="Поиск шрифта..."  autocomplete="off" name="font"></select>
-                                            </div>
-                                            <div class="col-3">
-                                                <select class="form-select" aria-label="Default select example" name="font_size">
-                                                    <option @if($link->font_size == 0.9) selected @endif value="0.9">1</option>
-                                                    <option @if($link->font_size == 1) selected @endif value="1">2</option>
-                                                    <option @if($link->font_size == 1.1) selected @endif value="1.1">3</option>
-                                                    <option @if($link->font_size == 1.2) selected @endif value="1.2">4</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <label class="mb-3" style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Вы можете выбрать шрифт и его размер для текста вашей ссылки</label>
-                                        <div class="mb-3"> <!-- Полный текст -->
-                                            <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">@lang('app.p_text')</label>
-                                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="full_text">{{$link->full_text}}</textarea>
-                                            <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_free_text')</span>
-                                        </div>
-                                        <div class="mb-3"> <!-- Ссылка на источник -->
-                                            <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.p_link')</label>
-                                            <input type="text" class="form-control" name="link" value="{{$link->link}}">
-                                            <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_description_link')</span>
-                                        </div>
-                                        <div class="mb-3"> <!-- Фотографии -->
-                                            <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.p_photos')</label>
-                                            <input type="file" class="form-control" id="inputGroupFile02" name="photos[]" accept=".png, .jpg, .jpeg" multiple>
-                                            <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_photos_description')</span>
-                                        </div>
-                                        <div class="mb-3"> <!-- Ссылка на видео -->
-                                            <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.p_video')</label>
-                                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" name="video">{{$link->video}}</textarea>
-                                            <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_video_description')</span>
-                                        </div>
-                                        <div class="mb-3"> <!-- Ссылка на любое медиа -->
-                                            <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.p_media')</label>
-                                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" name="media">{{$link->media}}</textarea>
-                                            <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_media_description')</span>
-                                        </div>
-
-                                        <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;"@lang('app.p_title_color')</label>
-                                        <div class="mb-3 text-center d-flex justify-content-center"> <!-- выбор цвета на заголовок -->
-                                            <input type="color" class="form-control" id="exampleColorInput" value="{{$link->title_color}}" title="Choose your color" name="title_color" style="height: 40px;"><br>
-                                            <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_title_color_def')</span>
-                                        </div>
-                                        <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.p_background_color')</label>
-                                        <div class="mb-3 text-center d-flex justify-content-center"> <!-- выбор цвета на фон -->
-                                            <input type="color" class="form-control " id="exampleColorInput" value="{{$link->background_color_hex}}" title="Choose your color" name="background_color" style="height: 40px;">
-                                            <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_background_color_def')</span>
-                                        </div>
-                                        <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.p_transparency')</label>
-                                        <div class="mb-3 text-center d-flex justify-content-center"> <!-- выбор прозрачности фона -->
-                                            <input type="range" class="form-range" min="0.0" max="1.0" step="0.1" id="customRange2" name="transparency" value="{{$link->transparency}}">
-                                        </div>
-                                        <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.p_shadow')</label>
-                                        <div class="mb-3 text-center d-flex justify-content-center"> <!-- Добавить тень -->
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="shadow" id="inlineRadio1" value="shadow-none" @if($link->shadow == 'shadow-none') checked @endif>
-                                                <label class="form-check-label" for="inlineRadio1">none</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="shadow" id="inlineRadio2" value="shadow-sm" @if($link->shadow == 'shadow-sm') checked @endif>
-                                                <label class="form-check-label" for="inlineRadio2">sm</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="shadow" id="inlineRadio3" value="shadow" @if($link->shadow == 'shadow') checked @endif>
-                                                <label class="form-check-label" for="inlineRadio3">md</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="shadow" id="inlineRadio3" value="shadow-lg" @if($link->shadow == 'shadow-lg') checked @endif>
-                                                <label class="form-check-label" for="inlineRadio3">lg</label>
-                                            </div>
-                                        </div>
-                                        <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.p_round')</label>
-                                        <div class="mb-3 text-center d-flex justify-content-center"> <!-- Добивить округление углов -->
-                                            <input type="range" class="form-range" min="1" max="50" step="1" id="customRange2" name="rounded" value="{{$link->rounded}}">
-                                        </div>
-                                        <div class="mb-3 text-center">
-                                            <div>
-                                                <select class="form-select" aria-label="Default select example" name="animation">
-                                                    <option >Выбрать анимацию...</option>
-                                                    <option @if($link->animation == 'animate__animated animate__pulse animate__infinite infinite') selected @endif value="animate__animated animate__pulse animate__infinite infinite">Pulse</option>
-                                                    <option @if($link->animation == 'animate__animated animate__headShake animate__infinite infinite') selected @endif value="animate__animated animate__headShake animate__infinite infinite">Head Shake</option>
-                                                </select>
-                                            </div>
-                                            <label style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Вы можете выделить свою ссылку от остальных выбрав одну из анимаций</label>
-                                        </div>
-                                        <div class="mb-3 text-center">
-                                            <div class="form-check text-center">
-                                                <input @if($link->pinned == 1) checked @endif name="pinned" class="form-check-input" type="checkbox" value="{{true}}" id="flexCheckDefault">
-                                                <label class="form-check-label" for="flexCheckDefault">
-                                                    Закрепите ссылку и она всегда будет вверху списка
-                                                </label>
-                                            </div>
-                                        </div>
-                                    <div class="d-grid gap-2">
-                                    <button type="submit" class="btn btn-primary">@lang('app.p_edit_prof')</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    </div>
-                    @endif
                 @endforeach
             </tbody>
         </table>
@@ -689,8 +557,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="d-flex justify-content-between rounded-bottom rounded-3 ms-4 me-4" style="padding: 0;">
-                                        <div class="col-4 border-end " style="background-color: #f0eeef; box-shadow: 5px 0px 0px black;">
+                                    <div class="d-flex justify-content-between rounded-bottom rounded-3" style="padding: 0; margin-right: 30px; margin-left: 30px">
+                                        <div class="col-4 border-end " style="background-color: #f0eeef; box-shadow: 5px 0px 0px black; border-bottom-left-radius: 5px;">
                                             <a href="{{ route('showClickLinkStatistic', ['id' => $user->id, 'link' => $link->id]) }}" style="text-decoration: none; color: black">
                                                 <button href="{{ route('showClickLinkStatistic', ['id' => $user->id, 'link' => $link->id]) }}" class="btn-sm" style="background-color: #f1f2f2; border: 0;">
                                                     @lang('app.s_stats')
@@ -702,7 +570,7 @@
                                                 @lang('app.a_edit')
                                             </button>
                                         </div>
-                                        <div class="col-4" style="background-color: #f1f2f2; ">
+                                        <div class="col-4" style="background-color: #f1f2f2; border-bottom-right-radius: 5px;">
                                             <form action="{{ route('delLink', ['id' => Auth::user()->id, 'link' => $link->id]) }}" method="POST">
                                                 @csrf @method('DELETE')
                                                 <button class="btn-sm" style="background-color: #f0eeef; border: 0;">
@@ -713,10 +581,10 @@
                                     </div>
 
                                     <div class="modal fade" id="exampleModalEdit{{$link->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
+                                        <div class="modal-dialog" style="margin: 0">
                                             <div class="modal-content @if($user->dayVsNight) bg-dark text-white-50 @endif">
                                                 <div class="modal-header @if($user->dayVsNight) bg-dark text-white-50 @endif">
-                                                    <h5 class="modal-title" style="font-family: 'Rubik', sans-serif;">@lang('app.a_edit_link')</h5>
+                                                    <h5 class="modal-title" style="font-family: 'Rubik', sans-serif;">Изменить ссылку</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
 
@@ -766,14 +634,14 @@
                                                     </div>
                                                 @endif
 
-                                                <div class="modal-body">
+                                                <div class="modal-body @if($user->dayVsNight) bg-dark text-white-50 @endif" style="background-color: #f1f2f2">
                                                     <form action="{{ route('editLink', ['id' => Auth::user()->id, 'link' => $link->id]) }}" method="post" enctype="multipart/form-data">
                                                         @csrf @method('PATCH')
                                                         <div>
                                                             <input type="hidden" name="type" value="LINK"> <!-- Тип ссылки -->
                                                             <div class="mb-3">
                                                                 <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.p_title')</label>
-                                                                <input type="text" class="form-control @if($user->dayVsNight) bg-secondary @endif" name="title" placeholder="Моя красивая ссылка" maxlength="100" value="{{$link->title}}" style="border-radius: 0">
+                                                                <input type="text" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow" name="title" placeholder="Моя красивая ссылка" maxlength="100" value="{{$link->title}}" style="border: 0">
                                                                 <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.m_text_link_span')</span>
                                                             </div>
                                                             <div class="text-center row">
@@ -781,7 +649,7 @@
                                                                     <select id="empty-links{{$link->id}}" data-placeholder="Поиск шрифта..."  autocomplete="off" name="font"></select>
                                                                 </div>
                                                                 <div class="col-3">
-                                                                    <select class="form-select @if($user->dayVsNight) bg-secondary @endif" aria-label="Default select example" name="font_size" style="border-radius: 0; height: 35px">
+                                                                    <select class="form-select @if($user->dayVsNight) bg-secondary @endif shadow" aria-label="Default select example" name="font_size" style="border: 0; height: 35px">
                                                                         <option @if($link->font_size == 0.9) selected @endif value="0.9">1</option>
                                                                         <option @if($link->font_size == 1) selected @endif value="1">2</option>
                                                                         <option @if($link->font_size == 1.1) selected @endif value="1.1">3</option>
@@ -789,17 +657,17 @@
                                                                     </select>
                                                                 </div>
                                                             </div>
-                                                            <label class="mb-3" style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Вы можете выбрать шрифт и его размер для текста вашей ссылки</label>
+                                                            <label class="mb-3 mt-1" style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Вы можете выбрать шрифт и его размер для текста вашей ссылки</label>
                                                             <div class="mb-3">
                                                                 <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.m_insert_link')</label>
-                                                                <input type="text" class="form-control @if($user->dayVsNight) bg-secondary @endif" name="link" placeholder="http://..." value="{{$link->link}}" style="border-radius: 0">
+                                                                <input type="text" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow" name="link" placeholder="http://..." value="{{$link->link}}" style="border: 0">
                                                                 <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.a_edit_link')</span>
                                                             </div>
 
                                                             <div class="mb-3 text-center">
-                                                                <div class="form-check text-center">
-                                                                    <input name="bold" class="form-check-input" type="checkbox" value="{{true}}" id="flexCheckDefault" @if($link->bold == true) checked @endif>
-                                                                    <label class="form-check-label" for="flexCheckDefault">
+                                                                <div class="form-check form-switch text-center">
+                                                                    <input name="bold" class="form-check-input shadow" type="checkbox" value="{{true}}" id="flexCheckDefault" @if($link->bold == true) checked @endif style="border: 0">
+                                                                    <label class="form-check-label" for="flexCheckDefault" style="font-family: 'Rubik', sans-serif;">
                                                                         Сделать текст ссылки жирным
                                                                     </label>
                                                                 </div>
@@ -808,7 +676,7 @@
                                                             <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Тень для текста</label>
                                                             <div class="mb-3 text-center row">
                                                                 <div class="col-12">
-                                                                    <input type="color" class="block-input @if($user->dayVsNight) bg-secondary @endif form-control" id="exampleColorInput" value="{{$link->text_shadow_color}}" title="Choose your color" name="text_shadow_color" style="height: 40px; border-radius: 0"><br>
+                                                                    <input type="color" class="block-input @if($user->dayVsNight) bg-secondary @endif form-control shadow p-1" id="exampleColorInput" value="{{$link->text_shadow_color}}" title="Choose your color" name="text_shadow_color" style="height: 35px; border: 0"><br>
                                                                 </div>
                                                                 <div class="col-12">
                                                                     <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Четкость тени</span>
@@ -834,14 +702,14 @@
 
                                                             <div class="mb-3" id="upload-icon{{$link->id}}">
                                                                 <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.m_photo')</label>
-                                                                <input type="file" class="form-control @if($user->dayVsNight) bg-secondary @endif" id="inputGroupFile02" name="photo" style="border-radius: 0">
+                                                                <input type="file" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow" id="inputGroupFile02" name="photo" style="border: 0">
                                                                 <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.m_photo_description')</span>
                                                             </div>
 
                                                             <div class="mb-3">
                                                                 <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.m_title_color')</label>
                                                                 <div class="mb-3 text-center d-flex justify-content-center">
-                                                                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif" id="exampleColorInput" value="{{$link->title_color_hex}}" title="Choose your color" name="title_color" style="height: 40px; border-radius: 0">
+                                                                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" id="exampleColorInput" value="{{$link->title_color_hex}}" title="Choose your color" name="title_color" style="height: 35px; border: 0">
                                                                 </div>
                                                             </div>
 
@@ -849,7 +717,7 @@
                                                             <div class="mb-3">
                                                                 <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.m_background_color')</label>
                                                                 <div class="mb-3 text-center d-flex justify-content-center">
-                                                                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif" id="exampleColorInput" value="{{$link->background_color_hex}}" title="Choose your color" name="background_color" style="height: 40px; border-radius: 0">
+                                                                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" id="exampleColorInput" value="{{$link->background_color_hex}}" title="Choose your color" name="background_color" style="height: 35px; border: 0">
                                                                 </div>
                                                             </div>
 
@@ -861,21 +729,23 @@
 
                                                             <div class="mb-3">
                                                                 <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.m_shadow')</label><br>
-                                                                <div class="form-check form-check-inline">
-                                                                    <input class="form-check-input" type="radio" name="shadow" id="inlineRadio1" value="shadow-none" @if($link->shadow == 'shadow-none') checked @endif>
-                                                                    <label class="form-check-label" for="inlineRadio1">none</label>
-                                                                </div>
-                                                                <div class="form-check form-check-inline">
-                                                                    <input class="form-check-input" type="radio" name="shadow" id="inlineRadio2" value="shadow-sm" @if($link->shadow == 'shadow-sm') checked @endif>
-                                                                    <label class="form-check-label" for="inlineRadio2">sm</label>
-                                                                </div>
-                                                                <div class="form-check form-check-inline">
-                                                                    <input class="form-check-input" type="radio" name="shadow" id="inlineRadio3" value="shadow" @if($link->shadow == 'shadow') checked @endif>
-                                                                    <label class="form-check-label" for="inlineRadio3">md</label>
-                                                                </div>
-                                                                <div class="form-check form-check-inline">
-                                                                    <input class="form-check-input" type="radio" name="shadow" id="inlineRadio3" value="shadow-lg" @if($link->shadow == 'shadow-lg') checked @endif>
-                                                                    <label class="form-check-label" for="inlineRadio3">lg</label>
+                                                                <div class="mb-3 text-center d-flex justify-content-between">
+                                                                    <div class="form-check form-check-inline">
+                                                                        <input class="form-check-input shadow" type="radio" name="shadow" id="inlineRadio1" value="shadow-none" @if($link->shadow == 'shadow-none') checked @endif style="border: 0">
+                                                                        <label class="form-check-label" for="inlineRadio1" style="font-size: 0.8rem">Без тени</label>
+                                                                    </div>
+                                                                    <div class="form-check form-check-inline">
+                                                                        <input class="form-check-input shadow" type="radio" name="shadow" id="inlineRadio2" value="shadow-sm" @if($link->shadow == 'shadow-sm') checked @endif style="border: 0">
+                                                                        <label class="form-check-label" for="inlineRadio2" style="font-size: 0.8rem">Маленькая</label>
+                                                                    </div>
+                                                                    <div class="form-check form-check-inline">
+                                                                        <input class="form-check-input shadow" type="radio" name="shadow" id="inlineRadio3" value="shadow" @if($link->shadow == 'shadow') checked @endif style="border: 0">
+                                                                        <label class="form-check-label" for="inlineRadio3" style="font-size: 0.8rem">Средняя</label>
+                                                                    </div>
+                                                                    <div class="form-check form-check-inline">
+                                                                        <input class="form-check-input shadow" type="radio" name="shadow" id="inlineRadio3" value="shadow-lg" @if($link->shadow == 'shadow-lg') checked @endif style="border: 0">
+                                                                        <label class="form-check-label" for="inlineRadio3" style="font-size: 0.8rem">Большая</label>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                             <div class="mb-3">
@@ -887,24 +757,24 @@
 
                                                             <div class="mb-3 text-center">
                                                                 <div>
-                                                                    <select class="form-select @if($user->dayVsNight) bg-secondary @endif" aria-label="Default select example" name="animation" style="border-radius: 0">
+                                                                    <select class="form-select @if($user->dayVsNight) bg-secondary @endif shadow" aria-label="Default select example" name="animation" style="border: 0">
                                                                         <option >Выбрать анимацию...</option>
                                                                         <option @if($link->animation == 'animate__animated animate__pulse animate__infinite infinite') selected @endif value="animate__animated animate__pulse animate__infinite infinite">Pulse</option>
                                                                         <option @if($link->animation == 'animate__animated animate__headShake animate__infinite infinite') selected @endif value="animate__animated animate__headShake animate__infinite infinite">Head Shake</option>
                                                                     </select>
                                                                 </div>
-                                                                <label style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Вы можете выделить свою ссылку от остальных выбрав одну из анимаций</label>
+                                                                <label class="mt-1" style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Вы можете выделить свою ссылку от остальных выбрав одну из анимаций</label>
                                                             </div>
                                                             <div class="mb-3 text-center">
-                                                                <div class="form-check text-center">
-                                                                    <input name="pinned" class="form-check-input" type="checkbox" value="{{true}}" id="flexCheckDefault">
+                                                                <div class="form-check form-switch text-center">
+                                                                    <input name="pinned" class="form-check-input shadow" type="checkbox" value="{{true}}" id="flexCheckDefault" style="border: 0">
                                                                     <label class="form-check-label" for="flexCheckDefault">
                                                                         Закрепите ссылку и она всегда будет вверху списка
                                                                     </label>
                                                                 </div>
                                                             </div>
                                                             <div class="grap-2 d-grid">
-                                                                <button type="submit" class="btn btn-secondary" style="border-radius: 0">@lang('app.a_edit')</button>
+                                                                <button type="submit" class="btn btn-secondary" style="border: 0">@lang('app.a_edit')</button>
                                                             </div>
                                                         </div>
                                                     </form>

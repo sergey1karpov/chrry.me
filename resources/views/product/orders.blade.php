@@ -73,7 +73,7 @@
 
     </style>
 </head>
-<body class="antialiased @if($user->dayVsNight) bg-dark text-white-50 @endif">
+<body class="antialiased @if($user->dayVsNight) bg-dark text-white-50 @endif" >
 <div class="container-fluid" style="padding: 0">
     <nav class="navbar navbar-expand-lg @if($user->dayVsNight) bg-dark text-white-50 @endif" style="background-color: #f1f2f2">
         <div class="container-fluid">
@@ -87,44 +87,71 @@
     </nav>
 </div>
 
-
-
-
-
-
-
-
-
-
 <div class="me-2 ms-2 rounded">
     @foreach($orders as $order)
-        <div class="card mb-3 @if($order->processed) bg-success @elseif(!$order->processed) bg-info @endif" style="max-width: 540px;" data-bs-toggle="modal" data-bs-target="#order{{$order->id}}">
-            <div class="row">
-                <div class="col-4">
-                    <img src="{{$order->main_photo}}" class="img-fluid rounded-start" alt="..." width="60">
+        <div class="card mb-2 ms-2 me-2 shadow position-relative" style="border: none;" data-bs-toggle="modal" data-bs-target="#order{{$order->id}}">
+            @if(!$order->processed)
+            <span class="position-absolute top-100 start-50 translate-middle badge rounded-pill bg-success shadow">Новый заказ <span class="visually-hidden">непрочитанные сообщения</span></span>
+            @elseif($order->processed)
+                <span class="position-absolute top-100 start-50 translate-middle badge rounded-pill bg-secondary shadow">Заказ обработан <span class="visually-hidden">непрочитанные сообщения</span></span>
+            @endif
+            <div class="row g-0" style="border-radius: 5px;">
+                <div class="col-3">
+                    <img src="{{$order->main_photo}}" width="100" class="img-fluid" id="up" style="border-top-left-radius: 5px; border-bottom-left-radius: 5px;">
                 </div>
-                <div class="col-8">
-                    <div class="card-body">
-                        <h5 class="card-title">{{$order->title}}</h5>
+                <div class="col-9 @if($user->dayVsNight) bg-secondary @endif">
+                    <div class="card-body p-2">
+                        <h5 class="card-title @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; font-size: 15px"><b>Название:</b> {{$order->title}}</h5>
+                        <h5 class="card-title @if($user->dayVsNight) text-white-50 @endif" style="margin-bottom: 0; font-family: 'Rubik', sans-serif; font-size: 13px"><b>Заказ от:</b> {{$order->created_at}}</h5>
                     </div>
                 </div>
             </div>
         </div>
+
         <div class="modal fade" id="order{{$order->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <p>{{$order->client_name}}</p>
-                        <p>{{$order->client_email}}</p>
-                        <p>{{$order->client_phone}}</p>
-                        <p>{{$order->client_text}}</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <form action="{{ route('orderProcessing', ['id' => $user->id, 'order' => $order->id]) }}" method="POST"> @csrf @method('POST')
-                            <input type="hidden" value="{{true}}" name="processed">
-                            <button type="submit" class="btn btn-primary">Обработать заказ</button>
-                        </form>
+                <div class="block-modal modal-content text-center @if($user->dayVsNight) bg-dark text-white-50 @endif shadow" style="border: 0">
+                    <div class="modal-body ">
+                        <div class="text-right"> <i class="fa fa-close close" data-dismiss="modal"></i> </div>
+                        <div class="p-1">
+                            <h5 class="text-uppercase">{{$order->client_name}}</h5>
+
+                            <div class="mt-4 mb-4">
+                                <p class="theme-color mb-3">Письмо от заказчика</p>
+                                <p class="text-start" style="white-space: pre-wrap; font-size: 0.8rem">{{$order->client_text}}</p>
+                            </div>
+
+                            <div class="mt-4 mb-4">
+                                <p class="theme-color mb-3">Контактные данные заказчика</p>
+                            </div>
+
+                            <div class="d-flex justify-content-between">
+                                <small>tel.</small>
+                                <small>{{$order->client_phone}}</small>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <small>email</small>
+                                <small>{{$order->client_email}}</small>
+                            </div>
+
+                            <div class="mt-4 mb-4">
+                                <p class="theme-color mb-3">Стоимость заказа</p>
+                            </div>
+
+                            <div class="d-flex justify-content-between">
+                                <span class="font-weight-bold">Цена</span>
+                                <span class="text-muted">{{$order->price}} руб.</span>
+                            </div>
+                            <div class="text-center mt-5">
+                                <form action="{{ route('orderProcessing', ['id' => $user->id, 'order' => $order->id]) }}" method="POST"> @csrf @method('POST')
+                                    <input type="hidden" value="{{true}}" name="processed">
+                                    <div class="d-grid gap-2">
+                                        <button type="submit" class="btn btn-secondary">Подтвердить заказ</button>
+                                        <label style="font-size: 0.8rem">Свяжитесь с заказчиком удобным для вас сбособом и обговорите детали сделки</label>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

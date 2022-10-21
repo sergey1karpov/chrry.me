@@ -48,7 +48,7 @@ class Order extends Model
             ->join('users', 'orders.user_id', 'users.id')
             ->join('products', 'orders.product_id', 'products.id')
             ->select(
-                'orders.*', 'products.title', 'products.main_photo'
+                'orders.*', 'products.title', 'products.main_photo', 'products.price'
             )
             ->where('users.id', $userId)
             ->orderBy('orders.id', 'DESC')

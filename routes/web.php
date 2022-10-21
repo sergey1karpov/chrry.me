@@ -57,6 +57,8 @@ Route::middleware(['locale', 'userCheck', 'web'])->group(function () {
      * Маршруты для работы со ссылками в личном кабинете пользователя
      */
     Route::get('/{id}/links', [LinkController::class, 'allLinks'])->name('allLinks');
+    Route::get('/{id}/create-links', [LinkController::class, 'createLinkForm'])->name('createLinkForm');
+
     Route::get('/{id}/search', [LinkController::class, 'searchLink'])->name('searchLink');
     Route::post('/{id}/add-link', [LinkController::class, 'addLink'])->name('addLink');
     Route::post('/{id}/add-post', [LinkController::class, 'addPost'])->name('addPost');
@@ -72,6 +74,7 @@ Route::middleware(['locale', 'userCheck', 'web'])->group(function () {
      * Маршруты для работы с мероприятиями в личном кабинете пользователя
      */
     Route::get('/{id}/events', [EventController::class, 'allEvents'])->name('allEvents');
+    Route::get('/{id}/create-events', [EventController::class, 'createEventForm'])->name('createEventForm');
     Route::post('/{id}/events/add-event', [EventController::class, 'addEvent'])->name('addEvent');
     Route::patch('/{id}/events/{event}/edit', [EventController::class, 'editEvent'])->name('editEvent');
     Route::delete('/{id}/events/{event}/delete', [EventController::class, 'deleteEvent'])->name('deleteEvent');
@@ -81,12 +84,14 @@ Route::middleware(['locale', 'userCheck', 'web'])->group(function () {
      * Маршруты для работы с продуктами
      */
     Route::get('/{id}/products', [ProductController::class, 'allProducts'])->name('allProducts');
+    Route::get('/{id}/create-products', [ProductController::class, 'createProductForm'])->name('createProductForm');
     Route::post('/{id}/add-product', [ProductController::class, 'addProduct'])->name('addProduct');
     Route::get('/{id}/edit-product/{product}/show', [ProductController::class, 'showProduct'])->name('showProduct');
     Route::patch('/{id}/edit-product/{product}/edit', [ProductController::class, 'editProduct'])->name('editProduct');
     Route::patch('/{id}/delete-photo/{product}/delete', [ProductController::class, 'deleteAdditionalPhoto'])->name('deleteAdditionalPhoto');
     Route::delete('/{id}/delete-product/{product}/delete', [ProductController::class, 'deleteProduct'])->name('deleteProduct');
     Route::post('{id}/product/sort', [ProductController::class, 'sortProduct'])->name('sortProduct');
+    Route::get('/{id}/products/search', [ProductController::class, 'searchProducts'])->name('searchProducts');
     /**
      * Маршруты для работы с заявками
      */

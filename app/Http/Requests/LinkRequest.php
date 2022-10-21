@@ -24,7 +24,7 @@ class LinkRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'min:1|max:100',
+            'title' => 'required|min:1|max:100',
             'link'  => 'required|url',
             'photo' => 'nullable|mimes:jpeg,png,jpg,gif|max:5000',
         ];

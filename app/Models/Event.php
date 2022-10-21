@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Http\Requests\EventRequest;
+use App\Http\Requests\UpdateEventRequest;
 use App\Services\ColorConvertorService;
 use App\Services\UploadPhotoService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -144,14 +145,14 @@ class Event extends Model
      * @param UploadPhotoService $uploadService
      * @return void
      */
-    public function editEvent(int $id, Event $event, Request $request, UploadPhotoService $uploadService)
+    public function editEvent(int $id, Event $event, UpdateEventRequest $request, UploadPhotoService $uploadService)
     {
         Event::where('id', $event->id)->update([
-            'title'       => $request->title,
-            'description' => $request->description,
-            'city'        => $request->city,
-            'location'    => $request->location,
-            'time'        => $request->time,
+            'title'       => isset($request->title) ? $request->title : $event->title,
+            'description' => isset($request->description) ? $request->description : $event->description,
+            'city'        => isset($request->city) ? $request->city : $event->city,
+            'location'    => isset($request->location) ? $request->location : $event->location,
+            'time'        => isset($request->time) ? $request->time : $event->time,
             'date'        => isset($request->date) ? $request->date : $event->date,
             'banner'      => isset($request->banner) ?
                 $uploadService->uploader($request->banner, $this->imgPath($id), 500, true, $event->banner) :

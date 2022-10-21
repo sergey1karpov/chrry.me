@@ -73,52 +73,54 @@
 
     </style>
 </head>
-    <body class="antialiased @if($user->dayVsNight) bg-dark text-white-50 @endif">
-        <div class="container-fluid" style="padding: 0">
-            <nav class="navbar navbar-expand-lg @if($user->dayVsNight) bg-dark text-white-50 @endif" style="background-color: #f1f2f2">
-                <div class="container-fluid">
-                    <a class="mb-1" href="{{ route('userHomePage', ['slug' => $user->slug]) }}">
-                        <img src="https://i.ibb.co/DM6hKmk/bbbbbbbbbbb.png" class="img-fluid" style="width:20px; border: 0">
-                    </a>
-                    <a class="" href="{{ route('userHomePage',  ['slug' => $user->slug]) }}" style="text-decoration: none; border: 0; padding: 0">
-                        <div class="img" style="background-image: url({{$user->avatar}});"></div>
-                    </a>
-                </div>
-            </nav>
+
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <p class="form-text">{{ $error }}</p>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    <body class="antialiased">
+
+        <div class="mt-4 mb-4 rounded text-center">
+            <p class="card-text" style="font-size: 15px">Заполните форму для заказа товара\услуги</p>
         </div>
 
-        <div class="me-2 ms-2 rounded">
-            <div class="card mb-3 rounded" style="max-width: 540px;">
+        <div class="me-3 ms-3 rounded">
+            <div class="card mb-3 rounded shadow" style="max-width: 540px; border: 0">
                 <div class="row g-0">
                     <div class="col-4">
-                        <img src="{{$product->main_photo}}" class="img-fluid rounded-start" width="200">
+                        <img src="{{$product->main_photo}}" class="img-fluid rounded-start" width="150">
                     </div>
                     <div class="col-8">
                         <div class="card-body m-2" style="padding: 0">
                             <h5 class="card-title">{{$product->title}}</h5>
-                            <p class="card-text">{{$product->description}}</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="me-2 ms-2 text-center">
+        <div class="me-3 ms-3 mt-4 text-center">
             <form action="{{route('sendOrder', ['id' => $user->id, 'product' => $product->id])}}" method="POST"> @CSRF @method('POST')
                 <div class="mb-3">
-                    <input type="text" name="client_name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <input type="text" name="client_name" class="form-control shadow" id="exampleInputEmail1" aria-describedby="emailHelp" style="border: 0">
                     <div id="emailHelp" class="form-text">Ваше имя\фамилия</div>
                 </div>
                 <div class="mb-3">
-                    <input type="email" name="client_email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <input type="email" name="client_email" class="form-control shadow" id="exampleInputEmail1" aria-describedby="emailHelp" style="border: 0">
                     <div id="emailHelp" class="form-text">Ваш почтовый адрес</div>
                 </div>
                 <div class="mb-3">
-                    <input type="text" name="client_phone" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <input type="text" name="client_phone" class="form-control shadow" id="exampleInputEmail1" aria-describedby="emailHelp" style="border: 0">
                     <div id="emailHelp" class="form-text">Ваш номер телефона</div>
                 </div>
                 <div class="mb-3">
-                    <textarea name="client_text" class="form-control" rows="3"></textarea>
+                    <textarea name="client_text" class="form-control shadow" rows="3" style="border: 0"></textarea>
                     <div id="emailHelp" class="form-text">Примечание к заказу</div>
                 </div>
                 <div class="d-grid gap-2">
