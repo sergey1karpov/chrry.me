@@ -43,6 +43,11 @@
 
         @include('fonts.fonts')
 
+{{--        shop--}}
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300&display=swap" rel="stylesheet">
+
         <style type="text/css">
         	@if($user->banner)
 	        	body {
@@ -84,6 +89,24 @@
             .text{
                 margin:20px 0px;
             }
+            .p-text {
+                white-space: nowrap;
+                overflow: hidden;
+                max-width: 400px;
+                position: relative;
+            }
+
+            .p-text::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 70px;
+                height: 100%;
+                /*background: linear-gradient(to right, rgba(255, 255, 255, .2) 0%, rgba(255, 255, 255, 1) 100%);*/
+                background: linear-gradient(to right, rgba({{$user->background_color_rgb}}, .2) 0%, rgba({{$user->background_color_rgb}}, 1) 100%);
+                pointer-events: none;
+            }
         </style>
 
     </head>
@@ -124,20 +147,31 @@
 
 	        <div class="d-flex justify-content-center text-center">
 		      	<div class="text-center" style="margin-top: 25px">
-			        <div class="d-flex justify-content-center">
-                        <div class="img" style="background-image: url({{$user->avatar}});"></div>
-                    </div>
-			        <h2 class="mt-4" style="font-family: 'Rubik', sans-serif; color: #464646; font-weight: 600 ; font-size: 20px; @if($user->name_color) color: {{$user->name_color}}; @endif ">
-			        	{{ $user->name }}
-			        	@if($user->verify == 1)
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-patch-check-fill mb-1" viewBox="0 0 16 16" style="color: {{$user->verify_color}}">
-                            <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
-                        </svg>
-			        	@endif
-			        </h2>
-			        @if($user->description)
-			        	<p style="font-family: 'Rubik', sans-serif; font-size: 0.9rem; @if($user->description_color) color: {{$user->description_color}}; @endif">{{ $user->description }}</p>
-			        @endif
+
+                    @if($user->userSettings->logotype)
+                        <div class="d-flex justify-content-center">
+                            <img src="{{$user->userSettings->logotype}}" class="img-fluid" width="{{$user->userSettings->logotype_size}}" style="
+                                filter: drop-shadow({{$user->userSettings->logotype_shadow_right}}px {{$user->userSettings->logotype_shadow_bottom}}px {{$user->userSettings->logotype_shadow_round}}px {{$user->userSettings->logotype_shadow_color}});
+                            ">
+                        </div>
+                    @else
+                        @if($user->avatar)
+                            <div class="d-flex justify-content-center">
+                                <div class="img" style="background-image: url({{$user->avatar}});"></div>
+                            </div>
+                        @endif
+                        <h2 class="mt-4" style="font-family: 'Rubik', sans-serif; color: #464646; font-weight: 600 ; font-size: 20px; @if($user->name_color) color: {{$user->name_color}}; @endif ">
+                            {{ $user->name }}
+                            @if($user->verify == 1)
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-patch-check-fill mb-1" viewBox="0 0 16 16" style="color: {{$user->verify_color}}">
+                                    <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
+                                </svg>
+                            @endif
+                        </h2>
+                        @if($user->description)
+                            <p style="font-family: 'Rubik', sans-serif; font-size: 0.9rem; @if($user->description_color) color: {{$user->description_color}}; @endif">{{ $user->description }}</p>
+                        @endif
+                    @endif
 
                     @if($user->type == 'Events')
                         @if($user->show_social == true)
@@ -444,88 +478,216 @@
         <!-- ---------------------- -->
         @elseif($user->type == 'Market')
             <div class="mt-3">
-                @foreach($products as $product)
-                    <section data-bs-toggle="modal" data-bs-target="#productModal{{$product->id}}">
-                        <div class="container mt-2">
-                            <div class="row justify-content-center">
-                                <div class="col-md-8 col-lg-6 col-xl-4">
-                                    <div class="card text-black shadow-sm mb-3 bg-body rounded">
-                                        <img src="{{$product->main_photo}}" class="card-img-top" alt="Apple Computer" />
-                                        <div class="card-body">
-                                            <div class="text-center">
-                                                <h5 class="card-title">{{$product->title}}</h5>
-                                                <p class="text-muted mb-4">{{$product->description}}R</p>
-                                            </div>
-                                            <div class="d-flex justify-content-between total font-weight-bold mt-4">
-                                                <span>Цена</span><span><b>{{$product->price}}</b> рублей</span>
+                @if(isset($user->marketSettings->cards_style))
+                    @if($user->marketSettings->cards_style == 'one')
+                        @foreach($products as $product)
+
+                            <section data-bs-toggle="modal" data-bs-target="#productModal{{$product->id}}">
+                                <div class="container mt-2">
+                                    <div class="row justify-content-center">
+                                        <div class="col-md-8 col-lg-6 col-xl-4">
+                                            <div class="text-black mb-3" style="border: 0; border-radius: 10px;">
+                                                <img src="{{$product->main_photo}}" class="card-img-top" alt="Apple Computer" style="border-radius: {{$user->marketSettings->card_round}}px; @if($user->marketSettings->cards_shadow) box-shadow: 0px 5px 5px -5px rgba(0, 0, 0, 0.6); @endif" />
+                                                <div class="card-body mt-2" style="padding: 0">
+                                                    <div class="text-start">
+                                                        <p class="mb-1" style="
+                                                            @if($user->marketSettings->title_shadow) text-shadow: 1px 1px 1px rgba(0, 0, 0, 1); @endif
+                                                            white-space: nowrap;
+                                                            overflow: hidden;
+                                                            text-overflow: ellipsis;
+                                                            font-family: 'Roboto Flex', sans-serif;
+                                                            font-size: {{$user->marketSettings->title_font_size}}rem;
+                                                            @if($user->marketSettings->color_title) color: {{$user->marketSettings->color_title}}; @endif"
+                                                        >{{$product->title}}</p>
+                                                        <p style="
+                                                            @if($user->marketSettings->price_shadow) text-shadow: 1px 1px 1px rgba(0, 0, 0, 1); @endif
+                                                            margin: 0; font-family: 'Roboto Flex', sans-serif;
+                                                            font-size: {{$user->marketSettings->price_font_size}}rem;
+                                                            @if($user->marketSettings->color_price) color: {{$user->marketSettings->color_price}}; @endif"
+                                                        ><b>₽ {{$product->price}}</b></p>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </section>
-                    <div class="modal fade" id="productModal{{$product->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" style="margin: 0; border-radius: 0">
-                            <div class="modal-content" style="border-radius: 0">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">{{$product->title}}</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body p-2">
-                                    <div class="card text-black" style="border:none">
+                            </section>
 
-                                        @php
-                                            $adds_ph = unserialize($product->additional_photos);
-                                            array_unshift($adds_ph, $product->main_photo);
-                                        @endphp
-                                        <div id="carouselExampleControls{{$product->id}}" class="carousel slide" data-bs-ride="carousel">
-                                            <div class="carousel-inner">
-                                                @foreach($adds_ph as $key => $ph)
-                                                    <div class="carousel-item @if($key == 0) active @endif">
-                                                        <img src="{{$ph}}" class="card-img-top" alt="Apple Computer" />
-                                                    </div>
-                                                @endforeach
-                                            </div>
-                                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls{{$product->id}}" data-bs-slide="prev">
-                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                <span class="visually-hidden">Previous</span>
-                                            </button>
-                                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls{{$product->id}}" data-bs-slide="next">
-                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                <span class="visually-hidden">Next</span>
-                                            </button>
+                            <div class="modal fade" id="productModal{{$product->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" style="margin: 0; border-radius: 0">
+                                    <div class="modal-content" style="border-radius: 0">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">{{$product->title}}</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                        <div class="card-body" style="padding: 0">
-                                            <div class="text-center">
-                                                <h5 class="card-title mt-2">{{$product->title}}</h5>
-                                                <p class="text-muted mb-4" style="white-space: pre-wrap;">{{$product->description}}</p>
-                                                @if($product->full_description)
-                                                    <p class="mb-4" style="white-space: pre-wrap;">{{$product->full_description}}</p>
+                                        <div class="modal-body p-2">
+                                            <div class="card text-black" style="border:none">
+
+                                                @if($product->additional_photos)
+                                                    @php
+                                                        $adds_ph = unserialize($product->additional_photos);
+                                                        array_unshift($adds_ph, $product->main_photo);
+                                                    @endphp
+                                                @endif
+                                                <div id="carouselExampleControls{{$product->id}}" class="carousel slide" data-bs-ride="carousel">
+                                                    <div class="carousel-inner">
+                                                        @foreach($adds_ph as $key => $ph)
+                                                            <div class="carousel-item @if($key == 0) active @endif">
+                                                                <img src="{{$ph}}" class="card-img-top" alt="Apple Computer" />
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls{{$product->id}}" data-bs-slide="prev">
+                                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                        <span class="visually-hidden">Previous</span>
+                                                    </button>
+                                                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls{{$product->id}}" data-bs-slide="next">
+                                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                        <span class="visually-hidden">Next</span>
+                                                    </button>
+                                                </div>
+                                                <div class="card-body" style="padding: 0">
+                                                    <div class="text-center">
+                                                        <h5 class="card-title mt-2">{{$product->title}}</h5>
+                                                        <p class="text-muted mb-4" style="white-space: pre-wrap;">{{$product->description}}</p>
+                                                        @if($product->full_description)
+                                                            <p class="mb-4" style="white-space: pre-wrap;">{{$product->full_description}}</p>
+                                                        @endif
+                                                    </div>
+                                                    <div class="d-flex justify-content-between total font-weight-bold mt-5">
+                                                        <span>Цена</span><span><b>{{$product->price}}</b> рублей</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="d-grid gap-2 mt-3">
+                                                @if($product->link_to_shop)
+                                                    <a class="btn btn-primary" href="{{$product->link_to_shop}}">
+                                                        {{$product->link_to_shop_text}}
+                                                    </a>
+                                                @endif
+                                                @if($product->link_to_order_text)
+                                                    <a class="btn btn-primary" href="{{ route('showProductDetails', ['slug' => $user->slug, 'product' => $product->id]) }}">
+                                                        {{$product->link_to_order_text}}
+                                                    </a>
                                                 @endif
                                             </div>
-                                            <div class="d-flex justify-content-between total font-weight-bold mt-5">
-                                                <span>Цена</span><span><b>{{$product->price}}</b> рублей</span>
-                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="d-grid gap-2 mt-3">
-                                        @if($product->link_to_shop)
-                                            <a class="btn btn-primary" href="{{$product->link_to_shop}}">
-                                                {{$product->link_to_shop_text}}
-                                            </a>
-                                        @endif
-                                        @if($product->link_to_order_text)
-                                            <a class="btn btn-primary" href="{{ route('showProductDetails', ['slug' => $user->slug, 'product' => $product->id]) }}">
-                                                {{$product->link_to_order_text}}
-                                            </a>
-                                        @endif
                                     </div>
                                 </div>
                             </div>
+                        @endforeach
+                    @elseif($user->marketSettings->cards_style == 'two')
+                        <div class="row ms-1 me-1" style="margin: 0">
+                            @foreach($products as $product)
+                                <div class="col-6 p-2" style="padding: 0">
+                                    <section data-bs-toggle="modal" data-bs-target="#productModal{{$product->id}}">
+                                        <div class="container mt-2" style="padding: 0">
+                                            <div class="row justify-content-center">
+                                                <div class="col-md-8 col-lg-6 col-xl-4">
+                                                    <div class="text-black mb-3" style="border: 0; border-radius: 10px;">
+                                                        <img src="{{$product->main_photo}}" class="card-img-top" alt="Apple Computer" style="border-radius: {{$user->marketSettings->card_round}}px; @if($user->marketSettings->cards_shadow) box-shadow: 0px 5px 5px -5px rgba(0, 0, 0, 0.6); @endif" />
+                                                        <div class="card-body mt-2" style="padding: 0">
+                                                            <div class="text-start">
+                                                                <p class="mb-1" style="
+                                                            @if($user->marketSettings->title_shadow) text-shadow: 1px 1px 1px rgba(0, 0, 0, 1); @endif
+                                                            white-space: nowrap;
+                                                            overflow: hidden;
+                                                            text-overflow: ellipsis;
+                                                            font-family: 'Roboto Flex', sans-serif;
+                                                            font-size: {{$user->marketSettings->title_font_size}}rem;
+                                                            @if($user->marketSettings->color_title) color: {{$user->marketSettings->color_title}}; @endif"
+                                                                >{{$product->title}}</p>
+                                                                <p style="
+                                                            @if($user->marketSettings->price_shadow) text-shadow: 1px 1px 1px rgba(0, 0, 0, 1); @endif
+                                                            margin: 0; font-family: 'Roboto Flex', sans-serif;
+                                                            font-size: {{$user->marketSettings->price_font_size}}rem;
+                                                            @if($user->marketSettings->color_price) color: {{$user->marketSettings->color_price}}; @endif"
+                                                                ><b>₽ {{$product->price}}</b></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                                <div class="modal fade" id="productModal{{$product->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="padding: 0">
+                                    <div class="modal-dialog" style="margin: 0; border-radius: 0">
+                                        <div class="modal-content" style="border-radius: 0">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">{{$product->title}}</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body p-2">
+                                                <div class="card text-black" style="border:none">
+
+                                                    @if($product->additional_photos)
+                                                        @php
+                                                            $adds_ph = unserialize($product->additional_photos);
+                                                            array_unshift($adds_ph, $product->main_photo);
+                                                        @endphp
+                                                    @endif
+                                                    <div id="carouselExampleControls{{$product->id}}" class="carousel slide" data-bs-ride="carousel">
+                                                        <div class="carousel-inner">
+                                                            @foreach($adds_ph as $key => $ph)
+                                                                <div class="carousel-item @if($key == 0) active @endif">
+                                                                    <img src="{{$ph}}" class="card-img-top" alt="Apple Computer" />
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+                                                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls{{$product->id}}" data-bs-slide="prev">
+                                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                            <span class="visually-hidden">Previous</span>
+                                                        </button>
+                                                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls{{$product->id}}" data-bs-slide="next">
+                                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                            <span class="visually-hidden">Next</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="card-body" style="padding: 0">
+                                                        <div class="text-center">
+                                                            <h5 class="card-title mt-2">{{$product->title}}</h5>
+                                                            <p class="text-muted mb-4" style="white-space: pre-wrap;">{{$product->description}}</p>
+                                                            @if($product->full_description)
+                                                                <p class="mb-4" style="white-space: pre-wrap;">{{$product->full_description}}</p>
+                                                            @endif
+                                                        </div>
+                                                        <div class="d-flex justify-content-between total font-weight-bold mt-5">
+                                                            <span>Цена</span><span><b>{{$product->price}}</b> рублей</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="d-grid gap-2 mt-3">
+                                                    @if($product->link_to_shop)
+                                                        <a class="btn btn-primary" href="{{$product->link_to_shop}}">
+                                                            {{$product->link_to_shop_text}}
+                                                        </a>
+                                                    @endif
+                                                    @if($product->link_to_order_text)
+                                                        <a class="btn btn-primary" href="{{ route('showProductDetails', ['slug' => $user->slug, 'product' => $product->id]) }}">
+                                                            {{$product->link_to_order_text}}
+                                                        </a>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
-                    </div>
-                @endforeach
+                    @endif
+                @else
+                    @if(Auth::check())
+                        <div class="mt-5 mb-5 me-3 ms-3 text-center">
+                            <p>Для первого запуска витрины, её необходимо настроить. </p>
+                            <div class="d-grid gap-2">
+                                <a href="{{ route('marketSettingsForm', ['id' => $user->id]) }}">
+                                    <button class="btn btn-primary" type="button" style="border: 0">Настройки витрины</button>
+                                </a>
+                            </div>
+                        </div>
+                    @endif
+                @endif
             </div>
             @if($user->type == 'Market')
                 @if($user->show_social == true)

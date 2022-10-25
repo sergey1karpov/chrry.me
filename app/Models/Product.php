@@ -82,9 +82,17 @@ class Product extends Model
         $product->title = $request->title;
         $product->description = $request->description;
         $product->full_description = $request->full_description;
-        $product->main_photo = $uploadService->uploader($request->main_photo, $this->imgPath($userId), 500);
+        $product->main_photo = $uploadService->uploader(
+            ph: $request->main_photo,
+            path: $this->imgPath($userId),
+            size: 500
+        );
         if($request->additional_photos) {
-            $product->additional_photos = $uploadService->uploader($request->additional_photos, $this->imgPath($userId), 500);
+            $product->additional_photos = $uploadService->uploader(
+                ph: $request->additional_photos,
+                path: $this->imgPath($userId),
+                size: 500
+            );
         }
         $product->price = $request->price;
         $product->count_products = $request->count_products;
@@ -122,7 +130,13 @@ class Product extends Model
         }
 
         if($request->main_photo) {
-            $product->main_photo = $uploadService->uploader($request->main_photo, $this->imgPath($userId), 500, true, $product->main_photo);
+            $product->main_photo = $uploadService->uploader(
+                ph: $request->main_photo,
+                path: $this->imgPath($userId),
+                size: 500,
+                drop: true,
+                dropImagePath: $product->main_photo
+            );
         }
 
         $product->title = isset($request->title) ? $request->title :  $product->title;
@@ -169,7 +183,11 @@ class Product extends Model
             $uploadProductPhotos = [];
 
             foreach ($photos as $ph) {
-                $uploadProductPhotos[] = $uploadService->uploader($ph, $path, 500);
+                $uploadProductPhotos[] = $uploadService->uploader(
+                    ph: $ph,
+                    path: $path,
+                    size: 500
+                );
             }
 
             $arr = array_merge($currentProductPhotosArr, $uploadProductPhotos);

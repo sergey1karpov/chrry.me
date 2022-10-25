@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Link;
 use App\Models\Product;
+use App\Models\ShopSettings;
 use App\Models\User;
 use App\Models\Event;
 use App\Services\UploadPhotoService;
@@ -112,7 +113,7 @@ class UserController extends Controller
     {
         $user->deleteUserImages($userId, $request, $this->uploadService);
 
-        return response()->json('deleted');
+        return redirect()->back();
     }
 
     /**
@@ -127,6 +128,38 @@ class UserController extends Controller
         $user->changeUserTheme($userId);
 
         return response()->json('changed');
+    }
+
+    public function marketSettingsForm(int $userId)
+    {
+        $user = User::where('id', $userId)->firstOrFail();
+        return view('product.settings', compact('user'));
+    }
+
+    public function marketSettingsPatch(int $userId, Request $request)
+    {
+        $settings = ShopSettings::where('user_id', $userId)->first();
+
+        ShopSettings::where('id', $settings->id)->update([
+            'cards_style' => $request->cards_style,
+            'cards_shadow' => $request->cards_shadow,
+            'color_title' => $request->color_title,
+            'color_price' => $request->color_price,
+            'title_shadow' => $request->title_shadow,
+            'price_shadow' => $request->price_shadow,
+            'title_font_size' => $request->title_font_size,
+            'price_font_size' => $request->price_font_size,
+            'card_round' => $request->card_round,
+        ]);
+
+        return redirect()->back()->with('success', 'Параметры витрины успешно изменены!');
+    }
+
+    public function profileSettingsForm(int $userId)
+    {
+        $user = User::where('id', $userId)->firstOrFail();
+
+        return view('user.edit-profile-form', compact('user'));
     }
 }
 

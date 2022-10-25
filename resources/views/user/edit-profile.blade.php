@@ -81,7 +81,7 @@
             <nav class="navbar fixed-top">
                 <div class="container-fluid">
                     <div class="form-check form-switch">
-                        <input data-id="{{$user->id}}" id="theme" name="theme" class="form-check-input" type="checkbox" @if($user->dayVsNight == true) checked @endif>
+                        <input data-id="{{$user->id}}" id="theme" name="theme" class="form-check-input shadow" type="checkbox" @if($user->dayVsNight == true) checked @endif style="border: 0">
                     </div>
                 </div>
             </nav>
@@ -89,16 +89,25 @@
 			<!-- БЛОК: Ссылка на профиль -->
 			<div class="row">
 				<a href="{{ route('userHomePage',  ['slug' => Auth::user()->slug]) }}" style="text-decoration: none; border: 0; padding: 0">
-					<div class="col-12">
-						<div class="block1 box-part text-center @if($user->dayVsNight) bg-dark @endif" style="margin: 0; background-color: #f26868">
-							<div class="d-flex justify-content-center">
-                                <div class="img" style="background-image: url({{$user->avatar}});"></div>
+
+                    @if($user->userSettings->logotype)
+                        <div class="d-flex justify-content-center block1 box-part text-center @if($user->dayVsNight) bg-dark @endif" style="margin: 0; background-color: #f26868">
+                            <img src="{{$user->userSettings->logotype}}" class="img-fluid" width="{{$user->userSettings->logotype_size}}" style="
+                                filter: drop-shadow({{$user->userSettings->logotype_shadow_right}}px {{$user->userSettings->logotype_shadow_bottom}}px {{$user->userSettings->logotype_shadow_round}}px {{$user->userSettings->logotype_shadow_color}});
+                            ">
+                        </div>
+                    @else
+                        <div class="col-12">
+                            <div class="block1 box-part text-center @if($user->dayVsNight) bg-dark @endif" style="margin: 0; background-color: #f26868">
+                                <div class="d-flex justify-content-center">
+                                    <div class="img" style="background-image: url({{$user->avatar}});"></div>
+                                </div>
+                                <div class="title">
+                                    <h4 class="mt-4 block1-text @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: #fefafa; font-weight: 600 ; margin-bottom: 0">{{ $user->name }}</h4>
+                                </div>
                             </div>
-							<div class="title">
-								<h4 class="mt-4 block1-text @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: #fefafa; font-weight: 600 ; margin-bottom: 0">{{ $user->name }}</h4>
-							</div>
-						</div>
-					</div>
+                        </div>
+                    @endif
 				</a>
 			</div>
 
@@ -242,6 +251,26 @@
                                                 </div>
                                             </a>
                                         </div>
+                                        <hr style="margin: 0">
+                                        <div class="col-12 text-center">
+                                            <a href="{{ route('marketSettingsForm', ['id' => $user->id]) }}">
+                                                <div class="row d-flex justify-content-center">
+                                                    <div class="col-4" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="padding-left: 0">
+                                                        <div class="m-5" style="background-image: url(https://i.ibb.co/7Y1wz8p/settings-2.png); width: 60px;height: 60px;margin-right: 0;background-position: center center;-wekit-background-size: cover;background-size: cover;background-repeat: no-repeat;"></div>
+                                                    </div>
+                                                    <div class="col-8 d-flex align-items-center" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="padding-left: 0">
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <h4 class="block1-text mt-4 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">Настройки</h4>
+                                                            </div>
+                                                            <div class="col-12">
+                                                                <h4 class="block1-text mb-3 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">Управление вашей витриной, изменение внешнего вида и другие настройки</h4>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -341,21 +370,23 @@
 
             <!-- БЛОК: Настройки -->
 			<div class="row" style="margin-right: 0; margin-top: 1px">
-				<div class="col-12" data-bs-toggle="modal" data-bs-target="#exampleModal" style="padding-right: 7px; padding: 0">
+				<div class="col-12" style="padding-right: 7px; padding: 0">
 					<div class="block1 row shadow @if($user->dayVsNight) bg-dark @endif" style="background-color: #f26868">
 						<div class="col-4">
 							<div class="m-5" style="background-image: url(https://i.ibb.co/7vrtV67/settings-1.png); width: 60px;height: 60px;margin-right: 0;background-position: center center;-wekit-background-size: cover;background-size: cover;background-repeat: no-repeat;"></div>
 						</div>
-						<div class="col-8 d-flex align-items-center">
-							<div class="row">
-								<div class="col-12">
-									<h4 class="block1-text mt-4 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">@lang('app.settings')</h4>
-								</div>
-								<div class="col-12">
-									<h4 class="block1-text mb-3 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">@lang('app.settings_description')</h4>
-								</div>
-							</div>
-						</div>
+                        <div class="col-8 d-flex align-items-center">
+                            <a href="{{ route('profileSettingsForm', ['id' => $user->id]) }}" style="border: 0">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h4 class="block1-text mt-4 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">@lang('app.settings')</h4>
+                                    </div>
+                                    <div class="col-12">
+                                        <h4 class="block1-text mb-3 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">@lang('app.settings_description')</h4>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
 					</div>
 				</div>
 			</div>
@@ -517,190 +548,6 @@
                 </div>
             </div>
 
-			<!-- Модалка для редактирования профиля -->
-			<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background-color: #1b1b1b">
-		  		<div class="modal-dialog" style="margin: 0">
-				    <div class="block-modal modal-content text-center @if($user->dayVsNight) bg-dark text-white-50 @endif" style="border-radius: 0">
-				    	<div class="modal-header">
-				        	<h5 class="modal-title" style="font-family: 'Rubik', sans-serif;">@lang('app.p_edit')</h5>
-				        	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				      	</div>
-				      	<div class="modal-body" style="background-color: #f1f2f2">
-
-				      		@if($user->avatar)
-                                <div class="" id="delete-favicon-avatar">
-                                    <div class="row d-flex align-items-center justify-content-center">
-                                        <div class="col-12">
-                                            <form action="{{ route('delUserAvatar', ['id' => $user->id]) }}" method="POST">
-                                                @csrf @method('PATCH')
-                                                <input id="type-avatar" type="hidden" name="type" value="avatar">
-                                                <div class="d-grid gap-2">
-                                                    <button data-id="{{$user->id}}" id="delete-avatar" type="submit" class="btn-sm btn-danger mb-3 mt-3" style="font-family: 'Rubik', sans-serif; ">@lang('app.p_ava_del')</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-				      		@endif
-				      		@if($user->banner)
-                                <div class="" id="delete-favicon-banner">
-                                    <div class="row d-flex align-items-center justify-content-center">
-                                        <div class="col-12">
-                                            <form action="{{ route('delUserAvatar', ['id' => $user->id]) }}" method="POST">
-                                                @csrf @method('PATCH')
-                                                <input id="type-banner" type="hidden" name="type" value="banner">
-                                                <div class="d-grid gap-2">
-                                                    <button data-id="{{$user->id}}" id="delete-banner" type="submit" class="btn-sm btn-danger mb-3 mt-3" style="font-family: 'Rubik', sans-serif; ">Удалить фоновое изображение</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-				      		@endif
-                            @if($user->favicon)
-                                <div class="mb-3" id="delete-favicon-block">
-                                    <div class="row d-flex align-items-center justify-content-center">
-                                        <div class="col-12">
-                                            <form action="{{ route('delUserAvatar', ['id' => $user->id]) }}" method="POST">
-                                                @csrf @method('PATCH')
-                                                <input id="type" type="hidden" name="type" value="favicon">
-                                                <div class="d-grid gap-2">
-                                                    <button data-id="{{$user->id}}" id="delete-favicon" type="submit" class="btn-sm btn-danger mb-3 mt-3" style="font-family: 'Rubik', sans-serif; ">Удалить фавикон</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endif
-				        	<form action="{{ route('editUserProfile', ['id' => Auth::user()->id]) }}" method="post" enctype="multipart/form-data" class="text-center">
-					        	@csrf @method('PATCH')
-							  	<div class="mb-3">
-							    	<label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.p_name')</label>
-							    	<input value="{{$user->name}}" type="text" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow" id="exampleInputEmail1" aria-describedby="emailHelp" name="name" placeholder="{{$user->name}}" maxlength="100" style="border: 0">
-							    	<span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_name_descr')</span>
-							  	</div>
-							  	<label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.p_name_color')</label>
-							  	<div class="mb-3 text-center d-flex justify-content-center">
-									<input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" id="exampleColorInput" value="{{$user->name_color}}" title="Choose your color" name="name_color" style="height: 35px; border: 0">
-									<span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_n_def')</span>
-							  	</div>
-							  	<label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.page_adress')</label>
-							  	<div class="input-group mb-3 text-center">
-  									<span class="input-group-text shadow" id="basic-addon3" style="border: 0">chrry.me/</span>
-  									<input placeholder="{{$user->slug}}" type="text" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow" id="basic-url" aria-describedby="basic-addon3" name="slug" description="{{$user->slug}}" maxlength="150" style="border: 0">
-  									<span class="mt-1" style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.page_adress_descr')</span>
-								</div>
-							  	<div class="mb-3 text-center">
-							    	<label for="exampleFormControlTextarea1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.page_descr')</label>
-				  					<textarea class="form-control @if($user->dayVsNight) bg-secondary @endif shadow" id="exampleFormControlTextarea1" rows="3" name="description" maxlength="150" style="border: 0">{{$user->description}}</textarea>
-				  					<span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_page_descr_descr')</span>
-							  	</div>
-							  	<label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.p_color_descr')</label>
-							  	<div class="mb-3 text-center d-flex justify-content-center">
-									<input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" id="exampleColorInput" value="{{$user->description_color}}" title="Choose your color" name="description_color" style="height: 35px; border: 0">
-									<span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_color_descr_def')</span>
-							  	</div>
-							  	@if($user->verify == 1)
-								  	<label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">@lang('app.verif_icon_color')</label>
-								  	<div class="mb-3 text-center d-flex justify-content-center">
-										<input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" id="exampleColorInput" value="{{$user->verify_color}}" title="Choose your color" name="verify_color" style="height: 35px; border: 0">
-										<span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_v_i_c_def')</span>
-								  	</div>
-							  	@endif
-							  	<label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.p_background_color')</label><br>
-							  	<div class="mb-3 text-center d-flex justify-content-center">
-									<input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" id="exampleColorInput" value="{{$user->background_color}}" title="Choose your color" name="background_color" style="height: 35px; border: 0">
-							  	</div>
-							  	<label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.p_download_ava')</label>
-							  	<div class="input-group mb-3">
-							  		<input type="file" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" name="avatar" style="border: 0">
-							  		<span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_download_ava_rules')</span>
-								</div>
-								<label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.p_background_img')</label>
-							  	<div class="input-group mb-3">
-							  		<input type="file" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" name="banner" style="border: 0">
-							  		<span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">@lang('app.p_background_img_descr')</span>
-								</div>
-                                <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Загрузить фавикон</label>
-                                <div class="input-group mb-3">
-                                    <input type="file" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" name="favicon" style="border: 0">
-                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Малюсенькая картинка, которая будет отображаться в верху браузера. Обычно её размер 32х32 пикселя</span>
-                                </div>
-                                <div class=" mb-3">
-                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.p_select_lang')</label>
-                                    <select name="locale" class="form-select @if($user->dayVsNight) bg-secondary @endif shadow" aria-label="Default select example" style="border: 0">
-                                        <option selected>@lang('app.p_select')</option>
-                                        <option @if($user->locale == 'ru') selected @endif value="ru">Русский</option>
-                                        <option @if($user->locale == 'en') selected @endif value="en">English</option>
-                                    </select>
-                                </div>
-
-                                <div id="link_bar">
-                                    <div class=" mb-3">
-                                        <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Отображение бара с соц сетями</label>
-                                        <select name="social_links_bar" class="form-select @if($user->dayVsNight) bg-secondary @endif shadow" aria-label="Default select example" style="border: 0">
-                                            <option @if($user->social_links_bar == '1') selected @endif value="{{1}}">Включить</option>
-                                            <option @if($user->social_links_bar == '0') selected @endif value="{{0}}">Выключить</option>
-                                        </select>
-                                        <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Если у вас тип страницы "Ссылки", вы можете все свои ссылки с нашими иконками вынести в отдельный бар</span>
-                                    </div>
-
-                                    <div class=" mb-3">
-                                        <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Позиция бара с соц сетями</label>
-                                        <select name="links_bar_position" class="form-select @if($user->dayVsNight) bg-secondary @endif shadow" aria-label="Default select example" style="border: 0">
-                                            <option @if($user->links_bar_position == 'top') selected @endif value="top">Вверху</option>
-                                            <option @if($user->links_bar_position == 'bottom') selected @endif value="bottom">Внизу</option>
-                                        </select>
-                                        <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Вы можете выбрать где отобразить бар с сылками, вверху или внизу</span>
-                                    </div>
-                                </div>
-
-                                <div class=" mb-3">
-                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Показать логотип</label>
-                                    <select name="show_logo" class="form-select @if($user->dayVsNight) bg-secondary @endif shadow" aria-label="Default select example" style="border: 0">
-                                        <option @if($user->show_logo == '1') selected @endif value="{{1}}">Показать</option>
-                                        <option @if($user->show_logo == '0') selected @endif value="{{0}}">Отключить</option>
-                                    </select>
-                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Отображать наш логотип на странице или нет</span>
-                                </div>
-
-                                <div class=" mb-3">
-                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Тип страницы</label>
-                                    <select id="type-profile" name="type" class="form-select @if($user->dayVsNight) bg-secondary @endif shadow" aria-label="Default select example" style="border: 0">
-                                        <option selected>Выберите тип страницы</option>
-                                        <option @if($user->type == 'Links') selected @endif value="Links">Ссылки</option>
-                                        <option @if($user->type == 'Events') selected @endif value="Events">Афиша</option>
-                                        <option @if($user->type == 'Market') selected @endif value="Market">Магазин</option>
-                                    </select>
-                                </div>
-                                <div id="event-block" style="display:none">
-                                	<div class=" mb-3">
-	                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Отображение иконок соц сетей</label>
-	                                    <select name="show_social" class="form-select @if($user->dayVsNight) bg-secondary @endif shadow" aria-label="Default select example" style="border: 0">
-	                                        <option selected>Показать иконки соц. сетей или нет</option>
-	                                        <option @if($user->show_social == true) selected @endif value="1">Показать</option>
-	                                        <option @if($user->show_social == false) selected @endif value="0">Нет</option>
-	                                    </select>
-	                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Будут отображаться только ссылки с иконками из нашей бд.</span>
-	                                </div>
-	                                <div class=" mb-3">
-	                                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Место положение иконок</label>
-	                                    <select name="social" class="form-select @if($user->dayVsNight) bg-secondary @endif shadow" aria-label="Default select example" style="border: 0">
-	                                        <option selected>Показать иконки соц. сетей или нет</option>
-	                                        <option @if($user->social == 'TOP') selected @endif value="TOP">Вверху</option>
-	                                        <option @if($user->social == 'DOWN') selected @endif value="DOWN">Внизу</option>
-	                                    </select>
-	                                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Вверху - между вашим именем и мероприятиями. Внизу - под мероприятиями</span>
-	                                </div>
-                                </div>
-                                <div class="d-grid gap-2">
-								  	<button type="submit" class="btn btn-secondary mb-1 mt-3" style="font-family: 'Rubik', sans-serif; border: 0; color: white">@lang('app.p_edit_prof')</button>
-								</div>
-							</form>
-				      	</div>
-				    </div>
-		  		</div>
-			</div>
     	</div>
 
         {{-- Fonts select loader for Events--}}
@@ -744,145 +591,6 @@
                         return  '<h4 style="font-size: 1.2rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</h4>';
                     }
                 }
-            });
-        </script>
-
-        <script>
-        	//Hide upload field if icon selected
-            $( document ).ready(function() {
-                $('#select-beast-empty').change(function(){
-                    $('#pp').html($(this).val());
-                    if($(this).val() != '') {
-                        $('#download-file').hide();
-                    }
-                    if($(this).val() == '') {
-                        $('#download-file').show();
-                    }
-                });
-            });
-
-            //Select page type
-            $( document ).ready(function() {
-            	var type = $('#type-profile').val();
-            	if(type == 'Links') {
-            		$('#event-block').hide();
-            	}
-            	if(type == 'Events' || type == 'Market') {
-            		$('#event-block').show();
-            	}
-                $('#type-profile').change(function(){
-                    $('#pp').html($(this).val());
-                    if($(this).val() == 'Events' || $(this).val() == 'Market') {
-                        $('#event-block').show();
-                    }
-                    if($(this).val() == 'Links') {
-                        $('#event-block').hide();
-                    }
-                });
-            });
-
-            // $( document ).ready(function() {
-            //     var type = $('#type-profile').val();
-            //     if(type == 'Events') {
-            //         $('#link_bar').hide();
-            //     }
-            //     if(type == 'Links') {
-            //         $('#link_bar').show();
-            //     }
-            //     $('#type-profile').change(function(){
-            //         $('#pp').html($(this).val());
-            //         if($(this).val() == 'Events') {
-            //             $('#link_bar').hide();
-            //         }
-            //         if($(this).val() == 'Links') {
-            //             $('#link_bar').show();
-            //         }
-            //     });
-            // });
-
-        </script>
-
-        <script>
-	        $('#timepicker').timepicker({
-	            uiLibrary: 'bootstrap5'
-	        });
-    	</script>
-
-        <!-- Delete favicon -->
-        <script type="text/javascript">
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $(document).ready(function () {
-                $("body").on("click","#delete-favicon", function(e){
-                    e.preventDefault();
-                    var type = $("#type").val();
-                    var id = $(this).data('id');
-                    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-                    $.ajax({
-                        url: "/"+id+"/edit-profile/del-avatar",
-                        type: 'PATCH',
-                        data: {_token: CSRF_TOKEN, type: type},
-                        dataType: 'JSON',
-                        success: function (){
-                            $("#delete-favicon-block").hide();
-                        },
-                    });
-                });
-            });
-        </script>
-
-        <!-- Delete banner -->
-        <script type="text/javascript">
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $(document).ready(function () {
-                $("body").on("click","#delete-banner", function(e){
-                    e.preventDefault();
-                    var type = $("#type-banner").val();
-                    var id = $(this).data('id');
-                    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-                    $.ajax({
-                        url: "/"+id+"/edit-profile/del-avatar",
-                        type: 'PATCH',
-                        data: {_token: CSRF_TOKEN, type: type},
-                        dataType: 'JSON',
-                        success: function (){
-                            $("#delete-favicon-banner").hide();
-                        },
-                    });
-                });
-            });
-        </script>
-
-        <!-- Delete avatar -->
-        <script type="text/javascript">
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $(document).ready(function () {
-                $("body").on("click","#delete-avatar", function(e){
-                    e.preventDefault();
-                    var type = $("#type-avatar").val();
-                    var id = $(this).data('id');
-                    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-                    $.ajax({
-                        url: "/"+id+"/edit-profile/del-avatar",
-                        type: 'PATCH',
-                        data: {_token: CSRF_TOKEN, type: type},
-                        dataType: 'JSON',
-                        success: function (){
-                            $("#delete-favicon-avatar").hide();
-                        },
-                    });
-                });
             });
         </script>
 

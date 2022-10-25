@@ -99,7 +99,11 @@ class Link extends Model
             'title'     => $request->title,
             'link'      => $request->link,
             'photo'     => isset($request->photo) ?
-                $uploadService->uploader($request->photo, $this->imgPath($userId), 200) :
+                $uploadService->uploader(
+                    ph: $request->photo,
+                    path: $this->imgPath($userId),
+                    size: 200
+                ) :
                 null,
             'pinned'    => isset($request->pinned) ? 1 : 0,
             'icon'      => $request->icon,
@@ -147,7 +151,13 @@ class Link extends Model
             'title_color_hex'      => $request->title_color,
             'background_color_hex' => $request->background_color,
             'photo'                => isset($request->photo) ?
-                $uploadService->uploader($request->photo, $this->imgPath($userId), 200, true, $link->photo) :
+                $uploadService->uploader(
+                    ph: $request->photo,
+                    path: $this->imgPath($userId),
+                    size: 200,
+                    drop: true,
+                    dropImagePath: $link->photo
+                ) :
                 $link->photo,
             'icon'                 => isset($request->icon) ? $request->icon : $link->icon,
             'transparency'         => isset($request->transparency) ? $request->transparency : $link->transparency,

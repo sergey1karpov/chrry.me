@@ -50,9 +50,12 @@ Route::middleware(['locale', 'userCheck', 'web'])->group(function () {
      * Маршруты отображения личного кабинета, изменения профиля, удаления файлов(фото, фон, фавикон)
      */
     Route::get('/{id}/edit-profile', [UserController::class, 'editProfileForm'])->name('editProfileForm');
+    Route::get('/{id}/edit-profile/settings', [UserController::class, 'profileSettingsForm'])->name('profileSettingsForm');
     Route::patch('/{id}/edit-profile/edit', [UserController::class, 'editUserProfile'])->name('editUserProfile');
     Route::patch('/{id}/edit-profile/del-avatar', [UserController::class, 'delUserAvatar'])->name('delUserAvatar');
     Route::patch('/{id}/edit-profile/change-theme', [UserController::class, 'changeTheme'])->name('changeTheme');
+    Route::get('/{id}/market-settings', [UserController::class, 'marketSettingsForm'])->name('marketSettingsForm');
+    Route::patch('/{id}/market-settings/patch', [UserController::class, 'marketSettingsPatch'])->name('marketSettingsPatch');
     /**
      * Маршруты для работы со ссылками в личном кабинете пользователя
      */

@@ -29,18 +29,18 @@ class ProductController extends Controller
     }
 
     /**
-     * @param int $id
+     * @param int $userId
      * @param ProductRequest $request
      * @param Product $product
      * @return \Illuminate\Http\RedirectResponse
      *
      * Add new user product
      */
-    public function addProduct(int $id, ProductRequest $request, Product $product)
+    public function addProduct(int $userId, ProductRequest $request, Product $product)
     {
-        $product->storeProduct($id, $request, $this->uploadService);
+        $product->storeProduct($userId, $request, $this->uploadService);
 
-        return redirect()->back();
+        return redirect()->route('editProfileForm', ['id' => $userId])->with('success', 'Товар успешно добавлен');
     }
 
     /**

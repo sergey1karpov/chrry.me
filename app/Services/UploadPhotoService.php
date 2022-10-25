@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File;
+use Imagick;
 use Intervention\Image\ImageManagerStatic as Image;
 
 /**
@@ -26,13 +27,24 @@ class UploadPhotoService
      * @param string|null $dropImagePath
      * @return string
      */
-    public function uploader(array|UploadedFile $ph, string $path, int $size, bool $drop = null, string $dropImagePath = null): string
+    public function uploader(array|UploadedFile $ph, string $path, int $size, bool $drop = null, string $dropImagePath = null, bool $aspectRatio = null): string
     {
         if(true == $drop && $dropImagePath != null) {
             $this->dropImg($dropImagePath);
         }
 
         $this->createPath($path);
+
+        if($aspectRatio) {
+
+            $image = Image::make($ph);
+            $image->resize(null, $size, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
+            $image->save($path . '/' .$ph->hashName());
+            return $image->dirname . '/' . $image->basename;
+        }
 
         if($ph instanceof UploadedFile) {
             $image = Image::make($ph->getRealPath())->fit($size);

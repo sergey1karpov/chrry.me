@@ -102,7 +102,11 @@ class Event extends Model
             'location'    => $request->location,
             'time'        => $request->time,
             'date'        => $request->date,
-            'banner'      => $uploadService->uploader($request->banner, $this->imgPath($id), 500),
+            'banner'      => $uploadService->uploader(
+                ph: $request->banner,
+                path: $this->imgPath($id),
+                size: 500
+            ),
             'video'       => $request->video,
             'media'       => $request->media,
             'tickets'     => $request->tickets,
@@ -155,7 +159,13 @@ class Event extends Model
             'time'        => isset($request->time) ? $request->time : $event->time,
             'date'        => isset($request->date) ? $request->date : $event->date,
             'banner'      => isset($request->banner) ?
-                $uploadService->uploader($request->banner, $this->imgPath($id), 500, true, $event->banner) :
+                $uploadService->uploader(
+                    ph: $request->banner,
+                    path: $this->imgPath($id),
+                    size: 500,
+                    drop: true,
+                    dropImagePath: $event->banner
+                ) :
                 $event->banner,
             'video'       => $request->video,
             'media'       => $request->media,
