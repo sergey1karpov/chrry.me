@@ -43,7 +43,7 @@ class EventController extends Controller
     {
         $event->createEvent($id, $request, $this->uploadService);
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Мероприятие добавлено!');
     }
 
     /**

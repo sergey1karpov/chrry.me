@@ -180,68 +180,68 @@ class User extends Authenticatable
 
     public function updateUserSettings(int $userId, UpdateRegisteruserRequest $request)
     {
-//        UserSettings::updateOrCreate(
-//            ['user_id' => $userId],
-//            [
-//                'logotype_size' => $request->logotype_size,
-//                'logotype_shadow_right' => $request->logotype_shadow_right,
-//                'logotype_shadow_bottom' => $request->logotype_shadow_bottom,
-//                'logotype_shadow_round' => $request->logotype_shadow_round,
-//                'logotype_shadow_color' => $request->logotype_shadow_color,
-//                'avatar_vs_logotype' => $request->avatar_vs_logotype,
-//            ]
-//        );
-
-
-        $isLogotype = UserSettings::where('user_id', $userId)->first();
-
-        if(!$isLogotype) {
-            UserSettings::where('user_id', $userId)->create([
-                'logotype_size' => $request->logotype_size,
-                'logotype_shadow_right' => $request->logotype_shadow_right,
-                'logotype_shadow_bottom' => $request->logotype_shadow_bottom,
-                'logotype_shadow_round' => $request->logotype_shadow_round,
-                'logotype_shadow_color' => $request->logotype_shadow_color,
+        UserSettings::updateOrCreate(
+            ['user_id' => $userId],
+            [
+                'user_id' => $userId,
+                'logotype_size' => $request->logotype_size ?? 250,
+                'logotype_shadow_right' => $request->logotype_shadow_right ?? 0,
+                'logotype_shadow_bottom' => $request->logotype_shadow_bottom ?? 0,
+                'logotype_shadow_round' => $request->logotype_shadow_round ?? 0,
+                'logotype_shadow_color' => $request->logotype_shadow_color ?? '#000000',
                 'avatar_vs_logotype' => $request->avatar_vs_logotype,
-            ]);
-        } else {
-            UserSettings::where('user_id', $userId)->update([
-                'logotype_size' => $request->logotype_size,
-                'logotype_shadow_right' => $request->logotype_shadow_right,
-                'logotype_shadow_bottom' => $request->logotype_shadow_bottom,
-                'logotype_shadow_round' => $request->logotype_shadow_round,
-                'logotype_shadow_color' => $request->logotype_shadow_color,
-                'avatar_vs_logotype' => $request->avatar_vs_logotype,
-            ]);
-        }
+
+                'round_links_width' => $request->round_links_width ?? 40,
+                'round_links_shadow_right' => $request->round_links_shadow_right ?? 0,
+                'round_links_shadow_bottom' => $request->round_links_shadow_bottom ?? 0,
+                'round_links_shadow_round' => $request->round_links_shadow_round ?? 0,
+                'round_links_shadow_color' => $request->round_links_shadow_color ?? '#000000',
+            ]
+        );
     }
 
     public function uploadLogotype(User $user, UploadedFile $logotype, UploadPhotoService $uploadService)
     {
         $isLogotype = UserSettings::where('user_id', $user->id)->first();
 
-        if(!$isLogotype) {
-            UserSettings::where('user_id', $user->id)->create([
-                'user_id' => $user->id,
-                'logotype' => $uploadService->uploader(
-                    ph: $logotype,
-                    path: $this->imgPath($user->id),
-                    size: 500,
-                    aspectRatio: true
-                ),
-            ]);
-        } else {
-            UserSettings::where('user_id', $user->id)->update([
-                'logotype' => $uploadService->uploader(
-                    ph: $logotype,
-                    path: $this->imgPath($user->id),
-                    size: 500,
-                    drop: true,
-                    dropImagePath: $isLogotype->logotype,
-                    aspectRatio: true
-                ),
-            ]);
-        }
+        UserSettings::where('user_id', $user->id)->update([
+            'logotype' => $uploadService->uploader(
+                ph: $logotype,
+                path: $this->imgPath($user->id),
+                size: 500,
+                drop: true,
+                dropImagePath: $isLogotype->logotype,
+                aspectRatio: true
+            ),
+        ]);
+
+//        if(!$isLogotype) {
+//            UserSettings::where('user_id', $user->id)->create([
+//                'user_id' => $user->id,
+//                'logotype_size' => 250,
+//                'logotype_shadow_right' => 0,
+//                'logotype_shadow_bottom' => 0,
+//                'logotype_shadow_round' => 0,
+//                'logotype_shadow_color' => '#000000',
+//                'logotype' => $uploadService->uploader(
+//                    ph: $logotype,
+//                    path: $this->imgPath($user->id),
+//                    size: 500,
+//                    aspectRatio: true
+//                ),
+//            ]);
+//        } else {
+//            UserSettings::where('user_id', $user->id)->update([
+//                'logotype' => $uploadService->uploader(
+//                    ph: $logotype,
+//                    path: $this->imgPath($user->id),
+//                    size: 500,
+//                    drop: true,
+//                    dropImagePath: $isLogotype->logotype,
+//                    aspectRatio: true
+//                ),
+//            ]);
+//        }
     }
 
     public function createDefaultMarketSettings(int $userId)

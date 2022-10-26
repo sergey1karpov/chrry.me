@@ -112,6 +112,18 @@
                     </div>
                 </div>
             @endif
+            @if ($message = Session::get('success'))
+                <div class="row">
+                    <div class="col-12" style="padding: 0">
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert" style="margin: 0; background-color: lightseagreen">
+                            <div class="title">
+                                <span style="font-family: 'Rubik', sans-serif; font-size: 80%; line-height: 16px; display:block; color: white;">- {{$message}}</span>
+                            </div>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+            @endif
         </div>
         <div class="container-fluid" style="padding: 0">
             <nav class="navbar navbar-expand-lg @if($user->dayVsNight) bg-dark text-white-50 @endif" style="background-color: #f1f2f2">

@@ -112,6 +112,18 @@
             </div>
         </div>
     @endif
+    @if ($message = Session::get('success'))
+        <div class="row">
+            <div class="col-12" style="padding: 0">
+                <div class="alert alert-warning alert-dismissible fade show" role="alert" style="margin: 0; background-color: lightseagreen">
+                    <div class="title">
+                        <span style="font-family: 'Rubik', sans-serif; font-size: 80%; line-height: 16px; display:block; color: white;">- {{$message}}</span>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+    @endif
 </div>
 <div class="container-fluid" style="padding: 0">
     <nav class="navbar navbar-expand-lg @if($user->dayVsNight) bg-dark text-white-50 @endif" style="background-color: #f1f2f2">
@@ -226,6 +238,13 @@
         <div class="mb-3 text-center d-flex justify-content-center">
             <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" id="exampleColorInput" value="{{$user->background_color}}" title="Choose your color" name="background_color" style="height: 35px; border: 0">
         </div>
+
+        @if(isset($user->avatar))
+            <div class="mb-3">
+                <img src="{{'../'.$user->avatar}}" class="img-fluid rounded" width="250">
+            </div>
+        @endif
+
         <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">@lang('app.p_download_ava')</label>
         <div class="input-group mb-3">
             <input type="file" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" name="avatar" style="border: 0">
@@ -233,12 +252,22 @@
         </div>
 
         <hr>
+
+        @if(isset($user->userSettings->logotype))
+            <div class="mb-3">
+                <img src="{{'../'.$user->userSettings->logotype}}" class="img-fluid" width="250" style="
+                                filter: drop-shadow({{$user->userSettings->logotype_shadow_right}}px {{$user->userSettings->logotype_shadow_bottom}}px {{$user->userSettings->logotype_shadow_round}}px {{$user->userSettings->logotype_shadow_color}});
+                            ">
+            </div>
+        @endif
+
         <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Загрузить логотип</label>
         <div class="input-group mb-3">
             <input type="file" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" name="logotype" style="border: 0">
             <span class="mt-1" style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Вы можете загрузить свой логотип, который будет отображаться вместо круглого аватара и имени профиля. Что бы вернуться к аватару, просто удалите логотип. Пока принимаем только PNG</span>
         </div>
 
+        @if(isset($user->userSettings->logotype))
         <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Размер логотипа</label>
         <div class="input-group mb-3">
             <input type="range" class="form-range" min="200" max="350" step="1" id="customRange3" name="logotype_size" value="{{$user->userSettings->logotype_size}}">
@@ -263,6 +292,7 @@
         <div class="mb-3 text-center d-flex justify-content-center">
             <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" id="exampleColorInput" value="{{$user->userSettings->logotype_shadow_color}}" title="Choose your color" name="logotype_shadow_color" style="height: 35px; border: 0">
         </div>
+        @endif
 
         <hr>
 
@@ -288,20 +318,47 @@
         <div id="link_bar">
             <div class=" mb-3">
                 <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Отображение бара с соц сетями</label>
-                <select name="social_links_bar" class="form-select @if($user->dayVsNight) bg-secondary @endif shadow" aria-label="Default select example" style="border: 0">
+                <select id="is_link_bar" name="social_links_bar" class="form-select @if($user->dayVsNight) bg-secondary @endif shadow" aria-label="Default select example" style="border: 0">
                     <option @if($user->social_links_bar == '1') selected @endif value="{{1}}">Включить</option>
                     <option @if($user->social_links_bar == '0') selected @endif value="{{0}}">Выключить</option>
                 </select>
                 <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Если у вас тип страницы "Ссылки", вы можете все свои ссылки с нашими иконками вынести в отдельный бар</span>
             </div>
 
-            <div class=" mb-3">
-                <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Позиция бара с соц сетями</label>
-                <select name="links_bar_position" class="form-select @if($user->dayVsNight) bg-secondary @endif shadow" aria-label="Default select example" style="border: 0">
-                    <option @if($user->links_bar_position == 'top') selected @endif value="top">Вверху</option>
-                    <option @if($user->links_bar_position == 'bottom') selected @endif value="bottom">Внизу</option>
-                </select>
-                <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Вы можете выбрать где отобразить бар с сылками, вверху или внизу</span>
+            <div class="mb-3" id="links_bar_settings">
+                <div class=" mb-3">
+                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Позиция бара с соц сетями</label>
+                    <select name="links_bar_position" class="form-select @if($user->dayVsNight) bg-secondary @endif shadow" aria-label="Default select example" style="border: 0">
+                        <option @if($user->links_bar_position == 'top') selected @endif value="top">Вверху</option>
+                        <option @if($user->links_bar_position == 'bottom') selected @endif value="bottom">Внизу</option>
+                    </select>
+                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Вы можете выбрать где отобразить бар с сылками, вверху или внизу</span>
+                </div>
+
+                <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Размер логотипов</label>
+                <div class="input-group mb-3">
+                    <input type="range" class="form-range" min="40" max="70" step="1" id="customRange3" name="round_links_width" value="{{$user->userSettings->round_links_width}}">
+                </div>
+
+                <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Тень вправо</label>
+                <div class="input-group mb-3">
+                    <input type="range" class="form-range" min="0" max="40" step="1" id="customRange3" name="round_links_shadow_right" value="{{$user->userSettings->round_links_shadow_right}}">
+                </div>
+
+                <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Тень вниз</label>
+                <div class="input-group mb-3">
+                    <input type="range" class="form-range" min="0" max="40" step="1" id="customRange3" name="round_links_shadow_bottom" value="{{$user->userSettings->round_links_shadow_bottom}}">
+                </div>
+
+                <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Тень радиус</label>
+                <div class="input-group mb-3">
+                    <input type="range" class="form-range" min="0" max="40" step="1" id="customRange3" name="round_links_shadow_round" value="{{$user->userSettings->round_links_shadow_round}}">
+                </div>
+
+                <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Цвет тени</label>
+                <div class="mb-3 text-center d-flex justify-content-center">
+                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" id="exampleColorInput" value="{{$user->userSettings->round_links_shadow_color}}" title="Choose your color" name="round_links_shadow_color" style="height: 35px; border: 0">
+                </div>
             </div>
         </div>
 
@@ -326,41 +383,51 @@
         <div id="event-block" style="display:none">
             <div class=" mb-3">
                 <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Отображение иконок соц сетей</label>
-                <select name="show_social" class="form-select @if($user->dayVsNight) bg-secondary @endif shadow" aria-label="Default select example" style="border: 0">
+                <select id="show_social" name="show_social" class="form-select @if($user->dayVsNight) bg-secondary @endif shadow" aria-label="Default select example" style="border: 0">
                     <option selected>Показать иконки соц. сетей или нет</option>
                     <option @if($user->show_social == true) selected @endif value="1">Показать</option>
                     <option @if($user->show_social == false) selected @endif value="0">Нет</option>
                 </select>
                 <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Будут отображаться только ссылки с иконками из нашей бд.</span>
             </div>
-            <div class=" mb-3">
-                <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Место положение иконок</label>
-                <select name="social" class="form-select @if($user->dayVsNight) bg-secondary @endif shadow" aria-label="Default select example" style="border: 0">
-                    <option selected>Показать иконки соц. сетей или нет</option>
-                    <option @if($user->social == 'TOP') selected @endif value="TOP">Вверху</option>
-                    <option @if($user->social == 'DOWN') selected @endif value="DOWN">Внизу</option>
-                </select>
-                <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Вверху - между вашим именем и мероприятиями. Внизу - под мероприятиями</span>
+
+            <div id="is_link_bar_market_event">
+                <div class=" mb-3">
+                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Местоположение иконок</label>
+                    <select name="social" class="form-select @if($user->dayVsNight) bg-secondary @endif shadow" aria-label="Default select example" style="border: 0">
+                        <option selected>Показать иконки соц. сетей или нет</option>
+                        <option @if($user->social == 'TOP') selected @endif value="TOP">Вверху</option>
+                        <option @if($user->social == 'DOWN') selected @endif value="DOWN">Внизу</option>
+                    </select>
+                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Вверху - между вашим именем и мероприятиями. Внизу - под мероприятиями</span>
+                </div>
+
+                <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Размер логотипов</label>
+                <div class="input-group mb-3">
+                    <input type="range" class="form-range" min="40" max="70" step="1" id="customRange3" name="round_links_width" value="{{$user->userSettings->round_links_width}}">
+                </div>
+
+                <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Тень вправо</label>
+                <div class="input-group mb-3">
+                    <input type="range" class="form-range" min="0" max="40" step="1" id="customRange3" name="round_links_shadow_right" value="{{$user->userSettings->round_links_shadow_right}}">
+                </div>
+
+                <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Тень вниз</label>
+                <div class="input-group mb-3">
+                    <input type="range" class="form-range" min="0" max="40" step="1" id="customRange3" name="round_links_shadow_bottom" value="{{$user->userSettings->round_links_shadow_bottom}}">
+                </div>
+
+                <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Тень радиус</label>
+                <div class="input-group mb-3">
+                    <input type="range" class="form-range" min="0" max="40" step="1" id="customRange3" name="round_links_shadow_round" value="{{$user->userSettings->round_links_shadow_round}}">
+                </div>
+
+                <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Цвет тени</label>
+                <div class="mb-3 text-center d-flex justify-content-center">
+                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" id="exampleColorInput" value="{{$user->userSettings->round_links_shadow_color}}" title="Choose your color" name="round_links_shadow_color" style="height: 35px; border: 0">
+                </div>
             </div>
         </div>
-
-{{--        @if($user->avatar && $user->userSettings->logotype)--}}
-{{--            <div class="row">--}}
-{{--                <label class="form-check-label mb-2" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Выберите что будет отображаться на странице</label>--}}
-{{--                <div class="col-6 mb-3">--}}
-{{--                    <img src="{{'../' . $user->avatar }}" width="150" class="rounded">--}}
-{{--                    <div class="form-check d-flex justify-content-center align-items-center mt-2">--}}
-{{--                        <input class="form-check-input shadow" type="radio" value="avatar" id="flexCheckDefault" name="avatar_vs_logotype" style="border: 0" @if($user->userSettings->avatar_vs_logotype == 'avatar') checked @endif>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="col-6">--}}
-{{--                    <img src="{{'../' .  $user->userSettings->logotype }}" width="150">--}}
-{{--                    <div class="form-check d-flex justify-content-center align-items-center mt-2">--}}
-{{--                        <input class="form-check-input shadow" type="radio" value="logotype" id="flexCheckChecked" name="avatar_vs_logotype" style="border: 0" @if($user->userSettings->avatar_vs_logotype == 'logotype') checked @endif>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        @endif--}}
 
         <div class="d-grid gap-2">
             <button type="submit" class="btn btn-secondary mb-1 mt-3" style="font-family: 'Rubik', sans-serif; border: 0; color: white">@lang('app.p_edit_prof')</button>
@@ -382,7 +449,6 @@
         });
     });
 
-    //Select page type
     $( document ).ready(function() {
         var type = $('#type-profile').val();
         if(type == 'Links') {
@@ -398,6 +464,49 @@
             }
             if($(this).val() == 'Links') {
                 $('#event-block').hide();
+            }
+        });
+    });
+
+
+    //Select page type
+    $( document ).ready(function() {
+        var type = $('#is_link_bar').val();
+        if(type == 1) {
+            $('#links_bar_settings').show();
+        }
+        if(type == 0) {
+            $('#links_bar_settings').hide();
+        }
+
+        $('#is_link_bar').change(function(){
+            $('#pp').html($(this).val());
+            if($(this).val() == 0) {
+                $('#links_bar_settings').hide();
+            }
+            if($(this).val() == 1) {
+                $('#links_bar_settings').show();
+            }
+        });
+    });
+
+    //Select page typetttttttttttttttt
+    $( document ).ready(function() {
+        var type = $('#show_social').val();
+        if(type == 1) {
+            $('#is_link_bar_market_event').show();
+        }
+        if(type == 0) {
+            $('#is_link_bar_market_event').hide();
+        }
+
+        $('#show_social').change(function(){
+            $('#pp').html($(this).val());
+            if($(this).val() == 0) {
+                $('#is_link_bar_market_event').hide();
+            }
+            if($(this).val() == 1) {
+                $('#is_link_bar_market_event').show();
             }
         });
     });

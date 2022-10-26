@@ -71,7 +71,7 @@ class UserController extends Controller
     {
         $user->editUserProfile($userId, $request, $this->uploadService);
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Профиль изменен!');
     }
 
     /**

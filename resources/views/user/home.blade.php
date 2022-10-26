@@ -148,7 +148,7 @@
 	        <div class="d-flex justify-content-center text-center">
 		      	<div class="text-center" style="margin-top: 25px">
 
-                    @if($user->userSettings->logotype)
+                    @if(isset($user->userSettings->logotype))
                         <div class="d-flex justify-content-center">
                             <img src="{{$user->userSettings->logotype}}" class="img-fluid" width="{{$user->userSettings->logotype_size}}" style="
                                 filter: drop-shadow({{$user->userSettings->logotype_shadow_right}}px {{$user->userSettings->logotype_shadow_bottom}}px {{$user->userSettings->logotype_shadow_round}}px {{$user->userSettings->logotype_shadow_color}});
@@ -182,7 +182,10 @@
                                             @foreach($links as $link)
                                                 @if($link->icon)
                                                     <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">
-                                                        <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="width:40px;">
+                                                        <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="
+                                                            width:{{ $user->userSettings->round_links_width }}px;
+                                                            filter: drop-shadow({{ $user->userSettings->round_links_shadow_right }}px {{ $user->userSettings->round_links_shadow_bottom }}px {{ $user->userSettings->round_links_shadow_round }}px {{ $user->userSettings->round_links_shadow_color }})
+                                                        ">
                                                     </a>
                                                 @endif
                                             @endforeach
@@ -202,7 +205,10 @@
                                             @foreach($links as $link)
                                                 @if($link->icon)
                                                     <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">
-                                                        <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="width:40px;">
+                                                        <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="
+                                                            width:{{ $user->userSettings->round_links_width }}px;
+                                                            filter: drop-shadow({{ $user->userSettings->round_links_shadow_right }}px {{ $user->userSettings->round_links_shadow_bottom }}px {{ $user->userSettings->round_links_shadow_round }}px {{ $user->userSettings->round_links_shadow_color }})
+                                                        ">
                                                     </a>
                                                 @endif
                                             @endforeach
@@ -222,7 +228,10 @@
                                             @foreach($links as $link)
                                                 @if($link->icon)
                                                     <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">
-                                                        <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="width:40px;">
+                                                        <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="
+                                                            width:{{ $user->userSettings->round_links_width }}px;
+                                                            filter: drop-shadow({{ $user->userSettings->round_links_shadow_right }}px {{ $user->userSettings->round_links_shadow_bottom }}px {{ $user->userSettings->round_links_shadow_round }}px {{ $user->userSettings->round_links_shadow_color }})
+                                                        ">
                                                     </a>
                                                 @endif
                                             @endforeach
@@ -461,7 +470,10 @@
                                     @foreach($links as $link)
                                         @if($link->icon)
                                             <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">
-                                                <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="width:40px;">
+                                                <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="
+                                                    width:{{ $user->userSettings->round_links_width }}px;
+                                                    filter: drop-shadow({{ $user->userSettings->round_links_shadow_right }}px {{ $user->userSettings->round_links_shadow_bottom }}px {{ $user->userSettings->round_links_shadow_round }}px {{ $user->userSettings->round_links_shadow_color }})
+                                                ">
                                             </a>
                                         @endif
                                     @endforeach
@@ -482,7 +494,7 @@
                     @if($user->marketSettings->cards_style == 'one')
                         @foreach($products as $product)
 
-                            <section data-bs-toggle="modal" data-bs-target="#productModal{{$product->id}}">
+                            <section data-bs-toggle="modal" data-bs-target="#productModal{{$product->id}}" onclick="productStats{{$product->id}}()">
                                 <div class="container mt-2">
                                     <div class="row justify-content-center">
                                         <div class="col-md-8 col-lg-6 col-xl-4">
@@ -528,24 +540,24 @@
                                                         $adds_ph = unserialize($product->additional_photos);
                                                         array_unshift($adds_ph, $product->main_photo);
                                                     @endphp
-                                                @endif
-                                                <div id="carouselExampleControls{{$product->id}}" class="carousel slide" data-bs-ride="carousel">
-                                                    <div class="carousel-inner">
-                                                        @foreach($adds_ph as $key => $ph)
-                                                            <div class="carousel-item @if($key == 0) active @endif">
-                                                                <img src="{{$ph}}" class="card-img-top" alt="Apple Computer" />
-                                                            </div>
-                                                        @endforeach
+                                                    <div id="carouselExampleControls{{$product->id}}" class="carousel slide" data-bs-ride="carousel">
+                                                        <div class="carousel-inner">
+                                                            @foreach($adds_ph as $key => $ph)
+                                                                <div class="carousel-item @if($key == 0) active @endif">
+                                                                    <img src="{{$ph}}" class="card-img-top" alt="Apple Computer" />
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+                                                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls{{$product->id}}" data-bs-slide="prev">
+                                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                            <span class="visually-hidden">Previous</span>
+                                                        </button>
+                                                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls{{$product->id}}" data-bs-slide="next">
+                                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                            <span class="visually-hidden">Next</span>
+                                                        </button>
                                                     </div>
-                                                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls{{$product->id}}" data-bs-slide="prev">
-                                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                        <span class="visually-hidden">Previous</span>
-                                                    </button>
-                                                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls{{$product->id}}" data-bs-slide="next">
-                                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                        <span class="visually-hidden">Next</span>
-                                                    </button>
-                                                </div>
+                                                @endif
                                                 <div class="card-body" style="padding: 0">
                                                     <div class="text-center">
                                                         <h5 class="card-title mt-2">{{$product->title}}</h5>
@@ -582,7 +594,7 @@
                                 <div class="col-6 p-2" style="padding: 0">
                                     <section data-bs-toggle="modal" data-bs-target="#productModal{{$product->id}}">
                                         <div class="container mt-2" style="padding: 0">
-                                            <div class="row justify-content-center">
+                                            <div class="row justify-content-center" onclick="productStats{{$product->id}}()">
                                                 <div class="col-md-8 col-lg-6 col-xl-4">
                                                     <div class="text-black mb-3" style="border: 0; border-radius: 10px;">
                                                         <img src="{{$product->main_photo}}" class="card-img-top" alt="Apple Computer" style="border-radius: {{$user->marketSettings->card_round}}px; @if($user->marketSettings->cards_shadow) box-shadow: 0px 5px 5px -5px rgba(0, 0, 0, 0.6); @endif" />
@@ -626,24 +638,24 @@
                                                             $adds_ph = unserialize($product->additional_photos);
                                                             array_unshift($adds_ph, $product->main_photo);
                                                         @endphp
-                                                    @endif
-                                                    <div id="carouselExampleControls{{$product->id}}" class="carousel slide" data-bs-ride="carousel">
-                                                        <div class="carousel-inner">
-                                                            @foreach($adds_ph as $key => $ph)
-                                                                <div class="carousel-item @if($key == 0) active @endif">
-                                                                    <img src="{{$ph}}" class="card-img-top" alt="Apple Computer" />
-                                                                </div>
-                                                            @endforeach
+                                                        <div id="carouselExampleControls{{$product->id}}" class="carousel slide" data-bs-ride="carousel">
+                                                            <div class="carousel-inner">
+                                                                @foreach($adds_ph as $key => $ph)
+                                                                    <div class="carousel-item @if($key == 0) active @endif">
+                                                                        <img src="{{$ph}}" class="card-img-top" alt="Apple Computer" />
+                                                                    </div>
+                                                                @endforeach
+                                                            </div>
+                                                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls{{$product->id}}" data-bs-slide="prev">
+                                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                                <span class="visually-hidden">Previous</span>
+                                                            </button>
+                                                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls{{$product->id}}" data-bs-slide="next">
+                                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                                <span class="visually-hidden">Next</span>
+                                                            </button>
                                                         </div>
-                                                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls{{$product->id}}" data-bs-slide="prev">
-                                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                            <span class="visually-hidden">Previous</span>
-                                                        </button>
-                                                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls{{$product->id}}" data-bs-slide="next">
-                                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                            <span class="visually-hidden">Next</span>
-                                                        </button>
-                                                    </div>
+                                                    @endif
                                                     <div class="card-body" style="padding: 0">
                                                         <div class="text-center">
                                                             <h5 class="card-title mt-2">{{$product->title}}</h5>
@@ -698,7 +710,10 @@
                                     @foreach($links as $link)
                                         @if($link->icon)
                                             <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">
-                                                <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="width:40px;">
+                                                <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="
+                                                    width:{{ $user->userSettings->round_links_width }}px;
+                                                    filter: drop-shadow({{ $user->userSettings->round_links_shadow_right }}px {{ $user->userSettings->round_links_shadow_bottom }}px {{ $user->userSettings->round_links_shadow_round }}px {{ $user->userSettings->round_links_shadow_color }})
+                                                ">
                                             </a>
                                         @endif
                                     @endforeach
@@ -721,7 +736,10 @@
                                 @foreach($links as $link)
                                     @if($link->icon)
                                         <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">
-                                            <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="width:40px;">
+                                            <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="
+                                                width:{{ $user->userSettings->round_links_width }}px;
+                                                filter: drop-shadow({{ $user->userSettings->round_links_shadow_right }}px {{ $user->userSettings->round_links_shadow_bottom }}px {{ $user->userSettings->round_links_shadow_round }}px {{ $user->userSettings->round_links_shadow_color }})
+                                            ">
                                         </a>
                                     @endif
                                 @endforeach
@@ -738,7 +756,7 @@
                     <div class="text-center" style="margin-top: 25px">
                         <div class="d-flex justify-content-center">
                             <a href="{{ route('welcome') }}" style="border-bottom: none">
-                                <img src="https://i.ibb.co/3dJD25v/new-logo.png" class="img-fluid" width="110">
+                                <img src="https://i.ibb.co/3dJD25v/new-logo.png" class="img-fluid" width="100">
                             </a>
                         </div>
                     </div>
@@ -747,7 +765,6 @@
         @endif
     </body>
 
-    {{--    Move   --}}
     @foreach($links as $link)
         <script type="text/javascript">
             $.ajaxSetup({
@@ -889,7 +906,6 @@
         </script>
     @endforeach
 
-    {{--    Stats   --}}
     @foreach($links as $link)
         <script type="text/javascript">
             $.ajaxSetup({
@@ -941,7 +957,33 @@
             }
         </script>
     @endforeach
-    {{--    Stats   --}}
+
+    @foreach($products as $product)
+        <script type="text/javascript">
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            function productStats{{$product->id}}() {
+                let guest = '{{$_SERVER['REMOTE_ADDR']}}';
+                let productId = '{{$product->id}}';
+                let userId = '{{$user->id}}';
+                $.ajax({
+                    url: userId+"/product-stats",
+                    type: 'POST',
+                    data: { user_id: userId, product_id: productId, guest_ip: guest, func: 'stat_product' },
+                    success: function(data){
+                        console.log('GOOD');
+                    },
+                    error: function(){
+                        console.log('ERROR');
+                    }
+                })
+            }
+        </script>
+    @endforeach
+
 </html>
 
 

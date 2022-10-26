@@ -61,7 +61,7 @@ class LinkController extends Controller
     {
         $link->addLink($userId, $request, $this->uploadService);
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Мультиссылка добавлена!');
     }
 
     /**

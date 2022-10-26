@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateProductRequest;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
+use App\Services\StatsService;
 use App\Services\UploadPhotoService;
 use Illuminate\Http\Request;
 
@@ -137,6 +138,15 @@ class ProductController extends Controller
         $products = Product::search($request->search)->where('user_id', $user->id)->orderBy('id', 'desc')->get();
 
         return view('product.search', compact('user', 'products'));
+    }
+
+    public function statsProducts(int $userId, Product $product)
+    {
+        $user = User::where('id', $userId)->firstOrFail();
+
+        $stats = StatsService::getProductStatistic($user, $product);
+
+        return view('product.stat-product', compact('user', 'stats'));
     }
 
     public function sortProduct(int $id)

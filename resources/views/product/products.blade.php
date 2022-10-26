@@ -168,7 +168,7 @@
                                     </div>
                                     <div class="d-flex justify-content-between" style="padding: 0; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;">
                                         <div class="col-4 border-end text-center" style="background-color: #f0eeef; box-shadow: 5px 0px 0px black; border-bottom-left-radius: 5px;">
-                                            <a href="#" style="text-decoration: none; color: black">
+                                            <a href="{{ route('statsProducts', ['id' => $user->id, 'product' => $product->id]) }}" style="text-decoration: none; color: black">
                                                 <button href="#" class="btn-sm" style="background-color: #f1f2f2; border: 0;">
                                                     Статистика
                                                 </button>

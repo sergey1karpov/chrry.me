@@ -35,8 +35,16 @@ Route::get('/{slug}/item-{product}', [ProductController::class, 'showProductDeta
 Route::get('cc/{utag}', [UserController::class, 'editNewUserForm'])->name('editNewUserForm');
 Route::patch('cc/{utag}/registered', [UserController::class, 'editNewUser'])->name('editNewUser');
 
+/**
+ * Маршрут для заказа
+ */
 Route::post('/{id}/order/{product}', [OrderController::class, 'sendOrder'])->name('sendOrder');
 
+/**
+ * Счетчики статистики
+ */
+Route::post('/{id}/link', [StatisticController::class, 'clickLinkStatistic'])->name('clickLinkStatistic');
+Route::post('/{id}/product-stats', [StatisticController::class, 'productStats'])->name('productStats');
 /**
  * Личный кабинет пользователя
  */
@@ -44,8 +52,8 @@ Route::middleware(['locale', 'userCheck', 'web'])->group(function () {
     /**
      * Маршруты для работы со статистикой
      */
-    Route::post('/{id}/link', [StatisticController::class, 'clickLinkStatistic'])->name('clickLinkStatistic');
     Route::get('/{id}/link/{link}', [StatisticController::class, 'showClickLinkStatistic'])->name('showClickLinkStatistic');
+    Route::get('/{id}/products/{product}/stats', [ProductController::class, 'statsProducts'])->name('statsProducts');
     /**
      * Маршруты отображения личного кабинета, изменения профиля, удаления файлов(фото, фон, фавикон)
      */

@@ -90,7 +90,7 @@
 			<div class="row">
 				<a href="{{ route('userHomePage',  ['slug' => Auth::user()->slug]) }}" style="text-decoration: none; border: 0; padding: 0">
 
-                    @if($user->userSettings->logotype)
+                    @if(isset($user->userSettings->logotype))
                         <div class="d-flex justify-content-center block1 box-part text-center @if($user->dayVsNight) bg-dark @endif" style="margin: 0; background-color: #f26868">
                             <img src="{{$user->userSettings->logotype}}" class="img-fluid" width="{{$user->userSettings->logotype_size}}" style="
                                 filter: drop-shadow({{$user->userSettings->logotype_shadow_right}}px {{$user->userSettings->logotype_shadow_bottom}}px {{$user->userSettings->logotype_shadow_round}}px {{$user->userSettings->logotype_shadow_color}});

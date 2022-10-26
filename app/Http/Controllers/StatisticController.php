@@ -35,4 +35,9 @@ class StatisticController extends Controller
 
         return view('user.link-stat', compact('user', 'link', 'day', 'month', 'year', 'all'));
     }
+
+    public function productStats()
+    {
+        StatsService::productViewStats();
+    }
 }
