@@ -226,7 +226,9 @@ class Link extends Model
      */
     public function dropLink(Link $link, UploadPhotoService $uploadService)
     {
-        $uploadService->dropImg($link->photo);
+        if(isset($link->photo)) {
+            $uploadService->dropImg($link->photo);
+        }
 
         $link->delete();
     }
