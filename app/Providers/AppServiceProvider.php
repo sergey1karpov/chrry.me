@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Services\UploadPhotoService;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use App\Models\User;

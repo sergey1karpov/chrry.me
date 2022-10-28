@@ -492,5 +492,9 @@
         font-family: AA_Duke; /* Имя шрифта */
         src: url({{asset('public/fonts/AA_Duke.ttf')}}); /* Путь к файлу со шрифтом */
     }
+    @font-face {
+        font-family: Inter; /* Имя шрифта */
+        src: url({{asset('public/fonts/Inter.ttf')}}); /* Путь к файлу со шрифтом */
+    }
 
 </style>
