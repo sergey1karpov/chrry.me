@@ -215,6 +215,52 @@
 
             <hr>
 
+            <div class="mb-3 text-center">
+                <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Включить поиск товаров в вашей витрине или нет</label>
+                <select id="show_search" class="form-select shadow" name="show_search" aria-label="Default select example" style="border: 0">
+                    <option value="{{false}}" @if($user->marketSettings->show_search == 0) selected @endif>Не отображать</option>
+                    <option value="{{true}}" @if($user->marketSettings->show_search == 1) selected @endif>Показать</option>
+                </select>
+            </div>
+
+            <div class="mb-3 text-center" id="search_position">
+                <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Где отображать панель поиска</label>
+                <select class="form-select shadow" name="search_position" aria-label="Default select example" style="border: 0">
+                    <option value="on_main" @if($user->marketSettings->search_position == 'on_main') selected @endif>На главной странице витрины</option>
+                    <option value="on_canvas" @if($user->marketSettings->search_position == 'on_canvas') selected @endif>В боковой шторке</option>
+                    <option value="main_and_canvas" @if($user->marketSettings->search_position == 'main_and_canvas') selected @endif>Везде где можно</option>
+                </select>
+            </div>
+
+            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">
+                Цвет для шторки
+            </label>
+            <div class="mb-3 text-center d-flex justify-content-center">
+                <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" value="{{$user->marketSettings->canvas_color}}" name="canvas_color" style="height: 35px; border: 0">
+            </div>
+            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">
+                Цвет для шрифта шторки
+            </label>
+            <div class="mb-3 text-center d-flex justify-content-center">
+                <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" value="{{$user->marketSettings->canvas_font_color}}" name="canvas_font_color" style="height: 35px; border: 0">
+            </div>
+            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">
+                Цвет для навигационных кнопок
+            </label>
+            <div class="mb-3 text-center d-flex justify-content-center">
+                <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" value="{{$user->marketSettings->btn_color}}" name="btn_color" style="height: 35px; border: 0">
+            </div>
+
+            <div class="mb-1 text-center mt-2" >
+                <div class="ms-2 form-check" style="padding: 0">
+                    <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Показать иконки соц сетей в меню или нет</label>
+                    <div class="form-check form-switch mb-3 d-flex justify-content-center">
+                        <input name="show_social" class="form-check-input @if($user->dayVsNight) bg-secondary @endif shadow" type="checkbox" value="{{true}}" id="design-link-e" style="border: 0" @if($user->marketSettings->show_social) checked @endif>
+                    </div>
+                    <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Установить размер иконок можно в <a href="{{ route('profileSettingsForm', ['id' => $user->id]) }}">настройках</a> аккаунта</label>
+                </div>
+            </div>
+
             <div class="d-grid gap-2 mt-2">
                 <button class="btn btn-secondary" type="submit">Изменить настройки</button>
             </div>
@@ -225,6 +271,28 @@
     </form>
 </div>
 </body>
+
+<script>
+    $( document ).ready(function() {
+        var type = $('#show_search').val();
+        if(type == 1) {
+            $('#search_position').show();
+        }
+        if(type == 0) {
+            $('#search_position').hide();
+        }
+
+        $('#show_search').change(function(){
+            $('#pp').html($(this).val());
+            if($(this).val() == 0) {
+                $('#search_position').hide();
+            }
+            if($(this).val() == 1) {
+                $('#search_position').show();
+            }
+        });
+    });
+</script>
 
 </html>
 

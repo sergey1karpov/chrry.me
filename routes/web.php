@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -28,6 +29,9 @@ require __DIR__.'/auth.php';
  */
 Route::get('/{slug}', [UserController::class, 'userHomePage'])->name('userHomePage');
 Route::get('/{slug}/item-{product}', [ProductController::class, 'showProductDetails'])->name('showProductDetails');
+Route::get('/{slug}/@{categorySlug}', [ProductController::class, 'showProductsInCategory'])->name('showProductsInCategory');
+Route::get('/{slug}/search', [ProductController::class, 'search'])->name('search');
+//Route::get('/{slug}/filter', [ProductController::class, 'filter'])->name('filter');
 
 /**
  * Маршруты для функционала с nfc
@@ -103,6 +107,14 @@ Route::middleware(['locale', 'userCheck', 'web'])->group(function () {
     Route::delete('/{id}/delete-product/{product}/delete', [ProductController::class, 'deleteProduct'])->name('deleteProduct');
     Route::post('{id}/product/sort', [ProductController::class, 'sortProduct'])->name('sortProduct');
     Route::get('/{id}/products/search', [ProductController::class, 'searchProducts'])->name('searchProducts');
+    /**
+     * Маршруты для работы с категориями
+     */
+    Route::get('/{id}/categories', [ProductCategoryController::class, 'allCategories'])->name('allCategories');
+    Route::post('/{id}/add-category', [ProductCategoryController::class, 'createCategory'])->name('createCategory');
+    Route::patch('/{id}/edit-category/{category}/edit', [ProductCategoryController::class, 'editCategory'])->name('editCategory');
+    Route::delete('/{id}/delete-category/{category}/delete', [ProductCategoryController::class, 'deleteCategory'])->name('deleteCategory');
+    Route::post('/{id}/categories/sort', [ProductCategoryController::class, 'sortCategory'])->name('sortCategory');
     /**
      * Маршруты для работы с заявками
      */

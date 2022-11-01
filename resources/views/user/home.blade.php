@@ -41,12 +41,18 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap" rel="stylesheet">
 
+        {{--OWL--}}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
         @include('fonts.fonts')
 
-{{--        shop--}}
+        {{--Shop--}}
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300&display=swap" rel="stylesheet">
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
         <style type="text/css">
         	@if($user->banner)
@@ -108,28 +114,92 @@
                 pointer-events: none;
             }
         </style>
-
     </head>
     <body class="antialiased">
 
         <!-- ---------------------- -->
         <!-- Стрелка обратно в меню -->
         <!-- ---------------------- -->
-    	@auth
-            @if(Auth::user()->id == $user->id)
-                <nav class="navbar navbar-expand-lg fixed-top">
-                    <div class="container-fluid">
-                        <a class="navbar-brand" href="{{ route('editProfileForm', ['id' => Auth::user()->id]) }}">
-                            <img src="https://i.ibb.co/DM6hKmk/bbbbbbbbbbb.png" class="img-fluid mb-4" style="width:20px">
+
+        <nav class="fixed-top" style="margin-top: 12px; margin-right: 12px; margin-left: 12px">
+            <div class="row d-d-flex justify-content-between">
+                <div class="col-2 d-flex justify-content-center" style="padding: 0">
+                    @auth
+                        @if(Auth::user()->id == $user->id)
+                            <div>
+                                <a class="btn  d-flex align-content-center" href="{{ route('editProfileForm', ['id' => Auth::user()->id]) }}">
+                                    <span class="material-symbols-outlined" style="color: {{$user->marketSettings->btn_color}}">admin_panel_settings</span>
+                                </a>
+                            </div>
+                        @endif
+                    @endauth
+                </div>
+                <div class="col-2 d-flex justify-content-center" style="padding: 0">
+                    @if($user->type == 'Market')
+                        <div>
+                            <button type="button" class="btn  d-flex align-content-center" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample" style="border: 0">
+                                <span class="material-symbols-outlined" style="color: {{$user->marketSettings->btn_color}}">linear_scale</span>
+                            </button>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </nav>
+        @if($user->type == 'Market')
+            <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+                <div class="offcanvas-header text-center" style="background-color: {{$user->marketSettings->canvas_color}}">
+                    <h5 class="offcanvas-title" id="offcanvasExampleLabel" style="font-family: 'Inter', sans-serif; font-size: 1.2rem; color: {{$user->marketSettings->canvas_font_color}}">Категории товаров</h5>
+                    <button type="button" class="btn d-flex align-content-center" data-bs-dismiss="offcanvas" aria-label="Close" style="border: 0">
+                        <span class="material-symbols-outlined" style="border: 0; color: {{$user->marketSettings->btn_color}}">close</span>
+                    </button>
+                </div>
+                <div class="offcanvas-body text-center" style="max-width: none; background-color: {{$user->marketSettings->canvas_color}}">
+                    @if($user->marketSettings->show_search)
+                        @if($user->marketSettings->search_position == 'on_canvas' || $user->marketSettings->search_position == 'main_and_canvas')
+                            <div class="d-flex justify-content-center mb-5">
+                                <div class="col-12 d-flex justify-content-center align-items-center" style="padding-right: 12px; padding-left: 12px">
+                                    <form class="" action="{{ route('search', ['slug' => $user->slug]) }}" style="width: 100%">
+                                        <input class="form-control me-2 shadow" type="search" name="search" placeholder="Поиск..." aria-label="Search" style="border: 0">
+                                    </form>
+                                </div>
+                            </div>
+                        @endif
+                    @endif
+                    @foreach($categories as $category)
+                        <a href="{{ route('showProductsInCategory', ['slug' => $user->slug, 'categorySlug' => $category->slug]) }}" style="color: {{$user->marketSettings->canvas_font_color}}">
+                            <h5 class="offcanvas-title mt-2" id="offcanvasExampleLabel" style="font-family: 'Inter', sans-serif; font-size: 1rem;">{{$category->name}}</h5>
                         </a>
-                    </div>
-                </nav>
-            @endif
-        @endauth
+                    @endforeach
+                </div>
+                <div class="offcanvas-body text-center fixed-bottom" style="max-width: none; background-color: {{$user->marketSettings->canvas_color}}">
+                    @if($user->type == 'Market')
+                        @if($user->marketSettings->show_social)
+                            @if(count($links) > 0)
+                                <nav class="navbar mt-2 mb-2">
+                                    <div class="container-fluid d-flex justify-content-center">
+                                        @foreach($links as $link)
+                                            @if($link->icon)
+                                                <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">
+                                                    <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="
+                                                        width:{{ $user->userSettings->round_links_width }}px;
+                                                        filter: drop-shadow({{ $user->userSettings->round_links_shadow_right }}px {{ $user->userSettings->round_links_shadow_bottom }}px {{ $user->userSettings->round_links_shadow_round }}px {{ $user->userSettings->round_links_shadow_color }})
+                                                    ">
+                                                </a>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                </nav>
+                            @endif
+                        @endif
+                    @endif
+                </div>
+            </div>
+        @endif
 
         <!-- ---------------------- -->
         <!-- Карточка юзера -->
         <!-- ---------------------- -->
+
         <div class="container-fluid justify-content-center text-center mb-2">
 
             @if ($message = Session::get('success'))
@@ -200,7 +270,7 @@
                         @if($user->show_social == true)
                             @if($user->social == 'TOP')
                                 @if(count($links) > 0)
-                                    <nav class="navbar mt-2">
+                                    <nav class="navbar mt-2 mb-2">
                                         <div class="container-fluid d-flex justify-content-center">
                                             @foreach($links as $link)
                                                 @if($link->icon)
@@ -250,7 +320,9 @@
         <!-- ---------------------- -->
         <!-- Контент -->
         <!-- ---------------------- -->
+
         @if($user->type == 'Links')
+
             <!-- ---------------------- -->
             <!-- Закрепленные ссылки -->
             <!-- ---------------------- -->
@@ -489,6 +561,20 @@
         <!-- Магазин -->
         <!-- ---------------------- -->
         @elseif($user->type == 'Market')
+
+            <!--Чек показать поиск или нет-->
+            @if($user->marketSettings->show_search)
+                @if($user->marketSettings->search_position == 'on_main' || $user->marketSettings->search_position == 'main_and_canvas')
+                    <div class="d-flex justify-content-center">
+                        <div class="col-12 d-flex justify-content-center align-items-center" style="padding-right: 12px; padding-left: 12px">
+                            <form class="" action="{{ route('search', ['slug' => $user->slug]) }}" style="width: 100%">
+                                <input class="form-control me-2 shadow" type="search" name="search" placeholder="Поиск..." aria-label="Search" style="border: 0">
+                            </form>
+                        </div>
+                    </div>
+                @endif
+            @endif
+
             <div class="mt-3">
                 @if(isset($user->marketSettings->cards_style))
                     @if($user->marketSettings->cards_style == 'one')

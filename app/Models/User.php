@@ -105,6 +105,11 @@ class User extends Authenticatable
         return $this->hasOne(ShopSettings::class);
     }
 
+    public function productCategories()
+    {
+        return $this->hasMany(ProductCategory::class)->orderBy('position', 'DESC');
+    }
+
     public function imgPath(int $id): string
     {
         return '../storage/app/public/' . $id;

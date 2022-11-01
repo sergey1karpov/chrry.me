@@ -22,5 +22,11 @@ class ShopSettings extends Model
         'title_font_size',
         'price_font_size',
         'card_round',
+        'show_search',
+        'search_position',
+        'canvas_color',
+        'canvas_font_color',
+        'btn_color',
+        'market_settings',
     ];
 }

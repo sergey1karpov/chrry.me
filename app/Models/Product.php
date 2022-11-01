@@ -33,6 +33,7 @@ class Product extends Model
         'link_to_shop',
         'link_to_shop_text',
         'link_to_order_text',
+        'product_categories_id'
     ];
 
     protected $guarded = [];
@@ -102,6 +103,7 @@ class Product extends Model
         $product->link_to_shop = $request->link_to_shop;
         $product->link_to_shop_text = $request->link_to_shop_text;
         $product->link_to_order_text = $request->link_to_order_text;
+        $product->product_categories_id = $request->product_categories_id;
 
         $user->products()->save($product);
     }

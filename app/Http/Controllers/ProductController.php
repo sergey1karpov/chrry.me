@@ -4,14 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\NotLinkProductException;
 use App\Http\Requests\OrderProductRequest;
+use App\Http\Requests\ProductFilterRequest;
 use App\Http\Requests\ProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\ProductCategory;
 use App\Models\User;
 use App\Services\StatsService;
 use App\Services\UploadPhotoService;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class ProductController extends Controller
 {
@@ -26,7 +29,9 @@ class ProductController extends Controller
     {
         $user = User::findOrFail($userId);
 
-        return view('product.add-product', compact('user'));
+        $categories = $user->productCategories;
+
+        return view('product.add-product', compact('user', 'categories'));
     }
 
     /**
@@ -147,6 +152,76 @@ class ProductController extends Controller
         $stats = StatsService::getProductStatistic($user, $product);
 
         return view('product.stat-product', compact('user', 'stats'));
+    }
+
+    public function showProductsInCategory(string $slug, string $categorySlug)
+    {
+        $user = User::where('slug', $slug)->firstOrFail();
+
+        $categories = $user->productCategories;
+
+        $prod = ProductCategory::where('slug', $categorySlug)->firstOrFail();
+
+        $products = $prod->products;
+
+        return view('categories.search-result', compact('user', 'products', 'categorySlug', 'categories'));
+    }
+
+    public function search(string $slug, ProductFilterRequest $request)
+    {
+        $user = User::where('slug', $slug)->firstOrFail();
+
+        $categories = $user->productCategories;
+
+        $links = \DB::table('links')->where('user_id', $user->id)->where('pinned', false)->orderBy('position')->get();
+
+        if($request->search != null) {
+            $products = Product::search($request->search)
+                ->where('user_id', $user->id)
+                ->orderBy('id', 'desc')
+                ->get();
+
+            $search = $request->search;
+
+            return view('categories.search-result', compact('user', 'products', 'categories', 'search', 'links'));
+        } else {
+            $category = ProductCategory::where('name', $request->query('category'))->first();
+
+            if(!$category) {
+                return redirect()->back();
+            }
+
+            $search = $request->query('searchValue');
+
+            $productsCollection = Product::search($request->searchValue)
+                ->where('user_id', $user->id)
+                ->get();
+
+            $productsQuery = $productsCollection->toQuery();
+
+            if($request->filled('category')) {
+                $productsQuery->where('product_categories_id', '=', $category->id);
+            }
+            if($request->filled('min')) {
+                $productsQuery->where('price', '>=', $request->query('min'));
+            }
+            if($request->filled('max')) {
+                $productsQuery->where('price', '<=', $request->query('max'));
+            }
+            if($request->filled('date_pub')) {
+                if($request->query('date_pub') == 'Новые') {
+                    $productsQuery->orderBy('id', 'desc');
+                }
+                if($request->query('date_pub') == 'Старые') {
+                    $productsQuery->orderBy('id');
+                }
+            }
+
+            $products = $productsQuery->get();
+
+            return view('categories.search-result', compact('user', 'products', 'categories', 'search', 'links'));
+        }
+
     }
 
     public function sortProduct(int $id)

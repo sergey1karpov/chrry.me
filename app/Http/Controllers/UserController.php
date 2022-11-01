@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Link;
 use App\Models\Product;
+use App\Models\ProductCategory;
 use App\Models\ShopSettings;
 use App\Models\User;
 use App\Models\Event;
@@ -27,6 +28,8 @@ class UserController extends Controller
         $links = \DB::table('links')->where('user_id', $user->id)->where('pinned', false)->orderBy('position')->get();
         $pinnedLinks = \DB::table('links')->where('user_id', $user->id)->where('pinned', true)->orderBy('position')->get();
 
+        $categories = $user->productCategories;
+
         $products = Product::where('user_id', $user->id)->orderBy('position')->get();
 
         $linksWithoutBar = \DB::table('links')->where('type', 'LINK')->where('user_id', $user->id)->where('icon', null)->orderBy('position')->get();
@@ -37,7 +40,7 @@ class UserController extends Controller
 
         Carbon::setLocale('ru');
 
-        return view('user.home', compact('user', 'links', 'pinnedLinks', 'events', 'linksWithoutBar', 'products'));
+        return view('user.home', compact('user', 'links', 'pinnedLinks', 'events', 'linksWithoutBar', 'products', 'categories'));
     }
 
     public function editProfileForm(int $id)
@@ -150,6 +153,12 @@ class UserController extends Controller
             'title_font_size' => $request->title_font_size,
             'price_font_size' => $request->price_font_size,
             'card_round' => $request->card_round,
+            'show_search' => $request->show_search,
+            'search_position' => $request->search_position,
+            'canvas_color' => $request->canvas_color,
+            'canvas_font_color' => $request->canvas_font_color,
+            'btn_color' => $request->btn_color,
+            'show_social' => $request->show_social,
         ]);
 
         return redirect()->back()->with('success', 'Параметры витрины успешно изменены!');

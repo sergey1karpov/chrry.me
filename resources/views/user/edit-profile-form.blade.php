@@ -404,7 +404,7 @@
 
                 <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Размер логотипов</label>
                 <div class="input-group mb-3">
-                    <input type="range" class="form-range" min="40" max="70" step="1" id="customRange3" name="round_links_width" value="{{$user->userSettings->round_links_width}}">
+                    <input type="range" class="form-range" min="25" max="70" step="1" id="customRange3" name="round_links_width" value="{{$user->userSettings->round_links_width}}">
                 </div>
 
                 <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Тень вправо</label>

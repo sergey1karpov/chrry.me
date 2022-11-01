@@ -271,6 +271,26 @@
                                                 </div>
                                             </a>
                                         </div>
+                                        <hr style="margin: 0">
+                                        <div class="col-12 text-center">
+                                            <a href="{{ route('allCategories', ['id' => $user->id]) }}">
+                                                <div class="row d-flex justify-content-center">
+                                                    <div class="col-4" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="padding-left: 0">
+                                                        <div class="m-5" style="background-image: url(https://i.ibb.co/RCxVWyr/category.png); width: 60px;height: 60px;margin-right: 0;background-position: center center;-wekit-background-size: cover;background-size: cover;background-repeat: no-repeat;"></div>
+                                                    </div>
+                                                    <div class="col-8 d-flex align-items-center" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="padding-left: 0">
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <h4 class="block1-text mt-4 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">Категории</h4>
+                                                            </div>
+                                                            <div class="col-12">
+                                                                <h4 class="block1-text mb-3 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">Воспользуйтесь данным функционалом если хотите подключить категории для своих товаров</h4>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
