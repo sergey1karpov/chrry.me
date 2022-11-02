@@ -159,7 +159,6 @@
         <div class="mb-3">
             <label style="font-family: 'Rubik', sans-serif; font-size: 12px">Выберите категорию товара, если она есть</label>
             <select class="form-select shadow" aria-label="Default select example" style="border: 0" name="product_categories_id">
-                <option selected>Выберите категорию</option>
                 @foreach($categories as $c)
                     <option value="{{$c->id}}">{{$c->name}}</option>
                 @endforeach

@@ -25,6 +25,7 @@ class ProductRequest extends FormRequest
     {
         return [
             'title' => 'required|min:3|max:100',
+            'product_categories_id' => 'required',
             'description' => 'required|min:3|max:255',
             'main_photo' => 'required|mimes:jpeg,png,jpg,gif|max:2500',
             'additional_photos' => 'nullable|array|max:5',
