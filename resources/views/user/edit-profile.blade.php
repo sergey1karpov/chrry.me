@@ -182,7 +182,12 @@
                             <div class="col-8 d-flex align-items-center" data-bs-toggle="collapse" href="#collapseExampleShop" role="button" aria-expanded="false" aria-controls="collapseExampleShop">
                                 <div class="row">
                                     <div class="col-12">
-                                        <h4 class="block1-text mt-4 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">Магазин</h4>
+                                        <h4 class="block1-text mt-4 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">
+                                            Магазин
+                                            @if(count($user->orders->where('processed', 0)) != 0)
+                                                <span class="badge bg-secondary" style="border: 0; margin-left: 1px">{{count($user->orders->where('processed', 0))}}</span>
+                                            @endif
+                                        </h4>
                                     </div>
                                     <div class="col-12">
                                         <h4 class="block1-text mb-3 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">Добавление\изменение товара, управление товарами, прием заказов</h4>
@@ -241,7 +246,12 @@
                                                     <div class="col-8 d-flex align-items-center" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="padding-left: 0">
                                                         <div class="row">
                                                             <div class="col-12">
-                                                                <h4 class="block1-text mt-4 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">Заказы</h4>
+                                                                <h4 class="block1-text mt-4 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">
+                                                                    Заказы
+                                                                    @if(count($user->orders->where('processed', 0)) != 0)
+                                                                        <span class="badge bg-secondary" style="border: 0; margin-left: 1px">{{count($user->orders->where('processed', 0))}}</span>
+                                                                    @endif
+                                                                </h4>
                                                             </div>
                                                             <div class="col-12">
                                                                 <h4 class="block1-text mb-3 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">Управляйте своими заказами</h4>
