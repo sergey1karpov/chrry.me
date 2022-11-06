@@ -110,6 +110,11 @@ class User extends Authenticatable
         return $this->hasMany(ProductCategory::class)->orderBy('position', 'DESC');
     }
 
+    public function userLinksInBar(User $user)
+    {
+        return Link::where('user_id', $user->id)->where('pinned', false)->orderBy('position')->get();
+    }
+
     public function imgPath(int $id): string
     {
         return '../storage/app/public/' . $id;
@@ -219,34 +224,6 @@ class User extends Authenticatable
                 aspectRatio: true
             ),
         ]);
-
-//        if(!$isLogotype) {
-//            UserSettings::where('user_id', $user->id)->create([
-//                'user_id' => $user->id,
-//                'logotype_size' => 250,
-//                'logotype_shadow_right' => 0,
-//                'logotype_shadow_bottom' => 0,
-//                'logotype_shadow_round' => 0,
-//                'logotype_shadow_color' => '#000000',
-//                'logotype' => $uploadService->uploader(
-//                    ph: $logotype,
-//                    path: $this->imgPath($user->id),
-//                    size: 500,
-//                    aspectRatio: true
-//                ),
-//            ]);
-//        } else {
-//            UserSettings::where('user_id', $user->id)->update([
-//                'logotype' => $uploadService->uploader(
-//                    ph: $logotype,
-//                    path: $this->imgPath($user->id),
-//                    size: 500,
-//                    drop: true,
-//                    dropImagePath: $isLogotype->logotype,
-//                    aspectRatio: true
-//                ),
-//            ]);
-//        }
     }
 
     public function createDefaultMarketSettings(int $userId)
@@ -266,6 +243,15 @@ class User extends Authenticatable
                 'price_font_size' => 1,
                 'card_round' => 10,
                 'avatar_vs_logotype' => 'avatar',
+                'canvas_color' => '#FFFAFA',
+                'canvas_font_color' => '#000000',
+                'show_search' => true,
+            ]);
+
+            ProductCategory::create([
+                'name' => 'Все товары',
+                'slug' => 'all',
+                'user_id' => $userId,
             ]);
         }
     }

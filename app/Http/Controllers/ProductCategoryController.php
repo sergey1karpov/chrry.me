@@ -37,6 +37,10 @@ class ProductCategoryController extends Controller
 
     public function deleteCategory(int $userId, ProductCategory $category)
     {
+        if($category->slug != 'all') {
+            return redirect()->back()->with('success', 'У нас так не принято');
+        }
+
         $category->delete();
 
         return redirect()->back()->with('success', 'Категория удалена');

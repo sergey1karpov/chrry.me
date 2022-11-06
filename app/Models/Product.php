@@ -228,8 +228,10 @@ class Product extends Model
     {
         $photoArray = unserialize($product->additional_photos);
 
-        foreach($photoArray as $ph) {
-            $service->dropImg($ph);
+        if($product->additional_photos) {
+            foreach($photoArray as $ph) {
+                $service->dropImg($ph);
+            }
         }
 
         $service->dropImg($product->main_photo);

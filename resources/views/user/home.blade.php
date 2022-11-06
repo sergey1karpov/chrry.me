@@ -113,6 +113,9 @@
                 background: linear-gradient(to right, rgba({{$user->background_color_rgb}}, .2) 0%, rgba({{$user->background_color_rgb}}, 1) 100%);
                 pointer-events: none;
             }
+            .btn-check:focus+.btn, .btn:focus {
+                box-shadow: none;
+            }
         </style>
     </head>
     <body class="antialiased">
@@ -128,7 +131,7 @@
                         @if(Auth::user()->id == $user->id)
                             <div>
                                 <a class="btn  d-flex align-content-center" href="{{ route('editProfileForm', ['id' => Auth::user()->id]) }}">
-                                    <span class="material-symbols-outlined" style="color: {{$user->marketSettings->btn_color}}">admin_panel_settings</span>
+                                    <span class="material-symbols-outlined" style="border: 0; color: {{$user->marketSettings->btn_color}}">admin_panel_settings</span>
                                 </a>
                             </div>
                         @endif
@@ -138,7 +141,7 @@
                     @if($user->type == 'Market')
                         <div>
                             <button type="button" class="btn  d-flex align-content-center" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample" style="border: 0">
-                                <span class="material-symbols-outlined" style="color: {{$user->marketSettings->btn_color}}">linear_scale</span>
+                                <span class="material-symbols-outlined" style="border: 0; color: {{$user->marketSettings->btn_color}}">linear_scale</span>
                             </button>
                         </div>
                     @endif
@@ -158,7 +161,7 @@
                         @if($user->marketSettings->search_position == 'on_canvas' || $user->marketSettings->search_position == 'main_and_canvas')
                             <div class="d-flex justify-content-center mb-5">
                                 <div class="col-12 d-flex justify-content-center align-items-center" style="padding-right: 12px; padding-left: 12px">
-                                    <form class="" action="{{ route('search', ['slug' => $user->slug]) }}" style="width: 100%">
+                                    <form class="" action="{{ route('fullTextSearch', ['slug' => $user->slug]) }}" style="width: 100%">
                                         <input class="form-control me-2 shadow" type="search" name="search" placeholder="Поиск..." aria-label="Search" style="border: 0">
                                     </form>
                                 </div>
@@ -272,7 +275,7 @@
                                 @if(count($links) > 0)
                                     <nav class="navbar mt-2 mb-2">
                                         <div class="container-fluid d-flex justify-content-center">
-                                            @foreach($links as $link)
+                                            @foreach($user->userLinksInBar($user) as $link)
                                                 @if($link->icon)
                                                     <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">
                                                         <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="
@@ -567,7 +570,7 @@
                 @if($user->marketSettings->search_position == 'on_main' || $user->marketSettings->search_position == 'main_and_canvas')
                     <div class="d-flex justify-content-center">
                         <div class="col-12 d-flex justify-content-center align-items-center" style="padding-right: 12px; padding-left: 12px">
-                            <form class="" action="{{ route('search', ['slug' => $user->slug]) }}" style="width: 100%">
+                            <form class="" action="{{ route('fullTextSearch', ['slug' => $user->slug]) }}" style="width: 100%">
                                 <input class="form-control me-2 shadow" type="search" name="search" placeholder="Поиск..." aria-label="Search" style="border: 0">
                             </form>
                         </div>
@@ -793,7 +796,7 @@
                         @if(count($links) > 0)
                             <nav class="navbar mt-4">
                                 <div class="container-fluid d-flex justify-content-center">
-                                    @foreach($links as $link)
+                                    @foreach($user->userLinksInBar($user) as $link)
                                         @if($link->icon)
                                             <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">
                                                 <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="

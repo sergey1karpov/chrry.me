@@ -113,13 +113,16 @@
             border: 0;
             box-shadow: 0px 1px 10px 2px rgba(0, 0, 0, 0.2);
         }
-     .material-symbols-outlined {
-         font-variation-settings:
-             'FILL' 0,
-             'wght' 400,
-             'GRAD' 0,
-             'opsz' 48
-     }
+         .material-symbols-outlined {
+             font-variation-settings:
+                 'FILL' 0,
+                 'wght' 400,
+                 'GRAD' 0,
+                 'opsz' 48
+         }
+        .btn-check:focus+.btn, .btn:focus {
+            box-shadow: none;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -132,23 +135,41 @@
                 <div class="accordion-item" style="border-radius: 25px;">
                     <h2 class="accordion-header rounded" id="flush-headingOne" style="border-radius: 25px;">
                         <button class="p-2 accordion-button collapsed shadow rounded" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne" style="border: 0; border-radius: 25px;">
-                            Фильтровать запрос "{{$search}}"
+                            @if(isset($productCategory->name))
+                                Фильтровать "{{$productCategory->name ?? null}}"
+                            @endif
+                            @if(isset($search))
+                                Фильтровать запрос "{{$search ?? null}}"
+                            @endif
+
                         </button>
                     </h2>
                     <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
-                            <form action="{{ route('search', ['slug' => $user->slug]) }}">
+
+                            @if(isset($categorySlug))
+                                <form action="{{ route('categoryFilter', ['slug' => $user->slug]) }}">
+                            @elseif(!isset($categorySlug))
+                                <form action="{{ route('fullTextFilter', ['slug' => $user->slug]) }}">
+                            @endif
+
                                 <input type="hidden" name="searchValue" value="{{$search ?? null}}">
+                                <input type="hidden" name="categorySlug" value="{{$categorySlug ?? null}}">
 
                                 <div class="row" style="margin: 0">
-                                    <div class="col-12 mb-2" style="padding: 0">
-                                        <select class="form-select shadow" aria-label="Default select example" style="border: 0" name="category">
-                                            <option checked>{{request()->category ?? 'Выберите категорию'}}</option>
-                                            @foreach($categories as $k => $c)
-                                                <option style="background-color: antiquewhite">{{$c->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                                    @if(!isset($categorySlug))
+                                        <div class="col-12 mb-2" style="padding: 0">
+                                            <select class="form-select shadow" aria-label="Default select example" style="border: 0" name="category">
+                                                @if(request()->category)
+                                                    <option checked>{{request()->category}}</option>
+                                                @endif
+                                                @if(request()->category != 'Все товары') <option style="background-color: antiquewhite">Все товары</option> @endif
+                                                @foreach($user->productCategories as $k => $c)
+                                                    <option style="background-color: antiquewhite">{{$c->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    @endif
                                     <div class="col-12" style="padding: 0">
                                         <div class="mb-2 d-flex">
                                             <input type="text" name="min" class="form-control shadow" placeholder="от" style="border: 0; margin-right: 4px" value="{{request()->min}}">
@@ -198,14 +219,14 @@
                 @if($user->marketSettings->search_position == 'on_canvas' || $user->marketSettings->search_position == 'main_and_canvas')
                     <div class="d-flex justify-content-center mb-5">
                         <div class="col-12 d-flex justify-content-center align-items-center" style="padding-right: 12px; padding-left: 12px">
-                            <form class="" action="{{ route('search', ['slug' => $user->slug]) }}" style="width: 100%">
+                            <form class="" action="{{ route('fullTextSearch', ['slug' => $user->slug]) }}" style="width: 100%">
                                 <input class="form-control me-2 shadow" type="search" name="search" placeholder="Поиск..." aria-label="Search" style="border: 0">
                             </form>
                         </div>
                     </div>
                 @endif
             @endif
-            @foreach($categories as $category)
+            @foreach($user->productCategories as $category)
                 <a href="{{ route('showProductsInCategory', ['slug' => $user->slug, 'categorySlug' => $category->slug]) }}" style="color: {{$user->marketSettings->canvas_font_color}}">
                     <h5 class="offcanvas-title mt-2" id="offcanvasExampleLabel" style="font-family: 'Inter', sans-serif; font-size: 1rem;">{{$category->name}}</h5>
                 </a>
@@ -218,10 +239,10 @@
             <div class="mt-3">
                 @if($user->type == 'Market')
                     @if($user->marketSettings->show_social)
-                        @if(count($links) > 0)
+                        @if(count($user->userLinksInBar($user)) > 0)
                             <nav class="navbar mt-2 mb-2">
                                 <div class="container-fluid d-flex justify-content-center">
-                                    @foreach($links as $link)
+                                    @foreach($user->userLinksInBar($user) as $link)
                                         @if($link->icon)
                                             <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">
                                                 <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="
@@ -245,7 +266,11 @@
     <div style="margin-top: 60px">
         @if($products->count() == 0)
             <div class="text-center">
-                <h1 style="font-family: 'Roboto Flex', sans-serif; font-size: 1.2rem">По вашему запросу ничего не найдено. Измените параметры фильтров поиска</h1>
+                <div class="alert alert-success d-flex align-items-center" role="alert">
+                    <div>
+                        <h1 style="font-family: 'Roboto Flex', sans-serif; font-size: 1.2rem">По вашему запросу ничего не найдено. Измените параметры фильтров поиска</h1>
+                    </div>
+                </div>
             </div>
         @endif
 
@@ -462,10 +487,10 @@
 @if($user->type == 'Market')
     @if($user->show_social == true)
         @if($user->social == 'DOWN')
-            @if(count($links) > 0)
+            @if(count($user->userLinksInBar($user)) > 0)
                 <nav class="navbar mt-4">
                     <div class="container-fluid d-flex justify-content-center">
-                        @foreach($links as $link)
+                        @foreach($user->userLinksInBar($user) as $link)
                             @if($link->icon)
                                 <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">
                                     <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="

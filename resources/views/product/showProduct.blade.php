@@ -101,8 +101,8 @@
             </div>
         </nav>
 
-        <div class="mt-4 mb-4 rounded text-center">
-            <p class="card-text" style="font-size: 15px">Заполните форму для заказа товара\услуги</p>
+        <div class="mt-5 mb-4 rounded text-center">
+            <p class="card-text" style="font-family: 'Inter', sans-serif; font-size: 1rem;">Заполните форму для заказа товара\услуги</p>
         </div>
 
         <div class="me-3 ms-3 rounded">
@@ -113,37 +113,71 @@
                     </div>
                     <div class="col-8">
                         <div class="card-body m-2" style="padding: 0">
-                            <h5 class="card-title">{{$product->title}}</h5>
+                            <h5 style="font-family: 'Inter', sans-serif; font-size: 0.9rem;" class="card-title">{{$product->title}}</h5>
+                            <h5 style="font-family: 'Inter', sans-serif; font-size: 0.8rem;" class="card-title">{{$product->price}} руб.</h5>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="me-3 ms-3 mt-4 text-center">
+        <div class="me-3 ms-3 mt-4 mb-5 text-center">
             <form action="{{route('sendOrder', ['id' => $user->id, 'product' => $product->id])}}" method="POST" id="order-form"> @CSRF @method('POST')
                 <div class="mb-3">
                     <input type="text" name="client_name" class="form-control shadow" id="exampleInputEmail1" aria-describedby="emailHelp" style="border: 0">
-                    <div id="emailHelp" class="form-text">Ваше имя\фамилия</div>
+                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Укажите ваше Имя\Фамилию\Отчество если есть</span>
                 </div>
                 <div class="mb-3">
                     <input type="email" name="client_email" class="form-control shadow" id="exampleInputEmail1" aria-describedby="emailHelp" style="border: 0">
-                    <div id="emailHelp" class="form-text">Ваш почтовый адрес</div>
+                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Укажите свой Email</span>
                 </div>
                 <div class="mb-3">
                     <input type="text" name="client_phone" class="form-control shadow" id="exampleInputEmail1" aria-describedby="emailHelp" style="border: 0">
-                    <div id="emailHelp" class="form-text">Ваш номер телефона</div>
+                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Номер телефона для связи</span>
                 </div>
-                <div class="mb-3">
-                    <textarea name="client_text" class="form-control shadow" rows="3" style="border: 0"></textarea>
-                    <div id="emailHelp" class="form-text">Примечание к заказу</div>
+
+                <p class="card-text" style="font-family: 'Inter', sans-serif; font-size: 0.8rem;">Если не хотите указывать свой номер телефона, укажите ваши контакты в одном из месседжеров</p>
+
+                <div class="input-group">
+                    <div class="input-group-prepend shadow" style="border: 0; border-top-left-radius: 5px; border-bottom-left-radius: 5px;">
+                        <span class="input-group-text" id="basic-addon1" style="border: none; border-top-left-radius: 5px; border-bottom-left-radius: 5px;">
+                            <img src="https://i.ibb.co/7gyNXdV/telegram-plane.png" width="30">
+                        </span>
+                    </div>
+                    <input type="text" name="client_telegram" class="form-control shadow" id="exampleInputEmail1" aria-describedby="emailHelp" style="border: 0">
+                </div>
+                <span class="mb-3" style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Telegram</span>
+
+                <div class="input-group">
+                    <div class="input-group-prepend shadow" style="border: 0; border-top-left-radius: 5px; border-bottom-left-radius: 5px;">
+                        <span class="input-group-text" id="basic-addon1" style="border: none; border-top-left-radius: 5px; border-bottom-left-radius: 5px;">
+                            <img src="https://i.ibb.co/wd9PJCy/viber.png" width="30">
+                        </span>
+                    </div>
+                    <input type="text" name="client_viber" class="form-control shadow" id="exampleInputEmail1" aria-describedby="emailHelp" style="border: 0">
+                </div>
+                <span class="mb-3" style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Viber</span>
+
+                <div class="input-group">
+                    <div class="input-group-prepend shadow" style="border: 0; border-top-left-radius: 5px; border-bottom-left-radius: 5px;">
+                        <span class="input-group-text" id="basic-addon1" style="border: none; border-top-left-radius: 5px; border-bottom-left-radius: 5px;">
+                            <img src="https://i.ibb.co/8NQqVvH/whatsapp.png" width="30">
+                        </span>
+                    </div>
+                    <input type="text" name="client_whatsapp" class="form-control shadow" id="exampleInputEmail1" aria-describedby="emailHelp" style="border: 0">
+                </div>
+                <span class="mb-3" style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">WhatsApp</span>
+
+                <div class="mb-3 mt-2">
+                    <textarea name="client_text" class="form-control shadow" rows="3" style="border: 0">Здравствуйте!</textarea>
+                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Напишите какую нибудь заметку для продавца</span>
                 </div>
                 <div class="d-grid gap-2">
-                    <button class="g-recaptcha btn btn-primary"
+                    <button class="g-recaptcha btn btn-info shadow"
                             data-sitekey="6LdjE5siAAAAAFns6LrPthCLLu4niq3WG_coMFJA"
                             data-callback='onSubmit'
                             data-action='submit'
-                    type="submit">Submit</button>
+                    type="submit" style="border: 0">Отправить</button>
                 </div>
             </form>
         </div>

@@ -30,8 +30,10 @@ require __DIR__.'/auth.php';
 Route::get('/{slug}', [UserController::class, 'userHomePage'])->name('userHomePage');
 Route::get('/{slug}/item-{product}', [ProductController::class, 'showProductDetails'])->name('showProductDetails');
 Route::get('/{slug}/@{categorySlug}', [ProductController::class, 'showProductsInCategory'])->name('showProductsInCategory');
-Route::get('/{slug}/search', [ProductController::class, 'search'])->name('search');
-//Route::get('/{slug}/filter', [ProductController::class, 'filter'])->name('filter');
+
+Route::get('/{slug}/search', [ProductController::class, 'fullTextSearch'])->name('fullTextSearch');
+Route::get('/{slug}/search-filter', [ProductController::class, 'fullTextFilter'])->name('fullTextFilter');
+Route::get('/{slug}/category-filter', [ProductController::class, 'categoryFilter'])->name('categoryFilter');
 
 /**
  * Маршруты для функционала с nfc
@@ -119,7 +121,12 @@ Route::middleware(['locale', 'userCheck', 'web'])->group(function () {
      * Маршруты для работы с заявками
      */
     Route::get('/{id}/orders', [OrderController::class, 'orders'])->name('orders');
-    Route::post('/{id}/orders/{order}/order-processing', [OrderController::class, 'orderProcessing'])->name('orderProcessing');
+    Route::post('/{id}/orders/{order}/order', [OrderController::class, 'order'])->name('order');
+    Route::get('/{id}/orders-in-work', [OrderController::class, 'ordersInWork'])->name('ordersInWork');
+    Route::get('/{id}/orders-processed', [OrderController::class, 'ordersProcessed'])->name('ordersProcessed');
+    Route::post('/{id}/orders/{order}/order-processed', [OrderController::class, 'orderProcessed'])->name('orderProcessed');
+    Route::get('/{id}/orders-search', [OrderController::class, 'ordersSearch'])->name('ordersSearch');
+
 });
 
 /**

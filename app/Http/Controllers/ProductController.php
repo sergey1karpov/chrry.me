@@ -11,9 +11,11 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\User;
+use App\Services\ProductFilters;
 use App\Services\StatsService;
 use App\Services\UploadPhotoService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class ProductController extends Controller
@@ -154,74 +156,95 @@ class ProductController extends Controller
         return view('product.stat-product', compact('user', 'stats'));
     }
 
+    /**
+     * @param string $slug слаг юзера
+     * @param string $categorySlug слаг категории передаем в скрытое поле формы и потом по нему ищем в текущей категории
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     *
+     * Продукты категории
+     */
     public function showProductsInCategory(string $slug, string $categorySlug)
     {
-        $user = User::where('slug', $slug)->firstOrFail();
+        $user = User::where('slug', $slug)->firstOrFail(); //Текущий юзер
 
-        $categories = $user->productCategories;
+        $productCategory = ProductCategory::where('slug', $categorySlug)->firstOrFail(); //Текущая категория
 
-        $prod = ProductCategory::where('slug', $categorySlug)->firstOrFail();
+        $products = $productCategory->products;
 
-        $products = $prod->products;
+        $links = DB::table('links')->where('user_id', $user->id)->where('pinned', false)->orderBy('position')->get(); //Ссылки
 
-        return view('categories.search-result', compact('user', 'products', 'categorySlug', 'categories'));
+        return view('categories.search-result', compact('user', 'categorySlug', 'links', 'productCategory', 'products'));
     }
 
-    public function search(string $slug, ProductFilterRequest $request)
+    /**
+     * @param string $slug
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     *
+     * Полнотекстовый поиск, во вьюху передаём параметр $search в котором лежит то, что мы искали и суем это
+     * в скритое поле формы для фильтрации по нему
+     */
+    public function fullTextSearch(string $slug, Request $request)
     {
         $user = User::where('slug', $slug)->firstOrFail();
 
-        $categories = $user->productCategories;
+        $products = Product::search($request->search)
+            ->where('user_id', $user->id)
+            ->orderBy('id', 'desc')
+            ->get();
 
-        $links = \DB::table('links')->where('user_id', $user->id)->where('pinned', false)->orderBy('position')->get();
+        $search = $request->search;
 
-        if($request->search != null) {
-            $products = Product::search($request->search)
-                ->where('user_id', $user->id)
-                ->orderBy('id', 'desc')
-                ->get();
+        return view('categories.search-result', compact('user', 'products', 'search'));
+    }
 
-            $search = $request->search;
+    /**
+     * @param string $slug
+     * @param ProductFilterRequest $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     *
+     * Фильтрация результата полнотекстового поиска, в $request->query('searchValue') у нас то, что мы искали в полнотексте
+     * и то что мы записали в скрытое поле в методе fullTextSearch()
+     */
+    public function fullTextFilter(string $slug, ProductFilterRequest $request)
+    {
+        $user = User::where('slug', $slug)->firstOrFail();
 
-            return view('categories.search-result', compact('user', 'products', 'categories', 'search', 'links'));
-        } else {
-            $category = ProductCategory::where('name', $request->query('category'))->first();
+        $category = ProductCategory::where('name', $request->query('category'))->first();
 
-            if(!$category) {
-                return redirect()->back();
-            }
+        $search = $request->query('searchValue');
 
-            $search = $request->query('searchValue');
+        $productsCollection = Product::search($request->searchValue)
+            ->where('user_id', $user->id)
+            ->get();
 
-            $productsCollection = Product::search($request->searchValue)
-                ->where('user_id', $user->id)
-                ->get();
+        $products = ProductFilters::filter($category, $productsCollection, $request);
 
-            $productsQuery = $productsCollection->toQuery();
+        return view('categories.search-result', compact('user', 'products', 'search'));
+    }
 
-            if($request->filled('category')) {
-                $productsQuery->where('product_categories_id', '=', $category->id);
-            }
-            if($request->filled('min')) {
-                $productsQuery->where('price', '>=', $request->query('min'));
-            }
-            if($request->filled('max')) {
-                $productsQuery->where('price', '<=', $request->query('max'));
-            }
-            if($request->filled('date_pub')) {
-                if($request->query('date_pub') == 'Новые') {
-                    $productsQuery->orderBy('id', 'desc');
-                }
-                if($request->query('date_pub') == 'Старые') {
-                    $productsQuery->orderBy('id');
-                }
-            }
+    /**
+     * @param string $slug
+     * @param ProductFilterRequest $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     *
+     * Фильтрация отдельной категории. После перехода по категориям мы получаем их slug, и записываем в скрытое поле
+     * и проверяем если он есть то фильтруем категорию
+     */
+    public function categoryFilter(string $slug, ProductFilterRequest $request)
+    {
+        $user = User::where('slug', $slug)->firstOrFail();
 
-            $products = $productsQuery->get();
+        $categorySlug = $request->categorySlug;
 
-            return view('categories.search-result', compact('user', 'products', 'categories', 'search', 'links'));
-        }
+        $productCategory = ProductCategory::where('slug', $request->categorySlug)->first(); //Текущая категория
 
+        $productsCollection = Product::where('user_id', $user->id)
+            ->where('product_categories_id', $productCategory->id)->get();
+
+        $products = ProductFilters::filter($productCategory, $productsCollection, $request);
+
+        return view('categories.search-result', compact('user', 'products', 'productCategory', 'categorySlug'));
     }
 
     public function sortProduct(int $id)

@@ -184,13 +184,22 @@
                                     <div class="col-12">
                                         <h4 class="block1-text mt-4 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">
                                             Магазин
-                                            @if(count($user->orders->where('processed', 0)) != 0)
-                                                <span class="badge bg-secondary" style="border: 0; margin-left: 1px">{{count($user->orders->where('processed', 0))}}</span>
-                                            @endif
                                         </h4>
                                     </div>
                                     <div class="col-12">
                                         <h4 class="block1-text mb-3 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">Добавление\изменение товара, управление товарами, прием заказов</h4>
+                                    </div>
+                                    <div class="col-12 text-start">
+                                        @if(count($user->orders->where('order_status', \App\Models\Order::NEW_ORDER)) != 0)
+                                            <h1 style="color: white; font-family: 'Inter', sans-serif; font-size: 0.8rem;" class="@if($user->dayVsNight) text-white-50 @endif">
+                                                Новых заявок: <span class="badge" style="border: 0; margin-left: 1px; background-color: mediumseagreen">{{count($user->orders->where('order_status', \App\Models\Order::NEW_ORDER))}}</span>
+                                            </h1>
+                                        @endif
+                                        @if(count($user->orders->where('order_status', \App\Models\Order::IN_WORK_ORDER)) != 0)
+                                            <h1 style="color: white; font-family: 'Inter', sans-serif; font-size: 0.8rem;" class="@if($user->dayVsNight) text-white-50 @endif">
+                                                Заявки в работе: <span class="badge" style="border: 0; margin-left: 1px; background-color: dodgerblue">{{count($user->orders->where('order_status', \App\Models\Order::IN_WORK_ORDER))}}</span>
+                                            </h1>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -246,15 +255,23 @@
                                                     <div class="col-8 d-flex align-items-center" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="padding-left: 0">
                                                         <div class="row">
                                                             <div class="col-12">
-                                                                <h4 class="block1-text mt-4 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">
-                                                                    Заказы
-                                                                    @if(count($user->orders->where('processed', 0)) != 0)
-                                                                        <span class="badge bg-secondary" style="border: 0; margin-left: 1px">{{count($user->orders->where('processed', 0))}}</span>
-                                                                    @endif
+                                                                <h4 class="block1-text mt-4 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">Заказы
                                                                 </h4>
                                                             </div>
                                                             <div class="col-12">
                                                                 <h4 class="block1-text mb-3 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-size: 0.7rem">Управляйте своими заказами</h4>
+                                                            </div>
+                                                            <div class="col-12 text-start">
+                                                                @if(count($user->orders->where('order_status', \App\Models\Order::NEW_ORDER)) != 0)
+                                                                    <h1 style="color: white; font-family: 'Inter', sans-serif; font-size: 0.8rem;" class="@if($user->dayVsNight) text-white-50 @endif">
+                                                                        Новых заявок: <span class="badge" style="border: 0; margin-left: 1px; background-color: mediumseagreen">{{count($user->orders->where('order_status', \App\Models\Order::NEW_ORDER))}}</span>
+                                                                    </h1>
+                                                                @endif
+                                                                @if(count($user->orders->where('order_status', \App\Models\Order::IN_WORK_ORDER)) != 0)
+                                                                    <h1 style="color: white; font-family: 'Inter', sans-serif; font-size: 0.8rem;" class="@if($user->dayVsNight) text-white-50 @endif">
+                                                                        Заявки в работе: <span class="badge" style="border: 0; margin-left: 1px; background-color: dodgerblue">{{count($user->orders->where('order_status', \App\Models\Order::IN_WORK_ORDER))}}</span>
+                                                                    </h1>
+                                                                @endif
                                                             </div>
                                                         </div>
                                                     </div>

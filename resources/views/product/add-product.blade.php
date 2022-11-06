@@ -157,12 +157,13 @@
             <label style="font-family: 'Rubik', sans-serif; font-size: 12px">Стоимость товара\услуги в рублях</label>
         </div>
         <div class="mb-3">
-            <label style="font-family: 'Rubik', sans-serif; font-size: 12px">Выберите категорию товара, если она есть</label>
+            <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">* Выберите категорию</label>
             <select class="form-select shadow" aria-label="Default select example" style="border: 0" name="product_categories_id">
                 @foreach($categories as $c)
                     <option value="{{$c->id}}">{{$c->name}}</option>
                 @endforeach
             </select>
+            <label class="mt-2" style="font-family: 'Rubik', sans-serif; font-size: 12px">По умолчанию все товары попадают в категорию "Все товары". Что бы изменить или добавить новую категорию перейдите <a href="{{ route('allCategories', ['id' => $user->id]) }}">сюда</a></label>
         </div>
 
         {{-- Market buttons --}}

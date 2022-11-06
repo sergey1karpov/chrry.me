@@ -171,13 +171,15 @@
                                                     <div class="col-6" style="padding-right: 0" data-bs-toggle="modal" data-bs-target="#editCat{{$category->id}}">
                                                         <img src="https://i.ibb.co/tQpXNcg/edit-1.png" width="20">
                                                     </div>
-                                                    <div class="col-6">
-                                                        <form method="post" action="{{ route('deleteCategory', ['id' => $user->id, 'category' => $category->id]) }}"> @csrf @method('DELETE')
-                                                            <button class="btn p-0" type="submit">
-                                                                <img src="https://i.ibb.co/7R29Bpj/remove.png" width="20">
-                                                            </button>
-                                                        </form>
-                                                    </div>
+                                                    @if($category->slug != 'all')
+                                                        <div class="col-6">
+                                                            <form method="post" action="{{ route('deleteCategory', ['id' => $user->id, 'category' => $category->id]) }}"> @csrf @method('DELETE')
+                                                                <button class="btn p-0" type="submit">
+                                                                    <img src="https://i.ibb.co/7R29Bpj/remove.png" width="20">
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
