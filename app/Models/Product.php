@@ -2,11 +2,9 @@
 
 namespace App\Models;
 
-use App\Http\Requests\OrderProductRequest;
 use App\Http\Requests\ProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Services\UploadPhotoService;
-use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
@@ -27,16 +25,21 @@ class Product extends Model
         'price',
         'visible',
         'user_id',
-        'type',
         'full_description',
         'additional_photos',
         'link_to_shop',
         'link_to_shop_text',
         'link_to_order_text',
-        'product_categories_id'
+        'product_categories_id',
+        'position',
     ];
 
-    protected $guarded = [];
+    public function category()
+    {
+        return $this->belongsTo(ProductCategory::class, 'product_categories_id', 'id');
+    }
+
+    protected $table = 'products';
 
     public function searchableAs()
     {
@@ -96,9 +99,7 @@ class Product extends Model
             );
         }
         $product->price = $request->price;
-        $product->count_products = $request->count_products;
         $product->visible = isset($request->visible) ? 1 : 0;
-        $product->type = 'Market';
 
         $product->link_to_shop = $request->link_to_shop;
         $product->link_to_shop_text = $request->link_to_shop_text;
@@ -109,47 +110,34 @@ class Product extends Model
     }
 
     /**
+     * Update product
+     *
      * @param int $userId
      * @param Product $product
-     * @param ProductRequest $request
+     * @param UpdateProductRequest $request
      * @param UploadPhotoService $uploadService
-     * @return \Illuminate\Http\RedirectResponse|void
-     *
-     * Update product
+     * @return int|void
      */
     public function patchProduct(int $userId, Product $product, UpdateProductRequest $request, UploadPhotoService $uploadService)
     {
-        if($request->additional_photos) {
-            $fn = $this->checkCountAdditionalPhotosInProduct($product, $request->additional_photos, $this->imgPath($userId), $uploadService);
-            if($fn !== null) {
-                return redirect()
-                    ->route('showProduct', ['id' => $userId, 'product' => $product])
-                    ->with(
-                        'count',
-                        'Максимальное кол-во дополнительных фотографий 5 шт. Вы можете загрузить ' . $fn . ' фотографии для текущего товара'
-                    );
-            }
-        }
-
-        if($request->main_photo) {
-            $product->main_photo = $uploadService->uploader(
+        Product::where('id', $product->id)->where('user_id', $userId)->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'full_description' => $request->full_description,
+            'price' => $request->price ?? $product->price,
+            'visible' => isset($request->visible) ? 1 : 0,
+            'user_id' => $userId,
+            'main_photo' => isset($request->main_photo) ? $uploadService->uploader(
                 ph: $request->main_photo,
                 path: $this->imgPath($userId),
                 size: 500,
                 drop: true,
-                dropImagePath: $product->main_photo
-            );
-        }
-
-        $product->title = isset($request->title) ? $request->title :  $product->title;
-        $product->description = isset($request->description) ? $request->description : $product->description;
-        $product->full_description = $request->full_description;
-        $product->price = isset($request->price)  ? $request->price : $product->price;
-        $product->visible = isset($request->visible) ? 1 : 0;
-        $product->type = 'Market';
-
-        $product->user_id = $userId;
-        $product->save();
+                dropImagePath: $product->main_photo) : $product->main_photo,
+            'link_to_shop' => $request->link_to_shop,
+            'link_to_shop_text' => $request->link_to_shop_text,
+            'link_to_order_text' => $request->link_to_order_text,
+            'product_categories_id' => $request->product_categories_id,
+        ]);
     }
 
     /**
@@ -182,6 +170,7 @@ class Product extends Model
             return $freePlace;
         } else {
             $currentProductPhotosArr = (array)unserialize($product->additional_photos);
+
             $uploadProductPhotos = [];
 
             foreach ($photos as $ph) {
@@ -192,20 +181,26 @@ class Product extends Model
                 );
             }
 
-            $arr = array_merge($currentProductPhotosArr, $uploadProductPhotos);
-            $product->additional_photos = serialize($arr);
+            if($product->additional_photos == null) {
+                $product->additional_photos = serialize($uploadProductPhotos);
+            } else {
+                $arr = array_merge($currentProductPhotosArr, $uploadProductPhotos);
+                Product::where('id', $product->id)->update([
+                    'additional_photos' => serialize($arr),
+                ]);
+            }
         }
     }
 
     /**
+     * Delete additional photo in product
+     *
      * @param Product $product
      * @param string $photo
      * @param UploadPhotoService $service
      * @return void
-     *
-     * Delete additional photo in product
      */
-    public function dropAdditionalPhoto(Product $product, string $photo, UploadPhotoService $service)
+    public function dropAdditionalPhoto(Product $product, string $photo, UploadPhotoService $service): void
     {
         $photoArray = unserialize($product->additional_photos);
         $findImagePosition = array_search($photo, $photoArray);

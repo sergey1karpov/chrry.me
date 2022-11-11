@@ -75,7 +75,6 @@ Route::middleware(['locale', 'userCheck', 'web'])->group(function () {
      */
     Route::get('/{id}/links', [LinkController::class, 'allLinks'])->name('allLinks');
     Route::get('/{id}/create-links', [LinkController::class, 'createLinkForm'])->name('createLinkForm');
-
     Route::get('/{id}/search', [LinkController::class, 'searchLink'])->name('searchLink');
     Route::post('/{id}/add-link', [LinkController::class, 'addLink'])->name('addLink');
     Route::post('/{id}/add-post', [LinkController::class, 'addPost'])->name('addPost');
@@ -100,22 +99,23 @@ Route::middleware(['locale', 'userCheck', 'web'])->group(function () {
     /**
      * Маршруты для работы с продуктами
      */
-    Route::get('/{id}/products', [ProductController::class, 'allProducts'])->name('allProducts');
-    Route::get('/{id}/create-products', [ProductController::class, 'createProductForm'])->name('createProductForm');
-    Route::post('/{id}/add-product', [ProductController::class, 'addProduct'])->name('addProduct');
-    Route::get('/{id}/edit-product/{product}/show', [ProductController::class, 'showProduct'])->name('showProduct');
-    Route::patch('/{id}/edit-product/{product}/edit', [ProductController::class, 'editProduct'])->name('editProduct');
-    Route::patch('/{id}/delete-photo/{product}/delete', [ProductController::class, 'deleteAdditionalPhoto'])->name('deleteAdditionalPhoto');
-    Route::delete('/{id}/delete-product/{product}/delete', [ProductController::class, 'deleteProduct'])->name('deleteProduct');
-    Route::post('{id}/product/sort', [ProductController::class, 'sortProduct'])->name('sortProduct');
-    Route::get('/{id}/products/search', [ProductController::class, 'searchProducts'])->name('searchProducts');
+    Route::get('/{id}/products', [ProductController::class, 'allProducts'])->name('allProducts'); //Показать все продукты
+    Route::get('/{id}/products/store', [ProductController::class, 'createProductForm'])->name('createProductForm'); //Форма создания продукта
+    Route::post('/{id}/products/store', [ProductController::class, 'addProduct'])->name('addProduct'); //Создание продукта
+    Route::get('/{id}/products/{product}/edit', [ProductController::class, 'showProduct'])->name('showProduct'); //Форма обновления продукта
+    Route::patch('/{id}/products/{product}/edit', [ProductController::class, 'editProduct'])->name('editProduct'); //Обновление продукта
+    Route::patch('/{id}/products/{product}/delete-photo', [ProductController::class, 'deleteAdditionalPhoto'])->name('deleteAdditionalPhoto'); //Дроп фотографий
+    Route::delete('/{id}/products/{product}/delete', [ProductController::class, 'deleteProduct'])->name('deleteProduct'); //Удаление
+
+    Route::post('{id}/product/sort', [ProductController::class, 'sortProduct'])->name('sortProduct'); //Сортировка прдуктов
+    Route::get('/{id}/products/search', [ProductController::class, 'searchProducts'])->name('searchProducts'); //Поиск по продуктам
     /**
      * Маршруты для работы с категориями
      */
     Route::get('/{id}/categories', [ProductCategoryController::class, 'allCategories'])->name('allCategories');
-    Route::post('/{id}/add-category', [ProductCategoryController::class, 'createCategory'])->name('createCategory');
-    Route::patch('/{id}/edit-category/{category}/edit', [ProductCategoryController::class, 'editCategory'])->name('editCategory');
-    Route::delete('/{id}/delete-category/{category}/delete', [ProductCategoryController::class, 'deleteCategory'])->name('deleteCategory');
+    Route::post('/{id}/categories/add-category', [ProductCategoryController::class, 'createCategory'])->name('createCategory');
+    Route::patch('/{id}/categories/{category}/edit', [ProductCategoryController::class, 'editCategory'])->name('editCategory');
+    Route::delete('/{id}/categories/{category}/delete', [ProductCategoryController::class, 'deleteCategory'])->name('deleteCategory');
     Route::post('/{id}/categories/sort', [ProductCategoryController::class, 'sortCategory'])->name('sortCategory');
     /**
      * Маршруты для работы с заявками

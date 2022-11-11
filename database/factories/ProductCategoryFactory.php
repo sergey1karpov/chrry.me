@@ -3,13 +3,8 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Str;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
- */
-class ProductFactory extends Factory
+class ProductCategoryFactory extends Factory
 {
     protected static $position = 1;
     /**
@@ -20,17 +15,9 @@ class ProductFactory extends Factory
     public function definition()
     {
         return [
-            'title' => 'New Title',
-            'description' => 'New Description',
-            'full_description' => 'New full Description',
-            'price' => 100,
-            'visible' => 1,
+            'name' => $this->faker->name(),
+            'slug' => $this->faker->name(),
             'position' => self::$position++,
-            'main_photo' => UploadedFile::fake()->image('avatar.jpg', 500, 500)->size(100),
-            'link_to_shop' => 'link',
-            'link_to_shop_text' => 'text',
-            'link_to_order_text' => 'text',
-            'product_categories_id' => 1,
         ];
     }
 

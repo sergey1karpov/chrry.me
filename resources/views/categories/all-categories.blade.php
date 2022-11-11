@@ -135,13 +135,13 @@
                             <form class="" action="{{ route('createCategory', ['id' => $user->id]) }}" method="POST"> @csrf @method('POST')
                                 <div class="mb-3 text-center">
                                     <label for="exampleInputEmail1" class="form-label">Название категории</label>
-                                    <input type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                                    <input required type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                    <div id="emailHelp" class="form-text">Выберите подходящее название для вашей категории</div>
                                 </div>
                                 <div class="mb-3 text-center">
                                     <label for="exampleInputEmail1" class="form-label">Slug категории</label>
-                                    <input type="text" name="slug" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                                    <input required type="text" name="slug" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                    <div id="emailHelp" class="form-text">Короткое имя вашей категории без пробелов</div>
                                 </div>
                                 <div class="d-grid gap-2">
                                     <button class="btn btn-success" type="submit">Создать категорию</button>
@@ -191,16 +191,17 @@
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-body">
-                                        <form class="" action="{{ route('editCategory', ['id' => $user->id, 'category' => $category->id]) }}" method="post"> @csrf @method('PATCH')
+                                        <form action="{{ route('editCategory', ['id' => $user->id, 'category' => $category->id]) }}" method="POST">
+                                            @csrf @method('PATCH')
                                             <div class="mb-3 text-center">
                                                 <label for="exampleInputEmail1" class="form-label">Название категории</label>
-                                                <input type="text" value="{{$category->name}}" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                                                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                                                <input required type="text" value="{{$category->name}}" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                                <div id="emailHelp" class="form-text">Выберите подходящее название для вашей категории</div>
                                             </div>
                                             <div class="mb-3 text-center">
                                                 <label for="exampleInputEmail1" class="form-label">Slug категории</label>
-                                                <input type="text" value="{{$category->slug}}" name="slug" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                                                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                                                <input required pattern=".*\S+.*" title="This field is required" type="text" value="{{$category->slug}}" name="slug" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                                <div id="emailHelp" class="form-text">Короткое имя вашей категории без пробелов</div>
                                             </div>
                                             <div class="d-grid gap-2">
                                                 <button class="btn btn-success" type="submit">Обновить категорию</button>

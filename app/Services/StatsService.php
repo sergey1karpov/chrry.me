@@ -22,22 +22,22 @@ class StatsService
     {
 //        $response = Http::get('http://ip-api.com/php/' . $_SERVER['REMOTE_ADDR']);
 //        $data = unserialize($response->body());
-
-        $stat = Stats::where('guest_ip', $_SERVER['REMOTE_ADDR'])
-            ->where('created_at', Carbon::today())
-            ->where('user_id', $user->id)
-            ->first();
-
-        if(null == $stat) {
-            $profileStat = new Stats();
-            $profileStat->user_id = $user->id;
-            $profileStat->guest_ip = $_SERVER['REMOTE_ADDR'];
-            $profileStat->created_at = Carbon::today();
+//
+//        $stat = Stats::where('guest_ip', $_SERVER['REMOTE_ADDR'])
+//            ->where('created_at', Carbon::today())
+//            ->where('user_id', $user->id)
+//            ->first();
+//
+//        if(null == $stat) {
+//            $profileStat = new Stats();
+//            $profileStat->user_id = $user->id;
+//            $profileStat->guest_ip = $_SERVER['REMOTE_ADDR'];
+//            $profileStat->created_at = Carbon::today();
 //            $profileStat->city = $data['city'];
 //            $profileStat->country = $data['country'];
 //            $profileStat->country_code = $data['country'];
-            $profileStat->save();
-        }
+//            $profileStat->save();
+//        }
     }
 
     /**
@@ -50,58 +50,58 @@ class StatsService
     {
 //        $response = Http::get('http://ip-api.com/php/' . $_POST['guest_ip']);
 //        $data = unserialize($response->body());
-
-        $stat = LinkStat::where('guest_ip', $_POST['guest_ip'])
-            ->where('created_at', Carbon::today())
-            ->where('user_id', $_POST['user_id'])
-            ->where('link_id', $_POST['link_id'])
-            ->first();
-
-        if(null == $stat) {
-            $func = $_POST['func'];
-            if ($func === 'func_data') {
-
-                $linkStat = new LinkStat();
-                $linkStat->user_id = $_POST['user_id'];
-                $linkStat->link_id = $_POST['link_id'];
-                $linkStat->guest_ip = $_POST['guest_ip'];
-                $linkStat->created_at = Carbon::today();
+//
+//        $stat = LinkStat::where('guest_ip', $_POST['guest_ip'])
+//            ->where('created_at', Carbon::today())
+//            ->where('user_id', $_POST['user_id'])
+//            ->where('link_id', $_POST['link_id'])
+//            ->first();
+//
+//        if(null == $stat) {
+//            $func = $_POST['func'];
+//            if ($func === 'func_data') {
+//
+//                $linkStat = new LinkStat();
+//                $linkStat->user_id = $_POST['user_id'];
+//                $linkStat->link_id = $_POST['link_id'];
+//                $linkStat->guest_ip = $_POST['guest_ip'];
+//                $linkStat->created_at = Carbon::today();
 //                $linkStat->city = $data['city'];
 //                $linkStat->country = $data['country'];
 //                $linkStat->country_code = $data['countryCode'];
-                $linkStat->save();
-
-            }
-        }
+//                $linkStat->save();
+//
+//            }
+//        }
     }
 
     public static function productViewStats()
     {
-        //        $response = Http::get('http://ip-api.com/php/' . $_POST['guest_ip']);
+//        $response = Http::get('http://ip-api.com/php/' . $_POST['guest_ip']);
 //        $data = unserialize($response->body());
-
-        $stat = ProductStats::where('guest_ip', $_POST['guest_ip'])
-            ->where('created_at', Carbon::today())
-            ->where('user_id', $_POST['user_id'])
-            ->where('product_id', $_POST['product_id'])
-            ->first();
-
-        if(null == $stat) {
-            $func = $_POST['func'];
-            if ($func === 'stat_product') {
-
-                $linkStat = new ProductStats();
-                $linkStat->user_id = $_POST['user_id'];
-                $linkStat->product_id = $_POST['product_id'];
-                $linkStat->guest_ip = $_POST['guest_ip'];
-                $linkStat->created_at = Carbon::today();
+//
+//        $stat = ProductStats::where('guest_ip', $_POST['guest_ip'])
+//            ->where('created_at', Carbon::today())
+//            ->where('user_id', $_POST['user_id'])
+//            ->where('product_id', $_POST['product_id'])
+//            ->first();
+//
+//        if(null == $stat) {
+//            $func = $_POST['func'];
+//            if ($func === 'stat_product') {
+//
+//                $linkStat = new ProductStats();
+//                $linkStat->user_id = $_POST['user_id'];
+//                $linkStat->product_id = $_POST['product_id'];
+//                $linkStat->guest_ip = $_POST['guest_ip'];
+//                $linkStat->created_at = Carbon::today();
 //                $linkStat->city = $data['city'];
 //                $linkStat->country = $data['country'];
 //                $linkStat->country_code = $data['countryCode'];
-                $linkStat->save();
-
-            }
-        }
+//                $linkStat->save();
+//
+//            }
+//        }
     }
 
     public static function getUserStatsByDay(User $user)

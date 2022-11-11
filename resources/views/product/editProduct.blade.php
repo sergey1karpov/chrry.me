@@ -75,12 +75,12 @@
 </head>
 <body class="antialiased @if($user->dayVsNight) bg-dark text-white-50 @endif">
 
-@if (session('count'))
-    <div class="alert alert-danger alert-dismissible fade show text-center" role="alert" style="border-radius: 0">
-        {{ session('count') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-@endif
+{{--@if (session('count'))--}}
+{{--    <div class="alert alert-danger alert-dismissible fade show text-center" role="alert" style="border-radius: 0">--}}
+{{--        {{ session('count') }}--}}
+{{--        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>--}}
+{{--    </div>--}}
+{{--@endif--}}
 
 <div class="container-fluid justify-content-center text-center">
     @if(isset($errors))
@@ -101,6 +101,19 @@
     @endif
 
     @if ($message = Session::get('error'))
+        <div class="row">
+            <div class="col-12" style="padding: 0">
+                <div class="alert alert-warning alert-dismissible fade show" role="alert" style="margin: 0; background-color: red">
+                    <div class="title">
+                        <span style="font-family: 'Rubik', sans-serif; font-size: 80%; line-height: 16px; display:block; color: white;">- {{$message}}</span>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+    @endif
+
+    @if ($message = Session::get('count'))
         <div class="row">
             <div class="col-12" style="padding: 0">
                 <div class="alert alert-warning alert-dismissible fade show" role="alert" style="margin: 0; background-color: red">
@@ -181,6 +194,16 @@
                 <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">* Цена за единицу товара</label>
                 <input name="price" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow" style="border: 0" value="{{$product->price}}">
                 <label style="font-family: 'Rubik', sans-serif; font-size: 12px">Стоимость товара\услуги в рублях</label>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">* Выберите категорию</label>
+                <select class="form-select shadow" aria-label="Default select example" style="border: 0" name="product_categories_id">
+                    <option selected value="{{$product->category->id}}">{{$product->category->name}}</option>
+                    @foreach($categories as $c)
+                        <option value="{{$c->id}}">{{$c->name}}</option>
+                    @endforeach
+                </select>
+                <label class="mt-2" style="font-family: 'Rubik', sans-serif; font-size: 12px">По умолчанию все товары попадают в категорию "Все товары". Что бы изменить или добавить новую категорию перейдите <a href="{{ route('allCategories', ['id' => $user->id]) }}">сюда</a></label>
             </div>
 
             {{-- Market buttons --}}

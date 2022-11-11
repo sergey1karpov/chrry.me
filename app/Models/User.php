@@ -107,7 +107,7 @@ class User extends Authenticatable
 
     public function productCategories()
     {
-        return $this->hasMany(ProductCategory::class)->orderBy('position', 'DESC');
+        return $this->hasMany(ProductCategory::class)->orderBy('position', 'ASC');
     }
 
     public function userLinksInBar(User $user)

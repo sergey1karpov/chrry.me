@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Exceptions\NotLinkProductException;
-use App\Http\Requests\OrderProductRequest;
 use App\Http\Requests\ProductFilterRequest;
 use App\Http\Requests\ProductRequest;
 use App\Http\Requests\UpdateProductRequest;
-use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\User;
@@ -16,7 +13,6 @@ use App\Services\StatsService;
 use App\Services\UploadPhotoService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Spatie\QueryBuilder\QueryBuilder;
 
 class ProductController extends Controller
 {
@@ -70,19 +66,31 @@ class ProductController extends Controller
     {
         $user = User::findOrFail($userId);
 
-        return view('product.editProduct', compact('user', 'product'));
+        $categories = $user->productCategories;
+
+        return view('product.editProduct', compact('user', 'product', 'categories'));
     }
 
     /**
      * @param int $userId
-     * @param Product $product
-     * @param Request $request
+     * @param int $product
+     * @param UpdateProductRequest $request
      * @return \Illuminate\Http\RedirectResponse
      *
      * Patch product
      */
-    public function editProduct(int $userId, Product $product, UpdateProductRequest $request)
+    public function editProduct(int $userId, int $productId, UpdateProductRequest $request)
     {
+        $product = Product::where('id', $productId)->first();
+
+        //Не работает из за того что приходит id а не экземпляр продукта???WTF???
+        if($request->additional_photos) {
+            $totalPhoto = $product->checkCountAdditionalPhotosInProduct($product, $request->additional_photos, $product->imgPath($userId), $this->uploadService);
+            if($totalPhoto !== null) {
+                return redirect()->back()->with( 'count', 'Максимальное кол-во дополнительных фотографий 5 шт. Вы можете загрузить ' . $totalPhoto . ' фотографии для текущего товара');
+            }
+        }
+
         $product->patchProduct($userId, $product, $request, $this->uploadService);
 
         return redirect()->route('allProducts', ['id' => $userId])->with('success',$product->title . '" успешно обновлен!');

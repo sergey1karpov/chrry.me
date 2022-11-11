@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductCategoryRequest;
 use App\Models\ProductCategory;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ class ProductCategoryController extends Controller
         return view('categories.all-categories', compact('user', 'categories'));
     }
 
-    public function createCategory(int $userId, Request $request)
+    public function createCategory(int $userId, ProductCategoryRequest $request)
     {
         $category = new ProductCategory(['name' => $request->name, 'slug' => $request->slug]);
 
@@ -28,7 +29,7 @@ class ProductCategoryController extends Controller
         return redirect()->back()->with('success', 'Категория создана');
     }
 
-    public function editCategory(int $userId, ProductCategory $category, Request $request)
+    public function editCategory(int $userId, ProductCategory $category, ProductCategoryRequest $request)
     {
         $category->update(['name' => $request->name, 'slug' => $request->slug]);
 
@@ -37,7 +38,7 @@ class ProductCategoryController extends Controller
 
     public function deleteCategory(int $userId, ProductCategory $category)
     {
-        if($category->slug != 'all') {
+        if($category->slug == 'all') {
             return redirect()->back()->with('success', 'У нас так не принято');
         }
 
