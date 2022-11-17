@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\OrdersExport;
 use App\Models\Link;
 use App\Models\Product;
 use App\Models\ProductCategory;
@@ -17,6 +18,7 @@ use App\Http\Requests\RegNewUserRequest;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
@@ -30,7 +32,7 @@ class UserController extends Controller
 
         $categories = $user->productCategories;
 
-        $products = Product::where('user_id', $user->id)->orderBy('position')->get();
+        $products = Product::where('user_id', $user->id)->where('delete', null)->orderBy('position')->get();
 
         $linksWithoutBar = \DB::table('links')->where('type', 'LINK')->where('user_id', $user->id)->where('icon', null)->orderBy('position')->get();
 

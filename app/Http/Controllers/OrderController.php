@@ -61,7 +61,7 @@ class OrderController extends Controller
         $orders = Order::search($request->search)
             ->where('user_id', $user->id)
             ->where('order_status', Order::PROCESSED_ORDER)
-            ->get();
+            ->paginate(25);
 
         return view('product.orders', compact('user', 'orders'));
     }
@@ -94,6 +94,10 @@ class OrderController extends Controller
             'order_status' => Order::PROCESSED_ORDER,
             'processed_at' => \date('Y-m-d H:i:s'),
         ]);
+
+        $product = Product::where('id', $order->product_id)->first();
+        $product->count++;
+        $product->save();
 
         return redirect()->back();
     }

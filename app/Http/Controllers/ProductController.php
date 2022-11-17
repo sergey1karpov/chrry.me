@@ -57,7 +57,7 @@ class ProductController extends Controller
     {
         $user = User::find($userId);
 
-        $products = Product::where('user_id', $userId)->orderBy('position')->get();
+        $products = Product::where('user_id', $userId)->where('delete', null)->orderBy('position')->get();
 
         return view('product.products', compact('user', 'products'));
     }
@@ -120,9 +120,19 @@ class ProductController extends Controller
      */
     public function deleteProduct(int $userId, Product $product)
     {
+        if($product->count > 0) {
+            $this->productSoftDelete($product);
+            return redirect()->back();
+        }
         $product->dropProduct($product, $this->uploadService);
 
         return redirect()->back();
+    }
+
+    public function productSoftDelete(Product $product)
+    {
+        $product->delete = true;
+        $product->save();
     }
 
     /**
@@ -150,7 +160,7 @@ class ProductController extends Controller
     {
         $user = User::where('id', $userId)->firstOrFail();
 
-        $products = Product::search($request->search)->where('user_id', $user->id)->orderBy('id', 'desc')->get();
+        $products = Product::search($request->search)->where('user_id', $user->id)->where('delete', null)->orderBy('id', 'desc')->get();
 
         return view('product.search', compact('user', 'products'));
     }
@@ -198,6 +208,7 @@ class ProductController extends Controller
 
         $products = Product::search($request->search)
             ->where('user_id', $user->id)
+            ->where('delete', null)
             ->orderBy('id', 'desc')
             ->get();
 
@@ -223,6 +234,7 @@ class ProductController extends Controller
         $search = $request->query('searchValue');
 
         $productsCollection = Product::search($request->searchValue)
+            ->where('delete', null)
             ->where('user_id', $user->id)
             ->get();
 
@@ -248,7 +260,9 @@ class ProductController extends Controller
         $productCategory = ProductCategory::where('slug', $request->categorySlug)->first(); //Текущая категория
 
         $productsCollection = Product::where('user_id', $user->id)
-            ->where('product_categories_id', $productCategory->id)->get();
+            ->where('delete', null)
+            ->where('product_categories_id', $productCategory->id)
+            ->get();
 
         $products = ProductFilters::filter($productCategory, $productsCollection, $request);
 

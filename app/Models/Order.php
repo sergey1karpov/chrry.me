@@ -79,7 +79,7 @@ class Order extends Model
             ->where('users.id', $userId)
             ->where('orders.order_status', $status)
             ->orderBy('orders.id', 'DESC')
-            ->get();
+            ->paginate(25);
 
         return $orders;
     }

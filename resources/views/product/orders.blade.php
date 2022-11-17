@@ -77,6 +77,17 @@
         .btn-group-sm>.btn, .btn-sm {
             border-radius: 0;
         }
+        .page-link {
+            border: 0;
+            box-shadow: 2px 0px 5px -5px rgba(0, 0, 0, 0.6);
+        }
+        .pagination {
+            box-shadow: 0px 5px 5px -5px rgba(34, 60, 80, 0.6);
+        }
+        .page-link {
+            color: #474745;
+            padding: 10px 15px;
+        }
     </style>
 </head>
 <body class="antialiased @if($user->dayVsNight) bg-dark text-white-50 @endif" >
@@ -103,11 +114,10 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                <label class="" style="font-size: 0.9rem">В этом разделе отображается список всех новых заказов которые вам поступили.</label>
-                <label class="mt-2" style="font-size: 0.9rem">Для начала работы с заказом, откройте карточку заказа и нажмите на кнопку "В работе". Нажатие на эту кнопку будет означать что данный заказ находится в исполнении. На данном этапе
+                <label class="mt-4" style="font-size: 0.9rem"><b>1.</b> Для начала работы с заказом, откройте карточку заказа и нажмите на кнопку "В работе". Нажатие на эту кнопку будет означать что данный заказ находится в исполнении. На данном этапе
                     свяжитесь с заказчиком одним из способов который он указал в заявке, обговорите детали сделки, оплаты и других мелочей.</label>
-                <label class="mt-2" style="font-size: 0.9rem">Как только сделка будет завершена, зайдите в карточку заявки и нажмите на кнопку "Выполнено"</label>
-                <label class="mt-2" style="font-size: 0.9rem">Все выполненные вами заявки будут хранится в соответствующем разделе, где вы можете их просматривать, фильтровать, а так же формировать свою клиентскую базу</label>
+                <label class="mt-4" style="font-size: 0.9rem"><b>2.</b> Как только сделка будет завершена, зайдите в карточку заявки и нажмите на кнопку "Выполнено"</label>
+                <label class="mt-4" style="font-size: 0.9rem"><b>3.</b> Все выполненные вами заявки будут хранится в соответствующем разделе, где вы можете их просматривать, фильтровать, а так же формировать свою клиентскую базу</label>
             </div>
         </div>
     </div>
@@ -262,8 +272,8 @@
     @endforeach
 </div>
 
-<div class="mt-5 me-2 ms-2 text-center">
-
+<div class="mt-5 mb-3 me-2 ms-2 text-center d-flex justify-content-center">
+    {{$orders->links()}}
 </div>
 
 </body>

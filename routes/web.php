@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ExportController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
@@ -127,6 +128,8 @@ Route::middleware(['locale', 'userCheck', 'web'])->group(function () {
     Route::post('/{id}/orders/{order}/order-processed', [OrderController::class, 'orderProcessed'])->name('orderProcessed');
     Route::get('/{id}/orders-search', [OrderController::class, 'ordersSearch'])->name('ordersSearch');
 
+    Route::get('{id}/orders/export/', [ExportController::class, 'export'])->name('export');
+
 });
 
 /**
@@ -143,6 +146,9 @@ Route::group(['middleware' => 'guest'], function() {
      */
     Route::patch('{id}/confirm-registration', [AuthController::class, 'changeUserEmail'])->name('changeUserEmail');
 });
+
+
+
 
 
 
