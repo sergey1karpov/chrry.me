@@ -19,6 +19,11 @@ class ProductCategoryTest extends TestCase
         $this->actingAs($user)->get(route('allCategories', ['id' => $user->id]))->assertStatus(200);
     }
 
+    public function test_add_new_category()
+    {
+
+    }
+
     public function test_update_category()
     {
         $this->withoutExceptionHandling();
@@ -33,6 +38,11 @@ class ProductCategoryTest extends TestCase
         ]);
 
         $this->assertEquals('Updated name', ProductCategory::first()->name);
+    }
+
+    public function test_delete_category()
+    {
+
     }
 }
 

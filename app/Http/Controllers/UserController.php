@@ -26,8 +26,11 @@ class UserController extends Controller
 
     public function userHomePage(string $slug)
     {
+        //се методы вынести в модель типа скоупы и заменить на фронте форич
         $user = User::where('slug', $slug)->firstOrFail();
-        $links = \DB::table('links')->where('user_id', $user->id)->where('pinned', false)->orderBy('position')->get();
+
+        $links = $user->userLinks();
+//        $links = \DB::table('links')->where('user_id', $user->id)->where('pinned', false)->orderBy('position')->get();
         $pinnedLinks = \DB::table('links')->where('user_id', $user->id)->where('pinned', true)->orderBy('position')->get();
 
         $categories = $user->productCategories;

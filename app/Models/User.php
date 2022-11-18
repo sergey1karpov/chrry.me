@@ -120,6 +120,11 @@ class User extends Authenticatable
         return '../storage/app/public/' . $id;
     }
 
+    public function userLinks()
+    {
+        return $this->links()->where('user_id', $this->id)->where('pinned', false)->orderBy('position')->get();
+    }
+
     /**
      * Редактирование профиля пользователя
      *
