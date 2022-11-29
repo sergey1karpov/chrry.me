@@ -184,8 +184,8 @@
                                             @if($link->icon)
                                                 <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">
                                                     <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="
-                                                        width:{{ $user->userSettings->round_links_width }}px;
-                                                        filter: drop-shadow({{ $user->userSettings->round_links_shadow_right }}px {{ $user->userSettings->round_links_shadow_bottom }}px {{ $user->userSettings->round_links_shadow_round }}px {{ $user->userSettings->round_links_shadow_color }})
+                                                        width:{{ $user->round_links_width }}px;
+                                                        filter: drop-shadow({{ $user->round_links_shadow_right }}px {{ $user->round_links_shadow_bottom }}px {{ $user->round_links_shadow_round }}px {{ $user->round_links_shadow_color }})
                                                     ">
                                                 </a>
                                             @endif
@@ -221,10 +221,10 @@
 	        <div class="d-flex justify-content-center text-center">
 		      	<div class="text-center" style="margin-top: 25px">
 
-                    @if(isset($user->userSettings->logotype))
+                    @if(isset($user->logotype))
                         <div class="d-flex justify-content-center">
-                            <img src="{{$user->userSettings->logotype}}" class="img-fluid" width="{{$user->userSettings->logotype_size}}" style="
-                                filter: drop-shadow({{$user->userSettings->logotype_shadow_right}}px {{$user->userSettings->logotype_shadow_bottom}}px {{$user->userSettings->logotype_shadow_round}}px {{$user->userSettings->logotype_shadow_color}});
+                            <img src="{{$user->logotype}}" class="img-fluid" width="{{$user->logotype_size}}" style="
+                                filter: drop-shadow({{$user->logotype_shadow_right}}px {{$user->logotype_shadow_bottom}}px {{$user->logotype_shadow_round}}px {{$user->logotype_shadow_color}});
                             ">
                         </div>
                     @else
@@ -256,8 +256,8 @@
                                                 @if($link->icon)
                                                     <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">
                                                         <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="
-                                                            width:{{ $user->userSettings->round_links_width }}px;
-                                                            filter: drop-shadow({{ $user->userSettings->round_links_shadow_right }}px {{ $user->userSettings->round_links_shadow_bottom }}px {{ $user->userSettings->round_links_shadow_round }}px {{ $user->userSettings->round_links_shadow_color }})
+                                                            width:{{ $user->round_links_width }}px;
+                                                            filter: drop-shadow({{ $user->round_links_shadow_right }}px {{ $user->round_links_shadow_bottom }}px {{ $user->round_links_shadow_round }}px {{ $user->round_links_shadow_color }})
                                                         ">
                                                     </a>
                                                 @endif
@@ -279,8 +279,8 @@
                                                 @if($link->icon)
                                                     <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">
                                                         <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="
-                                                            width:{{ $user->userSettings->round_links_width }}px;
-                                                            filter: drop-shadow({{ $user->userSettings->round_links_shadow_right }}px {{ $user->userSettings->round_links_shadow_bottom }}px {{ $user->userSettings->round_links_shadow_round }}px {{ $user->userSettings->round_links_shadow_color }})
+                                                            width:{{ $user->round_links_width }}px;
+                                                            filter: drop-shadow({{ $user->round_links_shadow_right }}px {{ $user->round_links_shadow_bottom }}px {{ $user->round_links_shadow_round }}px {{ $user->round_links_shadow_color }})
                                                         ">
                                                     </a>
                                                 @endif
@@ -302,8 +302,8 @@
                                                 @if($link->icon)
                                                     <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">
                                                         <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="
-                                                            width:{{ $user->userSettings->round_links_width }}px;
-                                                            filter: drop-shadow({{ $user->userSettings->round_links_shadow_right }}px {{ $user->userSettings->round_links_shadow_bottom }}px {{ $user->userSettings->round_links_shadow_round }}px {{ $user->userSettings->round_links_shadow_color }})
+                                                            width:{{ $user->round_links_width }}px;
+                                                            filter: drop-shadow({{ $user->round_links_shadow_right }}px {{ $user->round_links_shadow_bottom }}px {{ $user->round_links_shadow_round }}px {{ $user->round_links_shadow_color }})
                                                         ">
                                                     </a>
                                                 @endif
@@ -378,93 +378,93 @@
             @if($user->social_links_bar == 0)
                 <table class="table">
                     <tbody>
-                    @foreach($user->userLinks(false) as $link)
-                        <tr data-index="{{$link->id}}" data-position="{{$link->position}}">
-                            <td style="padding-left: 0; padding-right: 0; padding-bottom: 0; border: 0">
-                                <div class="container" style="padding-left:8px; padding-right:8px">
-                                    <!-- Если тип ссылки POST ссылка не работает\не кликабельно -->
-                                    <a href="{{$link->link}}" style="text-decoration:none" onclick="countRabbits{{$link->id}}()">
-                                        <div class="@if($link->animation) {{$link->animation}} @endif row ms-1 me-1 card {{$link->shadow}}" style="background-color:rgba({{$link->background_color}}, {{$link->transparency}}); border: 0; margin-top: 8px; border-radius: {{$link->rounded}}px; background-position: center">
-                                            <div class="d-flex align-items-center justify-content-start mt-1 mb-1" style="padding-left: 4px; padding-right: 4px;">
-                                                <!-- Картинка -->
-                                                <div class="col-1">
-                                                    @if($link->icon)
-                                                        <img src="{{$link->icon}}" style="width:50px;">
-                                                    @elseif($link->photo)
-                                                        <img src="{{$link->photo}}" style="width:50px; border-radius: {{$link->rounded}}px;">
-                                                    @else
-                                                        <img src="https://digiltable.com/wp-content/uploads/edd/2021/09/Sexy-lady-logo-Pornhub-logo.png" style="width:50px; border-radius: {{$link->rounded}}px; opacity: 0;">
-                                                    @endif
-                                                </div>
-                                                <!-- Текст ссылки -->
-                                                <div class="col-10 text-center d-flex align-items-center justify-content-center">
-                                                    <div class="me-5 ms-5">
-                                                        <h4 style="text-shadow:{{$link->text_shadow_right}}px {{$link->text_shadow_bottom}}px {{$link->text_shadow_blur}}px {{$link->text_shadow_color}} ;font-family: '{{ $link->font ?? 'Inter' }}', sans-serif; line-height: 1.3; font-size: {{$link->font_size}}rem; margin-top: 2px; margin-bottom: 0; color: {{$link->title_color}};">@if($link->bold == true) <b> @endif{{$link->title}}@if($link->bold == true) </b> @endif</h4>
+                        @foreach($user->userLinks(false) as $link)
+                            <tr data-index="{{$link->id}}" data-position="{{$link->position}}">
+                                <td style="padding-left: 0; padding-right: 0; padding-bottom: 0; border: 0">
+                                    <div class="container" style="padding-left:8px; padding-right:8px">
+                                        <!-- Если тип ссылки POST ссылка не работает\не кликабельно -->
+                                        <a href="{{$link->link}}" style="text-decoration:none" onclick="countRabbits{{$link->id}}()">
+                                            <div class="@if($link->animation) {{$link->animation}} @endif row ms-1 me-1 card {{$link->shadow}}" style="background-color:rgba({{$link->background_color}}, {{$link->transparency}}); border: 0; margin-top: 8px; border-radius: {{$link->rounded}}px; background-position: center">
+                                                <div class="d-flex align-items-center justify-content-start mt-1 mb-1" style="padding-left: 4px; padding-right: 4px;">
+                                                    <!-- Картинка -->
+                                                    <div class="col-1">
+                                                        @if($link->icon)
+                                                            <img src="{{$link->icon}}" style="width:50px;">
+                                                        @elseif($link->photo)
+                                                            <img src="{{$link->photo}}" style="width:50px; border-radius: {{$link->rounded}}px;">
+                                                        @else
+                                                            <img src="https://digiltable.com/wp-content/uploads/edd/2021/09/Sexy-lady-logo-Pornhub-logo.png" style="width:50px; border-radius: {{$link->rounded}}px; opacity: 0;">
+                                                        @endif
+                                                    </div>
+                                                    <!-- Текст ссылки -->
+                                                    <div class="col-10 text-center d-flex align-items-center justify-content-center">
+                                                        <div class="me-5 ms-5">
+                                                            <h4 style="text-shadow:{{$link->text_shadow_right}}px {{$link->text_shadow_bottom}}px {{$link->text_shadow_blur}}px {{$link->text_shadow_color}} ;font-family: '{{ $link->font ?? 'Inter' }}', sans-serif; line-height: 1.3; font-size: {{$link->font_size}}rem; margin-top: 2px; margin-bottom: 0; color: {{$link->title_color}};">@if($link->bold == true) <b> @endif{{$link->title}}@if($link->bold == true) </b> @endif</h4>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Пустой div -->
+                                                    <div class="col-1">
+                                                        @if(Auth::check())
+                                                            @if(Auth::user()->id == $user->id)
+                                                                <div id="up" class="imgg" style="background-image: url(https://i.ibb.co/VLbJkrG/dots.png);">
+                                                                    <img src="https://i.ibb.co/VLbJkrG/dots.png" width="20">
+                                                                </div>
+                                                            @endif
+                                                        @endif
                                                     </div>
                                                 </div>
-                                                <!-- Пустой div -->
-                                                <div class="col-1">
-                                                    @if(Auth::check())
-                                                        @if(Auth::user()->id == $user->id)
-                                                            <div id="up" class="imgg" style="background-image: url(https://i.ibb.co/VLbJkrG/dots.png);">
-                                                                <img src="https://i.ibb.co/VLbJkrG/dots.png" width="20">
-                                                            </div>
-                                                        @endif
-                                                    @endif
-                                                </div>
                                             </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             @elseif($user->social_links_bar == 1)
                 <table class="table">
                     <tbody>
-                    @foreach($user->userLinksWithoutBar() as $link)
-                        <tr data-index="{{$link->id}}" data-position="{{$link->position}}">
-                            <td style="padding-left: 0; padding-right: 0; padding-bottom: 0; border: 0">
-                                <div class="container" style="padding-left:8px; padding-right:8px">
-                                    <!-- Если тип ссылки POST ссылка не работает\не кликабельно -->
-                                    <a href="{{$link->link}}" style="text-decoration:none" onclick="countRabbits{{$link->id}}()">
-                                        <div class="@if($link->animation) {{$link->animation}} @endif row ms-1 me-1 card {{$link->shadow}}" style="background-color:rgba({{$link->background_color}}, {{$link->transparency}}); border: 0; margin-top: 8px; border-radius: {{$link->rounded}}px; background-position: center">
-                                            <div class="d-flex align-items-center justify-content-start mt-1 mb-1" style="padding-left: 4px; padding-right: 4px;">
-                                                <!-- Картинка -->
-                                                <div class="col-1">
-                                                    @if($link->icon)
-                                                        <img src="{{$link->icon}}" style="width:50px; border-radius: {{$link->rounded}}px;">
-                                                    @elseif($link->photo)
-                                                        <img src="{{$link->photo}}" style="width:50px; border-radius: {{$link->rounded}}px;">
-                                                    @else
-                                                        <img src="https://digiltable.com/wp-content/uploads/edd/2021/09/Sexy-lady-logo-Pornhub-logo.png" style="width:50px; border-radius: {{$link->rounded}}px; opacity: 0;">
-                                                    @endif
-                                                </div>
-                                                <!-- Текст ссылки -->
-                                                <div class="col-10 text-center d-flex align-items-center justify-content-center">
-                                                    <div class="me-5 ms-5">
-                                                        <h4 style="text-shadow:{{$link->text_shadow_right}}px {{$link->text_shadow_bottom}}px {{$link->text_shadow_blur}}px {{$link->text_shadow_color}} ;font-family: '{{$link->font}}', sans-serif; line-height: 1.3; font-size: {{$link->font_size}}rem; margin-top: 2px; margin-bottom: 0; color: {{$link->title_color}};">@if($link->bold == true) <b> @endif{{$link->title}}@if($link->bold == true) </b> @endif</h4>
+                        @foreach($user->userLinksWithoutBar() as $link)
+                            <tr data-index="{{$link->id}}" data-position="{{$link->position}}">
+                                <td style="padding-left: 0; padding-right: 0; padding-bottom: 0; border: 0">
+                                    <div class="container" style="padding-left:8px; padding-right:8px">
+                                        <!-- Если тип ссылки POST ссылка не работает\не кликабельно -->
+                                        <a href="{{$link->link}}" style="text-decoration:none" onclick="countRabbits{{$link->id}}()">
+                                            <div class="@if($link->animation) {{$link->animation}} @endif row ms-1 me-1 card {{$link->shadow}}" style="background-color:rgba({{$link->background_color}}, {{$link->transparency}}); border: 0; margin-top: 8px; border-radius: {{$link->rounded}}px; background-position: center">
+                                                <div class="d-flex align-items-center justify-content-start mt-1 mb-1" style="padding-left: 4px; padding-right: 4px;">
+                                                    <!-- Картинка -->
+                                                    <div class="col-1">
+                                                        @if($link->icon)
+                                                            <img src="{{$link->icon}}" style="width:50px; border-radius: {{$link->rounded}}px;">
+                                                        @elseif($link->photo)
+                                                            <img src="{{$link->photo}}" style="width:50px; border-radius: {{$link->rounded}}px;">
+                                                        @else
+                                                            <img src="https://digiltable.com/wp-content/uploads/edd/2021/09/Sexy-lady-logo-Pornhub-logo.png" style="width:50px; border-radius: {{$link->rounded}}px; opacity: 0;">
+                                                        @endif
+                                                    </div>
+                                                    <!-- Текст ссылки -->
+                                                    <div class="col-10 text-center d-flex align-items-center justify-content-center">
+                                                        <div class="me-5 ms-5">
+                                                            <h4 style="text-shadow:{{$link->text_shadow_right}}px {{$link->text_shadow_bottom}}px {{$link->text_shadow_blur}}px {{$link->text_shadow_color}} ;font-family: '{{$link->font}}', sans-serif; line-height: 1.3; font-size: {{$link->font_size}}rem; margin-top: 2px; margin-bottom: 0; color: {{$link->title_color}};">@if($link->bold == true) <b> @endif{{$link->title}}@if($link->bold == true) </b> @endif</h4>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Пустой div -->
+                                                    <div class="col-1">
+                                                        @if(Auth::check())
+                                                            @if(Auth::user()->id == $user->id)
+                                                                <div id="up" class="imgg" style="background-image: url(https://i.ibb.co/VLbJkrG/dots.png);">
+                                                                    <img src="https://i.ibb.co/VLbJkrG/dots.png" width="20">
+                                                                </div>
+                                                            @endif
+                                                        @endif
                                                     </div>
                                                 </div>
-                                                <!-- Пустой div -->
-                                                <div class="col-1">
-                                                    @if(Auth::check())
-                                                        @if(Auth::user()->id == $user->id)
-                                                            <div id="up" class="imgg" style="background-image: url(https://i.ibb.co/VLbJkrG/dots.png);">
-                                                                <img src="https://i.ibb.co/VLbJkrG/dots.png" width="20">
-                                                            </div>
-                                                        @endif
-                                                    @endif
-                                                </div>
                                             </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             @endif
@@ -546,8 +546,8 @@
                                         @if($link->icon)
                                             <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">
                                                 <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="
-                                                    width:{{ $user->userSettings->round_links_width }}px;
-                                                    filter: drop-shadow({{ $user->userSettings->round_links_shadow_right }}px {{ $user->userSettings->round_links_shadow_bottom }}px {{ $user->userSettings->round_links_shadow_round }}px {{ $user->userSettings->round_links_shadow_color }})
+                                                    width:{{ $user->round_links_width }}px;
+                                                    filter: drop-shadow({{ $user->round_links_shadow_right }}px {{ $user->round_links_shadow_bottom }}px {{ $user->round_links_shadow_round }}px {{ $user->round_links_shadow_color }})
                                                 ">
                                             </a>
                                         @endif
@@ -832,8 +832,8 @@
                                         @if($link->icon)
                                             <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">
                                                 <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="
-                                                    width:{{ $user->userSettings->round_links_width }}px;
-                                                    filter: drop-shadow({{ $user->userSettings->round_links_shadow_right }}px {{ $user->userSettings->round_links_shadow_bottom }}px {{ $user->userSettings->round_links_shadow_round }}px {{ $user->userSettings->round_links_shadow_color }})
+                                                    width:{{ $user->round_links_width }}px;
+                                                    filter: drop-shadow({{ $user->round_links_shadow_right }}px {{ $user->round_links_shadow_bottom }}px {{ $user->round_links_shadow_round }}px {{ $user->round_links_shadow_color }})
                                                 ">
                                             </a>
                                         @endif
@@ -858,8 +858,8 @@
                                     @if($link->icon)
                                         <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">
                                             <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="
-                                                width:{{ $user->userSettings->round_links_width }}px;
-                                                filter: drop-shadow({{ $user->userSettings->round_links_shadow_right }}px {{ $user->userSettings->round_links_shadow_bottom }}px {{ $user->userSettings->round_links_shadow_round }}px {{ $user->userSettings->round_links_shadow_color }})
+                                                width:{{ $user->round_links_width }}px;
+                                                filter: drop-shadow({{ $user->round_links_shadow_right }}px {{ $user->round_links_shadow_bottom }}px {{ $user->round_links_shadow_round }}px {{ $user->round_links_shadow_color }})
                                             ">
                                         </a>
                                     @endif

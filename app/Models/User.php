@@ -2,22 +2,17 @@
 
 namespace App\Models;
 
-use App\Enums\UserProfileImageType;
-use App\Http\Requests\RegNewUserRequest;
 use App\Http\Requests\UpdateRegisteruserRequest;
 use App\Services\ColorConvertorService;
 use App\Services\UploadPhotoService;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Http\Request;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Support\Facades\Hash;
 
-/**
- * [Description User]
- */
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -45,7 +40,19 @@ class User extends Authenticatable
         'social_links_bar',
         'show_logo',
         'links_bar_position',
-        'background_color_rgb'
+        'background_color_rgb',
+        'logotype',
+        'logotype_size',
+        'logotype_shadow_right',
+        'logotype_shadow_bottom',
+        'logotype_shadow_round',
+        'logotype_shadow_color',
+        'avatar_vs_logotype',
+        'round_links_width',
+        'round_links_shadow_right',
+        'round_links_shadow_bottom',
+        'round_links_shadow_round',
+        'round_links_shadow_color',
     ];
 
     protected $hidden = [
@@ -57,46 +64,42 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function getRouteKeyName()
+    public function getRouteKeyName(): string
     {
         return 'slug';
     }
 
-    public function links() {
+    public function links(): HasMany
+    {
         return $this->hasMany(Link::class);
     }
 
-    public function events()
+    public function events(): HasMany
     {
         return $this->hasMany(Event::class)->orderBy('date');
     }
 
-    public function products()
+    public function products(): HasMany
     {
         return $this->hasMany(Product::class);
     }
 
-    public function orders()
+    public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
     }
 
-    public function userSettings()
-    {
-        return $this->hasOne(UserSettings::class);
-    }
-
-    public function marketSettings()
+    public function marketSettings(): HasOne
     {
         return $this->hasOne(ShopSettings::class);
     }
 
-    public function productCategories()
+    public function productCategories(): HasMany
     {
         return $this->hasMany(ProductCategory::class)->orderBy('position', 'ASC');
     }
 
-    public function userLinksInBar(User $user)
+    public function userLinksInBar(User $user): Collection
     {
         return Link::where('user_id', $user->id)->where('pinned', false)->orderBy('position')->get();
     }
@@ -106,41 +109,41 @@ class User extends Authenticatable
         return '../storage/app/public/' . $id;
     }
 
-    public function userLinks(bool $pinned): \Illuminate\Database\Eloquent\Collection
+    public function userLinks(bool $pinned): Collection
     {
         return $this->links()->where('user_id', $this->id)->where('pinned', $pinned)->orderBy('position')->get();
     }
 
-    public function userProducts()
+    public function userProducts(): Collection
     {
         return Product::where('user_id', $this->id)->where('delete', null)->orderBy('position')->get();
     }
 
-    public function userLinksWithoutBar(): \Illuminate\Database\Eloquent\Collection
+    public function userLinksWithoutBar(): Collection
     {
-        return $this->links()->where('type', 'LINK')->where('user_id', $this->id)->where('icon', null)->orderBy('position')->get();
+        return $this->links()->where('type', 'LINK')->where('user_id', $this->id)->where('icon', null)->where('pinned', false)->orderBy('position')->get();
     }
 
     /**
-     * Редактирование профиля пользователя
+     * Edit user profile
      *
      * @param int $userId
      * @param UpdateRegisteruserRequest $request
      * @param UploadPhotoService $uploadService
      * @return void
      */
-    public function editUserProfile(int $userId, UpdateRegisteruserRequest $request, UploadPhotoService $uploadService)
+    public function editUserProfile(int $userId, UpdateRegisteruserRequest $request, UploadPhotoService $uploadService): void
     {
         $user = User::find($userId);
 
         User::where('id', $user->id)->update([
             'name'              => $request->name,
             'description'       => $request->description,
-            'background_color'  => isset($request->background_color) ? $request->background_color : $user->background_color,
-            'name_color'        => isset($request->name_color) ? $request->name_color : $user->name_color,
-            'description_color' => isset($request->description_color) ? $request->description_color : $user->description_color,
-            'verify_color'      => isset($request->verify_color) ? $request->verify_color : $user->verify_color,
-            'slug'              => isset($request->slug) ? $request->slug : $user->slug,
+            'background_color'  => $request->background_color,
+            'name_color'        => $request->name_color,
+            'description_color' => $request->description_color,
+            'verify_color'      => $request->verify_color,
+            'slug'              => $request->slug ?? $user->slug,
             'avatar'            => isset($request->avatar) ?
                 $uploadService->uploader(
                     ph: $request->avatar,
@@ -161,8 +164,8 @@ class User extends Authenticatable
                 $user->banner,
             'locale'            => $request->locale,
             'type'              => $request->type,
-            'show_social'       => isset($request->show_social) ? $request->show_social : $user->show_social,
-            'social'            => isset($request->social) ? $request->social : $user->social,
+            'show_social'       => $request->show_social ?? $user->show_social,
+            'social'            => $request->social ?? $user->social,
             'favicon'           => isset($request->favicon) ?
                 $uploadService->uploader(
                     ph: $request->favicon,
@@ -176,58 +179,42 @@ class User extends Authenticatable
             'show_logo'         => $request->show_logo,
             'links_bar_position' => $request->links_bar_position,
             'background_color_rgb' => ColorConvertorService::convertBackgroundColor($request->background_color),
+
+            'logotype_size' => $request->logotype_size,
+            'logotype_shadow_right' => $request->logotype_shadow_right,
+            'logotype_shadow_bottom' => $request->logotype_shadow_bottom,
+            'logotype_shadow_round' => $request->logotype_shadow_round,
+            'logotype_shadow_color' => $request->logotype_shadow_color,
+            'avatar_vs_logotype' => $request->avatar_vs_logotype,
+            'round_links_width' => $request->round_links_width,
+            'round_links_shadow_right' => $request->round_links_shadow_right,
+            'round_links_shadow_bottom' => $request->round_links_shadow_bottom,
+            'round_links_shadow_round' => $request->round_links_shadow_round,
+            'round_links_shadow_color' => $request->round_links_shadow_color,
+            'logotype'           => isset($request->logotype) ?
+                $uploadService->uploader(
+                    ph: $request->logotype,
+                    path: $this->imgPath($userId),
+                    size: 500,
+                    drop: true,
+                    dropImagePath: $user->logotype,
+                    aspectRatio: true
+                ) :
+                $user->logotype,
         ]);
-
-        $this->updateUserSettings($userId, $request);
-
-        if(isset($request->logotype)) {
-            $this->uploadLogotype($user, $request->logotype, $uploadService);
-        }
 
         if($request->type == 'Market') {
             $this->createDefaultMarketSettings($userId);
         }
     }
 
-    public function updateUserSettings(int $userId, UpdateRegisteruserRequest $request)
-    {
-        UserSettings::updateOrCreate(
-            ['user_id' => $userId],
-            [
-                'user_id' => $userId,
-                'logotype_size' => $request->logotype_size ?? 250,
-                'logotype_shadow_right' => $request->logotype_shadow_right ?? 0,
-                'logotype_shadow_bottom' => $request->logotype_shadow_bottom ?? 0,
-                'logotype_shadow_round' => $request->logotype_shadow_round ?? 0,
-                'logotype_shadow_color' => $request->logotype_shadow_color ?? '#000000',
-                'avatar_vs_logotype' => $request->avatar_vs_logotype,
-
-                'round_links_width' => $request->round_links_width ?? 40,
-                'round_links_shadow_right' => $request->round_links_shadow_right ?? 0,
-                'round_links_shadow_bottom' => $request->round_links_shadow_bottom ?? 0,
-                'round_links_shadow_round' => $request->round_links_shadow_round ?? 0,
-                'round_links_shadow_color' => $request->round_links_shadow_color ?? '#000000',
-            ]
-        );
-    }
-
-    public function uploadLogotype(User $user, UploadedFile $logotype, UploadPhotoService $uploadService)
-    {
-        $isLogotype = UserSettings::where('user_id', $user->id)->first();
-
-        UserSettings::where('user_id', $user->id)->update([
-            'logotype' => $uploadService->uploader(
-                ph: $logotype,
-                path: $this->imgPath($user->id),
-                size: 500,
-                drop: true,
-                dropImagePath: $isLogotype->logotype,
-                aspectRatio: true
-            ),
-        ]);
-    }
-
-    public function createDefaultMarketSettings(int $userId)
+    /**
+     * If user change page type to Market, we create a default market settings
+     *
+     * @param int $userId
+     * @return void
+     */
+    public function createDefaultMarketSettings(int $userId): void
     {
         $settings = ShopSettings::where('user_id', $userId)->first();
 
@@ -258,37 +245,19 @@ class User extends Authenticatable
     }
 
     /**
-     * Удаление Аватарки, Баннера и Фавикона юзера
+     * Delete user avatar, favicon, banner and logotype
      *
      * @param int $userId
      * @param string $type
      * @param UploadPhotoService $uploadService
      * @return void
      */
-    //Оптимизировать
-    public function deleteUserImages(int $userId, string $type, UploadPhotoService $uploadService)
+    public function deleteUserImages(int $userId, string $type, UploadPhotoService $uploadService): void
     {
         $user = User::where('id', $userId)->firstOrFail();
 
-        if($type == UserProfileImageType::LOGOTYPE->value) {
-            UserSettings::where('user_id', $userId)->update(['logotype' => null]);
-            $uploadService->dropImg($user->userSettings->logotype);
-        }
-
-        if($type == UserProfileImageType::AVATAR->value) {
-            User::where('id', $userId)->update(['avatar' => null]);
-            $uploadService->dropImg($user->avatar);
-        }
-
-        if($type == UserProfileImageType::BANNER->value) {
-            User::where('id', $userId)->update(['banner' => null]);
-            $uploadService->dropImg($user->banner);
-        }
-
-        if($type == UserProfileImageType::FAVICON->value) {
-            User::where('id', $userId)->update(['favicon' => null]);
-            $uploadService->dropImg($user->favicon);
-        }
+        User::where('id', $userId)->update([$type => null]);
+        $uploadService->dropImg($user->$type);
     }
 
     /**
@@ -297,8 +266,7 @@ class User extends Authenticatable
      * @param int $userId
      * @return void
      */
-    //Оптимизировать
-    public function changeUserTheme(int $userId)
+    public function changeUserTheme(int $userId): void
     {
         $user = User::where('id', $userId)->firstOrFail();
 

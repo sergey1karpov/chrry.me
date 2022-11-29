@@ -124,11 +124,38 @@ class UserControllerTest extends TestCase
      */
     public function test_edit_user_profile()
     {
+        $this->withoutExceptionHandling();
+
         $this->actingAs($this->user)->patch(route('editUserProfile', ['id' => $this->user->id]), [
-            'name' => 'Sergey Karpov',
-            'slug' => 'sergey1Karpov',
-            'background_color' => ColorConvertorService::convertBackgroundColor('#ffffff'),
-            'type' => 'Links'
+            'name'              => 'Sergey Karpov',
+            'description'       => 'Description',
+            'background_color'  => '#ffffff',
+            'name_color'        => '#000000',
+            'description_color' => '#000000',
+            'verify_color'      => '#000000',
+            'slug'              => 'sergey1Karpov',
+            'avatar'            => UploadedFile::fake()->image('avatar.jpg', 500, 500)->size(100),
+            'banner'            => UploadedFile::fake()->image('banner.jpg', 500, 500)->size(100),
+            'locale'            => 'ru',
+            'type'              => 'Links',
+            'show_social'       => true,
+            'social'            => 'TOP',
+            'favicon'           => UploadedFile::fake()->image('avatar.jpg', 500, 500)->size(100),
+            'social_links_bar'  => true,
+            'show_logo'         => true,
+            'links_bar_position' => 'bottom',
+            'background_color_rgb' => ColorConvertorService::convertBackgroundColor('#ffffff'),
+            'logotype_size' => 30,
+            'logotype_shadow_right' => 30,
+            'logotype_shadow_bottom' => 30,
+            'logotype_shadow_round' => 30,
+            'logotype_shadow_color' => '#ffffff',
+            'round_links_width' => 50,
+            'round_links_shadow_right' => 50,
+            'round_links_shadow_bottom' => 50,
+            'round_links_shadow_round' => 50,
+            'round_links_shadow_color' => 50,
+            'logotype' => UploadedFile::fake()->image('logotype.png', 500, 500)->size(100),
         ]);
 
         $this->assertEquals('Sergey Karpov', User::first()->name);

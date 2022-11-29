@@ -184,7 +184,7 @@
             </div>
         </div>
     @endif
-    @if(isset($user->userSettings->logotype))
+    @if(isset($user->logotype))
         <div class="mb-3">
             <div class="row d-flex align-items-center justify-content-center">
                 <div class="col-12">
@@ -253,10 +253,10 @@
 
         <hr>
 
-        @if(isset($user->userSettings->logotype))
+        @if(isset($user->logotype))
             <div class="mb-3">
-                <img src="{{'../'.$user->userSettings->logotype}}" class="img-fluid" width="250" style="
-                                filter: drop-shadow({{$user->userSettings->logotype_shadow_right}}px {{$user->userSettings->logotype_shadow_bottom}}px {{$user->userSettings->logotype_shadow_round}}px {{$user->userSettings->logotype_shadow_color}});
+                <img src="{{'../'.$user->logotype}}" class="img-fluid" width="250" style="
+                                filter: drop-shadow({{$user->logotype_shadow_right}}px {{$user->logotype_shadow_bottom}}px {{$user->logotype_shadow_round}}px {{$user->logotype_shadow_color}});
                             ">
             </div>
         @endif
@@ -267,30 +267,30 @@
             <span class="mt-1" style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Вы можете загрузить свой логотип, который будет отображаться вместо круглого аватара и имени профиля. Что бы вернуться к аватару, просто удалите логотип. Пока принимаем только PNG</span>
         </div>
 
-        @if(isset($user->userSettings->logotype))
+        @if(isset($user->logotype))
         <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Размер логотипа</label>
         <div class="input-group mb-3">
-            <input type="range" class="form-range" min="200" max="350" step="1" id="customRange3" name="logotype_size" value="{{$user->userSettings->logotype_size}}">
+            <input type="range" class="form-range" min="200" max="350" step="1" id="customRange3" name="logotype_size" value="{{$user->logotype_size}}">
         </div>
 
         <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Тень вправо</label>
         <div class="input-group mb-3">
-            <input type="range" class="form-range" min="0" max="40" step="1" id="customRange3" name="logotype_shadow_right" value="{{$user->userSettings->logotype_shadow_right}}">
+            <input type="range" class="form-range" min="0" max="40" step="1" id="customRange3" name="logotype_shadow_right" value="{{$user->logotype_shadow_right}}">
         </div>
 
         <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Тень вниз</label>
         <div class="input-group mb-3">
-            <input type="range" class="form-range" min="0" max="40" step="1" id="customRange3" name="logotype_shadow_bottom" value="{{$user->userSettings->logotype_shadow_bottom}}">
+            <input type="range" class="form-range" min="0" max="40" step="1" id="customRange3" name="logotype_shadow_bottom" value="{{$user->logotype_shadow_bottom}}">
         </div>
 
         <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Тень радиус</label>
         <div class="input-group mb-3">
-            <input type="range" class="form-range" min="0" max="40" step="1" id="customRange3" name="logotype_shadow_round" value="{{$user->userSettings->logotype_shadow_round}}">
+            <input type="range" class="form-range" min="0" max="40" step="1" id="customRange3" name="logotype_shadow_round" value="{{$user->logotype_shadow_round}}">
         </div>
 
         <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Цвет тени</label>
         <div class="mb-3 text-center d-flex justify-content-center">
-            <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" id="exampleColorInput" value="{{$user->userSettings->logotype_shadow_color}}" title="Choose your color" name="logotype_shadow_color" style="height: 35px; border: 0">
+            <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" id="exampleColorInput" value="{{$user->logotype_shadow_color}}" title="Choose your color" name="logotype_shadow_color" style="height: 35px; border: 0">
         </div>
         @endif
 
@@ -335,29 +335,29 @@
                     <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Вы можете выбрать где отобразить бар с сылками, вверху или внизу</span>
                 </div>
 
-                <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Размер логотипов</label>
+                <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Размер иконок</label>
                 <div class="input-group mb-3">
-                    <input type="range" class="form-range" min="40" max="70" step="1" id="customRange3" name="round_links_width" value="{{$user->userSettings->round_links_width ?? null}}">
+                    <input type="range" class="form-range" min="40" max="70" step="1" id="customRange3" name="round_links_width" value="{{$user->round_links_width}}">
                 </div>
 
                 <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Тень вправо</label>
                 <div class="input-group mb-3">
-                    <input type="range" class="form-range" min="0" max="40" step="1" id="customRange3" name="round_links_shadow_right" value="{{$user->userSettings->round_links_shadow_right ?? null}}">
+                    <input type="range" class="form-range" min="0" max="40" step="1" id="customRange3" name="round_links_shadow_right" value="{{$user->round_links_shadow_right}}">
                 </div>
 
                 <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Тень вниз</label>
                 <div class="input-group mb-3">
-                    <input type="range" class="form-range" min="0" max="40" step="1" id="customRange3" name="round_links_shadow_bottom" value="{{$user->userSettings->round_links_shadow_bottom ?? null}}">
+                    <input type="range" class="form-range" min="0" max="40" step="1" id="customRange3" name="round_links_shadow_bottom" value="{{$user->round_links_shadow_bottom}}">
                 </div>
 
                 <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Тень радиус</label>
                 <div class="input-group mb-3">
-                    <input type="range" class="form-range" min="0" max="40" step="1" id="customRange3" name="round_links_shadow_round" value="{{$user->userSettings->round_links_shadow_round ?? null}}">
+                    <input type="range" class="form-range" min="0" max="40" step="1" id="customRange3" name="round_links_shadow_round" value="{{$user->round_links_shadow_round}}">
                 </div>
 
                 <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Цвет тени</label>
                 <div class="mb-3 text-center d-flex justify-content-center">
-                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" id="exampleColorInput" value="{{$user->userSettings->round_links_shadow_color ?? null}}" title="Choose your color" name="round_links_shadow_color" style="height: 35px; border: 0">
+                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" id="exampleColorInput" value="{{$user->round_links_shadow_color}}" title="Choose your color" name="round_links_shadow_color" style="height: 35px; border: 0">
                 </div>
             </div>
         </div>
@@ -402,30 +402,30 @@
                     <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Вверху - между вашим именем и мероприятиями. Внизу - под мероприятиями</span>
                 </div>
 
-                <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Размер логотипов</label>
-                <div class="input-group mb-3">
-                    <input type="range" class="form-range" min="25" max="70" step="1" id="customRange3" name="round_links_width" value="{{$user->userSettings->round_links_width ?? null}}">
-                </div>
+{{--                <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Размер логотипов</label>--}}
+{{--                <div class="input-group mb-3">--}}
+{{--                    <input type="range" class="form-range" min="25" max="70" step="1" id="customRange3" name="round_links_width" value="{{$user->round_links_width}}">--}}
+{{--                </div>--}}
 
-                <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Тень вправо</label>
-                <div class="input-group mb-3">
-                    <input type="range" class="form-range" min="0" max="40" step="1" id="customRange3" name="round_links_shadow_right" value="{{$user->userSettings->round_links_shadow_right ?? null}}">
-                </div>
+{{--                <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Тень вправо</label>--}}
+{{--                <div class="input-group mb-3">--}}
+{{--                    <input type="range" class="form-range" min="0" max="40" step="1" id="customRange3" name="round_links_shadow_right" value="{{$user->round_links_shadow_right}}">--}}
+{{--                </div>--}}
 
-                <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Тень вниз</label>
-                <div class="input-group mb-3">
-                    <input type="range" class="form-range" min="0" max="40" step="1" id="customRange3" name="round_links_shadow_bottom" value="{{$user->userSettings->round_links_shadow_bottom ?? null}}">
-                </div>
+{{--                <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Тень вниз</label>--}}
+{{--                <div class="input-group mb-3">--}}
+{{--                    <input type="range" class="form-range" min="0" max="40" step="1" id="customRange3" name="round_links_shadow_bottom" value="{{$user->round_links_shadow_bottom}}">--}}
+{{--                </div>--}}
 
-                <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Тень радиус</label>
-                <div class="input-group mb-3">
-                    <input type="range" class="form-range" min="0" max="40" step="1" id="customRange3" name="round_links_shadow_round" value="{{$user->userSettings->round_links_shadow_round ?? null}}">
-                </div>
+{{--                <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Тень радиус</label>--}}
+{{--                <div class="input-group mb-3">--}}
+{{--                    <input type="range" class="form-range" min="0" max="40" step="1" id="customRange3" name="round_links_shadow_round" value="{{$user->round_links_shadow_round}}">--}}
+{{--                </div>--}}
 
-                <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Цвет тени</label>
-                <div class="mb-3 text-center d-flex justify-content-center">
-                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" id="exampleColorInput" value="{{$user->userSettings->round_links_shadow_color ?? null}}" title="Choose your color" name="round_links_shadow_color" style="height: 35px; border: 0">
-                </div>
+{{--                <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Цвет тени</label>--}}
+{{--                <div class="mb-3 text-center d-flex justify-content-center">--}}
+{{--                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" id="exampleColorInput" value="{{$user->round_links_shadow_color}}" title="Choose your color" name="round_links_shadow_color" style="height: 35px; border: 0">--}}
+{{--                </div>--}}
             </div>
         </div>
 

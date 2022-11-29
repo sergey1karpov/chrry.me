@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ShopSettings;
 use App\Models\User;
 use App\Services\UploadPhotoService;
 use App\Http\Requests\UpdateRegisteruserRequest;
@@ -12,7 +11,6 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\File;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class UserController extends Controller
