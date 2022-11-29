@@ -42,17 +42,6 @@
         <div class="cover-container w-100 h-100 p-3 mx-auto section d-flex align-items-center justify-content-center" >
             <main class="text-center">
 
-                {{-- <nav class="nav nav-masthead justify-content-center float-md-end fixed-top mt-2">
-                    @if (Route::has('login'))
-                        @auth
-                            <a class="nav-link " aria-current="page" href="{{ route('userHomePage',  ['slug' => Auth::user()->slug]) }}" style="font-family: 'Train One', cursive; color: white; text-shadow: 5px 5px 2px black; font-size: 1.5rem">home</a>
-                        @else
-                            <a class="nav-link active" aria-current="page" href="#" style="font-family: 'Train One', cursive; color: white; text-shadow: 5px 5px 2px black; font-size: 1.5rem">login</a>
-                        @endauth
-                    @endif
-                    <a class="nav-link" href="#" style="font-family: 'Train One', cursive; color: white; text-shadow: 5px 5px 2px black; font-size: 1.5rem">c.shop</a>
-                    <a class="nav-link" href="#" style="font-family: 'Roboto', sans-serif; color: white; text-shadow: 5px 5px 2px black; font-size: 1.5rem">контакты</a>
-                </nav> --}}
                 <div class="row d-flex flex-row fixed-top ms-" style="margin-left: 10px;">
                     <div class="col-12 d-flex justify-content-start" style="padding: 0">
                         <button style="padding-left:0;padding-right:0" class="btn " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
@@ -75,7 +64,7 @@
                                     @if (Route::has('login'))
                                         @auth
                                             <li class="nav-item">
-                                                <a class="nav-link" aria-current="page" href="{{ route('userHomePage',  ['slug' => Auth::user()->slug]) }}" style="font-family: 'Roboto', sans-serif; color: black;font-size: 1rem">Профиль</a>
+                                                <a class="nav-link" aria-current="page" href="{{ route('userHomePage',  ['user' => Auth::user()->slug]) }}" style="font-family: 'Roboto', sans-serif; color: black;font-size: 1rem">Профиль</a>
                                             </li>
                                             <li class="nav-item">
                                                 <a class="nav-link" aria-current="page" href="{{ route('editProfileForm',  ['id' => Auth::user()->id]) }}" style="font-family: 'Roboto', sans-serif; color: black;font-size: 1rem">Настройки</a>

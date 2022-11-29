@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Models\ProductCategory;
+
 class ProductFilters
 {
     public static function filter($category, $productsCollection, $request)
@@ -9,7 +11,7 @@ class ProductFilters
         $productsQuery = $productsCollection->toQuery();
 
         //Категория
-        if ($category) {
+        if ($category && $category->name != ProductCategory::DEFAULT_CATEGORY) {
             if ($request->filled('category')) {
                 $productsQuery->where('product_categories_id', '=', $category->id);
             }

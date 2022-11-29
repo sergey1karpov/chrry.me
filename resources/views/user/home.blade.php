@@ -161,15 +161,15 @@
                         @if($user->marketSettings->search_position == 'on_canvas' || $user->marketSettings->search_position == 'main_and_canvas')
                             <div class="d-flex justify-content-center mb-5">
                                 <div class="col-12 d-flex justify-content-center align-items-center" style="padding-right: 12px; padding-left: 12px">
-                                    <form class="" action="{{ route('fullTextSearch', ['slug' => $user->slug]) }}" style="width: 100%">
+                                    <form class="" action="{{ route('fullTextSearch', ['user' => $user->slug]) }}" style="width: 100%">
                                         <input class="form-control me-2 shadow" type="search" name="search" placeholder="Поиск..." aria-label="Search" style="border: 0">
                                     </form>
                                 </div>
                             </div>
                         @endif
                     @endif
-                    @foreach($categories as $category)
-                        <a href="{{ route('showProductsInCategory', ['slug' => $user->slug, 'categorySlug' => $category->slug]) }}" style="color: {{$user->marketSettings->canvas_font_color}}">
+                    @foreach($user->productCategories as $category)
+                        <a href="{{ route('showProductsInCategory', ['user' => $user->slug, 'categorySlug' => $category->slug]) }}" style="color: {{$user->marketSettings->canvas_font_color}}">
                             <h5 class="offcanvas-title mt-2" id="offcanvasExampleLabel" style="font-family: 'Inter', sans-serif; font-size: 1rem;">{{$category->name}}</h5>
                         </a>
                     @endforeach
@@ -177,10 +177,10 @@
                 <div class="offcanvas-body text-center fixed-bottom" style="max-width: none; background-color: {{$user->marketSettings->canvas_color}}">
                     @if($user->type == 'Market')
                         @if($user->marketSettings->show_social)
-                            @if(count($links) > 0)
+                            @if(count($user->userLinks(false)) > 0)
                                 <nav class="navbar mt-2 mb-2">
                                     <div class="container-fluid d-flex justify-content-center">
-                                        @foreach($links as $link)
+                                        @foreach($user->userLinks(false) as $link)
                                             @if($link->icon)
                                                 <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">
                                                     <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="
@@ -249,10 +249,10 @@
                     @if($user->type == 'Events')
                         @if($user->show_social == true)
                             @if($user->social == 'TOP')
-                                @if(count($links) > 0)
+                                @if(count($user->userLinks(false)) > 0)
                                     <nav class="navbar mt-2">
                                         <div class="container-fluid d-flex justify-content-center">
-                                            @foreach($links as $link)
+                                            @foreach($user->userLinks(false) as $link)
                                                 @if($link->icon)
                                                     <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">
                                                         <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="
@@ -272,7 +272,7 @@
                     @if($user->type == 'Market')
                         @if($user->show_social == true)
                             @if($user->social == 'TOP')
-                                @if(count($links) > 0)
+                                @if(count($user->userLinks(false)) > 0)
                                     <nav class="navbar mt-2 mb-2">
                                         <div class="container-fluid d-flex justify-content-center">
                                             @foreach($user->userLinksInBar($user) as $link)
@@ -295,10 +295,10 @@
                     @if($user->type == 'Links')
                         @if($user->social_links_bar == 1)
                             @if($user->links_bar_position == 'top')
-                                @if(count($links) > 0)
+                                @if(count($user->userLinks(false)) > 0)
                                     <nav class="navbar mt-2">
                                         <div class="container-fluid d-flex justify-content-center">
-                                            @foreach($links as $link)
+                                            @foreach($user->userLinks(false) as $link)
                                                 @if($link->icon)
                                                     <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">
                                                         <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="
@@ -331,7 +331,7 @@
             <!-- ---------------------- -->
             <table class="table" style="margin-bottom: 0">
                 <tbody>
-                    @foreach($pinnedLinks as $link)
+                    @foreach($user->userLinks(true) as $link)
                         <tr data-index="{{$link->id}}" data-position="{{$link->position}}">
                             <td style="padding-left: 0; padding-right: 0; padding-bottom: 0; border: 0">
                                 <div class="container" style="padding-left:8px; padding-right:8px">
@@ -378,7 +378,7 @@
             @if($user->social_links_bar == 0)
                 <table class="table">
                     <tbody>
-                    @foreach($links as $link)
+                    @foreach($user->userLinks(false) as $link)
                         <tr data-index="{{$link->id}}" data-position="{{$link->position}}">
                             <td style="padding-left: 0; padding-right: 0; padding-bottom: 0; border: 0">
                                 <div class="container" style="padding-left:8px; padding-right:8px">
@@ -424,7 +424,7 @@
             @elseif($user->social_links_bar == 1)
                 <table class="table">
                     <tbody>
-                    @foreach($linksWithoutBar as $link)
+                    @foreach($user->userLinksWithoutBar() as $link)
                         <tr data-index="{{$link->id}}" data-position="{{$link->position}}">
                             <td style="padding-left: 0; padding-right: 0; padding-bottom: 0; border: 0">
                                 <div class="container" style="padding-left:8px; padding-right:8px">
@@ -473,7 +473,7 @@
         <!-- ---------------------- -->
         @elseif($user->type == 'Events')
             <div class="mt-3">
-                @foreach($events as $event)
+                @foreach($user->events as $event)
                     <div class="container mt-2" data-bs-toggle="modal" data-bs-target="#eventModal{{$event->id}}">
                         <div class="col-lg-12 allalbums">
                             <ul class="list-group list-group-flush">
@@ -539,10 +539,10 @@
             @if($user->type == 'Events')
                 @if($user->show_social == true)
                     @if($user->social == 'DOWN')
-                        @if(count($links) > 0)
+                        @if(count($user->userLinks(false)) > 0)
                             <nav class="navbar mt-4">
                                 <div class="container-fluid d-flex justify-content-center">
-                                    @foreach($links as $link)
+                                    @foreach($user->userLinks(false) as $link)
                                         @if($link->icon)
                                             <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">
                                                 <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="
@@ -570,7 +570,7 @@
                 @if($user->marketSettings->search_position == 'on_main' || $user->marketSettings->search_position == 'main_and_canvas')
                     <div class="d-flex justify-content-center">
                         <div class="col-12 d-flex justify-content-center align-items-center" style="padding-right: 12px; padding-left: 12px">
-                            <form class="" action="{{ route('fullTextSearch', ['slug' => $user->slug]) }}" style="width: 100%">
+                            <form class="" action="{{ route('fullTextSearch', ['user' => $user->slug]) }}" style="width: 100%">
                                 <input class="form-control me-2 shadow" type="search" name="search" placeholder="Поиск..." aria-label="Search" style="border: 0">
                             </form>
                         </div>
@@ -581,7 +581,7 @@
             <div class="mt-3">
                 @if(isset($user->marketSettings->cards_style))
                     @if($user->marketSettings->cards_style == 'one')
-                        @foreach($products as $product)
+                        @foreach($user->userProducts() as $product)
 
                             <section data-bs-toggle="modal" data-bs-target="#productModal{{$product->id}}" onclick="productStats{{$product->id}}()">
                                 <div class="container mt-2">
@@ -683,7 +683,7 @@
                                                     </a>
                                                 @endif
                                                 @if($product->link_to_order_text)
-                                                    <a class="btn btn-primary" href="{{ route('showProductDetails', ['slug' => $user->slug, 'product' => $product->id]) }}">
+                                                    <a class="btn btn-primary" href="{{ route('showProductOrderForm', ['user' => $user->slug, 'product' => $product->id]) }}">
                                                         {{$product->link_to_order_text}}
                                                     </a>
                                                 @endif
@@ -695,7 +695,7 @@
                         @endforeach
                     @elseif($user->marketSettings->cards_style == 'two')
                         <div class="row ms-1 me-1" style="margin: 0">
-                            @foreach($products as $product)
+                            @foreach($user->userProducts() as $product)
                                 <div class="col-6 p-2" style="padding: 0">
                                     <section data-bs-toggle="modal" data-bs-target="#productModal{{$product->id}}">
                                         <div class="container mt-2" style="padding: 0">
@@ -797,7 +797,7 @@
                                                         </a>
                                                     @endif
                                                     @if($product->link_to_order_text)
-                                                        <a class="btn btn-primary" href="{{ route('showProductDetails', ['slug' => $user->slug, 'product' => $product->id]) }}">
+                                                        <a class="btn btn-primary" href="{{ route('showProductOrderForm', ['user' => $user->slug, 'product' => $product->id]) }}">
                                                             {{$product->link_to_order_text}}
                                                         </a>
                                                     @endif
@@ -825,7 +825,7 @@
             @if($user->type == 'Market')
                 @if($user->show_social == true)
                     @if($user->social == 'DOWN')
-                        @if(count($links) > 0)
+                        @if(count($user->userLinks(false)) > 0)
                             <nav class="navbar mt-4">
                                 <div class="container-fluid d-flex justify-content-center">
                                     @foreach($user->userLinksInBar($user) as $link)
@@ -851,10 +851,10 @@
         @if($user->type == 'Links')
             @if($user->social_links_bar == 1)
                 @if($user->links_bar_position == 'bottom')
-                    @if(count($links) > 0)
+                    @if(count($user->userLinks(false)) > 0)
                         <nav class="navbar mt-5 mb-4">
                             <div class="container-fluid d-flex justify-content-center">
-                                @foreach($links as $link)
+                                @foreach($user->userLinks(false) as $link)
                                     @if($link->icon)
                                         <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">
                                             <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="
@@ -886,7 +886,7 @@
         @endif
     </body>
 
-    @foreach($links as $link)
+    @foreach($user->userLinks(false) as $link)
         <script type="text/javascript">
             $.ajaxSetup({
                 headers: {
@@ -919,7 +919,7 @@
                 });
 
                 $.ajax({
-                    url: userId + "/ppp/sort",
+                    url: "id"+ userId + "/ppp/sort",
                     method: 'POST',
                     dataType: 'text',
                     data: {
@@ -933,7 +933,7 @@
         </script>
     @endforeach
 
-    @foreach($linksWithoutBar as $link)
+    @foreach($user->userLinksWithoutBar() as $link)
         <script type="text/javascript">
             $.ajaxSetup({
                 headers: {
@@ -966,7 +966,7 @@
                 });
 
                 $.ajax({
-                    url: userId + "/ppp/sort",
+                    url: "id"+ userId + "/ppp/sort",
                     method: 'POST',
                     dataType: 'text',
                     data: {
@@ -980,7 +980,7 @@
         </script>
     @endforeach
 
-    @foreach($pinnedLinks as $link)
+    @foreach($user->userLinks(true) as $link)
         <script type="text/javascript">
             $.ajaxSetup({
             headers: {
@@ -1013,7 +1013,7 @@
                 });
 
                 $.ajax({
-                    url: userId + "/ppp/sort",
+                    url: "id"+ userId + "/ppp/sort",
                     method: 'POST',
                     dataType: 'text',
                     data: {
@@ -1027,7 +1027,7 @@
         </script>
     @endforeach
 
-    @foreach($links as $link)
+    @foreach($user->userLinks(false) as $link)
         <script type="text/javascript">
             $.ajaxSetup({
                 headers: {
@@ -1053,7 +1053,7 @@
         </script>
     @endforeach
 
-    @foreach($pinnedLinks as $link)
+    @foreach($user->userLinks(true) as $link)
         <script type="text/javascript">
             $.ajaxSetup({
                 headers: {
@@ -1079,7 +1079,7 @@
         </script>
     @endforeach
 
-    @foreach($products as $product)
+    @foreach($user->userProducts() as $product)
         <script type="text/javascript">
             $.ajaxSetup({
                 headers: {

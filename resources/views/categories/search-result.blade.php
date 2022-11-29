@@ -148,9 +148,9 @@
                         <div class="accordion-body">
 
                             @if(isset($categorySlug))
-                                <form action="{{ route('categoryFilter', ['slug' => $user->slug]) }}">
+                                <form action="{{ route('categoryFilter', ['user' => $user->slug]) }}">
                             @elseif(!isset($categorySlug))
-                                <form action="{{ route('fullTextFilter', ['slug' => $user->slug]) }}">
+                                <form action="{{ route('fullTextFilter', ['user' => $user->slug]) }}">
                             @endif
 
                                 <input type="hidden" name="searchValue" value="{{$search ?? null}}">
@@ -227,13 +227,13 @@
                 @endif
             @endif
             @foreach($user->productCategories as $category)
-                <a href="{{ route('showProductsInCategory', ['slug' => $user->slug, 'categorySlug' => $category->slug]) }}" style="color: {{$user->marketSettings->canvas_font_color}}">
+                <a href="{{ route('showProductsInCategory', ['user' => $user->slug, 'categorySlug' => $category->slug]) }}" style="color: {{$user->marketSettings->canvas_font_color}}">
                     <h5 class="offcanvas-title mt-2" id="offcanvasExampleLabel" style="font-family: 'Inter', sans-serif; font-size: 1rem;">{{$category->name}}</h5>
                 </a>
             @endforeach
         </div>
         <div class="offcanvas-body text-center fixed-bottom " style="max-width: none">
-            <a href="{{ route('userHomePage', ['slug' => $user->slug]) }}" style="font-family: 'Inter', sans-serif; font-size: 2rem; text-decoration: none; color: #080808">
+            <a href="{{ route('userHomePage', ['user' => $user->slug]) }}" style="font-family: 'Inter', sans-serif; font-size: 2rem; text-decoration: none; color: #080808">
                 <span class="material-symbols-outlined" style="font-size: 25px; color: {{$user->marketSettings->btn_color}}">home</span>
             </a>
             <div class="mt-3">
@@ -359,7 +359,7 @@
                                             </a>
                                         @endif
                                         @if($product->link_to_order_text)
-                                            <a class="btn btn-primary" href="{{ route('showProductDetails', ['slug' => $user->slug, 'product' => $product->id]) }}">
+                                            <a class="btn btn-primary" href="{{ route('showProductOrderForm', ['user' => $user->slug, 'product' => $product->id]) }}">
                                                 {{$product->link_to_order_text}}
                                             </a>
                                         @endif
@@ -457,7 +457,7 @@
                                                 </a>
                                             @endif
                                             @if($product->link_to_order_text)
-                                                <a class="btn btn-primary" href="{{ route('showProductDetails', ['slug' => $user->slug, 'product' => $product->id]) }}">
+                                                <a class="btn btn-primary" href="{{ route('showProductOrderForm', ['user' => $user->slug, 'product' => $product->id]) }}">
                                                     {{$product->link_to_order_text}}
                                                 </a>
                                             @endif

@@ -6,20 +6,24 @@ use App\Http\Requests\OrderProductRequest;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
-use Carbon\Traits\Date;
-use Carbon\Traits\Timestamp;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
-    public function __construct(
-        private Order $order,
-    ) {}
+    public function __construct(private readonly Order $order) {}
 
-    public function sendOrder(int $userId, Product $product, OrderProductRequest $request)
+    /**
+     * Order product
+     *
+     * @param int $userId
+     * @param Product $product
+     * @param OrderProductRequest $request
+     * @return RedirectResponse
+     */
+    public function sendOrder(int $userId, Product $product, OrderProductRequest $request): RedirectResponse
     {
-        $user = User::find($userId);
+        $user = User::findOrFail($userId);
 
         $this->order->sendOrder($userId, $product, $request);
 

@@ -45,7 +45,15 @@ class Order extends Model
         return $this->hasOne(Product::class, 'id', 'product_id');
     }
 
-    public function sendOrder(int $userId, Product $product, OrderProductRequest $request)
+    /**
+     * Order user product
+     *
+     * @param int $userId
+     * @param Product $product
+     * @param OrderProductRequest $request
+     * @return void
+     */
+    public function sendOrder(int $userId, Product $product, OrderProductRequest $request): void
     {
         if(Auth::check()) {
             if($userId == Auth::user()->id) {

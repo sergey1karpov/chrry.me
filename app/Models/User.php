@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\UserProfileImageType;
 use App\Http\Requests\RegNewUserRequest;
 use App\Http\Requests\UpdateRegisteruserRequest;
 use App\Services\ColorConvertorService;
@@ -21,11 +22,6 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'name',
         'email',
@@ -52,37 +48,27 @@ class User extends Authenticatable
         'background_color_rgb'
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
 
-    /**
-     * @return [type]
-     *
-     * HasMany to Links
-     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
     public function links() {
         return $this->hasMany(Link::class);
     }
 
     public function events()
     {
-        return $this->hasMany(Event::class);
+        return $this->hasMany(Event::class)->orderBy('date');
     }
 
     public function products()
@@ -120,9 +106,19 @@ class User extends Authenticatable
         return '../storage/app/public/' . $id;
     }
 
-    public function userLinks()
+    public function userLinks(bool $pinned): \Illuminate\Database\Eloquent\Collection
     {
-        return $this->links()->where('user_id', $this->id)->where('pinned', false)->orderBy('position')->get();
+        return $this->links()->where('user_id', $this->id)->where('pinned', $pinned)->orderBy('position')->get();
+    }
+
+    public function userProducts()
+    {
+        return Product::where('user_id', $this->id)->where('delete', null)->orderBy('position')->get();
+    }
+
+    public function userLinksWithoutBar(): \Illuminate\Database\Eloquent\Collection
+    {
+        return $this->links()->where('type', 'LINK')->where('user_id', $this->id)->where('icon', null)->orderBy('position')->get();
     }
 
     /**
@@ -265,41 +261,43 @@ class User extends Authenticatable
      * Удаление Аватарки, Баннера и Фавикона юзера
      *
      * @param int $userId
-     * @param Request $request
+     * @param string $type
      * @param UploadPhotoService $uploadService
      * @return void
      */
-    public function deleteUserImages(int $userId, Request $request, UploadPhotoService $uploadService)
+    //Оптимизировать
+    public function deleteUserImages(int $userId, string $type, UploadPhotoService $uploadService)
     {
         $user = User::where('id', $userId)->firstOrFail();
 
-        if($request->type == 'logotype') {
-            $uploadService->dropImg($user->userSettings->logotype);
+        if($type == UserProfileImageType::LOGOTYPE->value) {
             UserSettings::where('user_id', $userId)->update(['logotype' => null]);
+            $uploadService->dropImg($user->userSettings->logotype);
         }
 
-        if($request->type == 'avatar') {
+        if($type == UserProfileImageType::AVATAR->value) {
             User::where('id', $userId)->update(['avatar' => null]);
             $uploadService->dropImg($user->avatar);
         }
 
-        if($request->type == 'banner') {
+        if($type == UserProfileImageType::BANNER->value) {
             User::where('id', $userId)->update(['banner' => null]);
             $uploadService->dropImg($user->banner);
         }
 
-        if($request->type == 'favicon') {
+        if($type == UserProfileImageType::FAVICON->value) {
             User::where('id', $userId)->update(['favicon' => null]);
             $uploadService->dropImg($user->favicon);
         }
     }
 
     /**
-     * Темная\светлая тема личного кабинета
+     * Night or day profile theme
      *
      * @param int $userId
      * @return void
      */
+    //Оптимизировать
     public function changeUserTheme(int $userId)
     {
         $user = User::where('id', $userId)->firstOrFail();
@@ -309,53 +307,6 @@ class User extends Authenticatable
         } else {
             User::where('id', $userId)->update(['dayVsNight' => 0]);
         }
-    }
-
-    /**
-     * Сканирование NFC чипа
-     *
-     * Подготовка:
-     * 1. Сперва регистрируем юзера через админку и вшиваем его в NFC чип
-     *
-     * Логика:
-     * 1. В качестве праметра в url приходит унникальный сгенерированный вшитый $utag - рандомная строка
-     * 2. Проверяем юзера в базе где $utag == 'utag' и где юзер еще не активен
-     * 3. Если такую запись не находим, то берем из url второй сегмент('slug') и редиректим его на стр со slug
-     * 4. Если запись не находим, то редиректим на страницу фальш реги, по сути это обновление созданного юзера из
-     *    пункта подготовка.
-     *
-     * @param string $utag
-     * @param Request $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
-     */
-    public function newUserNFC(string $utag, Request $request)
-    {
-        $user = User::where('utag', $utag)->where('is_active', 0)->firstOrFail();
-
-        if(!$user) {
-            $active_user = User::where('utag', $request->segment(2))->where('is_active', 1)->first();
-            return redirect()->route('userHomePage', ['slug' => $active_user->slug]);
-        }
-
-        return view('auth.edit-user', compact('user'));
-    }
-
-    /**
-     * Фальш рега(Обновление юзера) после сканирования NFC чипа в первый раз
-     *
-     * @param string $utag
-     * @param RegNewUserRequest $request
-     * @return void
-     */
-    public function confirmNewUser(string $utag, RegNewUserRequest $request)
-    {
-        User::where('utag', $utag)->update([
-            'name'      => $request->name,
-            'slug'      => $request->slug,
-            'email'     => $request->email,
-            'password'  => Hash::make($request->password),
-            'is_active' => 1,
-        ]);
     }
 }
 

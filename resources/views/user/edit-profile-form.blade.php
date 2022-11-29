@@ -131,7 +131,7 @@
             <a class="mb-1" href="{{ route('editProfileForm', ['id' => Auth::user()->id]) }}">
                 <img src="https://i.ibb.co/DM6hKmk/bbbbbbbbbbb.png" class="img-fluid" style="width:20px; border: 0">
             </a>
-            <a class="" href="{{ route('userHomePage',  ['slug' => Auth::user()->slug]) }}" style="text-decoration: none; border: 0; padding: 0">
+            <a class="" href="{{ route('userHomePage',  ['user' => $user->id]) }}" style="text-decoration: none; border: 0; padding: 0">
                 <div class="img" style="background-image: url({{'/'.$user->avatar}});"></div>
             </a>
         </div>
@@ -143,7 +143,7 @@
         <div class="">
             <div class="row d-flex align-items-center justify-content-center">
                 <div class="col-12">
-                    <form action="{{ route('delUserAvatar', ['id' => $user->id]) }}" method="POST">
+                    <form action="{{ route('delUserAvatar', ['id' => $user->id, 'type' => 'avatar']) }}" method="POST">
                         @csrf @method('PATCH')
                         <input id="type-avatar" type="hidden" name="type" value="avatar">
                         <div class="d-grid gap-2">
@@ -158,7 +158,7 @@
         <div class="">
             <div class="row d-flex align-items-center justify-content-center">
                 <div class="col-12">
-                    <form action="{{ route('delUserAvatar', ['id' => $user->id]) }}" method="POST">
+                    <form action="{{ route('delUserAvatar', ['id' => $user->id, 'type' => 'banner']) }}" method="POST">
                         @csrf @method('PATCH')
                         <input id="type-banner" type="hidden" name="type" value="banner">
                         <div class="d-grid gap-2">
@@ -173,7 +173,7 @@
         <div class="" >
             <div class="row d-flex align-items-center justify-content-center">
                 <div class="col-12">
-                    <form action="{{ route('delUserAvatar', ['id' => $user->id]) }}" method="POST">
+                    <form action="{{ route('delUserAvatar', ['id' => $user->id, 'type' => 'favicon']) }}" method="POST">
                         @csrf @method('PATCH')
                         <input id="type" type="hidden" name="type" value="favicon">
                         <div class="d-grid gap-2">
@@ -188,7 +188,7 @@
         <div class="mb-3">
             <div class="row d-flex align-items-center justify-content-center">
                 <div class="col-12">
-                    <form action="{{ route('delUserAvatar', ['id' => $user->id]) }}" method="POST">
+                    <form action="{{ route('delUserAvatar', ['id' => $user->id, 'type' => 'logotype']) }}" method="POST">
                         @csrf @method('PATCH')
                         <input id="type" type="hidden" name="type" value="logotype">
                         <div class="d-grid gap-2">

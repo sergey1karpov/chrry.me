@@ -13,6 +13,9 @@ class ProductCategory extends Model
 
     protected $fillable = ['user_id', 'name', 'position', 'slug'];
 
+    const DEFAULT_CATEGORY = 'Все товары';
+    const DEFAULT_CATEGORY_SLUG = 'all';
+
     public function products()
     {
         return $this->hasMany(Product::class, 'product_categories_id', 'id');

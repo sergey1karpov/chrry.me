@@ -95,7 +95,7 @@
 
         <nav class="navbar navbar-expand-lg fixed-top">
             <div class="container-fluid">
-                <a class="navbar-brand" href="{{ route('userHomePage', ['slug' => $user->slug]) }}">
+                <a class="navbar-brand" href="{{ route('userHomePage', ['user' => $user->slug]) }}">
                     <img src="https://i.ibb.co/DM6hKmk/bbbbbbbbbbb.png" class="img-fluid mb-4" style="width:20px">
                 </a>
             </div>
@@ -122,7 +122,7 @@
         </div>
 
         <div class="me-3 ms-3 mt-4 mb-5 text-center">
-            <form action="{{route('sendOrder', ['id' => $user->id, 'product' => $product->id])}}" method="POST" id="order-form"> @CSRF @method('POST')
+            <form action="{{route('sendOrder', ['user' => $user->id, 'product' => $product->id])}}" method="POST" id="order-form"> @CSRF @method('POST')
                 <div class="mb-3">
                     <input type="text" name="client_name" class="form-control shadow" id="exampleInputEmail1" aria-describedby="emailHelp" style="border: 0">
                     <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Укажите ваше Имя\Фамилию\Отчество если есть</span>
