@@ -26,7 +26,6 @@ class ShopSettings extends Model
         'search_position',
         'canvas_color',
         'canvas_font_color',
-        'btn_color',
         'market_settings',
     ];
 }

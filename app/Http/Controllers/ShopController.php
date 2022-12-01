@@ -35,7 +35,6 @@ class ShopController extends Controller
             'search_position' => $request->search_position,
             'canvas_color' => $request->canvas_color,
             'canvas_font_color' => $request->canvas_font_color,
-            'btn_color' => $request->btn_color,
             'show_social' => $request->show_social,
         ]);
 

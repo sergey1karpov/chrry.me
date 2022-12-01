@@ -654,7 +654,7 @@
                     var id = $(this).data('id');
                     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
                     $.ajax({
-                        url: "/"+id+"/edit-profile/change-theme",
+                        url: "/"+"id"+id+"/edit-profile/change-theme",
                         type: 'PATCH',
                         data: {_token: CSRF_TOKEN, type: type},
                         dataType: 'HTML',

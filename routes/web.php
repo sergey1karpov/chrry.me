@@ -78,7 +78,7 @@ Route::prefix('/id{id}/')->middleware(['locale', 'userCheck', 'web'])->group(fun
      */
     Route::get('links', [LinkController::class, 'allLinks'])->name('allLinks');
     Route::get('create-links', [LinkController::class, 'createLinkForm'])->name('createLinkForm');
-    Route::get('search', [LinkController::class, 'searchLink'])->name('searchLink');
+    Route::get('search-link', [LinkController::class, 'searchLink'])->name('searchLink');
     Route::post('add-link', [LinkController::class, 'addLink'])->name('addLink');
     Route::post('add-post', [LinkController::class, 'addPost'])->name('addPost');
     Route::patch('add-link/{link}/edit', [LinkController::class, 'editLink'])->name('editLink');

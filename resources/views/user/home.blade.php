@@ -131,7 +131,7 @@
                         @if(Auth::user()->id == $user->id)
                             <div>
                                 <a class="btn  d-flex align-content-center" href="{{ route('editProfileForm', ['id' => Auth::user()->id]) }}">
-                                    <span class="material-symbols-outlined" style="border: 0; color: {{$user->marketSettings->btn_color}}">admin_panel_settings</span>
+                                    <span class="material-symbols-outlined" style="border: 0; color: {{$user->navigation_color}}">admin_panel_settings</span>
                                 </a>
                             </div>
                         @endif
@@ -141,7 +141,7 @@
                     @if($user->type == 'Market')
                         <div>
                             <button type="button" class="btn  d-flex align-content-center" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample" style="border: 0">
-                                <span class="material-symbols-outlined" style="border: 0; color: {{$user->marketSettings->btn_color}}">linear_scale</span>
+                                <span class="material-symbols-outlined" style="border: 0; color: {{$user->navigation_color}}">linear_scale</span>
                             </button>
                         </div>
                     @endif
@@ -153,7 +153,7 @@
                 <div class="offcanvas-header text-center" style="background-color: {{$user->marketSettings->canvas_color}}">
                     <h5 class="offcanvas-title" id="offcanvasExampleLabel" style="font-family: 'Inter', sans-serif; font-size: 1.2rem; color: {{$user->marketSettings->canvas_font_color}}">Категории товаров</h5>
                     <button type="button" class="btn d-flex align-content-center" data-bs-dismiss="offcanvas" aria-label="Close" style="border: 0">
-                        <span class="material-symbols-outlined" style="border: 0; color: {{$user->marketSettings->btn_color}}">close</span>
+                        <span class="material-symbols-outlined" style="border: 0; color: {{$user->navigation_color}}">close</span>
                     </button>
                 </div>
                 <div class="offcanvas-body text-center" style="max-width: none; background-color: {{$user->marketSettings->canvas_color}}">
@@ -337,7 +337,13 @@
                                 <div class="container" style="padding-left:8px; padding-right:8px">
                                     <!-- Если тип ссылки POST ссылка не работает\не кликабельно -->
                                     @if($link->type != 'POST')<a href="{{$link->link}}" style="text-decoration:none" onclick="countRabbits{{$link->id}}()">@elseif($link->type == 'POST') <a style="text-decoration:none" onclick="countRabbits{{$link->id}}()"> @endif
-                                        <div class="@if($link->animation) {{$link->animation}} @endif row ms-1 me-1 card {{$link->shadow}}" style="background-color:rgba({{$link->background_color}}, {{$link->transparency}}); border: 0; margin-top: 8px; border-radius: {{$link->rounded}}px; background-position: center">
+                                        <div class="@if($link->animation) {{$link->animation}} @endif row ms-1 me-1 card {{$link->shadow}}" style="
+                                            background-color:rgba({{$link->background_color}}, {{$link->transparency}});
+                                            border: 0;
+                                            margin-top: 8px;
+                                            border-radius: {{$link->rounded}}px;
+                                            background-position: center
+                                        ">
                                             <div class="d-flex align-items-center justify-content-start mt-1 mb-1" style="padding-left: 4px; padding-right: 4px;">
                                                 <!-- Картинка -->
                                                 <div class="col-1">

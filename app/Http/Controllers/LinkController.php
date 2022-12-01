@@ -7,57 +7,65 @@ use App\Http\Requests\UpdateLinkRequest;
 use App\Models\Link;
 use App\Models\User;
 use App\Services\UploadPhotoService;
-use Illuminate\Support\Facades\File;
+use App\Traits\IconsAndFonts;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class LinkController extends Controller
 {
-    public $uploadService;
+    use IconsAndFonts;
 
-    public function __construct(UploadPhotoService $uploadService)
+    public function __construct(
+        private readonly UploadPhotoService $uploadService
+    ) {}
+
+    /**
+     * Page with all user links
+     *
+     * @param int $userId
+     * @return View|Factory|Application
+     */
+    public function allLinks(int $userId): View|Factory|Application
     {
-        $this->uploadService = $uploadService;
+        $user = User::where('id', $userId)->firstOrFail();
+
+        return view('link.all-links', [
+            'user' => $user,
+            'allIconsInsideFolder' => $this->getIcons(),
+            'allFontsInFolder' => $this->getFonts(),
+        ]);
     }
 
     /**
-     * Возвращает страницу со всеми ссылками /links
+     * Form for create new link
      *
-     * @param int $id
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|never
+     * @param int $userId
+     * @return Application|Factory|View
      */
-    public function allLinks(int $id)
-    {
-        $user = User::where('id', $id)->firstOrFail();
-        $links = Link::where('user_id', $user->id)->where('pinned', false)->orderBy('position')->get();
-        $pinnedLinks = Link::where('user_id', $user->id)->where('pinned', true)->orderBy('position')->get();
-        $icons  = public_path('images/social');
-        $allIconsInsideFolder = File::files($icons);
-        $fonts  = public_path('fonts');
-        $allFontsInFolder = File::files($fonts);
-        return view('user.links', compact('user', 'links', 'allIconsInsideFolder','pinnedLinks', 'allFontsInFolder'));
-    }
-
-    public function createLinkForm(int $userId)
+    public function createLinkForm(int $userId): View|Factory|Application
     {
         $user = User::findOrFail($userId);
 
-        $icons  = public_path('images/social');
-        $allIconsInsideFolder = File::files($icons);
-        $fonts  = public_path('fonts');
-        $allFontsInFolder = File::files($fonts);
-
-        return view('link.add-link', compact('user', 'allIconsInsideFolder', 'allFontsInFolder'));
+        return view('link.add-link', [
+            'user' => $user,
+            'allIconsInsideFolder' => $this->getIcons(),
+            'allFontsInFolder' => $this->getFonts(),
+        ]);
     }
 
     /**
-     * Добавление ссылки
+     * Create new link
      *
      * @param int $userId
      * @param Link $link
      * @param LinkRequest $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    public function addLink(int $userId, Link $link, LinkRequest $request)
+    public function addLink(int $userId, Link $link, LinkRequest $request): RedirectResponse
     {
         $link->addLink($userId, $request, $this->uploadService);
 
@@ -65,14 +73,14 @@ class LinkController extends Controller
     }
 
     /**
-     * Изменить ссылку
+     * Update link
      *
      * @param int $userId
      * @param Link $link
-     * @param LinkRequest $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @param UpdateLinkRequest $request
+     * @return RedirectResponse
      */
-    public function editLink(int $userId, Link $link, UpdateLinkRequest $request)
+    public function editLink(int $userId, Link $link, UpdateLinkRequest $request): RedirectResponse
     {
         $link->editLink($userId, $link, $request, $this->uploadService);
 
@@ -80,14 +88,14 @@ class LinkController extends Controller
     }
 
     /**
-     * Изменить все ссылки
+     * Mass update links
      *
      * @param int $userId
      * @param Link $link
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    public function editAllLink(int $userId, Link $link, Request $request)
+    public function editAllLink(int $userId, Link $link, Request $request): RedirectResponse
     {
         $link->editAll($userId, $request);
 
@@ -95,13 +103,13 @@ class LinkController extends Controller
     }
 
     /**
-     * Удалить прикрепленное изображение у ссылки
+     * Delete photo from link
      *
      * @param int $userId
      * @param Link $link
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function delPhoto(int $userId, Link $link)
+    public function delPhoto(int $userId, Link $link): JsonResponse
     {
         $link->deleteLinkImage($userId, $link, $this->uploadService);
 
@@ -109,13 +117,13 @@ class LinkController extends Controller
     }
 
     /**
-     * Удаление иконки ссылки
+     * Delete icon from link
      *
-     * @param int $id
+     * @param int $userId
      * @param int $link
-     * @return \Illuminate\Http\JsonResponse|never
+     * @return JsonResponse
      */
-    public function delLinkIcon(int $userId, int $link)
+    public function delLinkIcon(int $userId, int $link): JsonResponse
     {
         Link::where('user_id', $userId)->where('id', $link)->update(['icon' => null]);
 
@@ -123,13 +131,13 @@ class LinkController extends Controller
     }
 
     /**
-     * Удаление ссылки
+     * Delete link
      *
      * @param int $userId
      * @param Link $link
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    public function delLink(int $userId, Link $link)
+    public function delLink(int $userId, Link $link): RedirectResponse
     {
         $link->dropLink($link, $this->uploadService);
 
@@ -137,11 +145,22 @@ class LinkController extends Controller
     }
 
     /**
-     * @param int $id
-     * @return void
-     *
-     * Сортировка ссылок на js
+     * Full text link search in all links page
      */
+    public function searchLink(int $id, Request $request)
+    {
+        $user = User::where('id', $id)->firstOrFail();
+
+        $links = Link::search($request->search)->where('user_id', $user->id)->orderBy('id', 'desc')->get();
+
+        return view('link.search', [
+            'user' => $user,
+            'links' => $links,
+            'allIconsInsideFolder' => $this->getIcons(),
+            'allFontsInFolder' => $this->getFonts(),
+        ]);
+    }
+
     public function sortLink(int $id)
     {
         if(isset($_POST['update'])) {
@@ -153,24 +172,5 @@ class LinkController extends Controller
                 ]);
             }
         }
-    }
-
-    /**
-     * @param int $id
-     * @param Request $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|never
-     *
-     * Laravel Scout search service
-     */
-    public function searchLink(int $id, Request $request)
-    {
-        $user = User::where('id', $id)->firstOrFail();
-        $links = Link::search($request->search)->where('user_id', $user->id)->orderBy('id', 'desc')->get();
-        $icons  = public_path('images/social');
-        $allIconsInsideFolder = File::files($icons);
-        $fonts  = public_path('fonts');
-        $allFontsInFolder = File::files($fonts);
-        return view('user.search', compact('user', 'links', 'allIconsInsideFolder', 'allFontsInFolder'));
-
     }
 }

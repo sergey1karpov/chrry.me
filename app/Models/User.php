@@ -53,6 +53,7 @@ class User extends Authenticatable
         'round_links_shadow_bottom',
         'round_links_shadow_round',
         'round_links_shadow_color',
+        'navigation_color'
     ];
 
     protected $hidden = [
@@ -63,11 +64,6 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    public function getRouteKeyName(): string
-    {
-        return 'slug';
-    }
 
     public function links(): HasMany
     {
@@ -201,6 +197,7 @@ class User extends Authenticatable
                     aspectRatio: true
                 ) :
                 $user->logotype,
+            'navigation_color' => $request->navigation_color,
         ]);
 
         if($request->type == 'Market') {

@@ -244,12 +244,6 @@
             <div class="mb-3 text-center d-flex justify-content-center">
                 <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" value="{{$user->marketSettings->canvas_font_color}}" name="canvas_font_color" style="height: 35px; border: 0">
             </div>
-            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">
-                Цвет для навигационных кнопок
-            </label>
-            <div class="mb-3 text-center d-flex justify-content-center">
-                <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" value="{{$user->marketSettings->btn_color}}" name="btn_color" style="height: 35px; border: 0">
-            </div>
 
             <div class="mb-1 text-center mt-2" >
                 <div class="ms-2 form-check" style="padding: 0">

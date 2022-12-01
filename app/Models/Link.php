@@ -47,21 +47,11 @@ class Link extends Model
         'bold',
     ];
 
-    /**
-     * @return string
-     *
-     * Таблица для индексирования
-     */
     public function searchableAs()
     {
         return 'links_index';
     }
 
-    /**
-     * @return array
-     *
-     * Laravel scout. Поля по которым идет поиск
-     */
     public function toSearchableArray()
     {
         return [
@@ -71,7 +61,7 @@ class Link extends Model
     }
 
     /**
-     * Путь по которому сохраняются фотографии для ссылок
+     * Path to save photo for link
      *
      * @param int $id
      * @return string
@@ -82,7 +72,7 @@ class Link extends Model
     }
 
     /**
-     * Добавление ссылки
+     * Add new link
      *
      * @param int $userId
      * @param LinkRequest $request
@@ -129,22 +119,22 @@ class Link extends Model
     }
 
     /**
-     * Изменить ссылку
+     * Update link
      *
      * @param int $userId
      * @param Link $link
-     * @param LinkRequest $request
+     * @param UpdateLinkRequest $request
      * @param UploadPhotoService $uploadService
      * @return void
      */
-    public function editLink(int $userId, Link $link, UpdateLinkRequest $request, UploadPhotoService $uploadService)
+    public function editLink(int $userId, Link $link, UpdateLinkRequest $request, UploadPhotoService $uploadService): void
     {
         Link::where('id', $link->id)->where('user_id', $userId)->update([
-            'title'                => isset($request->title) ? $request->title : $link->title,
-            'link'                 => isset($request->link) ? $request->link : $link->link,
+            'title'                => $request->title ?? $link->title,
+            'link'                 => $request->link ?? $link->link,
             'shadow'               => $request->shadow,
             'rounded'              => $request->rounded,
-            'title_color'          => isset($request->title_color) ? $request->title_color : $link->title_color,
+            'title_color'          => $request->title_color ?? $link->title_color,
             'background_color'     => isset($request->background_color) ?
                 ColorConvertorService::convertBackgroundColor($request->background_color) :
                 $link->background_color,
@@ -159,11 +149,11 @@ class Link extends Model
                     dropImagePath: $link->photo
                 ) :
                 $link->photo,
-            'icon'                 => isset($request->icon) ? $request->icon : $link->icon,
-            'transparency'         => isset($request->transparency) ? $request->transparency : $link->transparency,
+            'icon'                 => $request->icon ?? $link->icon,
+            'transparency'         => $request->transparency ?? $link->transparency,
             'pinned'               => isset($request->pinned) ? 1 : 0,
             'animation'            => $request->animation,
-            'font'                 => isset($request->font) ? $request->font : $link->font,
+            'font'                 => $request->font ?? $link->font,
             'font_size'            => $request->font_size,
             'text_shadow_color'    => $request->text_shadow_color,
             'text_shadow_blur'     => $request->text_shadow_blur,
@@ -174,7 +164,7 @@ class Link extends Model
     }
 
     /**
-     * Массовое изменение ссылок
+     * Mass update links
      *
      * @param int $userId
      * @param Request $request
@@ -190,7 +180,7 @@ class Link extends Model
             'transparency'         => $request->transparency,
             'shadow'               => $request->shadow,
             'rounded'              => $request->rounded,
-            'font'                 => isset($request->font) ? $request->font : 'Inter',
+            'font'                 => $request->font ?? 'Inter',
             'font_size'            => $request->font_size,
             'text_shadow_color'    => $request->text_shadow_color,
             'text_shadow_blur'     => $request->text_shadow_blur,
@@ -201,14 +191,14 @@ class Link extends Model
     }
 
     /**
-     * Удаление прикрепленного изображения
+     * Delete link photo
      *
      * @param int $userId
      * @param Link $link
      * @param UploadPhotoService $uploadService
      * @return void
      */
-    public function deleteLinkImage(int $userId, Link $link, UploadPhotoService $uploadService)
+    public function deleteLinkImage(int $userId, Link $link, UploadPhotoService $uploadService): void
     {
         $uploadService->dropImg($link->photo);
 
@@ -218,15 +208,15 @@ class Link extends Model
     }
 
     /**
-     * Удаление ссылки
+     * Drop link
      *
      * @param Link $link
      * @param UploadPhotoService $uploadService
      * @return void
      */
-    public function dropLink(Link $link, UploadPhotoService $uploadService)
+    public function dropLink(Link $link, UploadPhotoService $uploadService): void
     {
-        if(isset($link->photo)) {
+        if($link->photo) {
             $uploadService->dropImg($link->photo);
         }
 

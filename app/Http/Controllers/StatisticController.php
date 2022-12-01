@@ -4,27 +4,30 @@ namespace App\Http\Controllers;
 
 use App\Services\StatsService;
 use App\Models\User;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 
 class StatisticController extends Controller
 {
     /**
-     * @return void
+     * Collection of statistics on clicks on links
      *
-     * Сбор статистики по кликам по ссылкам
+     * @return void
      */
-    public function clickLinkStatistic()
+    public function clickLinkStatistic(): void
     {
         StatsService::clickLinkStatistic();
     }
 
     /**
+     * Get links statistics
+     *
      * @param int $id
      * @param int $link
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     *
-     * Отображение статистики по кликам за день, месяц, год, всё время
+     * @return Application|Factory|View
      */
-    public function showClickLinkStatistic(int $id, int $link)
+    public function showClickLinkStatistic(int $id, int $link): View|Factory|Application
     {
         $user = User::where('id', $id)->firstOrFail();
 
@@ -33,10 +36,15 @@ class StatisticController extends Controller
         $year = StatsService::getUserLinkStatsByYear($user, $link);
         $all = StatsService::getAllUserLinkStats($user, $link);
 
-        return view('user.link-stat', compact('user', 'link', 'day', 'month', 'year', 'all'));
+        return view('link.stat', compact('user', 'link', 'day', 'month', 'year', 'all'));
     }
 
-    public function productStats()
+    /**
+     * Collection of statistics on clicks on products
+     *
+     * @return void
+     */
+    public function productStats(): void
     {
         StatsService::productViewStats();
     }

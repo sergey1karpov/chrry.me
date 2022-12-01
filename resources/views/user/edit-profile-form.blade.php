@@ -429,6 +429,13 @@
             </div>
         </div>
 
+        <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">
+            Цвет для навигационных кнопок
+        </label>
+        <div class="mb-3 text-center d-flex justify-content-center">
+            <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" value="{{$user->navigation_color}}" name="navigation_color" style="height: 35px; border: 0">
+        </div>
+
         <div class="d-grid gap-2">
             <button type="submit" class="btn btn-secondary mb-1 mt-3" style="font-family: 'Rubik', sans-serif; border: 0; color: white">@lang('app.p_edit_prof')</button>
         </div>

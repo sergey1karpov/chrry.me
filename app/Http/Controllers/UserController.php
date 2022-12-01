@@ -6,15 +6,17 @@ use App\Models\User;
 use App\Services\UploadPhotoService;
 use App\Http\Requests\UpdateRegisteruserRequest;
 use App\Services\StatsService;
+use App\Traits\IconsAndFonts;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\File;
 use Illuminate\View\View;
 
 class UserController extends Controller
 {
+    use IconsAndFonts;
+
     public function __construct(
         private readonly UploadPhotoService $uploadService,
         private readonly StatsService $statsService,
@@ -45,15 +47,12 @@ class UserController extends Controller
 
         $stat = $this->statsService->getUserProfileStatistic($user);
 
-        // Get icons and fonts to customize links, events from project folder
-        // Transfer all this shit to AWS
-        $icons = public_path('images/social');
-        $allIconsInsideFolder = File::files($icons);
-        $fonts  = public_path('fonts');
-        $allFontsInFolder = File::files($fonts);
-
-        return view('user.edit-profile', compact('user', 'stat' , 'allIconsInsideFolder', 'allFontsInFolder'));
-
+        return view('user.edit-profile', [
+            'user' => $user,
+            'stat' => $stat,
+            'allIconsInsideFolder' => $this->getIcons(),
+            'allFontsInFolder' => $this->getFonts(),
+        ]);
     }
 
     /**
