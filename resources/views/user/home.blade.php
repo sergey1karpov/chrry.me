@@ -246,53 +246,53 @@
                         @endif
                     @endif
 
-                    @if($user->type == 'Events')
-                        @if($user->show_social == true)
-                            @if($user->social == 'TOP')
-                                @if(count($user->userLinks(false)) > 0)
-                                    <nav class="navbar mt-2">
-                                        <div class="container-fluid d-flex justify-content-center">
-                                            @foreach($user->userLinks(false) as $link)
-                                                @if($link->icon)
-                                                    <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">
-                                                        <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="
-                                                            width:{{ $user->round_links_width }}px;
-                                                            filter: drop-shadow({{ $user->round_links_shadow_right }}px {{ $user->round_links_shadow_bottom }}px {{ $user->round_links_shadow_round }}px {{ $user->round_links_shadow_color }})
-                                                        ">
-                                                    </a>
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                    </nav>
-                                @endif
-                            @endif
-                        @endif
-                    @endif
+{{--                    @if($user->type == 'Events')--}}
+{{--                        @if($user->show_social == true)--}}
+{{--                            @if($user->social == 'TOP')--}}
+{{--                                @if(count($user->userLinks(false)) > 0)--}}
+{{--                                    <nav class="navbar mt-2">--}}
+{{--                                        <div class="container-fluid d-flex justify-content-center">--}}
+{{--                                            @foreach($user->userLinks(false) as $link)--}}
+{{--                                                @if($link->icon)--}}
+{{--                                                    <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">--}}
+{{--                                                        <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="--}}
+{{--                                                            width:{{ $user->round_links_width }}px;--}}
+{{--                                                            filter: drop-shadow({{ $user->round_links_shadow_right }}px {{ $user->round_links_shadow_bottom }}px {{ $user->round_links_shadow_round }}px {{ $user->round_links_shadow_color }})--}}
+{{--                                                        ">--}}
+{{--                                                    </a>--}}
+{{--                                                @endif--}}
+{{--                                            @endforeach--}}
+{{--                                        </div>--}}
+{{--                                    </nav>--}}
+{{--                                @endif--}}
+{{--                            @endif--}}
+{{--                        @endif--}}
+{{--                    @endif--}}
 
-                    @if($user->type == 'Market')
-                        @if($user->show_social == true)
-                            @if($user->social == 'TOP')
-                                @if(count($user->userLinks(false)) > 0)
-                                    <nav class="navbar mt-2 mb-2">
-                                        <div class="container-fluid d-flex justify-content-center">
-                                            @foreach($user->userLinksInBar($user) as $link)
-                                                @if($link->icon)
-                                                    <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">
-                                                        <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="
-                                                            width:{{ $user->round_links_width }}px;
-                                                            filter: drop-shadow({{ $user->round_links_shadow_right }}px {{ $user->round_links_shadow_bottom }}px {{ $user->round_links_shadow_round }}px {{ $user->round_links_shadow_color }})
-                                                        ">
-                                                    </a>
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                    </nav>
-                                @endif
-                            @endif
-                        @endif
-                    @endif
+{{--                    @if($user->type == 'Market')--}}
+{{--                        @if($user->show_social == true)--}}
+{{--                            @if($user->social == 'TOP')--}}
+{{--                                @if(count($user->userLinks(false)) > 0)--}}
+{{--                                    <nav class="navbar mt-2 mb-2">--}}
+{{--                                        <div class="container-fluid d-flex justify-content-center">--}}
+{{--                                            @foreach($user->userLinksInBar($user) as $link)--}}
+{{--                                                @if($link->icon)--}}
+{{--                                                    <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">--}}
+{{--                                                        <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="--}}
+{{--                                                            width:{{ $user->round_links_width }}px;--}}
+{{--                                                            filter: drop-shadow({{ $user->round_links_shadow_right }}px {{ $user->round_links_shadow_bottom }}px {{ $user->round_links_shadow_round }}px {{ $user->round_links_shadow_color }})--}}
+{{--                                                        ">--}}
+{{--                                                    </a>--}}
+{{--                                                @endif--}}
+{{--                                            @endforeach--}}
+{{--                                        </div>--}}
+{{--                                    </nav>--}}
+{{--                                @endif--}}
+{{--                            @endif--}}
+{{--                        @endif--}}
+{{--                    @endif--}}
 
-                    @if($user->type == 'Links')
+{{--                    @if($user->type == 'Links')--}}
                         @if($user->social_links_bar == 1)
                             @if($user->links_bar_position == 'top')
                                 @if(count($user->userLinks(false)) > 0)
@@ -313,7 +313,7 @@
                                 @endif
                             @endif
                         @endif
-                    @endif
+{{--                    @endif--}}
 
 		      	</div>
 	    	</div>
@@ -542,28 +542,28 @@
             <!-- ---------------------- -->
             <!-- Соц сети для типа Events -->
             <!-- ---------------------- -->
-            @if($user->type == 'Events')
-                @if($user->show_social == true)
-                    @if($user->social == 'DOWN')
-                        @if(count($user->userLinks(false)) > 0)
-                            <nav class="navbar mt-4">
-                                <div class="container-fluid d-flex justify-content-center">
-                                    @foreach($user->userLinks(false) as $link)
-                                        @if($link->icon)
-                                            <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">
-                                                <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="
-                                                    width:{{ $user->round_links_width }}px;
-                                                    filter: drop-shadow({{ $user->round_links_shadow_right }}px {{ $user->round_links_shadow_bottom }}px {{ $user->round_links_shadow_round }}px {{ $user->round_links_shadow_color }})
-                                                ">
-                                            </a>
-                                        @endif
-                                    @endforeach
-                                </div>
-                            </nav>
-                        @endif
-                    @endif
-                @endif
-            @endif
+{{--            @if($user->type == 'Events')--}}
+{{--                @if($user->show_social == true)--}}
+{{--                    @if($user->social == 'DOWN')--}}
+{{--                        @if(count($user->userLinks(false)) > 0)--}}
+{{--                            <nav class="navbar mt-4">--}}
+{{--                                <div class="container-fluid d-flex justify-content-center">--}}
+{{--                                    @foreach($user->userLinks(false) as $link)--}}
+{{--                                        @if($link->icon)--}}
+{{--                                            <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">--}}
+{{--                                                <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="--}}
+{{--                                                    width:{{ $user->round_links_width }}px;--}}
+{{--                                                    filter: drop-shadow({{ $user->round_links_shadow_right }}px {{ $user->round_links_shadow_bottom }}px {{ $user->round_links_shadow_round }}px {{ $user->round_links_shadow_color }})--}}
+{{--                                                ">--}}
+{{--                                            </a>--}}
+{{--                                        @endif--}}
+{{--                                    @endforeach--}}
+{{--                                </div>--}}
+{{--                            </nav>--}}
+{{--                        @endif--}}
+{{--                    @endif--}}
+{{--                @endif--}}
+{{--            @endif--}}
             <div class="mb-3"></div>
 
         <!-- ---------------------- -->
@@ -828,33 +828,33 @@
                     @endif
                 @endif
             </div>
-            @if($user->type == 'Market')
-                @if($user->show_social == true)
-                    @if($user->social == 'DOWN')
-                        @if(count($user->userLinks(false)) > 0)
-                            <nav class="navbar mt-4">
-                                <div class="container-fluid d-flex justify-content-center">
-                                    @foreach($user->userLinksInBar($user) as $link)
-                                        @if($link->icon)
-                                            <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">
-                                                <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="
-                                                    width:{{ $user->round_links_width }}px;
-                                                    filter: drop-shadow({{ $user->round_links_shadow_right }}px {{ $user->round_links_shadow_bottom }}px {{ $user->round_links_shadow_round }}px {{ $user->round_links_shadow_color }})
-                                                ">
-                                            </a>
-                                        @endif
-                                    @endforeach
-                                </div>
-                            </nav>
-                        @endif
-                    @endif
-                @endif
-            @endif
+{{--            @if($user->type == 'Market')--}}
+{{--                @if($user->show_social == true)--}}
+{{--                    @if($user->social == 'DOWN')--}}
+{{--                        @if(count($user->userLinks(false)) > 0)--}}
+{{--                            <nav class="navbar mt-4">--}}
+{{--                                <div class="container-fluid d-flex justify-content-center">--}}
+{{--                                    @foreach($user->userLinksInBar($user) as $link)--}}
+{{--                                        @if($link->icon)--}}
+{{--                                            <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">--}}
+{{--                                                <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="--}}
+{{--                                                    width:{{ $user->round_links_width }}px;--}}
+{{--                                                    filter: drop-shadow({{ $user->round_links_shadow_right }}px {{ $user->round_links_shadow_bottom }}px {{ $user->round_links_shadow_round }}px {{ $user->round_links_shadow_color }})--}}
+{{--                                                ">--}}
+{{--                                            </a>--}}
+{{--                                        @endif--}}
+{{--                                    @endforeach--}}
+{{--                                </div>--}}
+{{--                            </nav>--}}
+{{--                        @endif--}}
+{{--                    @endif--}}
+{{--                @endif--}}
+{{--            @endif--}}
         @endif
         <!-- ---------------------- -->
         <!-- Соц сети для типа Links -->
         <!-- ---------------------- -->
-        @if($user->type == 'Links')
+{{--        @if($user->type == 'Links')--}}
             @if($user->social_links_bar == 1)
                 @if($user->links_bar_position == 'bottom')
                     @if(count($user->userLinks(false)) > 0)
@@ -875,7 +875,7 @@
                     @endif
                 @endif
             @endif
-        @endif
+{{--        @endif--}}
 
         @if($user->show_logo == true)
             <div class="container-fluid justify-content-center text-center mb-4 " style="margin-top: 70px">

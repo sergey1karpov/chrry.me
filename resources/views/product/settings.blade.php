@@ -223,15 +223,6 @@
                 </select>
             </div>
 
-            <div class="mb-3 text-center" id="search_position">
-                <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Где отображать панель поиска</label>
-                <select class="form-select shadow" name="search_position" aria-label="Default select example" style="border: 0">
-                    <option value="on_main" @if($user->marketSettings->search_position == 'on_main') selected @endif>На главной странице витрины</option>
-                    <option value="on_canvas" @if($user->marketSettings->search_position == 'on_canvas') selected @endif>В боковой шторке</option>
-                    <option value="main_and_canvas" @if($user->marketSettings->search_position == 'main_and_canvas') selected @endif>Везде где можно</option>
-                </select>
-            </div>
-
             <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">
                 Цвет для шторки
             </label>

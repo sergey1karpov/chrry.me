@@ -315,17 +315,33 @@
             </select>
         </div>
 
-        <div id="link_bar">
+        <div class=" mb-3">
+            <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Показать логотип CHRRY.ME</label>
+            <select name="show_logo" class="form-select @if($user->dayVsNight) bg-secondary @endif shadow" aria-label="Default select example" style="border: 0">
+                <option @if($user->show_logo == '1') selected @endif value="{{1}}">Показать</option>
+                <option @if($user->show_logo == '0') selected @endif value="{{0}}">Отключить</option>
+            </select>
+            <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Отображать наш логотип на странице или нет</span>
+        </div>
+
+        <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">
+            Цвет для навигационных кнопок
+        </label>
+        <div class="mb-3 text-center d-flex justify-content-center">
+            <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" value="{{$user->navigation_color}}" name="navigation_color" style="height: 35px; border: 0">
+        </div>
+
+        <div>
             <div class=" mb-3">
                 <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Отображение бара с соц сетями</label>
-                <select id="is_link_bar" name="social_links_bar" class="form-select @if($user->dayVsNight) bg-secondary @endif shadow" aria-label="Default select example" style="border: 0">
+                <select id="social_links_bar" name="social_links_bar" class="form-select @if($user->dayVsNight) bg-secondary @endif shadow" aria-label="Default select example" style="border: 0">
                     <option @if($user->social_links_bar == '1') selected @endif value="{{1}}">Включить</option>
                     <option @if($user->social_links_bar == '0') selected @endif value="{{0}}">Выключить</option>
                 </select>
                 <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Если у вас тип страницы "Ссылки", вы можете все свои ссылки с нашими иконками вынести в отдельный бар</span>
             </div>
 
-            <div class="mb-3" id="links_bar_settings">
+            <div id="social_links_bar_settings">
                 <div class=" mb-3">
                     <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Позиция бара с соц сетями</label>
                     <select name="links_bar_position" class="form-select @if($user->dayVsNight) bg-secondary @endif shadow" aria-label="Default select example" style="border: 0">
@@ -363,15 +379,6 @@
         </div>
 
         <div class=" mb-3">
-            <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Показать логотип</label>
-            <select name="show_logo" class="form-select @if($user->dayVsNight) bg-secondary @endif shadow" aria-label="Default select example" style="border: 0">
-                <option @if($user->show_logo == '1') selected @endif value="{{1}}">Показать</option>
-                <option @if($user->show_logo == '0') selected @endif value="{{0}}">Отключить</option>
-            </select>
-            <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Отображать наш логотип на странице или нет</span>
-        </div>
-
-        <div class=" mb-3">
             <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Тип страницы</label>
             <select id="type-profile" name="type" class="form-select @if($user->dayVsNight) bg-secondary @endif shadow" aria-label="Default select example" style="border: 0">
                 <option selected>Выберите тип страницы</option>
@@ -380,61 +387,67 @@
                 <option @if($user->type == 'Market') selected @endif value="Market">Магазин</option>
             </select>
         </div>
-        <div id="event-block" style="display:none">
-            <div class=" mb-3">
-                <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Отображение иконок соц сетей</label>
-                <select id="show_social" name="show_social" class="form-select @if($user->dayVsNight) bg-secondary @endif shadow" aria-label="Default select example" style="border: 0">
-                    <option selected>Показать иконки соц. сетей или нет</option>
-                    <option @if($user->show_social == true) selected @endif value="1">Показать</option>
-                    <option @if($user->show_social == false) selected @endif value="0">Нет</option>
-                </select>
-                <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Будут отображаться только ссылки с иконками из нашей бд.</span>
-            </div>
 
-            <div id="is_link_bar_market_event">
-                <div class=" mb-3">
-                    <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Местоположение иконок</label>
-                    <select name="social" class="form-select @if($user->dayVsNight) bg-secondary @endif shadow" aria-label="Default select example" style="border: 0">
-                        <option selected>Показать иконки соц. сетей или нет</option>
-                        <option @if($user->social == 'TOP') selected @endif value="TOP">Вверху</option>
-                        <option @if($user->social == 'DOWN') selected @endif value="DOWN">Внизу</option>
-                    </select>
-                    <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Вверху - между вашим именем и мероприятиями. Внизу - под мероприятиями</span>
-                </div>
 
-{{--                <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Размер логотипов</label>--}}
-{{--                <div class="input-group mb-3">--}}
-{{--                    <input type="range" class="form-range" min="25" max="70" step="1" id="customRange3" name="round_links_width" value="{{$user->round_links_width}}">--}}
-{{--                </div>--}}
 
-{{--                <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Тень вправо</label>--}}
-{{--                <div class="input-group mb-3">--}}
-{{--                    <input type="range" class="form-range" min="0" max="40" step="1" id="customRange3" name="round_links_shadow_right" value="{{$user->round_links_shadow_right}}">--}}
-{{--                </div>--}}
 
-{{--                <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Тень вниз</label>--}}
-{{--                <div class="input-group mb-3">--}}
-{{--                    <input type="range" class="form-range" min="0" max="40" step="1" id="customRange3" name="round_links_shadow_bottom" value="{{$user->round_links_shadow_bottom}}">--}}
-{{--                </div>--}}
 
-{{--                <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Тень радиус</label>--}}
-{{--                <div class="input-group mb-3">--}}
-{{--                    <input type="range" class="form-range" min="0" max="40" step="1" id="customRange3" name="round_links_shadow_round" value="{{$user->round_links_shadow_round}}">--}}
-{{--                </div>--}}
 
-{{--                <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Цвет тени</label>--}}
-{{--                <div class="mb-3 text-center d-flex justify-content-center">--}}
-{{--                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" id="exampleColorInput" value="{{$user->round_links_shadow_color}}" title="Choose your color" name="round_links_shadow_color" style="height: 35px; border: 0">--}}
-{{--                </div>--}}
-            </div>
-        </div>
 
-        <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">
-            Цвет для навигационных кнопок
-        </label>
-        <div class="mb-3 text-center d-flex justify-content-center">
-            <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" value="{{$user->navigation_color}}" name="navigation_color" style="height: 35px; border: 0">
-        </div>
+
+
+
+
+
+{{--        <div id="links_settings">--}}
+{{--            <div class=" mb-3">--}}
+{{--                <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Позиция бара с соц сетями</label>--}}
+{{--                <select name="links_bar_position" class="form-select @if($user->dayVsNight) bg-secondary @endif shadow" aria-label="Default select example" style="border: 0">--}}
+{{--                    <option @if($user->links_bar_position == 'top') selected @endif value="top">Вверху</option>--}}
+{{--                    <option @if($user->links_bar_position == 'bottom') selected @endif value="bottom">Внизу</option>--}}
+{{--                </select>--}}
+{{--                <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Вы можете выбрать где отобразить бар с сылками, вверху или внизу</span>--}}
+{{--            </div>--}}
+
+{{--            <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Размер иконок</label>--}}
+{{--            <div class="input-group mb-3">--}}
+{{--                <input type="range" class="form-range" min="40" max="70" step="1" id="customRange3" name="round_links_width" value="{{$user->round_links_width}}">--}}
+{{--            </div>--}}
+
+{{--            <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Тень вправо</label>--}}
+{{--            <div class="input-group mb-3">--}}
+{{--                <input type="range" class="form-range" min="0" max="40" step="1" id="customRange3" name="round_links_shadow_right" value="{{$user->round_links_shadow_right}}">--}}
+{{--            </div>--}}
+
+{{--            <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Тень вниз</label>--}}
+{{--            <div class="input-group mb-3">--}}
+{{--                <input type="range" class="form-range" min="0" max="40" step="1" id="customRange3" name="round_links_shadow_bottom" value="{{$user->round_links_shadow_bottom}}">--}}
+{{--            </div>--}}
+
+{{--            <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif;">Тень радиус</label>--}}
+{{--            <div class="input-group mb-3">--}}
+{{--                <input type="range" class="form-range" min="0" max="40" step="1" id="customRange3" name="round_links_shadow_round" value="{{$user->round_links_shadow_round}}">--}}
+{{--            </div>--}}
+
+{{--            <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Цвет тени</label>--}}
+{{--            <div class="mb-3 text-center d-flex justify-content-center">--}}
+{{--                <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" id="exampleColorInput" value="{{$user->round_links_shadow_color}}" title="Choose your color" name="round_links_shadow_color" style="height: 35px; border: 0">--}}
+{{--            </div>--}}
+{{--        </div>--}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         <div class="d-grid gap-2">
             <button type="submit" class="btn btn-secondary mb-1 mt-3" style="font-family: 'Rubik', sans-serif; border: 0; color: white">@lang('app.p_edit_prof')</button>
@@ -457,85 +470,116 @@
     });
 
     $( document ).ready(function() {
-        var type = $('#type-profile').val();
-        if(type == 'Links') {
-            $('#event-block').hide();
+        var type = $('#social_links_bar').val();
+        if(type == 1) {
+            $('#social_links_bar_settings').show();
         }
-        if(type == 'Events' || type == 'Market') {
-            $('#event-block').show();
+        if(type == 0) {
+            $('#social_links_bar_settings').hide();
         }
-        $('#type-profile').change(function(){
+
+        $('#social_links_bar').change(function(){
             $('#pp').html($(this).val());
-            if($(this).val() == 'Events' || $(this).val() == 'Market') {
-                $('#event-block').show();
+            if($(this).val() == 0) {
+                $('#social_links_bar_settings').hide();
             }
-            if($(this).val() == 'Links') {
-                $('#event-block').hide();
+            if($(this).val() == 1) {
+                $('#social_links_bar_settings').show();
             }
         });
     });
-
+    //
+    // $( document ).ready(function() {
+    //     var type = $('#type-profile').val();
+    //     if(type == 'Links') {
+    //         $('#event-block').hide();
+    //     }
+    //     if(type == 'Events' || type == 'Market') {
+    //         $('#event-block').show();
+    //     }
+    //     $('#type-profile').change(function(){
+    //         $('#pp').html($(this).val());
+    //         if($(this).val() == 'Events' || $(this).val() == 'Market') {
+    //             $('#event-block').show();
+    //         }
+    //         if($(this).val() == 'Links') {
+    //             $('#event-block').hide();
+    //         }
+    //     });
+    // });
 
     //Select page type
-    $( document ).ready(function() {
-        var type = $('#is_link_bar').val();
-        if(type == 1) {
-            $('#links_bar_settings').show();
-        }
-        if(type == 0) {
-            $('#links_bar_settings').hide();
-        }
-
-        $('#is_link_bar').change(function(){
-            $('#pp').html($(this).val());
-            if($(this).val() == 0) {
-                $('#links_bar_settings').hide();
-            }
-            if($(this).val() == 1) {
-                $('#links_bar_settings').show();
-            }
-        });
-    });
+    // $( document ).ready(function() {
+    //     var type = $('#is_link_bar').val();
+    //     if(type == 1) {
+    //         $('#links_settings').show();
+    //         $('#links_bar_settings').show();
+    //     }
+    //     if(type == 0) {
+    //         $('#links_settings').hide();
+    //         $('#links_bar_settings').hide();
+    //     }
+    //
+    //     $('#is_link_bar').change(function(){
+    //         $('#pp').html($(this).val());
+    //         if($(this).val() == 0) {
+    //             $('#links_settings').hide();
+    //             $('#links_bar_settings').hide();
+    //         }
+    //         if($(this).val() == 1) {
+    //             $('#links_settings').show();
+    //             $('#links_bar_settings').show();
+    //         }
+    //     });
+    // });
 
     //Select page typetttttttttttttttt
-    $( document ).ready(function() {
-        var type = $('#show_social').val();
-        if(type == 1) {
-            $('#is_link_bar_market_event').show();
-        }
-        if(type == 0) {
-            $('#is_link_bar_market_event').hide();
-        }
+    // $( document ).ready(function() {
+    //     var type = $('#show_social').val();
+    //     if(type == 1) {
+    //         $('#links_settings').show();
+    //         $('#is_link_bar_market_event').show();
+    //     }
+    //     if(type == 0) {
+    //         $('#links_settings').hide();
+    //         $('#is_link_bar_market_event').hide();
+    //     }
+    //
+    //     $('#show_social').change(function(){
+    //         $('#pp').html($(this).val());
+    //         if($(this).val() == 0) {
+    //             $('#links_settings').hide();
+    //             $('#is_link_bar_market_event').hide();
+    //         }
+    //         if($(this).val() == 1) {
+    //             $('#links_settings').show();
+    //             $('#is_link_bar_market_event').show();
+    //         }
+    //     });
+    // });
 
-        $('#show_social').change(function(){
-            $('#pp').html($(this).val());
-            if($(this).val() == 0) {
-                $('#is_link_bar_market_event').hide();
-            }
-            if($(this).val() == 1) {
-                $('#is_link_bar_market_event').show();
-            }
-        });
-    });
-
-    $( document ).ready(function() {
-        var type = $('#type-profile').val();
-        if(type == 'Events' || type == 'Market') {
-            $('#link_bar').hide();
-        }
-        if(type == 'Links') {
-            $('#link_bar').show();
-        }
-        $('#type-profile').change(function(){
-            $('#pp').html($(this).val());
-            if($(this).val() == 'Events' || $(this).val() == 'Market') {
-                $('#link_bar').hide();
-            }
-            if($(this).val() == 'Links') {
-                $('#link_bar').show();
-            }
-        });
-    });
+    // $( document ).ready(function() {
+    //     var type = $('#type-profile').val();
+    //     if(type == 'Events' || type == 'Market') {
+    //         $('#links_settings').hide();
+    //         $('#link_bar').hide();
+    //     }
+    //     if(type == 'Links') {
+    //         $('#links_settings').show();
+    //         $('#link_bar').show();
+    //     }
+    //     $('#type-profile').change(function(){
+    //         $('#pp').html($(this).val());
+    //         if($(this).val() == 'Events' || $(this).val() == 'Market') {
+    //             $('#links_settings').hide();
+    //             $('#link_bar').hide();
+    //         }
+    //         if($(this).val() == 'Links') {
+    //             $('#links_settings').show();
+    //             $('#link_bar').show();
+    //         }
+    //     });
+    // });
 
 </script>
 
