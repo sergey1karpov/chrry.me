@@ -29,6 +29,6 @@ class DropEvents extends Command
      */
     public function handle()
     {
-        Event::where('date', '<', Carbon::now())->delete();
+        Event::where('date', '<', Carbon::tomorrow())->delete();
     }
 }

@@ -73,7 +73,7 @@ class Event extends Model
     ];
 
     /**
-     * Возвращает путь по которому сохраняются изображения для Event
+     * Path to save photo for event
      *
      * @param int $id
      * @return string
@@ -84,7 +84,7 @@ class Event extends Model
     }
 
     /**
-     * Добавление нового мероприятия
+     * Create new event
      *
      * @param int $id
      * @param EventRequest $request
@@ -102,17 +102,12 @@ class Event extends Model
             'location'    => $request->location,
             'time'        => $request->time,
             'date'        => $request->date,
-            'banner'      => $uploadService->uploader(
-                ph: $request->banner,
-                path: $this->imgPath($id),
-                size: 500
-            ),
+            'banner'      => $uploadService->uploader(ph: $request->banner, path: $this->imgPath($id), size: 500),
             'video'       => $request->video,
             'media'       => $request->media,
             'tickets'     => $request->tickets,
             'user_id'     => Auth::user()->id,
             'link_id'     => 1,
-
             'location_font'         => isset($request->check_last_event) ? $lastEvent->location_font : $request->location_font,
             'location_font_size'    => isset($request->check_last_event) ? $lastEvent->location_font_size : $request->location_font_size,
             'location_font_color'   => isset($request->check_last_event) ? $lastEvent->location_font_color : $request->location_font_color,
@@ -141,23 +136,23 @@ class Event extends Model
     }
 
     /**
-     * Изменить мероприятие
+     * Update event
      *
      * @param int $id
      * @param Event $event
-     * @param Request $request
+     * @param UpdateEventRequest $request
      * @param UploadPhotoService $uploadService
      * @return void
      */
     public function editEvent(int $id, Event $event, UpdateEventRequest $request, UploadPhotoService $uploadService)
     {
         Event::where('id', $event->id)->update([
-            'title'       => isset($request->title) ? $request->title : $event->title,
-            'description' => isset($request->description) ? $request->description : $event->description,
-            'city'        => isset($request->city) ? $request->city : $event->city,
-            'location'    => isset($request->location) ? $request->location : $event->location,
-            'time'        => isset($request->time) ? $request->time : $event->time,
-            'date'        => isset($request->date) ? $request->date : $event->date,
+            'title'       => $request->title ?? $event->title,
+            'description' => $request->description ?? $event->description,
+            'city'        => $request->city ?? $event->city,
+            'location'    => $request->location ?? $event->location,
+            'time'        => $request->time ?? $event->time,
+            'date'        => $request->date ?? $event->date,
             'banner'      => isset($request->banner) ?
                 $uploadService->uploader(
                     ph: $request->banner,
@@ -171,10 +166,10 @@ class Event extends Model
             'media'       => $request->media,
             'tickets'     => $request->tickets,
 
-            'location_font'         => isset($request->location_font) ? $request->location_font : $event->location_font,
+            'location_font'         => $request->location_font ?? $event->location_font,
             'location_font_size'    => $request->location_font_size,
             'location_font_color'   => $request->location_font_color,
-            'date_font'             => isset($request->date_font) ? $request->date_font : $event->date_font,
+            'date_font'             => $request->date_font ?? $event->date_font,
             'date_font_size'        => $request->date_font_size,
             'date_font_color'       => $request->date_font_color,
             'transparency'          => $request->transparency,
@@ -190,7 +185,7 @@ class Event extends Model
             'date_text_shadow_blur'       => $request->date_text_shadow_blur,
             'date_text_shadow_bottom'     => $request->date_text_shadow_bottom,
             'date_text_shadow_right'      => $request->date_text_shadow_right,
-            'block_shadow'                => isset($request->block_shadow) ? $request->block_shadow : $event->shadow,
+            'block_shadow'                => $request->block_shadow ?? $event->shadow,
             'bold_city'     => $request->bold_city,
             'bold_location' => $request->bold_location,
             'bold_date'     => $request->bold_date,
@@ -199,13 +194,13 @@ class Event extends Model
     }
 
     /**
-     * Массовое изменение мероприятий
+     * Events mass edit
      *
      * @param int $id
      * @param Request $request
      * @return void
      */
-    public function editAll(int $id, Request $request)
+    public function editAll(int $id, Request $request): void
     {
         Event::where('user_id', $id)->update([
             'location_font'         => $request->location_font,
@@ -235,7 +230,7 @@ class Event extends Model
     }
 
     /**
-     * Удаление мероприятия
+     * Delete event
      *
      * @param Event $event
      * @param UploadPhotoService $uploadService
