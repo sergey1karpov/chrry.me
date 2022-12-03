@@ -219,7 +219,7 @@
                 @if($user->marketSettings->search_position == 'on_canvas' || $user->marketSettings->search_position == 'main_and_canvas')
                     <div class="d-flex justify-content-center mb-5">
                         <div class="col-12 d-flex justify-content-center align-items-center" style="padding-right: 12px; padding-left: 12px">
-                            <form class="" action="{{ route('fullTextSearch', ['slug' => $user->slug]) }}" style="width: 100%">
+                            <form class="" action="{{ route('fullTextSearch', ['user' => $user->slug]) }}" style="width: 100%">
                                 <input class="form-control me-2 shadow" type="search" name="search" placeholder="Поиск..." aria-label="Search" style="border: 0">
                             </form>
                         </div>
@@ -246,8 +246,8 @@
                                         @if($link->icon)
                                             <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">
                                                 <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="
-                                                        width:{{ $user->userSettings->round_links_width }}px;
-                                                        filter: drop-shadow({{ $user->userSettings->round_links_shadow_right }}px {{ $user->userSettings->round_links_shadow_bottom }}px {{ $user->userSettings->round_links_shadow_round }}px {{ $user->userSettings->round_links_shadow_color }})
+                                                        width:{{ $user->round_links_width }}px;
+                                                        filter: drop-shadow({{ $user->round_links_shadow_right }}px {{ $user->round_links_shadow_bottom }}px {{ $user->round_links_shadow_round }}px {{ $user->round_links_shadow_color }})
                                                     ">
                                             </a>
                                         @endif
@@ -265,7 +265,7 @@
 @if($user->type == 'Market')
     <div style="margin-top: 60px">
         @if($products->count() == 0)
-            <div class="text-center">
+            <div class="text-center ms-2 me-2">
                 <div class="alert alert-success d-flex align-items-center" role="alert">
                     <div>
                         <h1 style="font-family: 'Roboto Flex', sans-serif; font-size: 1.2rem">По вашему запросу ничего не найдено. Измените параметры фильтров поиска</h1>
@@ -494,8 +494,8 @@
                             @if($link->icon)
                                 <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">
                                     <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="
-                                                    width:{{ $user->userSettings->round_links_width }}px;
-                                                    filter: drop-shadow({{ $user->userSettings->round_links_shadow_right }}px {{ $user->userSettings->round_links_shadow_bottom }}px {{ $user->userSettings->round_links_shadow_round }}px {{ $user->userSettings->round_links_shadow_color }})
+                                                    width:{{ $user->round_links_width }}px;
+                                                    filter: drop-shadow({{ $user->round_links_shadow_right }}px {{ $user->round_links_shadow_bottom }}px {{ $user->round_links_shadow_round }}px {{ $user->round_links_shadow_color }})
                                                 ">
                                 </a>
                             @endif

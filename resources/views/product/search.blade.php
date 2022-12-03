@@ -136,7 +136,7 @@
             <form class="" action="{{ route('searchProducts', ['id' => Auth::user()->id]) }}">
                 <input class="form-control me-2" type="search" placeholder="Поиск товаров" aria-label="Search" name="search" style="height: 30px">
             </form>
-            <a class="" href="{{ route('userHomePage',  ['slug' => Auth::user()->slug]) }}" style="text-decoration: none; border: 0; padding: 0">
+            <a class="" href="{{ route('userHomePage',  ['user' => Auth::user()->slug]) }}" style="text-decoration: none; border: 0; padding: 0">
                 <div class="img" style="background-image: url({{$user->avatar}});"></div>
             </a>
         </div>
@@ -168,7 +168,7 @@
                         </div>
                         <div class="d-flex justify-content-between" style="padding: 0; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;">
                             <div class="col-4 border-end text-center" style="background-color: #f0eeef; box-shadow: 5px 0px 0px black; border-bottom-left-radius: 5px;">
-                                <a href="#" style="text-decoration: none; color: black">
+                                <a href="{{ route('statsProducts', ['id' => $user->id, 'product' => $product->id]) }}" style="text-decoration: none; color: black">
                                     <button href="#" class="btn-sm" style="background-color: #f1f2f2; border: 0;">
                                         Статистика
                                     </button>

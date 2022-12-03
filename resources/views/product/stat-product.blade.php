@@ -43,7 +43,7 @@
                 <a class="mb-1" href="{{ route('editProfileForm', ['id' => Auth::user()->id]) }}">
                     <img src="https://i.ibb.co/DM6hKmk/bbbbbbbbbbb.png" class="img-fluid" style="width:20px; border: 0">
                 </a>
-                <a class="" href="{{ route('userHomePage',  ['slug' => Auth::user()->slug]) }}" style="text-decoration: none; border: 0; padding: 0">
+                <a class="" href="{{ route('userHomePage',  ['user' => Auth::user()->slug]) }}" style="text-decoration: none; border: 0; padding: 0">
                     <div class="img" style="background-image: url({{$user->avatar}});"></div>
                 </a>
             </div>

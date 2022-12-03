@@ -122,7 +122,7 @@
         </div>
 
         <div class="me-3 ms-3 mt-4 mb-5 text-center">
-            <form action="{{route('sendOrder', ['user' => $user->id, 'product' => $product->id])}}" method="POST" id="order-form"> @CSRF @method('POST')
+            <form action="{{route('sendOrder', ['id' => $user->id, 'product' => $product->id])}}" method="POST" id="order-form"> @CSRF @method('POST')
                 <div class="mb-3">
                     <input type="text" name="client_name" class="form-control shadow" id="exampleInputEmail1" aria-describedby="emailHelp" style="border: 0">
                     <span style="font-family: 'Rubik', sans-serif; font-size: 0.8rem;">Укажите ваше Имя\Фамилию\Отчество если есть</span>

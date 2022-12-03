@@ -478,7 +478,7 @@
         <!-- Мероприятия -->
         <!-- ---------------------- -->
         @elseif($user->type == 'Events')
-            <div class="mt-3">
+            <div class="mt-4">
                 @foreach($user->events as $event)
                     <div class="container mt-2" data-bs-toggle="modal" data-bs-target="#eventModal{{$event->id}}">
                         <div class="col-lg-12 allalbums">

@@ -74,7 +74,17 @@ class FilterAndSearchProductController extends Controller
     {
         $categorySlug = $request->categorySlug;
 
-        $productCategory = ProductCategory::where('slug', $request->categorySlug)->first(); //Текущая категория
+        $productCategory = ProductCategory::where('slug', $request->categorySlug)->first();//Текущая категория
+
+        if($productCategory->slug == 'all') {
+            $productsCollection = Product::where('user_id', $user->id)
+                ->where('delete', null)
+                ->get();
+
+            $products = ProductFilters::filter($productCategory, $productsCollection, $request);
+
+            return view('categories.search-result', compact('user', 'products', 'productCategory', 'categorySlug'));
+        }
 
         $productsCollection = Product::where('user_id', $user->id)
             ->where('delete', null)

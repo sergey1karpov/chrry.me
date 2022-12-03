@@ -119,6 +119,9 @@
                             <div class="title">
                                 <span style="font-family: 'Rubik', sans-serif; font-size: 80%; line-height: 16px; display:block; color: white;">- {{$message}}</span>
                             </div>
+                            <div class="title mt-2">
+                                <span style="font-family: 'Rubik', sans-serif; font-size: 80%; line-height: 16px; display:block; color: white;">Добавьте еще одну ссылку или перейдите на <a href="{{ route('userHomePage', ['user' => $user->slug]) }}">главную страницу</a></span>
+                            </div>
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     </div>

@@ -136,7 +136,7 @@
             <form class="" action="{{ route('searchProducts', ['id' => Auth::user()->id]) }}">
                 <input class="form-control me-2" type="search" placeholder="Поиск товаров" aria-label="Search" name="search" style="height: 30px">
             </form>
-            <a class="" href="{{ route('userHomePage',  ['slug' => Auth::user()->slug]) }}" style="text-decoration: none; border: 0; padding: 0">
+            <a class="" href="{{ route('userHomePage',  ['user' => Auth::user()->slug]) }}" style="text-decoration: none; border: 0; padding: 0">
                 <div class="img" style="background-image: url({{'/'.$user->avatar}});"></div>
             </a>
         </div>

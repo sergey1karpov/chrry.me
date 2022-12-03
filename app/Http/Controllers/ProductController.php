@@ -176,7 +176,7 @@ class ProductController extends Controller
 
         $productCategory = ProductCategory::where('slug', $categorySlug)->firstOrFail();
 
-        $products = $productCategory->products;
+        $products = $productCategory->products->where('delete', null);
 
         return view('categories.search-result', compact('user', 'categorySlug', 'productCategory', 'products'));
     }
