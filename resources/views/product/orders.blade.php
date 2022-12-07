@@ -160,9 +160,9 @@
             <div class="row g-0" style="border-radius: 5px;">
                 <div class="col-3">
                     @if(Route::current()->getName() == 'ordersSearch')
-                        <img src="{{$order->product->main_photo}}" width="100" class="img-fluid" id="up" style="border-top-left-radius: 5px; border-bottom-left-radius: 5px;">
+                        <img src="{{'../'.$order->product->main_photo}}" width="100" class="img-fluid" id="up" style="border-top-left-radius: 5px; border-bottom-left-radius: 5px;">
                     @else
-                        <img src="{{$order->main_photo}}" width="100" class="img-fluid" id="up" style="border-top-left-radius: 5px; border-bottom-left-radius: 5px;">
+                        <img src="{{'../'.$order->main_photo}}" width="100" class="img-fluid" id="up" style="border-top-left-radius: 5px; border-bottom-left-radius: 5px;">
                     @endif
                 </div>
                 <div class="col-9 @if($user->dayVsNight) bg-secondary @endif">

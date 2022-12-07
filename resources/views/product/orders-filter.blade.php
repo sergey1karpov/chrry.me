@@ -1,4 +1,4 @@
-<form action="{{ route('ordersSearch', ['id' => $user->id]) }}" method="GET"> @csrf
+<form action="{{ route('ordersSearch', ['user' => $user->id]) }}" method="GET"> @csrf
     <input class="form-control me-2 shadow" name="search" type="search" placeholder="Поиск..." aria-label="Search" style="border: 0">
     <label class="mt-2" style="font-size: 0.9rem">С помощью поиска вы можете найти обработанный вами заказ по имени заказчика или номеру заказа</label>
 </form>
@@ -6,7 +6,7 @@
 @if(count($user->orders) > 0)
     <label class="mt-2" style="font-size: 0.9rem">Общее кол-во записей в базе - {{count($user->orders)}}</label>
 
-    <form class="mt-2" action="{{ route('export', ['id' => $user->id]) }}" method="GET"> @csrf
+    <form class="mt-2" action="{{ route('export', ['user' => $user->id]) }}" method="GET"> @csrf
         <input type="hidden" value="{{$user->id}}" name="user">
         <select class="form-select shadow" aria-label="Default select example" name="format" style="border: 0">
             <option value="xlsx">XLSX</option>

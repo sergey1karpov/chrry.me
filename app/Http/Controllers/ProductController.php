@@ -134,26 +134,9 @@ class ProductController extends Controller
      */
     public function deleteProduct(User $user, Product $product)
     {
-        if($product->count > 0) {
-            $this->productSoftDelete($product);
-
-            return redirect()->back();
-        }
-
         $product->dropProduct($product, $this->uploadService);
 
         return redirect()->back();
-    }
-
-    /**
-     * @param Product $product
-     * @return void
-     */
-    public function productSoftDelete(Product $product): void
-    {
-        $product->delete = true;
-
-        $product->save();
     }
 
     /**

@@ -7,6 +7,7 @@ use App\Models\Filters\ProductFilters;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -25,41 +26,49 @@ class FilterAndSearchProductController extends Controller
      */
     public function fullTextSearch(User $user, Request $request): View
     {
-        $products = Product::search($request->search)
-            ->where('user_id', $user->id)
-            ->where('delete', null)
-            ->orderBy('id', 'desc')
-            ->get();
+        return view('categories.search-result', [
+            'user' => $user,
+            'products' => $this->productSearch($request->search, $user),
+            'search' => $request->search,
+        ]);
 
-        $search = $request->search;
-
-        return view('categories.search-result', compact('user', 'products', 'search'));
     }
 
     /**
      * Here we make filtered the result of the FullText.
      * In $request->query('searchValue') we have a result a FullText search from method fullTextSearch()
      *
-     * @param string $slug
+     * @param User $user
      * @param ProductFilterRequest $request
      * @return View
      */
-    public function fullTextFilter(string $slug, ProductFilterRequest $request): View
+    public function fullTextFilter(User $user, ProductFilterRequest $request): View
     {
-        $user = User::where('slug', $slug)->firstOrFail();
+        $category = ProductCategory::where('user_id', $user->id)
+            ->where('name', $request->query('category'))
+            ->first();
 
-        $category = ProductCategory::where('name', $request->query('category'))->first();
+        $productsCollection = $this->productSearch($request->searchValue, $user);
 
-        $search = $request->query('searchValue');
+        return view('categories.search-result', [
+            'user' => $user,
+            'search' => $request->searchvalue,
+            'products' => ProductFilters::filter($category, $productsCollection, $request),
+        ]);
+    }
 
-        $productsCollection = Product::search($request->searchValue)
-            ->where('delete', null)
+    /**
+     * @param string $search
+     * @param User $user
+     * @return Collection
+     */
+    public function productSearch(string $search, User $user): Collection
+    {
+        return Product::search($search)
             ->where('user_id', $user->id)
+            ->where('delete', null)
+            ->orderBy('id', 'desc')
             ->get();
-
-        $products = ProductFilters::filter($category, $productsCollection, $request);
-
-        return view('categories.search-result', compact('user', 'products', 'search'));
     }
 
     /**
@@ -75,25 +84,47 @@ class FilterAndSearchProductController extends Controller
     {
         $categorySlug = $request->categorySlug;
 
-        $productCategory = ProductCategory::where('slug', $request->categorySlug)->first();//Текущая категория
+        $productCategory = ProductCategory::where('user_id', $user->id)->where('slug', $request->categorySlug)->first();
 
         if($productCategory->slug == 'all') {
-            $productsCollection = Product::where('user_id', $user->id)
-                ->where('delete', null)
-                ->get();
-
-            $products = ProductFilters::filter($productCategory, $productsCollection, $request);
+            $products = $this->withOutCategoryFilter($user, $productCategory, $request);
 
             return view('categories.search-result', compact('user', 'products', 'productCategory', 'categorySlug'));
         }
 
+        $products = $this->withCategoryFilter($user, $productCategory, $request);
+
+        return view('categories.search-result', compact('user', 'products', 'productCategory', 'categorySlug'));
+    }
+
+    /**
+     * @param User $user
+     * @param ProductCategory $productCategory
+     * @param ProductFilterRequest $request
+     * @return Collection
+     */
+    public function withOutCategoryFilter(User $user, ProductCategory $productCategory, ProductFilterRequest $request): Collection
+    {
+        $productsCollection = Product::where('user_id', $user->id)
+            ->where('delete', null)
+            ->get();
+
+        return ProductFilters::filter($productCategory, $productsCollection, $request);
+    }
+
+    /**
+     * @param User $user
+     * @param ProductCategory $productCategory
+     * @param ProductFilterRequest $request
+     * @return Collection
+     */
+    public function withCategoryFilter(User $user, ProductCategory $productCategory, ProductFilterRequest $request): Collection
+    {
         $productsCollection = Product::where('user_id', $user->id)
             ->where('delete', null)
             ->where('product_categories_id', $productCategory->id)
             ->get();
 
-        $products = ProductFilters::filter($productCategory, $productsCollection, $request);
-
-        return view('categories.search-result', compact('user', 'products', 'productCategory', 'categorySlug'));
+        return ProductFilters::filter($productCategory, $productsCollection, $request);
     }
 }

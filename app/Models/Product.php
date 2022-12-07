@@ -222,6 +222,11 @@ class Product extends Model
      */
     public function dropProduct(Product $product, UploadPhotoService $service): void
     {
+        if($product->count > 0) {
+            $this->productSoftDelete($product);
+            return;
+        }
+
         $photoArray = unserialize($product->additional_photos);
 
         if($product->additional_photos) {
@@ -233,6 +238,17 @@ class Product extends Model
         $service->deletePhotoFromFolder($product->main_photo);
 
         $product->delete();
+    }
+
+    /**
+     * @param Product $product
+     * @return void
+     */
+    public function productSoftDelete(Product $product): void
+    {
+        $product->delete = true;
+
+        $product->save();
     }
 }
 

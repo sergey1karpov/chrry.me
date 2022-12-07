@@ -74,6 +74,10 @@
             border: 0;
             box-shadow: 0px 1px 10px 2px rgba(0, 0, 0, 0.2);
         }
+        .btn-check:focus+.btn, .btn:focus {
+            outline: 0;
+            box-shadow: none;
+        }
     </style>
 </head>
     <body class="antialiased @if($user->dayVsNight) bg-dark text-white-50 @endif">
@@ -173,11 +177,9 @@
                                                     </div>
                                                     @if($category->slug != 'all')
                                                         <div class="col-6">
-                                                            <form method="post" action="{{ route('deleteCategory', ['user' => $user->id, 'category' => $category->id]) }}"> @csrf @method('DELETE')
-                                                                <button class="btn p-0" type="submit">
-                                                                    <img src="https://i.ibb.co/7R29Bpj/remove.png" width="20">
-                                                                </button>
-                                                            </form>
+                                                            <button style="border: 0" class="btn p-0" type="submit" data-bs-toggle="modal" data-bs-target="#exampleModal{{$category->id}}">
+                                                                <img src="https://i.ibb.co/7R29Bpj/remove.png" width="20">
+                                                            </button>
                                                         </div>
                                                     @endif
                                                 </div>
@@ -187,6 +189,24 @@
                                 </div>
                             </td>
                         </tr>
+                        <div class="modal fade" id="exampleModal{{$category->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-body text-center">
+                                        <p style="font-family: 'Inter', sans-serif; font-size: 1rem;">При удалении категории удалятся все продукты, которые в ней находятся!</p>
+                                        <p style="font-family: 'Inter', sans-serif; font-size: 1rem;">Приятного удаления!</p>
+                                        <img src="https://static.vecteezy.com/system/resources/previews/012/042/288/original/danger-sign-icon-transparent-background-free-png.png" width="300">
+                                    </div>
+                                    <div class="p-2">
+                                        <form method="post" action="{{ route('deleteCategory', ['user' => $user->id, 'category' => $category->id]) }}"> @csrf @method('DELETE')
+                                            <div class="d-grid gap-2">
+                                                <button class="btn btn-danger" type="submit">Удалить</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="modal fade" id="editCat{{$category->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">

@@ -110,8 +110,6 @@ Route::middleware(['web', 'root', 'locale'])->group(function () {
     });
 });
 
-//Route::post('/id{id}/links/sort', [LinkController::class, 'sortLink'])->name('sortLink');
-
 Route::group(['middleware' => 'guest'], function() {
 
     Route::get('/{social}/auth', [AuthController::class, 'index'])->name('auth');
