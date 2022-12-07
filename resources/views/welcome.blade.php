@@ -67,7 +67,7 @@
                                                 <a class="nav-link" aria-current="page" href="{{ route('userHomePage',  ['user' => Auth::user()->slug]) }}" style="font-family: 'Roboto', sans-serif; color: black;font-size: 1rem">Профиль</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link" aria-current="page" href="{{ route('editProfileForm',  ['id' => Auth::user()->id]) }}" style="font-family: 'Roboto', sans-serif; color: black;font-size: 1rem">Настройки</a>
+                                                <a class="nav-link" aria-current="page" href="{{ route('editProfileForm',  ['user' => Auth::user()->id]) }}" style="font-family: 'Roboto', sans-serif; color: black;font-size: 1rem">Настройки</a>
                                             </li>
                                             <li class="nav-item d-flex justify-content-center">
                                                 <form class="text-center" method="POST" action="{{ route('logout') }}">

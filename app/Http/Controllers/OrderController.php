@@ -16,52 +16,46 @@ class OrderController extends Controller
     /**
      * Order product
      *
-     * @param int $userId
+     * @param User $user
      * @param Product $product
      * @param OrderProductRequest $request
      * @return RedirectResponse
      */
-    public function sendOrder(int $userId, Product $product, OrderProductRequest $request): RedirectResponse
+    public function sendOrder(User $user, Product $product, OrderProductRequest $request): RedirectResponse
     {
-        $user = User::findOrFail($userId);
+        $this->order->sendOrder($user, $product, $request);
 
-        $this->order->sendOrder($userId, $product, $request);
-
-        return redirect()->route('userHomePage', ['slug' => $user->slug])
+        return redirect()->route('userHomePage', ['user' => $user->slug])
             ->with('success', 'Ваша заявка отправленна');
     }
 
-    public function orders(int $userId)
+    /**
+     * @param User $user
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function orders(User $user): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
     {
-        $user = User::findOrFail($userId);
-
-        $orders = $this->order->getUserOrders($userId, Order::NEW_ORDER);
+        $orders = $this->order->getUserOrders($user, Order::NEW_ORDER);
 
         return view('product.orders', compact('user', 'orders'));
     }
 
-    public function ordersInWork(int $userId)
+    public function ordersInWork(User $user)
     {
-        $user = User::findOrFail($userId);
-
-        $orders = $this->order->getUserOrders($userId, Order::IN_WORK_ORDER);
+        $orders = $this->order->getUserOrders($user, Order::IN_WORK_ORDER);
 
         return view('product.orders', compact('user', 'orders'));
     }
 
-    public function ordersProcessed(int $userId)
+    public function ordersProcessed(User $user)
     {
-        $user = User::findOrFail($userId);
-
-        $orders = $this->order->getUserOrders($userId, Order::PROCESSED_ORDER);
+        $orders = $this->order->getUserOrders($user, Order::PROCESSED_ORDER);
 
         return view('product.orders', compact('user', 'orders'));
     }
 
-    public function ordersSearch(int $userId, Request $request)
+    public function ordersSearch(User $user, Request $request)
     {
-        $user = User::where('id', $userId)->firstOrFail();
-
         $orders = Order::search($request->search)
             ->where('user_id', $user->id)
             ->where('order_status', Order::PROCESSED_ORDER)
@@ -73,14 +67,14 @@ class OrderController extends Controller
     /**
      * Перевод заказа в статус в Работе
      *
-     * @param int $userId
+     * @param User $user
      * @param Order $order
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    public function order(int $userId, Order $order, Request $request)
+    public function order(User $user, Order $order, Request $request)
     {
-        $order->order($userId, $order, $request);
+        $order->order($user, $order, $request);
         return redirect()->back();
     }
 
@@ -91,9 +85,9 @@ class OrderController extends Controller
      * @param Order $order
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function orderProcessed(int $userId, Order $order)
+    public function orderProcessed(User $user, Order $order)
     {
-        Order::where('id', $order->id)->where('user_id', $userId)->update([
+        Order::where('id', $order->id)->where('user_id', $user->id)->update([
             'processed' => 1,
             'order_status' => Order::PROCESSED_ORDER,
             'processed_at' => \date('Y-m-d H:i:s'),

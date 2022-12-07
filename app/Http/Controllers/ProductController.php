@@ -9,6 +9,9 @@ use App\Models\ProductCategory;
 use App\Models\User;
 use App\Services\StatsService;
 use App\Services\UploadPhotoService;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -18,88 +21,103 @@ class ProductController extends Controller
         private UploadPhotoService $uploadService,
     ) {}
 
-    public function createProductForm(int $userId)
+    /**
+     * Show create product form
+     *
+     * @param User $user
+     * @return View
+     */
+    public function createProductForm(User $user): View
     {
-        $user = User::findOrFail($userId);
-
-        $categories = $user->productCategories;
-
-        return view('product.add-product', compact('user', 'categories'));
+        return view('product.add-product', compact('user'));
     }
 
     /**
-     * @param int $userId
+     * Create new product
+     *
+     * @param User $user
      * @param ProductRequest $request
      * @param Product $product
-     * @return \Illuminate\Http\RedirectResponse
-     *
-     * Add new user product
+     * @return RedirectResponse
      */
-    public function addProduct(int $userId, ProductRequest $request, Product $product)
+    public function addProduct(User $user, ProductRequest $request, Product $product): RedirectResponse
     {
-        $product->storeProduct($userId, $request, $this->uploadService);
+        $product->storeProduct($user, $request, $this->uploadService);
 
-        return redirect()->route('editProfileForm', ['id' => $userId])->with('success', 'Товар успешно добавлен');
+        return redirect()->route('editProfileForm', ['user' => $user->id])->with('success', 'Товар успешно добавлен');
     }
 
     /**
-     * @param int $userId
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * Show all products in admin panel
      *
-     * Show all user products
+     * @param User $user
+     * @return View
      */
-    public function allProducts(int $userId)
+    public function allProducts(User $user): View
     {
-        $user = User::find($userId);
-
-        $products = Product::where('user_id', $userId)->where('delete', null)->orderBy('position')->get();
-
-        return view('product.products', compact('user', 'products'));
+        return view('product.products', [
+            'user' => $user,
+            'products' => Product::where('user_id', $user->id)->where('delete', null)->orderBy('position')->get()
+        ]);
     }
 
-    public function showProduct(int $userId, Product $product)
+    /**
+     * Show product in front
+     *
+     * @param User $user
+     * @param Product $product
+     * @return View
+     */
+    public function showProductDetails(User $user, Product $product): View
     {
-        $user = User::findOrFail($userId);
+        return view('product.product-details', compact('user', 'product'));
+    }
 
+    /**
+     * Show update product form
+     *
+     * @param User $user
+     * @param Product $product
+     * @return View
+     */
+    public function showProduct(User $user, Product $product): View
+    {
         $categories = $user->productCategories;
 
         return view('product.editProduct', compact('user', 'product', 'categories'));
     }
 
     /**
-     * @param int $userId
-     * @param int $product
-     * @param UpdateProductRequest $request
-     * @return \Illuminate\Http\RedirectResponse
+     * Update product
      *
-     * Patch product
+     * @param User $user
+     * @param Product $product
+     * @param UpdateProductRequest $request
+     * @return RedirectResponse
      */
-    public function editProduct(int $userId, int $productId, UpdateProductRequest $request)
+    public function editProduct(User $user, Product $product, UpdateProductRequest $request): RedirectResponse
     {
-        $product = Product::where('id', $productId)->first();
-
-        //Не работает из за того что приходит id а не экземпляр продукта???WTF???
         if($request->additional_photos) {
-            $totalPhoto = $product->checkCountAdditionalPhotosInProduct($product, $request->additional_photos, $product->imgPath($userId), $this->uploadService);
-            if($totalPhoto !== null) {
-                return redirect()->back()->with( 'count', 'Максимальное кол-во дополнительных фотографий 5 шт. Вы можете загрузить ' . $totalPhoto . ' фотографии для текущего товара');
+            if(count($request->additional_photos) > $product->countFreeSpace($product)) {
+                return redirect()->back()->with( 'count', 'Максимальное кол-во дополнительных фотографий 5 шт. Вы можете загрузить ' . $product->countFreeSpace($product) . ' фотографии для текущего товара');
             }
+            $product->uploadAdditionalPhotos($product, $request->additional_photos, $product->imgPath($user->id), $this->uploadService);
         }
 
-        $product->patchProduct($userId, $product, $request, $this->uploadService);
+        $product->patchProduct($user, $product, $request, $this->uploadService);
 
-        return redirect()->route('allProducts', ['id' => $userId])->with('success',$product->title . '" успешно обновлен!');
+        return redirect()->route('allProducts', ['user' => $user->id])->with('success',$product->title . '" успешно обновлен!');
     }
 
     /**
-     * Удаление дополнительных фотографий
+     * Delete additional photo
      *
-     * @param int $userId
+     * @param User $user
      * @param Product $product
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    public function deleteAdditionalPhoto(int $userId, Product $product, Request $request)
+    public function deleteAdditionalPhoto(User $user, Product $product, Request $request): RedirectResponse
     {
         $product->dropAdditionalPhoto($product, $request->photo, $this->uploadService);
 
@@ -107,26 +125,34 @@ class ProductController extends Controller
     }
 
     /**
-     * Удалить продукт
+     * Delete product
+     * But if count filed(count orders) > 0 we make soft delete
      *
-     * @param int $userId
+     * @param User $user
      * @param Product $product
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    public function deleteProduct(int $userId, Product $product)
+    public function deleteProduct(User $user, Product $product)
     {
         if($product->count > 0) {
             $this->productSoftDelete($product);
+
             return redirect()->back();
         }
+
         $product->dropProduct($product, $this->uploadService);
 
         return redirect()->back();
     }
 
-    public function productSoftDelete(Product $product)
+    /**
+     * @param Product $product
+     * @return void
+     */
+    public function productSoftDelete(Product $product): void
     {
         $product->delete = true;
+
         $product->save();
     }
 
@@ -142,19 +168,29 @@ class ProductController extends Controller
         return view('product.showProduct', compact('user', 'product'));
     }
 
-    public function searchProducts(int $userId, Request $request)
+    /**
+     * Full text product search
+     *
+     * @param User $user
+     * @param Request $request
+     * @return View
+     */
+    public function searchProducts(User $user, Request $request): View
     {
-        $user = User::where('id', $userId)->firstOrFail();
-
         $products = Product::search($request->search)->where('user_id', $user->id)->where('delete', null)->orderBy('id', 'desc')->get();
 
         return view('product.search', compact('user', 'products'));
     }
 
-    public function statsProducts(int $userId, Product $product)
+    /**
+     * Get product view stat
+     *
+     * @param User $user
+     * @param Product $product
+     * @return View
+     */
+    public function statsProducts(User $user, Product $product): View
     {
-        $user = User::where('id', $userId)->firstOrFail();
-
         $stats = StatsService::getProductStatistic($user, $product);
 
         return view('product.stat-product', compact('user', 'stats'));
@@ -174,20 +210,20 @@ class ProductController extends Controller
             return view('categories.search-result', compact('user', 'categorySlug', 'products'));
         }
 
-        $productCategory = ProductCategory::where('slug', $categorySlug)->firstOrFail();
+        $productCategory = ProductCategory::where('user_id', $user->id)->where('slug', $categorySlug)->firstOrFail();
 
         $products = $productCategory->products->where('delete', null);
 
         return view('categories.search-result', compact('user', 'categorySlug', 'productCategory', 'products'));
     }
 
-    public function sortProduct(int $id)
+    public function sortProduct(User $user)
     {
         if(isset($_POST['update'])) {
             foreach($_POST['positions'] as $position) {
                 $index = $position[0];
                 $newPosition = $position[1];
-                Product::where('user_id', $id)->where('id', $index)->update([
+                Product::where('user_id', $user->id)->where('id', $index)->update([
                     'position' => $newPosition,
                 ]);
             }

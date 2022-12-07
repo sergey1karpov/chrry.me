@@ -4,73 +4,93 @@ namespace App\Services;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File;
-use Imagick;
 use Intervention\Image\ImageManagerStatic as Image;
 
-/**
- * Upload images
- */
 class UploadPhotoService
 {
     /**
-     * Функция принимает:
-     * array фотографий или UploadedFile фотографию из реквеста,
-     * string $path - Путь по которому нужно сохранить фото
-     * int $size - Расширение фотографии(Например 500px x 500px),
-     * bool $drop - Нужно ли перед загрузкой новой фотографии удалить старую. Используется при обновлении модели.
-     * string $dropImagePath - Название файла который нужно удалить
-     *
-     * @param array|UploadedFile $ph
-     * @param string $path
+     * @param UploadedFile $photo
      * @param int $size
-     * @param bool|null $drop
+     * @param string $path
      * @param string|null $dropImagePath
      * @return string
      */
-    public function uploader(array|UploadedFile $ph, string $path, int $size, bool $drop = null, string $dropImagePath = null, bool $aspectRatio = null): string
+    public function saveUserLogotype(UploadedFile $photo, int $size, string $path, string $dropImagePath = null): string
     {
-        if(true == $drop && $dropImagePath != null) {
-            $this->dropImg($dropImagePath);
+        if($dropImagePath != null) {
+            $this->deletePhotoFromFolder($dropImagePath);
         }
 
-        $this->createPath($path);
+        $this->createPathForPhoto($path);
 
-        if($aspectRatio) {
+        $image = Image::make($photo);
 
-            $image = Image::make($ph);
-            $image->resize(null, $size, function ($constraint) {
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            });
-            $image->save($path . '/' .$ph->hashName());
-            return $image->dirname . '/' . $image->basename;
+        $image->resize(null, $size, function ($constraint) {
+            $constraint->aspectRatio();
+            $constraint->upsize();
+        });
+
+        $image->save($path . '/' .$photo->hashName());
+
+        return $image->dirname . '/' . $image->basename;
+    }
+
+    /**
+     * @param array $photos
+     * @param string $path
+     * @param int $size
+     * @param string|null $dropImagePath
+     * @return string
+     */
+    public function savePhotoArray(array $photos, string $path, int $size, string $dropImagePath = null): string
+    {
+
+        if($dropImagePath != null) {
+            $this->deletePhotoFromFolder($dropImagePath);
         }
 
-        if($ph instanceof UploadedFile) {
-            $image = Image::make($ph->getRealPath())->fit($size);
-            $image->save($path . '/' .$ph->hashName());
-            return $image->dirname . '/' . $image->basename;
-        }
-        if(count($ph) > 0) {
-            $ph_array = [];
+        $this->createPathForPhoto($path);
 
-            foreach ($ph as $p) {
-                $image = Image::make($p->getRealPath())->fit($size);
-                $image->save($path . '/' .$p->hashName());
-                $ph_array[] = $image->dirname . '/' . $image->basename;
-            }
+        $photo_array = [];
 
-            return serialize($ph_array);
+        foreach ($photos as $photo) {
+            $image = Image::make($photo->getRealPath())->fit($size);
+
+            $image->save($path . '/' .$photo->hashName());
+
+            $photo_array[] = $image->dirname . '/' . $image->basename;
         }
+
+        return serialize($photo_array);
+    }
+
+    /**
+     * @param UploadedFile $photo
+     * @param string $path
+     * @param int $size
+     * @param string|null $dropImagePath
+     * @return string
+     */
+    public function savePhoto(UploadedFile $photo, string $path, int $size, string $dropImagePath = null): string
+    {
+        if($dropImagePath != null) {
+            $this->deletePhotoFromFolder($dropImagePath);
+        }
+
+        $this->createPathForPhoto($path);
+
+        $image = Image::make($photo->getRealPath())->fit($size);
+
+        $image->save($path . '/' .$photo->hashName());
+
+        return $image->dirname . '/' . $image->basename;
     }
 
     /**
      * @param string $path
      * @return void
-     *
-     * Create photos paths
      */
-    public function createPath(string $path): void
+    public function createPathForPhoto(string $path): void
     {
         if (!File::exists($path)) {
             File::makeDirectory($path, 0777,true);
@@ -80,10 +100,8 @@ class UploadPhotoService
     /**
      * @param string $imagePath
      * @return void
-     *
-     * Delete product image
      */
-    public function dropImg(string $imagePath)
+    public function deletePhotoFromFolder(string $imagePath): void
     {
         unlink($imagePath);
     }

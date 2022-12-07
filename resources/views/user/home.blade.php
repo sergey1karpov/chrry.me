@@ -130,7 +130,7 @@
                     @auth
                         @if(Auth::user()->id == $user->id)
                             <div>
-                                <a class="btn  d-flex align-content-center" href="{{ route('editProfileForm', ['id' => Auth::user()->id]) }}">
+                                <a class="btn  d-flex align-content-center" href="{{ route('editProfileForm', ['user' => Auth::user()->id]) }}">
                                     <span class="material-symbols-outlined" style="border: 0; color: {{$user->navigation_color}}">admin_panel_settings</span>
                                 </a>
                             </div>
@@ -182,12 +182,16 @@
                                     <div class="container-fluid d-flex justify-content-center">
                                         @foreach($user->userLinks(false) as $link)
                                             @if($link->icon)
-                                                <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">
-                                                    <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="
-                                                        width:{{ $user->round_links_width }}px;
-                                                        filter: drop-shadow({{ $user->round_links_shadow_right }}px {{ $user->round_links_shadow_bottom }}px {{ $user->round_links_shadow_round }}px {{ $user->round_links_shadow_color }})
-                                                    ">
-                                                </a>
+                                                <form method="POST" action="{{ route('clickLinkStatistic', ['user' => $user->id]) }}"> @csrf
+                                                    <input type="hidden" name="link_id" value="{{$link->id}}">
+                                                    <input type="hidden" name="link_url" value="{{$link->link}}">
+                                                    <button type="submit" style="border: 0; padding: 0; background-color: rgba(0, 125, 215, 0);">
+                                                        <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="
+                                                            width:{{ $user->round_links_width }}px;
+                                                            filter: drop-shadow({{ $user->round_links_shadow_right }}px {{ $user->round_links_shadow_bottom }}px {{ $user->round_links_shadow_round }}px {{ $user->round_links_shadow_color }})
+                                                        ">
+                                                    </button>
+                                                </form>
                                             @endif
                                         @endforeach
                                     </div>
@@ -245,54 +249,6 @@
                             <p style="font-family: 'Rubik', sans-serif; font-size: 0.9rem; @if($user->description_color) color: {{$user->description_color}}; @endif">{{ $user->description }}</p>
                         @endif
                     @endif
-
-{{--                    @if($user->type == 'Events')--}}
-{{--                        @if($user->show_social == true)--}}
-{{--                            @if($user->social == 'TOP')--}}
-{{--                                @if(count($user->userLinks(false)) > 0)--}}
-{{--                                    <nav class="navbar mt-2">--}}
-{{--                                        <div class="container-fluid d-flex justify-content-center">--}}
-{{--                                            @foreach($user->userLinks(false) as $link)--}}
-{{--                                                @if($link->icon)--}}
-{{--                                                    <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">--}}
-{{--                                                        <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="--}}
-{{--                                                            width:{{ $user->round_links_width }}px;--}}
-{{--                                                            filter: drop-shadow({{ $user->round_links_shadow_right }}px {{ $user->round_links_shadow_bottom }}px {{ $user->round_links_shadow_round }}px {{ $user->round_links_shadow_color }})--}}
-{{--                                                        ">--}}
-{{--                                                    </a>--}}
-{{--                                                @endif--}}
-{{--                                            @endforeach--}}
-{{--                                        </div>--}}
-{{--                                    </nav>--}}
-{{--                                @endif--}}
-{{--                            @endif--}}
-{{--                        @endif--}}
-{{--                    @endif--}}
-
-{{--                    @if($user->type == 'Market')--}}
-{{--                        @if($user->show_social == true)--}}
-{{--                            @if($user->social == 'TOP')--}}
-{{--                                @if(count($user->userLinks(false)) > 0)--}}
-{{--                                    <nav class="navbar mt-2 mb-2">--}}
-{{--                                        <div class="container-fluid d-flex justify-content-center">--}}
-{{--                                            @foreach($user->userLinksInBar($user) as $link)--}}
-{{--                                                @if($link->icon)--}}
-{{--                                                    <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">--}}
-{{--                                                        <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="--}}
-{{--                                                            width:{{ $user->round_links_width }}px;--}}
-{{--                                                            filter: drop-shadow({{ $user->round_links_shadow_right }}px {{ $user->round_links_shadow_bottom }}px {{ $user->round_links_shadow_round }}px {{ $user->round_links_shadow_color }})--}}
-{{--                                                        ">--}}
-{{--                                                    </a>--}}
-{{--                                                @endif--}}
-{{--                                            @endforeach--}}
-{{--                                        </div>--}}
-{{--                                    </nav>--}}
-{{--                                @endif--}}
-{{--                            @endif--}}
-{{--                        @endif--}}
-{{--                    @endif--}}
-
-{{--                    @if($user->type == 'Links')--}}
                         @if($user->social_links_bar == 1)
                             @if($user->links_bar_position == 'top')
                                 @if(count($user->userLinks(false)) > 0)
@@ -300,12 +256,16 @@
                                         <div class="container-fluid d-flex justify-content-center">
                                             @foreach($user->userLinks(false) as $link)
                                                 @if($link->icon)
-                                                    <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">
-                                                        <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="
+                                                    <form method="POST" action="{{ route('clickLinkStatistic', ['user' => $user->id]) }}"> @csrf
+                                                        <input type="hidden" name="link_id" value="{{$link->id}}">
+                                                        <input type="hidden" name="link_url" value="{{$link->link}}">
+                                                        <button type="submit" style="border: 0; padding: 0; background-color: rgba(0, 125, 215, 0);">
+                                                            <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="
                                                             width:{{ $user->round_links_width }}px;
                                                             filter: drop-shadow({{ $user->round_links_shadow_right }}px {{ $user->round_links_shadow_bottom }}px {{ $user->round_links_shadow_round }}px {{ $user->round_links_shadow_color }})
                                                         ">
-                                                    </a>
+                                                        </button>
+                                                    </form>
                                                 @endif
                                             @endforeach
                                         </div>
@@ -313,17 +273,12 @@
                                 @endif
                             @endif
                         @endif
-{{--                    @endif--}}
-
 		      	</div>
 	    	</div>
 	    </div>
-
-
         <!-- ---------------------- -->
         <!-- Контент -->
         <!-- ---------------------- -->
-
         @if($user->type == 'Links')
 
             <!-- ---------------------- -->
@@ -335,8 +290,9 @@
                         <tr data-index="{{$link->id}}" data-position="{{$link->position}}">
                             <td style="padding-left: 0; padding-right: 0; padding-bottom: 0; border: 0">
                                 <div class="container" style="padding-left:8px; padding-right:8px">
-                                    <!-- Если тип ссылки POST ссылка не работает\не кликабельно -->
-                                    @if($link->type != 'POST')<a href="{{$link->link}}" style="text-decoration:none" onclick="countRabbits{{$link->id}}()">@elseif($link->type == 'POST') <a style="text-decoration:none" onclick="countRabbits{{$link->id}}()"> @endif
+                                    <form method="POST" action="{{ route('clickLinkStatistic', ['user' => $user->id]) }}"> @csrf
+                                        <input type="hidden" name="link_id" value="{{$link->id}}">
+                                        <input type="hidden" name="link_url" value="{{$link->link}}">
                                         <div class="@if($link->animation) {{$link->animation}} @endif row ms-1 me-1 card {{$link->shadow}}" style="
                                             background-color:rgba({{$link->background_color}}, {{$link->transparency}});
                                             border: 0;
@@ -357,9 +313,11 @@
                                                 </div>
                                                 <!-- Текст ссылки -->
                                                 <div class=" col-10 text-center">
-                                                    <div class="me-5 ms-5">
-                                                        <h4 style="text-shadow:{{$link->text_shadow_right}}px {{$link->text_shadow_bottom}}px {{$link->text_shadow_blur}}px {{$link->text_shadow_color}} ;font-family: '{{ $link->font ?? 'Inter' }}', sans-serif; line-height: 1.3; font-size: {{$link->font_size}}rem; margin-top: 2px; margin-bottom: 0; color: {{$link->title_color}};">@if($link->bold == true) <b> @endif{{$link->title}}@if($link->bold == true) </b> @endif</h4>
-                                                    </div>
+                                                    <button type="submit" style="border: 0; padding: 0; background-color: rgba(0, 125, 215, 0);">
+                                                        <div class="me-5 ms-5">
+                                                            <h4 style="text-shadow:{{$link->text_shadow_right}}px {{$link->text_shadow_bottom}}px {{$link->text_shadow_blur}}px {{$link->text_shadow_color}} ;font-family: '{{ $link->font ?? 'Inter' }}', sans-serif; line-height: 1.3; font-size: {{$link->font_size}}rem; margin-top: 2px; margin-bottom: 0; color: {{$link->title_color}};">@if($link->bold == true) <b> @endif{{$link->title}}@if($link->bold == true) </b> @endif</h4>
+                                                        </div>
+                                                    </button>
                                                 </div>
                                                 <!-- Пустой div -->
                                                 <div class="col-1">
@@ -373,7 +331,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    @if($link->type != 'POST')</a>@endif
+                                    </form>
                                 </div>
                     @endforeach
                 </tbody>
@@ -389,7 +347,9 @@
                                 <td style="padding-left: 0; padding-right: 0; padding-bottom: 0; border: 0">
                                     <div class="container" style="padding-left:8px; padding-right:8px">
                                         <!-- Если тип ссылки POST ссылка не работает\не кликабельно -->
-                                        <a href="{{$link->link}}" style="text-decoration:none" onclick="countRabbits{{$link->id}}()">
+                                        <form method="POST" action="{{ route('clickLinkStatistic', ['user' => $user->id]) }}"> @csrf
+                                            <input type="hidden" name="link_id" value="{{$link->id}}">
+                                            <input type="hidden" name="link_url" value="{{$link->link}}">
                                             <div class="@if($link->animation) {{$link->animation}} @endif row ms-1 me-1 card {{$link->shadow}}" style="background-color:rgba({{$link->background_color}}, {{$link->transparency}}); border: 0; margin-top: 8px; border-radius: {{$link->rounded}}px; background-position: center">
                                                 <div class="d-flex align-items-center justify-content-start mt-1 mb-1" style="padding-left: 4px; padding-right: 4px;">
                                                     <!-- Картинка -->
@@ -404,9 +364,11 @@
                                                     </div>
                                                     <!-- Текст ссылки -->
                                                     <div class="col-10 text-center d-flex align-items-center justify-content-center">
-                                                        <div class="me-5 ms-5">
-                                                            <h4 style="text-shadow:{{$link->text_shadow_right}}px {{$link->text_shadow_bottom}}px {{$link->text_shadow_blur}}px {{$link->text_shadow_color}} ;font-family: '{{ $link->font ?? 'Inter' }}', sans-serif; line-height: 1.3; font-size: {{$link->font_size}}rem; margin-top: 2px; margin-bottom: 0; color: {{$link->title_color}};">@if($link->bold == true) <b> @endif{{$link->title}}@if($link->bold == true) </b> @endif</h4>
-                                                        </div>
+                                                        <button type="submit" style="border: 0; padding: 0; background-color: rgba(0, 125, 215, 0);">
+                                                            <div class="me-5 ms-5">
+                                                                <h4 style="text-shadow:{{$link->text_shadow_right}}px {{$link->text_shadow_bottom}}px {{$link->text_shadow_blur}}px {{$link->text_shadow_color}} ;font-family: '{{ $link->font ?? 'Inter' }}', sans-serif; line-height: 1.3; font-size: {{$link->font_size}}rem; margin-top: 2px; margin-bottom: 0; color: {{$link->title_color}};">@if($link->bold == true) <b> @endif{{$link->title}}@if($link->bold == true) </b> @endif</h4>
+                                                            </div>
+                                                        </button>
                                                     </div>
                                                     <!-- Пустой div -->
                                                     <div class="col-1">
@@ -420,7 +382,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </a>
+                                        </form>
                                     </div>
                                 </td>
                             </tr>
@@ -539,31 +501,6 @@
                     </div>
                 @endforeach
             </div>
-            <!-- ---------------------- -->
-            <!-- Соц сети для типа Events -->
-            <!-- ---------------------- -->
-{{--            @if($user->type == 'Events')--}}
-{{--                @if($user->show_social == true)--}}
-{{--                    @if($user->social == 'DOWN')--}}
-{{--                        @if(count($user->userLinks(false)) > 0)--}}
-{{--                            <nav class="navbar mt-4">--}}
-{{--                                <div class="container-fluid d-flex justify-content-center">--}}
-{{--                                    @foreach($user->userLinks(false) as $link)--}}
-{{--                                        @if($link->icon)--}}
-{{--                                            <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">--}}
-{{--                                                <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="--}}
-{{--                                                    width:{{ $user->round_links_width }}px;--}}
-{{--                                                    filter: drop-shadow({{ $user->round_links_shadow_right }}px {{ $user->round_links_shadow_bottom }}px {{ $user->round_links_shadow_round }}px {{ $user->round_links_shadow_color }})--}}
-{{--                                                ">--}}
-{{--                                            </a>--}}
-{{--                                        @endif--}}
-{{--                                    @endforeach--}}
-{{--                                </div>--}}
-{{--                            </nav>--}}
-{{--                        @endif--}}
-{{--                    @endif--}}
-{{--                @endif--}}
-{{--            @endif--}}
             <div class="mb-3"></div>
 
         <!-- ---------------------- -->
@@ -588,13 +525,15 @@
                 @if(isset($user->marketSettings->cards_style))
                     @if($user->marketSettings->cards_style == 'one')
                         @foreach($user->userProducts() as $product)
-
-                            <section data-bs-toggle="modal" data-bs-target="#productModal{{$product->id}}" onclick="productStats{{$product->id}}()">
-                                <div class="container mt-2">
-                                    <div class="row justify-content-center">
-                                        <div class="col-md-8 col-lg-6 col-xl-4">
+                            <div class="container mt-2">
+                                <div class="row justify-content-center">
+                                    <div class="col-md-8 col-lg-6 col-xl-4">
+                                        <form id="submit-prod" method="POST" action="{{ route('productStats', ['user' => $user->id]) }}"> @csrf
+                                            <input type="hidden" name="product_id" value="{{$product->id}}">
                                             <div class="text-black mb-3" style="border: 0; border-radius: 10px;">
-                                                <img src="{{$product->main_photo}}" class="card-img-top" alt="Apple Computer" style="border-radius: {{$user->marketSettings->card_round}}px; @if($user->marketSettings->cards_shadow) box-shadow: 0px 5px 5px -5px rgba(0, 0, 0, 0.6); @endif" />
+                                                <button type="submit" style="border: 0; padding: 0; background-color: rgba(0, 125, 215, 0);">
+                                                    <img src="{{$product->main_photo}}" class="card-img-top" alt="Apple Computer" style="border-radius: {{$user->marketSettings->card_round}}px; @if($user->marketSettings->cards_shadow) box-shadow: 0px 5px 5px -5px rgba(0, 0, 0, 0.6); @endif" />
+                                                </button>
                                                 <div class="card-body mt-2" style="padding: 0">
                                                     <div class="text-start">
                                                         <p class="mb-1" style="
@@ -615,86 +554,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-
-                            <div class="modal fade" id="productModal{{$product->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" style="margin: 0; border-radius: 0">
-                                    <div class="modal-content" style="border-radius: 0">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">{{$product->title}}</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body p-2">
-                                            <div class="card text-black" style="border:none">
-
-                                                @if($product->additional_photos)
-                                                    @php
-                                                        $adds_ph = unserialize($product->additional_photos);
-                                                        array_unshift($adds_ph, $product->main_photo);
-                                                    @endphp
-                                                    <div id="carouselExampleControls{{$product->id}}" class="carousel slide" data-bs-ride="carousel">
-                                                        <div class="carousel-inner">
-                                                            @foreach($adds_ph as $key => $ph)
-                                                                <div class="carousel-item @if($key == 0) active @endif">
-                                                                    <img src="{{$ph}}" class="card-img-top" alt="Apple Computer" />
-                                                                </div>
-                                                            @endforeach
-                                                        </div>
-                                                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls{{$product->id}}" data-bs-slide="prev">
-                                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                            <span class="visually-hidden">Previous</span>
-                                                        </button>
-                                                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls{{$product->id}}" data-bs-slide="next">
-                                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                            <span class="visually-hidden">Next</span>
-                                                        </button>
-                                                    </div>
-                                                @else
-                                                    <div id="carouselExampleControls{{$product->id}}" class="carousel slide" data-bs-ride="carousel">
-                                                        <div class="carousel-inner">
-                                                            <div class="carousel-item active ">
-                                                                <img src="{{$product->main_photo}}" class="card-img-top" alt="Apple Computer" />
-                                                            </div>
-                                                        </div>
-                                                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls{{$product->id}}" data-bs-slide="prev">
-                                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                            <span class="visually-hidden">Previous</span>
-                                                        </button>
-                                                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls{{$product->id}}" data-bs-slide="next">
-                                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                            <span class="visually-hidden">Next</span>
-                                                        </button>
-                                                    </div>
-                                                @endif
-                                                <div class="card-body" style="padding: 0">
-                                                    <div class="text-center">
-                                                        <h5 class="card-title mt-2">{{$product->title}}</h5>
-                                                        <p class="text-muted mb-4" style="white-space: pre-wrap;">{{$product->description}}</p>
-                                                        @if($product->full_description)
-                                                            <p class="mb-4" style="white-space: pre-wrap;">{{$product->full_description}}</p>
-                                                        @endif
-                                                    </div>
-                                                    <div class="d-flex justify-content-between total font-weight-bold mt-5">
-                                                        <span>Цена</span><span><b>{{$product->price}}</b> рублей</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="d-grid gap-2 mt-3">
-                                                @if($product->link_to_shop)
-                                                    <a class="btn btn-primary" href="{{$product->link_to_shop}}">
-                                                        {{$product->link_to_shop_text}}
-                                                    </a>
-                                                @endif
-                                                @if($product->link_to_order_text)
-                                                    <a class="btn btn-primary" href="{{ route('showProductOrderForm', ['user' => $user->slug, 'product' => $product->id]) }}">
-                                                        {{$product->link_to_order_text}}
-                                                    </a>
-                                                @endif
-                                            </div>
-                                        </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -703,111 +563,36 @@
                         <div class="row ms-1 me-1" style="margin: 0">
                             @foreach($user->userProducts() as $product)
                                 <div class="col-6 p-2" style="padding: 0">
-                                    <section data-bs-toggle="modal" data-bs-target="#productModal{{$product->id}}">
-                                        <div class="container mt-2" style="padding: 0">
-                                            <div class="row justify-content-center" onclick="productStats{{$product->id}}()">
-                                                <div class="col-md-8 col-lg-6 col-xl-4">
+                                    <div class="container mt-2" style="padding: 0">
+                                        <div class="row justify-content-center" onclick="productStats{{$product->id}}()">
+                                            <div class="col-md-8 col-lg-6 col-xl-4">
+                                                <form id="submit-prod" method="POST" action="{{ route('productStats', ['user' => $user->id]) }}"> @csrf
+                                                    <input type="hidden" name="product_id" value="{{$product->id}}">
                                                     <div class="text-black mb-3" style="border: 0; border-radius: 10px;">
-                                                        <img src="{{$product->main_photo}}" class="card-img-top" alt="Apple Computer" style="border-radius: {{$user->marketSettings->card_round}}px; @if($user->marketSettings->cards_shadow) box-shadow: 0px 5px 5px -5px rgba(0, 0, 0, 0.6); @endif" />
+                                                        <button type="submit" style="border: 0; padding: 0; background-color: rgba(0, 125, 215, 0);">
+                                                            <img src="{{$product->main_photo}}" class="card-img-top" alt="Apple Computer" style="border-radius: {{$user->marketSettings->card_round}}px; @if($user->marketSettings->cards_shadow) box-shadow: 0px 5px 5px -5px rgba(0, 0, 0, 0.6); @endif" />
+                                                        </button>
                                                         <div class="card-body mt-2" style="padding: 0">
                                                             <div class="text-start">
                                                                 <p class="mb-1" style="
-                                                            @if($user->marketSettings->title_shadow) text-shadow: 1px 1px 1px rgba(0, 0, 0, 1); @endif
-                                                            white-space: nowrap;
-                                                            overflow: hidden;
-                                                            text-overflow: ellipsis;
-                                                            font-family: 'Roboto Flex', sans-serif;
-                                                            font-size: {{$user->marketSettings->title_font_size}}rem;
-                                                            @if($user->marketSettings->color_title) color: {{$user->marketSettings->color_title}}; @endif"
+                                                        @if($user->marketSettings->title_shadow) text-shadow: 1px 1px 1px rgba(0, 0, 0, 1); @endif
+                                                        white-space: nowrap;
+                                                        overflow: hidden;
+                                                        text-overflow: ellipsis;
+                                                        font-family: 'Roboto Flex', sans-serif;
+                                                        font-size: {{$user->marketSettings->title_font_size}}rem;
+                                                        @if($user->marketSettings->color_title) color: {{$user->marketSettings->color_title}}; @endif"
                                                                 >{{$product->title}}</p>
                                                                 <p style="
-                                                            @if($user->marketSettings->price_shadow) text-shadow: 1px 1px 1px rgba(0, 0, 0, 1); @endif
-                                                            margin: 0; font-family: 'Roboto Flex', sans-serif;
-                                                            font-size: {{$user->marketSettings->price_font_size}}rem;
-                                                            @if($user->marketSettings->color_price) color: {{$user->marketSettings->color_price}}; @endif"
+                                                        @if($user->marketSettings->price_shadow) text-shadow: 1px 1px 1px rgba(0, 0, 0, 1); @endif
+                                                        margin: 0; font-family: 'Roboto Flex', sans-serif;
+                                                        font-size: {{$user->marketSettings->price_font_size}}rem;
+                                                        @if($user->marketSettings->color_price) color: {{$user->marketSettings->color_price}}; @endif"
                                                                 ><b>₽ {{$product->price}}</b></p>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </section>
-                                </div>
-                                <div class="modal fade" id="productModal{{$product->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="padding: 0">
-                                    <div class="modal-dialog" style="margin: 0; border-radius: 0">
-                                        <div class="modal-content" style="border-radius: 0">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">{{$product->title}}</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body p-2">
-                                                <div class="card text-black" style="border:none">
-
-                                                    @if($product->additional_photos)
-                                                        @php
-                                                            $adds_ph = unserialize($product->additional_photos);
-                                                            array_unshift($adds_ph, $product->main_photo);
-                                                        @endphp
-                                                        <div id="carouselExampleControls{{$product->id}}" class="carousel slide" data-bs-ride="carousel">
-                                                            <div class="carousel-inner">
-                                                                @foreach($adds_ph as $key => $ph)
-                                                                    <div class="carousel-item @if($key == 0) active @endif">
-                                                                        <img src="{{$ph}}" class="card-img-top" alt="Apple Computer" />
-                                                                    </div>
-                                                                @endforeach
-                                                            </div>
-                                                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls{{$product->id}}" data-bs-slide="prev">
-                                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                                <span class="visually-hidden">Previous</span>
-                                                            </button>
-                                                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls{{$product->id}}" data-bs-slide="next">
-                                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                                <span class="visually-hidden">Next</span>
-                                                            </button>
-                                                        </div>
-                                                    @else
-                                                        <div id="carouselExampleControls{{$product->id}}" class="carousel slide" data-bs-ride="carousel">
-                                                            <div class="carousel-inner">
-                                                                <div class="carousel-item active ">
-                                                                    <img src="{{$product->main_photo}}" class="card-img-top" alt="Apple Computer" />
-                                                                </div>
-                                                            </div>
-                                                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls{{$product->id}}" data-bs-slide="prev">
-                                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                                <span class="visually-hidden">Previous</span>
-                                                            </button>
-                                                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls{{$product->id}}" data-bs-slide="next">
-                                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                                <span class="visually-hidden">Next</span>
-                                                            </button>
-                                                        </div>
-                                                    @endif
-                                                    <div class="card-body" style="padding: 0">
-                                                        <div class="text-center">
-                                                            <h5 class="card-title mt-2">{{$product->title}}</h5>
-                                                            <p class="text-muted mb-4" style="white-space: pre-wrap;">{{$product->description}}</p>
-                                                            @if($product->full_description)
-                                                                <p class="mb-4" style="white-space: pre-wrap;">{{$product->full_description}}</p>
-                                                            @endif
-                                                        </div>
-                                                        <div class="d-flex justify-content-between total font-weight-bold mt-5">
-                                                            <span>Цена</span><span><b>{{$product->price}}</b> рублей</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="d-grid gap-2 mt-3">
-                                                    @if($product->link_to_shop)
-                                                        <a class="btn btn-primary" href="{{$product->link_to_shop}}">
-                                                            {{$product->link_to_shop_text}}
-                                                        </a>
-                                                    @endif
-                                                    @if($product->link_to_order_text)
-                                                        <a class="btn btn-primary" href="{{ route('showProductOrderForm', ['user' => $user->slug, 'product' => $product->id]) }}">
-                                                            {{$product->link_to_order_text}}
-                                                        </a>
-                                                    @endif
-                                                </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -828,54 +613,34 @@
                     @endif
                 @endif
             </div>
-{{--            @if($user->type == 'Market')--}}
-{{--                @if($user->show_social == true)--}}
-{{--                    @if($user->social == 'DOWN')--}}
-{{--                        @if(count($user->userLinks(false)) > 0)--}}
-{{--                            <nav class="navbar mt-4">--}}
-{{--                                <div class="container-fluid d-flex justify-content-center">--}}
-{{--                                    @foreach($user->userLinksInBar($user) as $link)--}}
-{{--                                        @if($link->icon)--}}
-{{--                                            <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">--}}
-{{--                                                <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="--}}
-{{--                                                    width:{{ $user->round_links_width }}px;--}}
-{{--                                                    filter: drop-shadow({{ $user->round_links_shadow_right }}px {{ $user->round_links_shadow_bottom }}px {{ $user->round_links_shadow_round }}px {{ $user->round_links_shadow_color }})--}}
-{{--                                                ">--}}
-{{--                                            </a>--}}
-{{--                                        @endif--}}
-{{--                                    @endforeach--}}
-{{--                                </div>--}}
-{{--                            </nav>--}}
-{{--                        @endif--}}
-{{--                    @endif--}}
-{{--                @endif--}}
-{{--            @endif--}}
         @endif
         <!-- ---------------------- -->
         <!-- Соц сети для типа Links -->
         <!-- ---------------------- -->
-{{--        @if($user->type == 'Links')--}}
-            @if($user->social_links_bar == 1)
-                @if($user->links_bar_position == 'bottom')
-                    @if(count($user->userLinks(false)) > 0)
-                        <nav class="navbar mt-5 mb-4">
-                            <div class="container-fluid d-flex justify-content-center">
-                                @foreach($user->userLinks(false) as $link)
-                                    @if($link->icon)
-                                        <a href="{{$link->link}}" onclick="countRabbits{{$link->id}}()">
+        @if($user->social_links_bar == 1)
+            @if($user->links_bar_position == 'bottom')
+                @if(count($user->userLinks(false)) > 0)
+                    <nav class="navbar mt-5 mb-4">
+                        <div class="container-fluid d-flex justify-content-center">
+                            @foreach($user->userLinks(false) as $link)
+                                @if($link->icon)
+                                    <form method="POST" action="{{ route('clickLinkStatistic', ['user' => $user->id]) }}"> @csrf
+                                        <input type="hidden" name="link_id" value="{{$link->id}}">
+                                        <input type="hidden" name="link_url" value="{{$link->link}}">
+                                        <button type="submit" style="border: 0; padding: 0; background-color: rgba(0, 125, 215, 0);">
                                             <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="
-                                                width:{{ $user->round_links_width }}px;
-                                                filter: drop-shadow({{ $user->round_links_shadow_right }}px {{ $user->round_links_shadow_bottom }}px {{ $user->round_links_shadow_round }}px {{ $user->round_links_shadow_color }})
-                                            ">
-                                        </a>
-                                    @endif
-                                @endforeach
-                            </div>
-                        </nav>
-                    @endif
+                                                        width:{{ $user->round_links_width }}px;
+                                                        filter: drop-shadow({{ $user->round_links_shadow_right }}px {{ $user->round_links_shadow_bottom }}px {{ $user->round_links_shadow_round }}px {{ $user->round_links_shadow_color }})
+                                                    ">
+                                        </button>
+                                    </form>
+                                @endif
+                            @endforeach
+                        </div>
+                    </nav>
                 @endif
             @endif
-{{--        @endif--}}
+        @endif
 
         @if($user->show_logo == true)
             <div class="container-fluid justify-content-center text-center mb-4 " style="margin-top: 70px">
@@ -925,7 +690,7 @@
                 });
 
                 $.ajax({
-                    url: "id"+ userId + "/ppp/sort",
+                    url: "{{ route('sortLink', ['user' => $user->id]) }}",
                     method: 'POST',
                     dataType: 'text',
                     data: {
@@ -972,7 +737,7 @@
                 });
 
                 $.ajax({
-                    url: "id"+ userId + "/ppp/sort",
+                    url: "{{ route('sortLink', ['user' => $user->id]) }}",
                     method: 'POST',
                     dataType: 'text',
                     data: {
@@ -1019,7 +784,7 @@
                 });
 
                 $.ajax({
-                    url: "id"+ userId + "/ppp/sort",
+                    url: "{{ route('sortLink', ['user' => $user->id]) }}",
                     method: 'POST',
                     dataType: 'text',
                     data: {
@@ -1029,84 +794,6 @@
                             console.log(response);
                     }
                 });
-            }
-        </script>
-    @endforeach
-
-    @foreach($user->userLinks(false) as $link)
-        <script type="text/javascript">
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            function countRabbits{{$link->id}}() {
-                let guest = '{{$_SERVER['REMOTE_ADDR']}}';
-                let linkId = '{{$link->id}}';
-                let userId = '{{$user->id}}';
-                $.ajax({
-                    url: userId+"/link",
-                    type: 'POST',
-                    data: { user_id: userId, link_id: linkId, guest_ip: guest, func: 'func_data' },
-                    success: function(data){
-                        console.log('GOOD');
-                    },
-                    error: function(){
-                        console.log('ERROR');
-                    }
-                })
-            }
-        </script>
-    @endforeach
-
-    @foreach($user->userLinks(true) as $link)
-        <script type="text/javascript">
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            function countRabbits{{$link->id}}() {
-                let guest = '{{$_SERVER['REMOTE_ADDR']}}';
-                let linkId = '{{$link->id}}';
-                let userId = '{{$user->id}}';
-                $.ajax({
-                    url: userId+"/link",
-                    type: 'POST',
-                    data: { user_id: userId, link_id: linkId, guest_ip: guest, func: 'func_data' },
-                    success: function(data){
-                        console.log('GOOD');
-                    },
-                    error: function(){
-                        console.log('ERROR');
-                    }
-                })
-            }
-        </script>
-    @endforeach
-
-    @foreach($user->userProducts() as $product)
-        <script type="text/javascript">
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            function productStats{{$product->id}}() {
-                let guest = '{{$_SERVER['REMOTE_ADDR']}}';
-                let productId = '{{$product->id}}';
-                let userId = '{{$user->id}}';
-                $.ajax({
-                    url: userId+"/product-stats",
-                    type: 'POST',
-                    data: { user_id: userId, product_id: productId, guest_ip: guest, func: 'stat_product' },
-                    success: function(data){
-                        console.log('GOOD');
-                    },
-                    error: function(){
-                        console.log('ERROR');
-                    }
-                })
             }
         </script>
     @endforeach

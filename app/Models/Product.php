@@ -71,30 +71,28 @@ class Product extends Model
     }
 
     /**
-     * Добавить продукт в базу данных
+     * Create new product
      *
-     * @param int $userId
+     * @param User $user
      * @param ProductRequest $request
      * @param UploadPhotoService $uploadService
      * @return void
      */
-    public function storeProduct(int $userId, ProductRequest $request, UploadPhotoService $uploadService): void
+    public function storeProduct(User $user, ProductRequest $request, UploadPhotoService $uploadService): void
     {
-        $user = User::find($userId);
-
         $product = new self();
         $product->title = $request->title;
         $product->description = $request->description;
         $product->full_description = $request->full_description;
-        $product->main_photo = $uploadService->uploader(
-            ph: $request->main_photo,
-            path: $this->imgPath($userId),
-            size: 500
+        $product->main_photo = $uploadService->savePhoto(
+            photo: $request->main_photo,
+            path: $this->imgPath($user->id),
+            size: 500,
         );
         if($request->additional_photos) {
-            $product->additional_photos = $uploadService->uploader(
-                ph: $request->additional_photos,
-                path: $this->imgPath($userId),
+            $product->additional_photos = $uploadService->savePhotoArray(
+                photos: $request->additional_photos,
+                path: $this->imgPath($user->id),
                 size: 500
             );
         }
@@ -112,26 +110,25 @@ class Product extends Model
     /**
      * Update product
      *
-     * @param int $userId
+     * @param User $user
      * @param Product $product
      * @param UpdateProductRequest $request
      * @param UploadPhotoService $uploadService
-     * @return int|void
+     * @return void
      */
-    public function patchProduct(int $userId, Product $product, UpdateProductRequest $request, UploadPhotoService $uploadService)
+    public function patchProduct(User $user, Product $product, UpdateProductRequest $request, UploadPhotoService $uploadService): void
     {
-        Product::where('id', $product->id)->where('user_id', $userId)->update([
+        Product::where('id', $product->id)->where('user_id', $user->id)->update([
             'title' => $request->title,
             'description' => $request->description,
             'full_description' => $request->full_description,
             'price' => $request->price ?? $product->price,
             'visible' => isset($request->visible) ? 1 : 0,
-            'user_id' => $userId,
-            'main_photo' => isset($request->main_photo) ? $uploadService->uploader(
-                ph: $request->main_photo,
-                path: $this->imgPath($userId),
+            'user_id' => $user->id,
+            'main_photo' => isset($request->main_photo) ? $uploadService->savePhoto(
+                photo: $request->main_photo,
+                path: $this->imgPath($user->id),
                 size: 500,
-                drop: true,
                 dropImagePath: $product->main_photo) : $product->main_photo,
             'link_to_shop' => $request->link_to_shop,
             'link_to_shop_text' => $request->link_to_shop_text,
@@ -143,14 +140,23 @@ class Product extends Model
     /**
      * @param Product $product
      * @return int
-     *
-     * Count free space
      */
     public function countFreeSpace(Product $product): int
     {
         $currentProductPhotos = $product->additional_photos ? count((array)unserialize($product->additional_photos)) : 0;
-        $freePlace = self::TOTAL_PRODUCT_PHOTOS - $currentProductPhotos;
-        return $freePlace;
+
+        return self::TOTAL_PRODUCT_PHOTOS - $currentProductPhotos;
+    }
+
+    /**
+     * @param array $photos
+     * @param UploadPhotoService $uploadService
+     * @param string $path
+     * @return array
+     */
+    public function additionalPhotosUploader(array $photos, UploadPhotoService $uploadService, string $path): array
+    {
+        return unserialize($uploadService->savePhotoArray(photos: $photos, path: $path, size: 500));
     }
 
     /**
@@ -158,37 +164,21 @@ class Product extends Model
      * @param array $photos
      * @param string $path
      * @param UploadPhotoService $uploadService
-     * @return int|void
-     *
-     * Check count images in current product
+     * @return void
      */
-    public function checkCountAdditionalPhotosInProduct(Product $product, array $photos, string $path, UploadPhotoService $uploadService)
+    public function uploadAdditionalPhotos(Product $product, array $photos, string $path, UploadPhotoService $uploadService): void
     {
-        $freePlace = $this->countFreeSpace($product);
+        if($product->additional_photos == null) {
+            Product::where('id', $product->id)
+                ->update(['additional_photos' => serialize($this->additionalPhotosUploader($photos, $uploadService, $path))]);
+        } else {;
+            $updatePhotoArray = array_merge(
+                (array)unserialize($product->additional_photos),
+                $this->additionalPhotosUploader($photos, $uploadService, $path)
+            );
 
-        if(count($photos) > $freePlace) {
-            return $freePlace;
-        } else {
-            $currentProductPhotosArr = (array)unserialize($product->additional_photos);
-
-            $uploadProductPhotos = [];
-
-            foreach ($photos as $ph) {
-                $uploadProductPhotos[] = $uploadService->uploader(
-                    ph: $ph,
-                    path: $path,
-                    size: 500
-                );
-            }
-
-            if($product->additional_photos == null) {
-                $product->additional_photos = serialize($uploadProductPhotos);
-            } else {
-                $arr = array_merge($currentProductPhotosArr, $uploadProductPhotos);
-                Product::where('id', $product->id)->update([
-                    'additional_photos' => serialize($arr),
-                ]);
-            }
+            Product::where('id', $product->id)
+                ->update(['additional_photos' => serialize($updatePhotoArray)]);
         }
     }
 
@@ -202,34 +192,45 @@ class Product extends Model
      */
     public function dropAdditionalPhoto(Product $product, string $photo, UploadPhotoService $service): void
     {
-        $photoArray = unserialize($product->additional_photos);
-        $findImagePosition = array_search($photo, $photoArray);
-        unset($photoArray[$findImagePosition]);
+        $service->deletePhotoFromFolder($photo);
 
-        $service->dropImg($photo);
-
-        $product->additional_photos = serialize($photoArray);
-        $product->save();
+        Product::update(['additional_photos' => serialize($this->deleteAdditionalProductPhotoFromArray($product, $photo))]);
     }
 
     /**
-     * Удаление продукта с фотографиями
+     * @param Product $product
+     * @param string $photo
+     * @return array
+     */
+    public function deleteAdditionalProductPhotoFromArray(Product $product, string $photo): array
+    {
+        $photoArray = unserialize($product->additional_photos);
+
+        $findImagePosition = array_search($photo, $photoArray);
+
+        unset($photoArray[$findImagePosition]);
+
+        return $photoArray;
+    }
+
+    /**
+     * Delete product with all photos
      *
      * @param Product $product
      * @param UploadPhotoService $service
      * @return void
      */
-    public function dropProduct(Product $product, UploadPhotoService $service)
+    public function dropProduct(Product $product, UploadPhotoService $service): void
     {
         $photoArray = unserialize($product->additional_photos);
 
         if($product->additional_photos) {
             foreach($photoArray as $ph) {
-                $service->dropImg($ph);
+                $service->deletePhotoFromFolder($ph);
             }
         }
 
-        $service->dropImg($product->main_photo);
+        $service->deletePhotoFromFolder($product->main_photo);
 
         $product->delete();
     }

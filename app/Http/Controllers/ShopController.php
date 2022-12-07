@@ -2,26 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ShopSettings;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
-/**
- * [Description ShopController]
- */
 class ShopController extends Controller
 {
-    public function marketSettingsForm(int $userId): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    /**
+     * Show market setting form
+     *
+     * @param User $user
+     * @return View
+     */
+    public function marketSettingsForm(User $user): View
     {
-        $user = User::where('id', $userId)->firstOrFail();
         return view('product.settings', compact('user'));
     }
 
-    public function marketSettingsPatch(int $userId, Request $request): \Illuminate\Http\RedirectResponse
+    /**
+     * Update market settings
+     *
+     * @param User $user
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function marketSettingsPatch(User $user, Request $request): RedirectResponse
     {
-        $settings = ShopSettings::where('user_id', $userId)->first();
-
-        ShopSettings::where('id', $settings->id)->update([
+        $user->marketSettings()->update([
             'cards_style' => $request->cards_style,
             'cards_shadow' => $request->cards_shadow,
             'color_title' => $request->color_title,
@@ -41,3 +49,4 @@ class ShopController extends Controller
         return redirect()->back()->with('success', 'Параметры витрины успешно изменены!');
     }
 }
+

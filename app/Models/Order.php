@@ -48,21 +48,22 @@ class Order extends Model
     /**
      * Order user product
      *
-     * @param int $userId
+     * @param User $user
      * @param Product $product
      * @param OrderProductRequest $request
      * @return void
      */
-    public function sendOrder(int $userId, Product $product, OrderProductRequest $request): void
+    public function sendOrder(User $user, Product $product, OrderProductRequest $request): void
     {
+        //Middleware
         if(Auth::check()) {
-            if($userId == Auth::user()->id) {
+            if($user->id == Auth::user()->id) {
                 abort(403);
             }
         }
 
         Order::create([
-            'user_id' => $userId,
+            'user_id' => $user->id,
             'product_id' => $product->id,
             'client_name' => $request->client_name,
             'client_email' => $request->client_email,
@@ -76,26 +77,32 @@ class Order extends Model
         ]);
     }
 
-    public function getUserOrders(int $userId, string $status)
+    public function getUserOrders(User $user, string $status)
     {
-        $orders = DB::table('orders')
+        return DB::table('orders')
             ->join('users', 'orders.user_id', 'users.id')
             ->join('products', 'orders.product_id', 'products.id')
             ->select(
                 'orders.*', 'products.title', 'products.main_photo', 'products.price'
             )
-            ->where('users.id', $userId)
+            ->where('users.id', $user->id)
             ->where('orders.order_status', $status)
             ->orderBy('orders.id', 'DESC')
             ->paginate(25);
-
-        return $orders;
     }
 
-    public function order(int $userId, Order $order, Request $request)
+    /**
+     * Change status to IN_WORK_ORDER
+     *
+     * @param User $user
+     * @param Order $order
+     * @param Request $request
+     * @return void
+     */
+    public function order(User $user, Order $order, Request $request)
     {
         if($request->processed) {
-            Order::where('id', $order->id)->where('user_id', $userId)->update([
+            Order::where('id', $order->id)->where('user_id', $user->id)->update([
                 'processed' => 1,
                 'order_status' => Order::IN_WORK_ORDER,
                 'updated_at' => \date('Y-m-d H:i:s'),

@@ -131,7 +131,7 @@
         <div class="container-fluid" style="padding: 0">
             <nav class="navbar navbar-expand-lg @if($user->dayVsNight) bg-dark text-white-50 @endif" style="background-color: #f1f2f2">
                 <div class="container-fluid">
-                    <a class="mb-1" href="{{ route('editProfileForm', ['id' => Auth::user()->id]) }}">
+                    <a class="mb-1" href="{{ route('editProfileForm', ['user' => Auth::user()->id]) }}">
                         <img src="https://i.ibb.co/DM6hKmk/bbbbbbbbbbb.png" class="img-fluid" style="width:20px; border: 0">
                     </a>
                     <a class="" href="{{ route('userHomePage',  ['user' => Auth::user()->slug]) }}" style="text-decoration: none; border: 0; padding: 0">
@@ -141,7 +141,7 @@
             </nav>
         </div>
         <div class="ms-3 me-3 mb-3 text-center">
-            <form action="{{ route('addLink', ['id' => Auth::user()->id]) }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('addLink', ['user' => Auth::user()->id]) }}" method="post" enctype="multipart/form-data">
                 @csrf @method('POST')
                 <input type="hidden" name="type" value="LINK">
                 <div class="mb-3">

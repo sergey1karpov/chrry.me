@@ -74,14 +74,14 @@ class Link extends Model
     /**
      * Add new link
      *
-     * @param int $userId
+     * @param User $user
      * @param LinkRequest $request
      * @param UploadPhotoService $uploadService
      * @return void
      */
-    public function addLink(int $userId, LinkRequest $request, UploadPhotoService $uploadService)
+    public function addLink(User $user, LinkRequest $request, UploadPhotoService $uploadService)
     {
-        $lastLink = Link::where('user_id', $userId)->orderBy('created_at', 'desc')->first();
+        $lastLink = Link::where('user_id', $user->id)->orderBy('created_at', 'desc')->first();
 
         Link::create([
             'type'      => 'LINK',
@@ -89,9 +89,9 @@ class Link extends Model
             'title'     => $request->title,
             'link'      => $request->link,
             'photo'     => isset($request->photo) ?
-                $uploadService->uploader(
-                    ph: $request->photo,
-                    path: $this->imgPath($userId),
+                $uploadService->savePhoto(
+                    photo: $request->photo,
+                    path: $this->imgPath($user->id),
                     size: 200
                 ) :
                 null,
@@ -127,9 +127,9 @@ class Link extends Model
      * @param UploadPhotoService $uploadService
      * @return void
      */
-    public function editLink(int $userId, Link $link, UpdateLinkRequest $request, UploadPhotoService $uploadService): void
+    public function editLink(User $user, Link $link, UpdateLinkRequest $request, UploadPhotoService $uploadService): void
     {
-        Link::where('id', $link->id)->where('user_id', $userId)->update([
+        Link::where('id', $link->id)->where('user_id', $user->id)->update([
             'title'                => $request->title ?? $link->title,
             'link'                 => $request->link ?? $link->link,
             'shadow'               => $request->shadow,
@@ -141,11 +141,10 @@ class Link extends Model
             'title_color_hex'      => $request->title_color,
             'background_color_hex' => $request->background_color,
             'photo'                => isset($request->photo) ?
-                $uploadService->uploader(
-                    ph: $request->photo,
-                    path: $this->imgPath($userId),
+                $uploadService->savePhoto(
+                    photo: $request->photo,
+                    path: $this->imgPath($user->id),
                     size: 200,
-                    drop: true,
                     dropImagePath: $link->photo
                 ) :
                 $link->photo,
@@ -166,13 +165,13 @@ class Link extends Model
     /**
      * Mass update links
      *
-     * @param int $userId
+     * @param User $user
      * @param Request $request
      * @return void
      */
-    public function editAll(int $userId, Request $request) : void
+    public function editAll(User $user, Request $request) : void
     {
-        Link::where('user_id', $userId)->update([
+        Link::where('user_id', $user->id)->update([
             'title_color'          => $request->title_color,
             'background_color'     => ColorConvertorService::convertBackgroundColor($request->background_color),
             'background_color_hex' => $request->background_color,
@@ -193,16 +192,16 @@ class Link extends Model
     /**
      * Delete link photo
      *
-     * @param int $userId
+     * @param User $user
      * @param Link $link
      * @param UploadPhotoService $uploadService
      * @return void
      */
-    public function deleteLinkImage(int $userId, Link $link, UploadPhotoService $uploadService): void
+    public function deleteLinkImage(User $user, Link $link, UploadPhotoService $uploadService): void
     {
-        $uploadService->dropImg($link->photo);
+        $uploadService->deletePhotoFromFolder($link->photo);
 
-        Link::where('user_id', $userId)->update([
+        Link::where('user_id', $user->id)->update([
             'photo' => '',
         ]);
     }
@@ -217,7 +216,7 @@ class Link extends Model
     public function dropLink(Link $link, UploadPhotoService $uploadService): void
     {
         if($link->photo) {
-            $uploadService->dropImg($link->photo);
+            $uploadService->deletePhotoFromFolder($link->photo);
         }
 
         $link->delete();

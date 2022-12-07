@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
+use App\Interfaces\Statistic;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductStats extends Model
+class ProductStats extends Model implements Statistic
 {
     use HasFactory;
 

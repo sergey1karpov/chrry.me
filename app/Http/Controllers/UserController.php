@@ -6,9 +6,8 @@ use App\Models\User;
 use App\Services\UploadPhotoService;
 use App\Http\Requests\UpdateRegisteruserRequest;
 use App\Services\StatsService;
+use App\Services\CreateProfileViewStatistics;
 use App\Traits\IconsAndFonts;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
@@ -18,8 +17,9 @@ class UserController extends Controller
     use IconsAndFonts;
 
     public function __construct(
-        private readonly UploadPhotoService $uploadService,
-        private readonly StatsService $statsService,
+        private readonly UploadPhotoService          $uploadService,
+        private readonly StatsService                $statsService,
+        private readonly CreateProfileViewStatistics $statistics,
     ) {}
 
     /**
@@ -30,7 +30,7 @@ class UserController extends Controller
      */
     public function userHomePage(User $user): View
     {
-        $this->statsService->createUserStats($user, $_SERVER['REMOTE_ADDR']);
+        $this->statistics->createStatistics($user, $_SERVER['REMOTE_ADDR']);
 
         return view('user.home', compact('user'));
     }
@@ -38,13 +38,11 @@ class UserController extends Controller
     /**
      * Show user admin profile
      *
-     * @param int $userId
+     * @param User $user
      * @return View
      */
-    public function editProfileForm(int $userId): View
+    public function editProfileForm(User $user): View
     {
-        $user = User::where('id', $userId)->firstOrFail();
-
         $stat = $this->statsService->getUserProfileStatistic($user);
 
         return view('user.edit-profile', [
@@ -56,16 +54,15 @@ class UserController extends Controller
     }
 
     /**
-     * Update user prodile
+     * Update user profile
      *
-     * @param int $userId
      * @param User $user
      * @param UpdateRegisteruserRequest $request
      * @return RedirectResponse
      */
-    public function editUserProfile(int $userId, User $user, UpdateRegisteruserRequest $request): RedirectResponse
+    public function editUserProfile(User $user, UpdateRegisteruserRequest $request): RedirectResponse
     {
-        $user->editUserProfile($userId, $request, $this->uploadService);
+        $user->editUserProfile($user, $request, $this->uploadService);
 
         return redirect()->back()->with('success', 'Профиль изменен!');
     }
@@ -73,14 +70,13 @@ class UserController extends Controller
     /**
      * Delete user avatar, banner and favicon from db and user folder
      *
-     * @param int $userId
-     * @param string $type
      * @param User $user
+     * @param string $type
      * @return RedirectResponse
      */
-    public function delUserAvatar(int $userId, string $type, User $user): RedirectResponse
+    public function delUserAvatar(User $user, string $type): RedirectResponse
     {
-        $user->deleteUserImages($userId, $type, $this->uploadService);
+        $user->deleteUserImages($user, $type, $this->uploadService);
 
         return redirect()->back();
     }
@@ -88,13 +84,12 @@ class UserController extends Controller
     /**
      * Change menu color theme, day-night
      *
-     * @param int $userId
      * @param User $user
      * @return JsonResponse
      */
-    public function changeTheme(int $userId, User $user): JsonResponse
+    public function changeTheme(User $user): JsonResponse
     {
-        $user->changeUserTheme($userId);
+        $user->changeUserTheme($user);
 
         return response()->json('changed');
     }
@@ -102,13 +97,11 @@ class UserController extends Controller
     /**
      * Show edit profile form
      *
-     * @param int $userId
-     * @return Application|Factory|\Illuminate\Contracts\View\View
+     * @param User $user
+     * @return View
      */
-    public function profileSettingsForm(int $userId): \Illuminate\Contracts\View\View|Factory|Application
+    public function profileSettingsForm(User $user): View
     {
-        $user = User::where('id', $userId)->firstOrFail();
-
         return view('user.edit-profile-form', compact('user'));
     }
 }

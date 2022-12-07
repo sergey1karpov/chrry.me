@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductFilterRequest;
+use App\Models\Filters\ProductFilters;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\User;
-use App\Services\ProductFilters;
-use App\Services\SearchService;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -16,8 +15,6 @@ use Illuminate\View\View;
  */
 class FilterAndSearchProductController extends Controller
 {
-    public function __construct(private SearchService $searchService) {}
-
     /**
      * FullText search, we send the parameter $search to the view.
      * Parameter $search has our search request, and this request we include in hidden field for filter for him
@@ -28,7 +25,11 @@ class FilterAndSearchProductController extends Controller
      */
     public function fullTextSearch(User $user, Request $request): View
     {
-        $products = $this->searchService->fullTextSearch($user, $request);
+        $products = Product::search($request->search)
+            ->where('user_id', $user->id)
+            ->where('delete', null)
+            ->orderBy('id', 'desc')
+            ->get();
 
         $search = $request->search;
 

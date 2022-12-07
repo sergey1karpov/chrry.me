@@ -113,7 +113,7 @@
 <div class="container-fluid" style="padding: 0">
     <nav class="navbar navbar-expand-lg @if($user->dayVsNight) bg-dark text-white-50 @endif" style="background-color: #f1f2f2">
         <div class="container-fluid">
-            <a class="mb-1" href="{{ route('editProfileForm', ['id' => Auth::user()->id]) }}">
+            <a class="mb-1" href="{{ route('editProfileForm', ['user' => Auth::user()->id]) }}">
                 <img src="https://i.ibb.co/DM6hKmk/bbbbbbbbbbb.png" class="img-fluid" style="width:20px; border: 0">
             </a>
             <a class="" href="{{ route('userHomePage',  ['user' => Auth::user()->slug]) }}" style="text-decoration: none; border: 0; padding: 0">
@@ -123,7 +123,7 @@
     </nav>
 </div>
 <div class="ms-3 me-3 mb-3 text-center">
-    <form action="{{ route('addProduct', ['id' => Auth::user()->id]) }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('addProduct', ['user' => Auth::user()->id]) }}" method="post" enctype="multipart/form-data">
         @csrf @method('POST')
         <input type="hidden" name="user" value="{{$user->id}}">
         <div class="mb-3"> <!-- Название продукта -->
@@ -159,11 +159,11 @@
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">* Выберите категорию</label>
             <select class="form-select shadow" aria-label="Default select example" style="border: 0" name="product_categories_id">
-                @foreach($categories as $c)
+                @foreach($user->productCategories as $c)
                     <option value="{{$c->id}}">{{$c->name}}</option>
                 @endforeach
             </select>
-            <label class="mt-2" style="font-family: 'Rubik', sans-serif; font-size: 12px">По умолчанию все товары попадают в категорию "Все товары". Что бы изменить или добавить новую категорию перейдите <a href="{{ route('allCategories', ['id' => $user->id]) }}">сюда</a></label>
+            <label class="mt-2" style="font-family: 'Rubik', sans-serif; font-size: 12px">По умолчанию все товары попадают в категорию "Все товары". Что бы изменить или добавить новую категорию перейдите <a href="{{ route('allCategories', ['user' => $user->id]) }}">сюда</a></label>
         </div>
 
         {{-- Market buttons --}}

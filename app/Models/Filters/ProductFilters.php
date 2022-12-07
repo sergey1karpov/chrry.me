@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Models\Filters;
 
 use App\Models\ProductCategory;
 
@@ -10,24 +10,20 @@ class ProductFilters
     {
         $productsQuery = $productsCollection->toQuery();
 
-        //Категория
         if ($category && $category->name != ProductCategory::DEFAULT_CATEGORY) {
             if ($request->filled('category')) {
                 $productsQuery->where('product_categories_id', '=', $category->id);
             }
         }
 
-        //Минимальная цена
         if ($request->filled('min')) {
             $productsQuery->where('price', '>=', $request->query('min'));
         }
 
-        //Максимальная цена
         if ($request->filled('max')) {
             $productsQuery->where('price', '<=', $request->query('max'));
         }
 
-        //Новые-старые
         if ($request->filled('date_pub')) {
             if ($request->query('date_pub') == 'Новые') {
                 $productsQuery->orderBy('id', 'desc');

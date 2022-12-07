@@ -113,7 +113,7 @@
         <div class="container-fluid" style="padding: 0">
             <nav class="navbar navbar-expand-lg @if($user->dayVsNight) bg-dark text-white-50 @endif" style="background-color: #f1f2f2">
                 <div class="container-fluid">
-                    <a class="mb-1" href="{{ route('editProfileForm', ['id' => Auth::user()->id]) }}">
+                    <a class="mb-1" href="{{ route('editProfileForm', ['user' => Auth::user()->id]) }}">
                         <img src="https://i.ibb.co/DM6hKmk/bbbbbbbbbbb.png" class="img-fluid" style="width:20px; border: 0">
                     </a>
                     <a class="" href="{{ route('userHomePage',  ['user' => Auth::user()->slug]) }}" style="text-decoration: none; border: 0; padding: 0">
@@ -132,7 +132,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-body">
-                            <form class="" action="{{ route('createCategory', ['id' => $user->id]) }}" method="POST"> @csrf @method('POST')
+                            <form class="" action="{{ route('createCategory', ['user' => $user->id]) }}" method="POST"> @csrf @method('POST')
                                 <div class="mb-3 text-center">
                                     <label for="exampleInputEmail1" class="form-label">Название категории</label>
                                     <input required type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
@@ -173,7 +173,7 @@
                                                     </div>
                                                     @if($category->slug != 'all')
                                                         <div class="col-6">
-                                                            <form method="post" action="{{ route('deleteCategory', ['id' => $user->id, 'category' => $category->id]) }}"> @csrf @method('DELETE')
+                                                            <form method="post" action="{{ route('deleteCategory', ['user' => $user->id, 'category' => $category->id]) }}"> @csrf @method('DELETE')
                                                                 <button class="btn p-0" type="submit">
                                                                     <img src="https://i.ibb.co/7R29Bpj/remove.png" width="20">
                                                                 </button>
@@ -191,7 +191,7 @@
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-body">
-                                        <form action="{{ route('editCategory', ['id' => $user->id, 'category' => $category->id]) }}" method="POST">
+                                        <form action="{{ route('editCategory', ['user' => $user->id, 'category' => $category->id]) }}" method="POST">
                                             @csrf @method('PATCH')
                                             <div class="mb-3 text-center">
                                                 <label for="exampleInputEmail1" class="form-label">Название категории</label>
@@ -248,7 +248,7 @@
 
                     $.ajax({
                         // url: userId + "/categories/sort",
-                        url: "{{ route('sortCategory', ['id' => $user->id]) }}",
+                        url: "{{ route('sortCategory', ['user' => $user->id]) }}",
                         method: 'POST',
                         dataType: 'text',
                         data: {

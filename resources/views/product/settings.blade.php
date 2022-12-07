@@ -113,7 +113,7 @@
 <div class="container-fluid" style="padding: 0">
     <nav class="navbar navbar-expand-lg @if($user->dayVsNight) bg-dark text-white-50 @endif" style="background-color: #f1f2f2">
         <div class="container-fluid">
-            <a class="mb-1" href="{{ route('editProfileForm', ['id' => Auth::user()->id]) }}">
+            <a class="mb-1" href="{{ route('editProfileForm', ['user' => Auth::user()->id]) }}">
                 <img src="https://i.ibb.co/DM6hKmk/bbbbbbbbbbb.png" class="img-fluid" style="width:20px; border: 0">
             </a>
             <a class="" href="{{ route('userHomePage',  ['user' => Auth::user()->slug]) }}" style="text-decoration: none; border: 0; padding: 0">
@@ -123,7 +123,7 @@
     </nav>
 </div>
 <div class="ms-3 me-3 mb-3 text-center">
-    <form action="{{route('marketSettingsPatch', ['id' => $user->id])}}" method="POST"> @csrf @method('PATCH')
+    <form action="{{route('marketSettingsPatch', ['user' => $user->id])}}" method="POST"> @csrf @method('PATCH')
 
         <div class="row">
 
@@ -223,6 +223,15 @@
                 </select>
             </div>
 
+            <div class="mb-3 text-center" id="search_position">
+                <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Где отображать панель поиска</label>
+                <select class="form-select shadow" name="search_position" aria-label="Default select example" style="border: 0">
+                    <option value="on_main" @if($user->marketSettings->search_position == 'on_main') selected @endif>На главной странице витрины</option>
+                    <option value="on_canvas" @if($user->marketSettings->search_position == 'on_canvas') selected @endif>В боковой шторке</option>
+                    <option value="main_and_canvas" @if($user->marketSettings->search_position == 'main_and_canvas') selected @endif>Везде где можно</option>
+                </select>
+            </div>
+
             <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">
                 Цвет для шторки
             </label>
@@ -242,7 +251,7 @@
                     <div class="form-check form-switch mb-3 d-flex justify-content-center">
                         <input name="show_social" class="form-check-input @if($user->dayVsNight) bg-secondary @endif shadow" type="checkbox" value="{{true}}" id="design-link-e" style="border: 0" @if($user->marketSettings->show_social) checked @endif>
                     </div>
-                    <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Установить размер иконок можно в <a href="{{ route('profileSettingsForm', ['id' => $user->id]) }}">настройках</a> аккаунта</label>
+                    <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Установить размер иконок можно в <a href="{{ route('profileSettingsForm', ['user' => $user->id]) }}">настройках</a> аккаунта</label>
                 </div>
             </div>
 

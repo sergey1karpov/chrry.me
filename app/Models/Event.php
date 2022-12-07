@@ -86,14 +86,14 @@ class Event extends Model
     /**
      * Create new event
      *
-     * @param int $id
+     * @param User $user
      * @param EventRequest $request
      * @param UploadPhotoService $uploadService
      * @return void
      */
-    public function createEvent(int $id, EventRequest $request, UploadPhotoService $uploadService): void
+    public function createEvent(User $user, EventRequest $request, UploadPhotoService $uploadService): void
     {
-        $lastEvent = Event::where('user_id', $id)->orderBy('created_at', 'desc')->first();
+        $lastEvent = Event::where('user_id', $user->id)->orderBy('created_at', 'desc')->first();
 
         Event::create([
             'title'       => $request->title,
@@ -102,11 +102,15 @@ class Event extends Model
             'location'    => $request->location,
             'time'        => $request->time,
             'date'        => $request->date,
-            'banner'      => $uploadService->uploader(ph: $request->banner, path: $this->imgPath($id), size: 500),
+            'banner'      => $uploadService->savePhoto(
+                photo: $request->banner,
+                path: $this->imgPath($user->id),
+                size: 500
+            ),
             'video'       => $request->video,
             'media'       => $request->media,
             'tickets'     => $request->tickets,
-            'user_id'     => Auth::user()->id,
+            'user_id'     => $user->id,
             'link_id'     => 1,
             'location_font'         => isset($request->check_last_event) ? $lastEvent->location_font : $request->location_font,
             'location_font_size'    => isset($request->check_last_event) ? $lastEvent->location_font_size : $request->location_font_size,
@@ -138,13 +142,13 @@ class Event extends Model
     /**
      * Update event
      *
-     * @param int $id
+     * @param User $user
      * @param Event $event
      * @param UpdateEventRequest $request
      * @param UploadPhotoService $uploadService
      * @return void
      */
-    public function editEvent(int $id, Event $event, UpdateEventRequest $request, UploadPhotoService $uploadService)
+    public function editEvent(User $user, Event $event, UpdateEventRequest $request, UploadPhotoService $uploadService)
     {
         Event::where('id', $event->id)->update([
             'title'       => $request->title ?? $event->title,
@@ -154,11 +158,10 @@ class Event extends Model
             'time'        => $request->time ?? $event->time,
             'date'        => $request->date ?? $event->date,
             'banner'      => isset($request->banner) ?
-                $uploadService->uploader(
-                    ph: $request->banner,
-                    path: $this->imgPath($id),
+                $uploadService->savePhoto(
+                    photo: $request->banner,
+                    path: $this->imgPath($user->id),
                     size: 500,
-                    drop: true,
                     dropImagePath: $event->banner
                 ) :
                 $event->banner,
@@ -196,13 +199,13 @@ class Event extends Model
     /**
      * Events mass edit
      *
-     * @param int $id
+     * @param User $user
      * @param Request $request
      * @return void
      */
-    public function editAll(int $id, Request $request): void
+    public function editAll(User $user, Request $request): void
     {
-        Event::where('user_id', $id)->update([
+        Event::where('user_id', $user->id)->update([
             'location_font'         => $request->location_font,
             'location_font_size'    => $request->location_font_size,
             'location_font_color'   => $request->location_font_color,
@@ -238,7 +241,7 @@ class Event extends Model
      */
     public function dropEvent(Event $event, UploadPhotoService $uploadService)
     {
-        $uploadService->dropImg($event->banner);
+        $uploadService->deletePhotoFromFolder($event->banner);
 
         $event->delete();
     }

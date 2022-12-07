@@ -26,13 +26,11 @@ class LinkController extends Controller
     /**
      * Page with all user links
      *
-     * @param int $userId
+     * @param User $user
      * @return View|Factory|Application
      */
-    public function allLinks(int $userId): View|Factory|Application
+    public function allLinks(User $user): View|Factory|Application
     {
-        $user = User::where('id', $userId)->firstOrFail();
-
         return view('link.all-links', [
             'user' => $user,
             'allIconsInsideFolder' => $this->getIcons(),
@@ -43,13 +41,11 @@ class LinkController extends Controller
     /**
      * Form for create new link
      *
-     * @param int $userId
-     * @return Application|Factory|View
+     * @param User $user
+     * @return View
      */
-    public function createLinkForm(int $userId): View|Factory|Application
+    public function createLinkForm(User $user): View
     {
-        $user = User::findOrFail($userId);
-
         return view('link.add-link', [
             'user' => $user,
             'allIconsInsideFolder' => $this->getIcons(),
@@ -60,14 +56,14 @@ class LinkController extends Controller
     /**
      * Create new link
      *
-     * @param int $userId
+     * @param User $user
      * @param Link $link
      * @param LinkRequest $request
      * @return RedirectResponse
      */
-    public function addLink(int $userId, Link $link, LinkRequest $request): RedirectResponse
+    public function addLink(User $user, Link $link, LinkRequest $request): RedirectResponse
     {
-        $link->addLink($userId, $request, $this->uploadService);
+        $link->addLink($user, $request, $this->uploadService);
 
         return redirect()->back()->with('success', 'Мультиссылка добавлена!');
     }
@@ -75,14 +71,14 @@ class LinkController extends Controller
     /**
      * Update link
      *
-     * @param int $userId
+     * @param User $user
      * @param Link $link
      * @param UpdateLinkRequest $request
      * @return RedirectResponse
      */
-    public function editLink(int $userId, Link $link, UpdateLinkRequest $request): RedirectResponse
+    public function editLink(User $user, Link $link, UpdateLinkRequest $request): RedirectResponse
     {
-        $link->editLink($userId, $link, $request, $this->uploadService);
+        $link->editLink($user, $link, $request, $this->uploadService);
 
         return redirect()->back();
     }
@@ -90,14 +86,14 @@ class LinkController extends Controller
     /**
      * Mass update links
      *
-     * @param int $userId
+     * @param User $user
      * @param Link $link
      * @param Request $request
      * @return RedirectResponse
      */
-    public function editAllLink(int $userId, Link $link, Request $request): RedirectResponse
+    public function editAllLink(User $user, Link $link, Request $request): RedirectResponse
     {
-        $link->editAll($userId, $request);
+        $link->editAll($user, $request);
 
         return redirect()->back();
     }
@@ -105,13 +101,13 @@ class LinkController extends Controller
     /**
      * Delete photo from link
      *
-     * @param int $userId
+     * @param User $user
      * @param Link $link
      * @return JsonResponse
      */
-    public function delPhoto(int $userId, Link $link): JsonResponse
+    public function delPhoto(User $user, Link $link): JsonResponse
     {
-        $link->deleteLinkImage($userId, $link, $this->uploadService);
+        $link->deleteLinkImage($user, $link, $this->uploadService);
 
         return response()->json('deleted');
     }
@@ -119,13 +115,13 @@ class LinkController extends Controller
     /**
      * Delete icon from link
      *
-     * @param int $userId
-     * @param int $link
+     * @param User $user
+     * @param Link $link
      * @return JsonResponse
      */
-    public function delLinkIcon(int $userId, int $link): JsonResponse
+    public function delLinkIcon(User $user, Link $link): JsonResponse
     {
-        Link::where('user_id', $userId)->where('id', $link)->update(['icon' => null]);
+        Link::where('user_id', $user->id)->where('id', $link->id)->update(['icon' => null]);
 
         return response()->json('deleted');
     }
@@ -133,11 +129,11 @@ class LinkController extends Controller
     /**
      * Delete link
      *
-     * @param int $userId
+     * @param User $user
      * @param Link $link
      * @return RedirectResponse
      */
-    public function delLink(int $userId, Link $link): RedirectResponse
+    public function delLink(User $user, Link $link): RedirectResponse
     {
         $link->dropLink($link, $this->uploadService);
 
@@ -145,12 +141,14 @@ class LinkController extends Controller
     }
 
     /**
-     * Full text link search in all links page
+     * Full-text search in admin panel
+     *
+     * @param User $user
+     * @param Request $request
+     * @return View
      */
-    public function searchLink(int $id, Request $request)
+    public function searchLink(User $user, Request $request): View
     {
-        $user = User::where('id', $id)->firstOrFail();
-
         $links = Link::search($request->search)->where('user_id', $user->id)->orderBy('id', 'desc')->get();
 
         return view('link.search', [
@@ -161,13 +159,13 @@ class LinkController extends Controller
         ]);
     }
 
-    public function sortLink(int $id)
+    public function sortLink(User $user)
     {
         if(isset($_POST['update'])) {
             foreach($_POST['positions'] as $position) {
                 $index = $position[0];
                 $newPosition = $position[1];
-                Link::where('user_id', $id)->where('id', $index)->update([
+                Link::where('user_id', $user->id)->where('id', $index)->update([
                     'position' => $newPosition,
                 ]);
             }

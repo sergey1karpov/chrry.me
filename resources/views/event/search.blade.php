@@ -119,10 +119,10 @@
 <div class="container-fluid" style="padding: 0">
     <nav class="navbar navbar-expand-lg @if($user->dayVsNight) bg-dark text-white-50 @endif" style="background-color: #f1f2f2">
         <div class="container-fluid">
-            <a class="mb-1" href="{{ route('editProfileForm', ['id' => Auth::user()->id]) }}">
+            <a class="mb-1" href="{{ route('editProfileForm', ['user' => Auth::user()->id]) }}">
                 <img src="https://i.ibb.co/DM6hKmk/bbbbbbbbbbb.png" class="img-fluid" style="width:20px; border: 0">
             </a>
-            <form class="" action="{{ route('searchEvent', ['id' => Auth::user()->id]) }}">
+            <form class="" action="{{ route('searchEvent', ['user' => Auth::user()->id]) }}">
                 <input class="form-control me-2" type="search" placeholder="Поиск по городам..." aria-label="Search" name="search" style="height: 30px">
             </form>
             <a class="" href="{{ route('userHomePage',  ['user' => Auth::user()->slug]) }}" style="text-decoration: none; border: 0; padding: 0">
@@ -152,7 +152,7 @@
                                     </button>
                                 </div>
                                 <div class="col-5" style="background-color: #f1f2f2; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">
-                                    <form action="{{ route('deleteEvent', ['id' => $user->id, 'event' => $event->id]) }}" method="POST"> @csrf @method('DELETE')
+                                    <form action="{{ route('deleteEvent', ['user' => $user->id, 'event' => $event->id]) }}" method="POST"> @csrf @method('DELETE')
                                         <button type="submit" class="btn btn-sm" style="background-color: #f1f2f2; border: 0;">Удалить</button>
                                     </form>
                                 </div>
@@ -180,7 +180,7 @@
                         </div>
                     @endif
                     <div class="modal-body text-center" style="background-color: #f1f2f2">
-                        <form action="{{ route('editEvent', ['id' => $user->id, 'event' => $event->id]) }}" method="post" enctype="multipart/form-data" id="add-post">
+                        <form action="{{ route('editEvent', ['user' => $user->id, 'event' => $event->id]) }}" method="post" enctype="multipart/form-data" id="add-post">
                             @csrf @method('PATCH')
                             <input type="hidden" name="type" value="EVENT"> <!-- Тип ссылки -->
                             <div class="mb-3"> <!-- Город -->

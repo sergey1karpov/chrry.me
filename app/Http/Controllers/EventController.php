@@ -26,13 +26,11 @@ class EventController extends Controller
     /**
      * Show form to create new Event
      *
-     * @param int $userId
+     * @param User $user
      * @return View
      */
-    public function createEventForm(int $userId): View
+    public function createEventForm(User $user): View
     {
-        $user = User::findOrFail($userId);
-
         return view('event.add-event', [
             'user' => $user,
             'allFontsInFolder' => $this->getFonts()
@@ -42,14 +40,14 @@ class EventController extends Controller
     /**
      * Add new Event
      *
-     * @param int $id
+     * @param User $user
      * @param Event $event
      * @param EventRequest $request
      * @return RedirectResponse
      */
-    public function addEvent(int $id, Event $event, EventRequest $request): RedirectResponse
+    public function addEvent(User $user, Event $event, EventRequest $request): RedirectResponse
     {
-        $event->createEvent($id, $request, $this->uploadService);
+        $event->createEvent($user, $request, $this->uploadService);
 
         return redirect()->back()->with('success', 'Мероприятие добавлено!');
     }
@@ -57,13 +55,11 @@ class EventController extends Controller
     /**
      * Page with all events
      *
-     * @param int $id
+     * @param User $user
      * @return View
      */
-    public function allEvents(int $id): View
+    public function allEvents(User $user): View
     {
-        $user = User::where('id', $id)->firstOrFail();
-
         return view('event.events', [
             'user' => $user,
             'allFontsInFolder' => $this->getFonts(),
@@ -73,14 +69,14 @@ class EventController extends Controller
     /**
      * Update event
      *
-     * @param int $id
+     * @param User $user
      * @param Event $event
      * @param UpdateEventRequest $request
      * @return RedirectResponse
      */
-    public function editEvent(int $id, Event $event, UpdateEventRequest $request)
+    public function editEvent(User $user, Event $event, UpdateEventRequest $request)
     {
-        $event->editEvent($id, $event, $request, $this->uploadService);
+        $event->editEvent($user, $event, $request, $this->uploadService);
 
         return redirect()->back();
     }
@@ -88,11 +84,11 @@ class EventController extends Controller
     /**
      * Manual delete event
      *
-     * @param int $id
+     * @param User $user
      * @param Event $event
      * @return RedirectResponse
      */
-    public function deleteEvent(int $id, Event $event): RedirectResponse
+    public function deleteEvent(User $user, Event $event): RedirectResponse
     {
         $event->dropEvent($event, $this->uploadService);
 
@@ -102,14 +98,14 @@ class EventController extends Controller
     /**
      * Events mass edit
      *
-     * @param int $id
+     * @param User $user
      * @param Event $event
      * @param Request $request
      * @return RedirectResponse
      */
-    public function editAllEvent(int $id, Event $event, Request $request): RedirectResponse
+    public function editAllEvent(User $user, Event $event, Request $request): RedirectResponse
     {
-        $event->editAll($id, $request);
+        $event->editAll($user, $request);
 
         return redirect()->back();
     }
@@ -117,14 +113,12 @@ class EventController extends Controller
     /**
      * Event full text search
      *
-     * @param int $id
+     * @param User $user
      * @param Request $request
      * @return View
      */
-    public function searchEvent(int $id, Request $request): View
+    public function searchEvent(User $user, Request $request): View
     {
-        $user = User::where('id', $id)->firstOrFail();
-
         $events = Event::search($request->search)->where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
 
         return view('event.search', [

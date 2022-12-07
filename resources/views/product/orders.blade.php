@@ -95,7 +95,7 @@
 <div class="container-fluid" style="padding: 0; margin-top: 1px">
     <nav class="navbar navbar-expand-lg @if($user->dayVsNight) bg-dark text-white-50 @endif" style="background-color: #f1f2f2">
         <div class="container-fluid">
-            <a class="mb-1" href="{{ route('editProfileForm', ['id' => $user->id]) }}">
+            <a class="mb-1" href="{{ route('editProfileForm', ['user' => $user->id]) }}">
                 <img src="https://i.ibb.co/DM6hKmk/bbbbbbbbbbb.png" class="img-fluid" style="width:20px; border: 0">
             </a>
             <div class="d-grid gap-2">
@@ -103,7 +103,7 @@
                     Как работать с заказами?
                 </button>
             </div>
-            <a class="" href="{{ route('editProfileForm',  ['id' => $user->id]) }}" style="text-decoration: none; border: 0; padding: 0">
+            <a class="" href="{{ route('editProfileForm',  ['user' => $user->id]) }}" style="text-decoration: none; border: 0; padding: 0">
                 <div class="img" style="background-image: url({{$user->avatar}});"></div>
             </a>
         </div>
@@ -125,7 +125,7 @@
 
 <div class="mt-2 mb- me-3 ms-3 d-flex justify-content-between">
     <div class="col-6">
-        <a class="btn-sm btn-success text-center bb" type="button" style="font-family: 'Inter', sans-serif; font-size: 0.8rem; border: 0; border-top-left-radius: 3px; border-bottom-left-radius: 3px;" href="{{ route('ordersInWork', ['id' => $user->id]) }}">
+        <a class="btn-sm btn-success text-center bb" type="button" style="font-family: 'Inter', sans-serif; font-size: 0.8rem; border: 0; border-top-left-radius: 3px; border-bottom-left-radius: 3px;" href="{{ route('ordersInWork', ['user' => $user->id]) }}">
             В работе
             @if(count($user->orders->where('order_status', \App\Models\Order::IN_WORK_ORDER)) > 0)
                 <span class="badge" style="border: 0; margin-left: 1px; background-color: orangered">
@@ -135,7 +135,7 @@
         </a>
     </div>
     <div class="col-6">
-        <a class="btn-sm btn-secondary text-center bb" type="button" style="font-family: 'Inter', sans-serif; font-size: 0.8rem; border: 0; border-top-right-radius: 3px; border-bottom-right-radius: 3px;" href="{{ route('ordersProcessed', ['id' => $user->id]) }}">Обработанные заявки</a>
+        <a class="btn-sm btn-secondary text-center bb" type="button" style="font-family: 'Inter', sans-serif; font-size: 0.8rem; border: 0; border-top-right-radius: 3px; border-bottom-right-radius: 3px;" href="{{ route('ordersProcessed', ['user' => $user->id]) }}">Обработанные заявки</a>
     </div>
 </div>
 
@@ -246,9 +246,9 @@
 
                             <div class="text-center mt-5">
                                 @if($order->order_status == \App\Models\Order::NEW_ORDER)
-                                    <form action="{{ route('order', ['id' => $user->id, 'order' => $order->id]) }}" method="POST"> @csrf @method('POST')
+                                    <form action="{{ route('order', ['user' => $user->id, 'order' => $order->id]) }}" method="POST"> @csrf @method('POST')
                                 @elseif($order->order_status == \App\Models\Order::IN_WORK_ORDER)
-                                    <form action="{{ route('orderProcessed', ['id' => $user->id, 'order' => $order->id]) }}" method="POST"> @csrf @method('POST')
+                                    <form action="{{ route('orderProcessed', ['user' => $user->id, 'order' => $order->id]) }}" method="POST"> @csrf @method('POST')
                                 @elseif($order->order_status == \App\Models\Order::IN_WORK_ORDER)
                                     <form action="#" method="">
                                 @endif

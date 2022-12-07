@@ -123,16 +123,14 @@ class User extends Authenticatable
     /**
      * Edit user profile
      *
-     * @param int $userId
+     * @param User $user
      * @param UpdateRegisteruserRequest $request
      * @param UploadPhotoService $uploadService
      * @return void
      */
-    public function editUserProfile(int $userId, UpdateRegisteruserRequest $request, UploadPhotoService $uploadService): void
+    public function editUserProfile(User $user, UpdateRegisteruserRequest $request, UploadPhotoService $uploadService): void
     {
-        $user = User::find($userId);
-
-        User::where('id', $user->id)->update([
+        $user->update([
             'name'              => $request->name,
             'description'       => $request->description,
             'background_color'  => $request->background_color,
@@ -141,20 +139,18 @@ class User extends Authenticatable
             'verify_color'      => $request->verify_color,
             'slug'              => $request->slug ?? $user->slug,
             'avatar'            => isset($request->avatar) ?
-                $uploadService->uploader(
-                    ph: $request->avatar,
-                    path: $this->imgPath($userId),
+                $uploadService->savePhoto(
+                    photo: $request->avatar,
+                    path: $this->imgPath($user->id),
                     size: 500,
-                    drop: true,
                     dropImagePath: $user->avatar
                 ) :
                 $user->avatar,
             'banner'            => isset($request->banner) ?
-                $uploadService->uploader(
-                    ph: $request->banner,
-                    path: $this->imgPath($userId),
+                $uploadService->savePhoto(
+                    photo: $request->banner,
+                    path: $this->imgPath($user->id),
                     size: 2000,
-                    drop: true,
                     dropImagePath: $user->banner
                 ) :
                 $user->banner,
@@ -163,11 +159,10 @@ class User extends Authenticatable
             'show_social'       => $request->show_social ?? $user->show_social,
             'social'            => $request->social ?? $user->social,
             'favicon'           => isset($request->favicon) ?
-                $uploadService->uploader(
-                    ph: $request->favicon,
-                    path: $this->imgPath($userId),
+                $uploadService->savePhoto(
+                    photo: $request->favicon,
+                    path: $this->imgPath($user->id),
                     size: 40,
-                    drop: true,
                     dropImagePath: $user->favicon
                 ) :
                 $user->favicon,
@@ -188,20 +183,18 @@ class User extends Authenticatable
             'round_links_shadow_round' => $request->round_links_shadow_round,
             'round_links_shadow_color' => $request->round_links_shadow_color,
             'logotype'           => isset($request->logotype) ?
-                $uploadService->uploader(
-                    ph: $request->logotype,
-                    path: $this->imgPath($userId),
+                $uploadService->saveUserLogotype(
+                    photo: $request->logotype,
                     size: 500,
-                    drop: true,
+                    path: $this->imgPath($user->id),
                     dropImagePath: $user->logotype,
-                    aspectRatio: true
                 ) :
                 $user->logotype,
             'navigation_color' => $request->navigation_color,
         ]);
 
         if($request->type == 'Market') {
-            $this->createDefaultMarketSettings($userId);
+            $this->createDefaultMarketSettings($user->id);
         }
     }
 
@@ -244,33 +237,30 @@ class User extends Authenticatable
     /**
      * Delete user avatar, favicon, banner and logotype
      *
-     * @param int $userId
+     * @param User $user
      * @param string $type
      * @param UploadPhotoService $uploadService
      * @return void
      */
-    public function deleteUserImages(int $userId, string $type, UploadPhotoService $uploadService): void
+    public function deleteUserImages(User $user, string $type, UploadPhotoService $uploadService): void
     {
-        $user = User::where('id', $userId)->firstOrFail();
+        User::where('id', $user->id)->update([$type => null]);
 
-        User::where('id', $userId)->update([$type => null]);
-        $uploadService->dropImg($user->$type);
+        $uploadService->deletePhotoFromFolder($user->$type);
     }
 
     /**
      * Night or day profile theme
      *
-     * @param int $userId
+     * @param User $user
      * @return void
      */
-    public function changeUserTheme(int $userId): void
+    public function changeUserTheme(User $user): void
     {
-        $user = User::where('id', $userId)->firstOrFail();
-
         if($user->dayVsNight == 0) {
-            User::where('id', $userId)->update(['dayVsNight' => 1]);
+            User::where('id', $user->id)->update(['dayVsNight' => 1]);
         } else {
-            User::where('id', $userId)->update(['dayVsNight' => 0]);
+            User::where('id', $user->id)->update(['dayVsNight' => 0]);
         }
     }
 }

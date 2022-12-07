@@ -103,10 +103,10 @@
     <div class="container-fluid " style="padding: 0">
         <nav class="navbar navbar-expand-lg @if($user->dayVsNight) bg-dark text-white-50 @endif" style="background-color: #f1f2f2">
             <div class="container-fluid">
-                <a class="mb-1" href="{{ route('allLinks', ['id' => Auth::user()->id]) }}">
+                <a class="mb-1" href="{{ route('allLinks', ['user' => Auth::user()->id]) }}">
                     <img src="https://i.ibb.co/DM6hKmk/bbbbbbbbbbb.png" class="img-fluid" style="width:20px; border: 0">
                 </a>
-                <form class="" action="{{ route('searchLink', ['id' => Auth::user()->id]) }}">
+                <form class="" action="{{ route('searchLink', ['user' => Auth::user()->id]) }}">
                     <input class="form-control me-2 @if($user->dayVsNight) bg-secondary @endif" type="search" placeholder="Поиск ссылок" aria-label="Search" name="search" style="height: 30px">
                 </form>
                 <a class="" href="{{ route('userHomePage',  ['user' => Auth::user()->slug]) }}" style="text-decoration: none; border: 0; padding: 0">
@@ -154,8 +154,8 @@
                         </div>
                         <div class="d-flex justify-content-between rounded-bottom rounded-3" style="padding: 0; margin-right: 30px; margin-left: 30px">
                             <div class="col-4 border-end " style="background-color: #f0eeef; box-shadow: 5px 0px 0px black; border-bottom-left-radius: 5px;">
-                                <a href="{{ route('showClickLinkStatistic', ['id' => $user->id, 'link' => $link->id]) }}" style="text-decoration: none; color: black">
-                                    <button href="{{ route('showClickLinkStatistic', ['id' => $user->id, 'link' => $link->id]) }}" class="btn-sm" style="background-color: #f1f2f2; border: 0;">
+                                <a href="{{ route('showClickLinkStatistic', ['user' => $user->id, 'link' => $link->id]) }}" style="text-decoration: none; color: black">
+                                    <button href="{{ route('showClickLinkStatistic', ['user' => $user->id, 'link' => $link->id]) }}" class="btn-sm" style="background-color: #f1f2f2; border: 0;">
                                         @lang('app.s_stats')
                                     </button>
                                 </a>
@@ -166,7 +166,7 @@
                                 </button>
                             </div>
                             <div class="col-4" style="background-color: #f1f2f2; border-bottom-right-radius: 5px;">
-                                <form action="{{ route('delLink', ['id' => Auth::user()->id, 'link' => $link->id]) }}" method="POST">
+                                <form action="{{ route('delLink', ['user' => Auth::user()->id, 'link' => $link->id]) }}" method="POST">
                                     @csrf @method('DELETE')
                                     <button class="btn-sm" style="background-color: #f0eeef; border: 0;">
                                         @lang('app.a_del')
@@ -216,7 +216,7 @@
                                                     <img class="rounded-3" src="{{$link->icon}}" style="width:50px;">
                                                 </div>
                                                 <div class="col-12 mt-2">
-                                                    <form action="{{ route('delLinkIcon', ['id' => Auth::user()->id, 'link' => $link->id]) }}" method="POST">
+                                                    <form action="{{ route('delLinkIcon', ['user' => Auth::user()->id, 'link' => $link->id]) }}" method="POST">
                                                         @csrf @method('PATCH')
                                                         <input type="hidden" id="linkId{{$link->id}}" value="{{$link->id}}">
                                                         <input type="hidden" id="userId{{$link->id}}" value="{{$user->id}}">
@@ -229,7 +229,7 @@
                                     @endif
 
                                     <div class="modal-body @if($user->dayVsNight) bg-dark text-white-50 @endif" style="background-color: #f1f2f2">
-                                        <form action="{{ route('editLink', ['id' => Auth::user()->id, 'link' => $link->id]) }}" method="post" enctype="multipart/form-data">
+                                        <form action="{{ route('editLink', ['user' => Auth::user()->id, 'link' => $link->id]) }}" method="post" enctype="multipart/form-data">
                                             @csrf @method('PATCH')
                                             <div>
                                                 <input type="hidden" name="type" value="LINK"> <!-- Тип ссылки -->

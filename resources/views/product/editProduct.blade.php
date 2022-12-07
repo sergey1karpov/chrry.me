@@ -130,10 +130,10 @@
 <div class="container-fluid" style="padding: 0">
     <nav class="navbar navbar-expand-lg @if($user->dayVsNight) bg-dark text-white-50 @endif" style="background-color: #f1f2f2">
         <div class="container-fluid">
-            <a class="mb-1" href="{{ route('allProducts', ['id' => Auth::user()->id]) }}">
+            <a class="mb-1" href="{{ route('allProducts', ['user' => Auth::user()->id]) }}">
                 <img src="https://i.ibb.co/DM6hKmk/bbbbbbbbbbb.png" class="img-fluid" style="width:20px; border: 0">
             </a>
-            <form class="" action="{{ route('searchProducts', ['id' => Auth::user()->id]) }}">
+            <form class="" action="{{ route('searchProducts', ['user' => Auth::user()->id]) }}">
                 <input class="form-control me-2" type="search" placeholder="Поиск товаров" aria-label="Search" name="search" style="height: 30px">
             </form>
             <a class="" href="{{ route('userHomePage',  ['user' => Auth::user()->slug]) }}" style="text-decoration: none; border: 0; padding: 0">
@@ -150,7 +150,7 @@
                 @foreach(unserialize($product->additional_photos) as $ph)
                     <div class="col mb-2">
                         <img class="rounded shadow" src="{{'/'.$ph}}" width="100">
-                        <form action="{{ route('deleteAdditionalPhoto', ['id' => $user->id, 'product' => $product->id]) }}" method="POST"> @csrf @method('PATCH')
+                        <form action="{{ route('deleteAdditionalPhoto', ['user' => $user->id, 'product' => $product->id]) }}" method="POST"> @csrf @method('PATCH')
                             <input type="hidden" value="{{$ph}}" name="photo">
                             <button class="btn-sm" style="background-color: rgba(28,28,28,0); border: none">
                                 <img class="shadow" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Delete-button.svg/862px-Delete-button.svg.png" width="15">
@@ -162,7 +162,7 @@
         @endif
     </div>
     <div class="text-center">
-        <form action="{{ route('editProduct', ['id' => $user->id, 'product' => $product->id]) }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('editProduct', ['user' => $user->id, 'product' => $product->id]) }}" method="post" enctype="multipart/form-data">
             @csrf @method('PATCH')
             <input type="hidden" name="user" value="{{$user->id}}">
             <div class="mb-3"> <!-- Название продукта -->
@@ -203,7 +203,7 @@
                         <option value="{{$c->id}}">{{$c->name}}</option>
                     @endforeach
                 </select>
-                <label class="mt-2" style="font-family: 'Rubik', sans-serif; font-size: 12px">По умолчанию все товары попадают в категорию "Все товары". Что бы изменить или добавить новую категорию перейдите <a href="{{ route('allCategories', ['id' => $user->id]) }}">сюда</a></label>
+                <label class="mt-2" style="font-family: 'Rubik', sans-serif; font-size: 12px">По умолчанию все товары попадают в категорию "Все товары". Что бы изменить или добавить новую категорию перейдите <a href="{{ route('allCategories', ['user' => $user->id]) }}">сюда</a></label>
             </div>
 
             {{-- Market buttons --}}

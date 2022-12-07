@@ -135,7 +135,7 @@
                                         <div class="m-5" style="background-image: url(https://i.ibb.co/L1WBCWC/click-user.png); width: 60px;height: 60px;margin-right: 0;background-position: center center;-wekit-background-size: cover;background-size: cover;background-repeat: no-repeat;"></div>
                                     </div>
                                     <div class="col-8 d-flex align-items-center" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="padding-left: 0">
-                                        <a href="{{ route('createLinkForm', ['id' => $user->id]) }}" style="border: 0">
+                                        <a href="{{ route('createLinkForm', ['user' => $user->id]) }}" style="border: 0">
                                             <div class="row">
                                                 <div class="col-12">
                                                     <h4 class="block1-text mt-4 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">Создать</h4>
@@ -153,7 +153,7 @@
                                         <div class="m-5" style="background-image: url(https://i.ibb.co/w67K8xY/controls.png); width: 60px;height: 60px;margin-right: 0;background-position: center center;-wekit-background-size: cover;background-size: cover;background-repeat: no-repeat;"></div>
                                     </div>
                                     <div class="col-8 d-flex align-items-center" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="padding-left: 0">
-                                        <a href="{{ route('allLinks', ['id' => $user->id]) }}" style="border: 0">
+                                        <a href="{{ route('allLinks', ['user' => $user->id]) }}" style="border: 0">
                                             <div class="row">
                                                 <div class="col-12">
                                                     <h4 class="block1-text mt-4 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">Управление ссылками</h4>
@@ -207,7 +207,7 @@
                                 <div class="sub-block1 card card-body @if($user->dayVsNight) bg-secondary  @endif" style="background-color: #f38864; border: 0; padding-left: 28px; padding-bottom: 0; padding-top: 0; border-radius: 0">
                                     <div class="row d-flex justify-content-center">
                                         <div class="col-12 text-center" >
-                                            <a href="{{ route('createProductForm', ['id' => $user->id]) }}">
+                                            <a href="{{ route('createProductForm', ['user' => $user->id]) }}">
                                                 <div class="row d-flex justify-content-center">
                                                     <div class="col-4"  href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="padding-left: 0">
                                                         <div class="m-5" style="background-image: url(https://i.ibb.co/yFYsThg/packaging.png); width: 60px;height: 60px;margin-right: 0;background-position: center center;-wekit-background-size: cover;background-size: cover;background-repeat: no-repeat;"></div>
@@ -227,7 +227,7 @@
                                         </div>
                                         <hr style="margin: 0">
                                         <div class="col-12 text-center" >
-                                            <a href="{{ route('allProducts', ['id' => $user->id]) }}">
+                                            <a href="{{ route('allProducts', ['user' => $user->id]) }}">
                                                 <div class="row d-flex justify-content-center">
                                                     <div class="col-4"  href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="padding-left: 0">
                                                         <div class="m-5" style="background-image: url(https://i.ibb.co/4ZCq7w4/product.png); width: 60px;height: 60px;margin-right: 0;background-position: center center;-wekit-background-size: cover;background-size: cover;background-repeat: no-repeat;"></div>
@@ -247,7 +247,7 @@
                                         </div>
                                         <hr style="margin: 0">
                                         <div class="col-12 text-center">
-                                            <a href="{{ route('orders', ['id' => $user->id]) }}">
+                                            <a href="{{ route('orders', ['user' => $user->id]) }}">
                                                 <div class="row d-flex justify-content-center">
                                                     <div class="col-4" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="padding-left: 0">
                                                         <div class="m-5" style="background-image: url(https://i.ibb.co/HX3jwS4/agreement.png); width: 60px;height: 60px;margin-right: 0;background-position: center center;-wekit-background-size: cover;background-size: cover;background-repeat: no-repeat;"></div>
@@ -280,7 +280,7 @@
                                         </div>
                                         <hr style="margin: 0">
                                         <div class="col-12 text-center">
-                                            <a href="{{ route('marketSettingsForm', ['id' => $user->id]) }}">
+                                            <a href="{{ route('marketSettingsForm', ['user' => $user->id]) }}">
                                                 <div class="row d-flex justify-content-center">
                                                     <div class="col-4" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="padding-left: 0">
                                                         <div class="m-5" style="background-image: url(https://i.ibb.co/7Y1wz8p/settings-2.png); width: 60px;height: 60px;margin-right: 0;background-position: center center;-wekit-background-size: cover;background-size: cover;background-repeat: no-repeat;"></div>
@@ -300,7 +300,7 @@
                                         </div>
                                         <hr style="margin: 0">
                                         <div class="col-12 text-center">
-                                            <a href="{{ route('allCategories', ['id' => $user->id]) }}">
+                                            <a href="{{ route('allCategories', ['user' => $user->id]) }}">
                                                 <div class="row d-flex justify-content-center">
                                                     <div class="col-4" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="padding-left: 0">
                                                         <div class="m-5" style="background-image: url(https://i.ibb.co/RCxVWyr/category.png); width: 60px;height: 60px;margin-right: 0;background-position: center center;-wekit-background-size: cover;background-size: cover;background-repeat: no-repeat;"></div>
@@ -348,7 +348,7 @@
                                 <div class="sub-block1 card card-body @if($user->dayVsNight) bg-secondary  @endif" style="background-color: #f38864; border: 0; padding-left: 28px; padding-bottom: 0; padding-top: 0; border-radius: 0">
                                     <div class="row d-flex justify-content-center">
                                         <div class="col-12 text-center">
-                                            <a href="{{ route('createEventForm', ['id' => $user->id]) }}" style="border: 0">
+                                            <a href="{{ route('createEventForm', ['user' => $user->id]) }}" style="border: 0">
                                                 <div class="row d-flex justify-content-center">
                                                     <div class="col-4" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="padding-left: 0">
                                                         <div class="m-5" style="background-image: url(https://i.ibb.co/j87C6VH/add-calendar.png); width: 60px;height: 60px;margin-right: 0;background-position: center center;-wekit-background-size: cover;background-size: cover;background-repeat: no-repeat;"></div>
@@ -368,7 +368,7 @@
                                         </div>
                                         <hr style="margin: 0">
                                         <div class="col-12 text-center" >
-                                            <a href="{{ route('allEvents', ['id' => $user->id]) }}" style="border: 0">
+                                            <a href="{{ route('allEvents', ['user' => $user->id]) }}" style="border: 0">
                                                 <div class="row d-flex justify-content-center">
                                                     <div class="col-4" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="padding-left: 0">
                                                         <div class="m-5" style="background-image: url(https://i.ibb.co/1772vHL/event.png); width: 60px;height: 60px;margin-right: 0;background-position: center center;-wekit-background-size: cover;background-size: cover;background-repeat: no-repeat;"></div>
@@ -423,7 +423,7 @@
 							<div class="m-5" style="background-image: url(https://i.ibb.co/7vrtV67/settings-1.png); width: 60px;height: 60px;margin-right: 0;background-position: center center;-wekit-background-size: cover;background-size: cover;background-repeat: no-repeat;"></div>
 						</div>
                         <div class="col-8 d-flex align-items-center">
-                            <a href="{{ route('profileSettingsForm', ['id' => $user->id]) }}" style="border: 0">
+                            <a href="{{ route('profileSettingsForm', ['user' => $user->id]) }}" style="border: 0">
                                 <div class="row">
                                     <div class="col-12">
                                         <h4 class="block1-text mt-4 text-start @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; color: white; font-weight: 600 ;">@lang('app.settings')</h4>
