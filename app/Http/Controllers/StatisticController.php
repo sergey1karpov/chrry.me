@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\ProductViewJob;
 use App\Models\Link;
 use App\Services\CreateClickLinkStatistics;
 use App\Services\CreateProductsViewStatistics;
@@ -10,6 +11,7 @@ use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class StatisticController extends Controller
@@ -19,16 +21,26 @@ class StatisticController extends Controller
         private readonly CreateProductsViewStatistics $productStatistics,
     ) {}
 
-    public function clickLinkStatistic(User $user, Request $request)
+    /**
+     * @param User $user
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function clickLinkStatistic(User $user, Request $request): RedirectResponse
     {
         $this->linkStatistics->createStatistics($user, $request->server->get('REMOTE_ADDR'), $request);
 
         return redirect()->to($request->link_url);
     }
 
-    public function productStats(User $user, Request $request)
+    /**
+     * @param User $user
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function productStats(User $user, Request $request): RedirectResponse
     {
-        $this->productStatistics->createStatistics($user, $request->server->get('REMOTE_ADDR'), $request);
+        ProductViewJob::dispatch($user, $request->server->get('REMOTE_ADDR'), $request->all(), $this->productStatistics);
 
         return redirect()->route('showProductDetails', ['user' => $user->slug, 'product' => $request->product_id]);
     }

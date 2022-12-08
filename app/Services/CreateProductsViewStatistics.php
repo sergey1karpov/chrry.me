@@ -15,10 +15,10 @@ class CreateProductsViewStatistics implements StatisticInterface
     /**
      * @param User $user
      * @param string $guest_ip
-     * @param Request|null $request
+     * @param array|null $request
      * @return void
      */
-    public function createStatistics(User $user, string $guest_ip, Request $request = null): void
+    public function createStatistics(User $user, string $guest_ip, array $request = null): void
     {
         $data = $this->connection->getDataFromAPI($guest_ip);
 
@@ -33,15 +33,15 @@ class CreateProductsViewStatistics implements StatisticInterface
     /**
      * @param string $guest_ip
      * @param User $user
-     * @param Request|null $request
+     * @param array|null $request
      * @return ProductStats|null
      */
-    public function getStatisticsData(string $guest_ip, User $user, Request $request = null): null|ProductStats
+    public function getStatisticsData(string $guest_ip, User $user, array $request = null): null|ProductStats
     {
         return ProductStats::where('guest_ip', $guest_ip)
-            ->where('created_at', today())
+            ->whereDate('created_at', today())
             ->where('user_id', $user->id)
-            ->where('product_id', $request->product_id)
+            ->where('product_id', $request['product_id'])
             ->first();
     }
 
@@ -49,14 +49,14 @@ class CreateProductsViewStatistics implements StatisticInterface
      * @param User $user
      * @param string $guest_ip
      * @param array $data
-     * @param Request|null $request
+     * @param array|null $request
      * @return void
      */
-    public function setStatisticsData(User $user, string $guest_ip, array $data, Request $request = null): void
+    public function setStatisticsData(User $user, string $guest_ip, array $data, array $request = null): void
     {
         ProductStats::create([
             'user_id' => $user->id,
-            'product_id' => $request->product_id,
+            'product_id' => $request['product_id'],
             'guest_ip' => $guest_ip,
             'created_at' => today(),
             'city' => $data['city'] ?? null,

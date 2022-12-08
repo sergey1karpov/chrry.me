@@ -112,7 +112,7 @@ class User extends Authenticatable
 
     public function userProducts(): Collection
     {
-        return Product::where('user_id', $this->id)->where('delete', null)->orderBy('position')->get();
+        return Product::where('user_id', $this->id)->where('delete', null)->orderBy('position')->take(20)->get();
     }
 
     public function userLinksWithoutBar(): Collection

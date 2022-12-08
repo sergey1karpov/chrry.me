@@ -66,5 +66,7 @@ class Kernel extends HttpKernel
         'redir' => \App\Http\Middleware\UserRedirectMiddleware::class,
         'locale' => \App\Http\Middleware\LocaleMiddleware::class,
         'root' => \App\Http\Middleware\RootMiddleware::class,
+        'links.count' => \App\Http\Middleware\CheckCountLinksMiddleware::class,
+        'events.count' => \App\Http\Middleware\CheckCountEventsMiddleware::class
     ];
 }

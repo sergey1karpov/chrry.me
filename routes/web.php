@@ -55,7 +55,7 @@ Route::middleware(['web', 'root', 'locale'])->group(function () {
         Route::group(['prefix' => 'links'], function() {
             Route::get('/', [LinkController::class, 'allLinks'])->name('allLinks');
             Route::get('/create', [LinkController::class, 'createLinkForm'])->name('createLinkForm');
-            Route::post('/create', [LinkController::class, 'addLink'])->name('addLink');
+            Route::post('/create', [LinkController::class, 'addLink'])->name('addLink')->middleware('links.count');
             Route::get('/search', [LinkController::class, 'searchLink'])->name('searchLink');
             Route::patch('/edit', [LinkController::class, 'editLink'])->name('editLink');
             Route::patch('/edit-all', [LinkController::class, 'editAllLink'])->name('editAllLink');
@@ -69,7 +69,7 @@ Route::middleware(['web', 'root', 'locale'])->group(function () {
         Route::group(['prefix' => 'events'], function() {
             Route::get('/', [EventController::class, 'allEvents'])->name('allEvents');
             Route::get('/create', [EventController::class, 'createEventForm'])->name('createEventForm');
-            Route::post('/create', [EventController::class, 'addEvent'])->name('addEvent');
+            Route::post('/create', [EventController::class, 'addEvent'])->name('addEvent')->middleware('events.count');
             Route::get('/search', [EventController::class, 'searchEvent'])->name('searchEvent');
             Route::patch('/edit-all', [EventController::class, 'editAllEvent'])->name('editAllEvent');
             Route::patch('/{event}/edit', [EventController::class, 'editEvent'])->name('editEvent');

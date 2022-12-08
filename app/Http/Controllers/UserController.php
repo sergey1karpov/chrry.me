@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\ProfileViewJob;
 use App\Models\User;
 use App\Services\UploadPhotoService;
 use App\Http\Requests\UpdateRegisteruserRequest;
@@ -30,7 +31,7 @@ class UserController extends Controller
      */
     public function userHomePage(User $user): View
     {
-        $this->statistics->createStatistics($user, $_SERVER['REMOTE_ADDR']);
+        ProfileViewJob::dispatch($user, $_SERVER['REMOTE_ADDR'], $this->statistics);
 
         return view('user.home', compact('user'));
     }

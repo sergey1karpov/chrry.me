@@ -600,6 +600,13 @@
                             @endforeach
                         </div>
                     @endif
+                    @if(count($user->userProducts()) == 20)
+                        <div class="d-grid gap-2" style="padding-right: 12px; padding-left: 12px">
+                            <a class="btn shadow" style="background-color: {{$user->navigation_color}}; font-family: 'Inter', sans-serif; font-size: 1rem; border: 0" href="{{ route('showProductsInCategory', ['user' => $user->slug, 'categorySlug' => 'all']) }}">
+                                Загрузить еще
+                            </a>
+                        </div>
+                    @endif
                 @else
                     @if(Auth::check())
                         <div class="mt-5 mb-5 me-3 ms-3 text-center">
