@@ -70,7 +70,9 @@
             background-size: cover;
             background-repeat: no-repeat;
         }
-
+        .accordion-button:focus {
+            box-shadow: none;
+        }
     </style>
 </head>
 <body class="antialiased @if($user->dayVsNight) bg-dark text-white-50 @endif">
@@ -231,6 +233,342 @@
                 </div>
             </div>
 
+            <hr>
+            <div class="accordion accordion-flush" id="accordionFlushExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingOne">
+                        <button style="border: 0; text-decoration: none" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                            Параметры дизайна карточки продукта
+                        </button>
+                    </h2>
+                    <div style="background-color: #f1f2f2" id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+
+                        <div class=" mb-3">
+                            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Цвет фона карточки</label>
+                            <div class="mb-3 text-center d-flex justify-content-center">
+                                <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" name="dp_card_bg_color" value="{{$designProperties['dp_card_bg_color']}}" style="height: 35px; border: 0">
+                            </div>
+                        </div>
+
+                        <hr>
+                        <label class="form-check-label" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Дизайн заголовка</label>
+                        <hr>
+
+                        <div class="mb-3">
+                            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Выбор шрифта для заголовка</label>
+                            <div class="col-12">
+                                <select id="title_font" data-placeholder="Поиск шрифта для заголовка"  autocomplete="off" name="dp_title_font"></select>
+                            </div>
+                        </div>
+                        <div class=" mb-3">
+                            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Размер шрифта для заголовка</label>
+                            <div class="mb-3 text-center d-flex justify-content-center">
+                                <input type="range" class="form-range" min="0.8" max="4" step="0.1" id="customRange3" style="height: 35px; border: 0" value="{{$designProperties['dp_title_font_size']}}" name="dp_title_font_size">
+                            </div>
+                        </div>
+                        <div class=" mb-3">
+                            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Цвет заголовка</label>
+                            <div class="mb-3 text-center d-flex justify-content-center">
+                                <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" name="dp_title_color" value="{{$designProperties['dp_title_color']}}" style="height: 35px; border: 0">
+                            </div>
+                        </div>
+                        <div class=" mb-3">
+                            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Цвет тени заголовка</label>
+                            <div class="mb-3 text-center d-flex justify-content-center">
+                                <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" name="dp_title_shadow_color" value="{{$designProperties['dp_title_shadow_color']}}" style="height: 35px; border: 0">
+                            </div>
+                        </div>
+                        <div class=" mb-3">
+                            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Смещение тени в право</label>
+                            <div class="mb-3 text-center d-flex justify-content-center">
+                                <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="{{$designProperties['dp_title_shadow_right']}}" name="dp_title_shadow_right">
+                            </div>
+                        </div>
+                        <div class=" mb-3">
+                            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Смещение тени в низ</label>
+                            <div class="mb-3 text-center d-flex justify-content-center">
+                                <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="{{$designProperties['dp_title_shadow_bottom']}}" name="dp_title_shadow_bottom">
+                            </div>
+                        </div>
+                        <div class=" mb-3">
+                            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Четкость тени</label>
+                            <div class="mb-3 text-center d-flex justify-content-center">
+                                <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="{{$designProperties['dp_title_shadow_blur']}}" name="dp_title_shadow_blur">
+                            </div>
+                        </div>
+
+                        <hr>
+                        <label class="form-check-label" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Дизайн короткого описания</label>
+                        <hr>
+
+                        <div class="mb-3">
+                            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Выбор шрифта для короткого описания</label>
+                            <div class="col-12">
+                                <select id="description_font" data-placeholder="Поиск шрифта для короткого описания"  autocomplete="off" name="dp_description_font"></select>
+                            </div>
+                        </div>
+                        <div class=" mb-3">
+                            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Размер шрифта для короткого описания</label>
+                            <div class="mb-3 text-center d-flex justify-content-center">
+                                <input type="range" class="form-range" min="0.8" max="4" step="0.1" id="customRange3" style="height: 35px; border: 0" value="{{$designProperties['dp_description_font_size']}}" name="dp_description_font_size">
+                            </div>
+                        </div>
+                        <div class=" mb-3">
+                            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Цвет короткого описания</label>
+                            <div class="mb-3 text-center d-flex justify-content-center">
+                                <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" name="dp_description_color" value="{{$designProperties['dp_description_color']}}" style="height: 35px; border: 0">
+                            </div>
+                        </div>
+                        <div class=" mb-3">
+                            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Цвет тени короткого описания</label>
+                            <div class="mb-3 text-center d-flex justify-content-center">
+                                <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" name="dp_description_shadow_color" value="{{$designProperties['dp_description_shadow_color']}}" style="height: 35px; border: 0">
+                            </div>
+                        </div>
+                        <div class=" mb-3">
+                            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Смещение тени в право</label>
+                            <div class="mb-3 text-center d-flex justify-content-center">
+                                <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="{{$designProperties['dp_description_shadow_right']}}" name="dp_description_shadow_right">
+                            </div>
+                        </div>
+                        <div class=" mb-3">
+                            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Смещение тени в низ</label>
+                            <div class="mb-3 text-center d-flex justify-content-center">
+                                <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="{{$designProperties['dp_description_shadow_bottom']}}" name="dp_description_shadow_bottom">
+                            </div>
+                        </div>
+                        <div class=" mb-3">
+                            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Четкость тени</label>
+                            <div class="mb-3 text-center d-flex justify-content-center">
+                                <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="{{$designProperties['dp_description_shadow_blur']}}" name="dp_description_shadow_blur">
+                            </div>
+                        </div>
+
+                        <hr>
+                        <label class="form-check-label" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Дизайн полного описания</label>
+                        <hr>
+
+                        <div class="mb-3">
+                            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Выбор шрифта для полного описания</label>
+                            <div class="col-12">
+                                <select id="full_description_font" data-placeholder="Поиск шрифта для полного описания"  autocomplete="off" name="dp_full_description_font"></select>
+                            </div>
+                        </div>
+                        <div class=" mb-3">
+                            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Размер шрифта для полного описания</label>
+                            <div class="mb-3 text-center d-flex justify-content-center">
+                                <input type="range" class="form-range" min="0.8" max="4" step="0.1" id="customRange3" style="height: 35px; border: 0" value="{{$designProperties['dp_full_description_font_size']}}" name="dp_full_description_font_size">
+                            </div>
+                        </div>
+                        <div class=" mb-3">
+                            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Цвет полного описания</label>
+                            <div class="mb-3 text-center d-flex justify-content-center">
+                                <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" name="dp_full_description_color" value="{{$designProperties['dp_full_description_color']}}" style="height: 35px; border: 0">
+                            </div>
+                        </div>
+                        <div class=" mb-3">
+                            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Цвет тени полного описания</label>
+                            <div class="mb-3 text-center d-flex justify-content-center">
+                                <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" name="dp_full_description_shadow_color" value="{{$designProperties['dp_full_description_shadow_color']}}" style="height: 35px; border: 0">
+                            </div>
+                        </div>
+                        <div class=" mb-3">
+                            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Смещение тени в право</label>
+                            <div class="mb-3 text-center d-flex justify-content-center">
+                                <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="{{$designProperties['dp_full_description_shadow_right']}}" name="dp_full_description_shadow_right">
+                            </div>
+                        </div>
+                        <div class=" mb-3">
+                            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Смещение тени в низ</label>
+                            <div class="mb-3 text-center d-flex justify-content-center">
+                                <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="{{$designProperties['dp_full_description_shadow_bottom']}}" name="dp_full_description_shadow_bottom">
+                            </div>
+                        </div>
+                        <div class=" mb-3">
+                            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Четкость тени</label>
+                            <div class="mb-3 text-center d-flex justify-content-center">
+                                <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="{{$designProperties['dp_full_description_shadow_blur']}}" name="dp_full_description_shadow_blur">
+                            </div>
+                        </div>
+
+                        <hr>
+                        <label class="form-check-label" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Дизайн цены</label>
+                        <hr>
+
+                        <div class="mb-3">
+                            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Выбор шрифта для цены</label>
+                            <div class="col-12">
+                                <select id="price_font" data-placeholder="Поиск шрифта для цены"  autocomplete="off" name="dp_price_font"></select>
+                            </div>
+                        </div>
+                        <div class=" mb-3">
+                            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Размер шрифта для цены</label>
+                            <div class="mb-3 text-center d-flex justify-content-center">
+                                <input type="range" class="form-range" min="0.8" max="4" step="0.1" id="customRange3" style="height: 35px; border: 0" value="{{$designProperties['dp_price_font_size']}}" name="dp_price_font_size">
+                            </div>
+                        </div>
+                        <div class=" mb-3">
+                            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Цвет цены</label>
+                            <div class="mb-3 text-center d-flex justify-content-center">
+                                <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" name="dp_price_color" value="{{$designProperties['dp_price_color']}}" style="height: 35px; border: 0">
+                            </div>
+                        </div>
+                        <div class=" mb-3">
+                            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Цвет тени цены</label>
+                            <div class="mb-3 text-center d-flex justify-content-center">
+                                <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" name="dp_price_shadow_color" value="{{$designProperties['dp_price_shadow_color']}}" style="height: 35px; border: 0">
+                            </div>
+                        </div>
+                        <div class=" mb-3">
+                            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Смещение тени в право</label>
+                            <div class="mb-3 text-center d-flex justify-content-center">
+                                <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="{{$designProperties['dp_price_shadow_right']}}" name="dp_price_shadow_right">
+                            </div>
+                        </div>
+                        <div class=" mb-3">
+                            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Смещение тени в низ</label>
+                            <div class="mb-3 text-center d-flex justify-content-center">
+                                <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="{{$designProperties['dp_price_shadow_bottom']}}" name="dp_price_shadow_bottom">
+                            </div>
+                        </div>
+                        <div class=" mb-3">
+                            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Четкость тени</label>
+                            <div class="mb-3 text-center d-flex justify-content-center">
+                                <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="{{$designProperties['dp_price_shadow_blur']}}" name="dp_price_shadow_blur">
+                            </div>
+                        </div>
+
+                        <hr>
+                        <label class="form-check-label" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Дизайн кнопки на внешний ресурс</label>
+                        <hr>
+
+                        <div class=" mb-3">
+                            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Цвет кнопки на внешний ресурс</label>
+                            <div class="mb-3 text-center d-flex justify-content-center">
+                                <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" value="{{$designProperties['dp_btn_bg_color_outher']}}" name="dp_btn_bg_color_outher" style="height: 35px; border: 0">
+                            </div>
+                        </div>
+                        <div class=" mb-3">
+                            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Цвет кнопки на внешний ресурс</label>
+                            <div class="mb-3 text-center d-flex justify-content-center">
+                                <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" value="{{$designProperties['dp_btn_text_color_outher']}}" name="dp_btn_text_color_outher" style="height: 35px; border: 0">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Округление кнопки на внешний ресурс</label>
+                            <div class="mb-3 text-center d-flex justify-content-center">
+                                <input type="range" class="form-range" min="1" max="50" step="1" id="customRange2" name="dp_btn_rounded_outher" value="{{$designProperties['dp_btn_rounded_outher']}}">
+                            </div>
+                        </div>
+                        <div class=" mb-3">
+                            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Цвет тени кнопки на внешний ресурс</label>
+                            <div class="mb-3 text-center d-flex justify-content-center">
+                                <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" value="{{$designProperties['dp_btn_rounded_outher_shadow_color']}}" name="dp_btn_rounded_outher_shadow_color" style="height: 35px; border: 0">
+                            </div>
+                        </div>
+                        <div class=" mb-3">
+                            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Смещение тени в право</label>
+                            <div class="mb-3 text-center d-flex justify-content-center">
+                                <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="{{$designProperties['dp_btn_rounded_outher_shadow_right']}}" name="dp_btn_rounded_outher_shadow_right">
+                            </div>
+                        </div>
+                        <div class=" mb-3">
+                            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Смещение тени в низ</label>
+                            <div class="mb-3 text-center d-flex justify-content-center">
+                                <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="{{$designProperties['dp_btn_rounded_outher_shadow_bottom']}}" name="dp_btn_rounded_outher_shadow_bottom">
+                            </div>
+                        </div>
+                        <div class=" mb-3">
+                            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Четкость тени</label>
+                            <div class="mb-3 text-center d-flex justify-content-center">
+                                <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="{{$designProperties['dp_btn_rounded_outher_shadow_blur']}}" name="dp_btn_rounded_outher_shadow_blur">
+                            </div>
+                        </div>
+
+                        <hr>
+                        <label class="form-check-label" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Дизайн кнопки на страницу заказа</label>
+                        <hr>
+
+                        <div class=" mb-3">
+                            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Цвет кнопки на страницу заказа</label>
+                            <div class="mb-3 text-center d-flex justify-content-center">
+                                <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" value="{{$designProperties['dp_btn_bg_color_chrry']}}" name="dp_btn_bg_color_chrry" style="height: 35px; border: 0">
+                            </div>
+                        </div>
+                        <div class=" mb-3">
+                            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Цвет кнопки на страницу заказа</label>
+                            <div class="mb-3 text-center d-flex justify-content-center">
+                                <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" value="{{$designProperties['dp_btn_text_color_chrry']}}" name="dp_btn_text_color_chrry" style="height: 35px; border: 0">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Округление кнопки на страницу заказа</label>
+                            <div class="mb-3 text-center d-flex justify-content-center">
+                                <input type="range" class="form-range" min="1" max="50" step="1" id="customRange2" name="dp_btn_rounded_chrry" value="{{$designProperties['dp_btn_rounded_chrry']}}">
+                            </div>
+                        </div>
+                        <div class=" mb-3">
+                            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Цвет тени кнопки на страницу заказа</label>
+                            <div class="mb-3 text-center d-flex justify-content-center">
+                                <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" name="dp_btn_rounded_chrry_shadow_color" value="{{$designProperties['dp_btn_rounded_chrry_shadow_color']}}" style="height: 35px; border: 0">
+                            </div>
+                        </div>
+                        <div class=" mb-3">
+                            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Смещение тени в право</label>
+                            <div class="mb-3 text-center d-flex justify-content-center">
+                                <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="{{$designProperties['dp_btn_rounded_chrry_shadow_right']}}" name="dp_btn_rounded_chrry_shadow_right">
+                            </div>
+                        </div>
+                        <div class=" mb-3">
+                            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Смещение тени в низ</label>
+                            <div class="mb-3 text-center d-flex justify-content-center">
+                                <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="{{$designProperties['dp_btn_rounded_chrry_shadow_bottom']}}" name="dp_btn_rounded_chrry_shadow_bottom">
+                            </div>
+                        </div>
+                        <div class=" mb-3">
+                            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Четкость тени</label>
+                            <div class="mb-3 text-center d-flex justify-content-center">
+                                <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="{{$designProperties['dp_btn_rounded_chrry_shadow_blur']}}" name="dp_btn_rounded_chrry_shadow_blur">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <label class="form-check-label mb-2 mt-3" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif; font-size: 0.8rem">В настройках магазина вы навернека уже описывали правила своего магазина. Но иногда бывает нужно написать правила
+                для конкретного товара. Можете использовать эти поля</label>
+
+            <div class="accordion accordion-flush mb-3" id="accordionFlushExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingOne">
+                        <button style="border: 0; text-decoration: none" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-rules" aria-expanded="false" aria-controls="flush-collapseOne">
+                            Правила магазина
+                        </button>
+                    </h2>
+                    <div style="background-color: #f1f2f2" id="flush-rules" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+
+                        <div class="form-group mb-3">
+                            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Информация о доставке</label>
+                            <textarea class="form-control" name="product_delivery_info" id="exampleFormControlTextarea1" rows="3">{{$product->product_delivery_info}}</textarea>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Информация об оплате</label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" name="product_payment_info" rows="3">{{$product->product_payment_info}}</textarea>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Информация о возвратах\обменах</label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" name="product_refund_info" rows="3">{{$product->product_refund_info}}</textarea>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Любая общая информация</label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" name="product_other_info" rows="3">{{$product->product_other_info}}</textarea>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
             <div class="d-grid gap-2">
                 <button type="submit" class="btn btn-secondary">Изменить</button>
             </div>
@@ -238,6 +576,88 @@
     </div>
 </div>
 </body>
+<script>
+    new TomSelect('#title_font',{
+        valueField: 'font',
+        searchField: 'title',
+        maxOptions: 150,
+        options: [
+                @foreach($allFontsInFolder as $font)
+            {id: {{$font->getInode()}}, title: '{{ stristr($font->getFilename(), '.', true)}}', font: '{{ stristr($font->getFilename(), '.', true) }}'},
+            @endforeach
+        ],
+        render: {
+            option: function(data, escape) {
+                return  '<div>' +
+                    '<span style="font-size: 2.5rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</span>' +
+                    '</div>';
+            },
+            item: function(data, escape) {
+                return  '<h4 style="font-size: 2.5rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</h4>';
+            }
+        }
+    });
+    new TomSelect('#description_font',{
+        valueField: 'font',
+        searchField: 'title',
+        maxOptions: 150,
+        options: [
+                @foreach($allFontsInFolder as $font)
+            {id: {{$font->getInode()}}, title: '{{ stristr($font->getFilename(), '.', true)}}', font: '{{ stristr($font->getFilename(), '.', true) }}'},
+            @endforeach
+        ],
+        render: {
+            option: function(data, escape) {
+                return  '<div>' +
+                    '<span style="font-size: 2.5rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</span>' +
+                    '</div>';
+            },
+            item: function(data, escape) {
+                return  '<h4 style="font-size: 2.5rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</h4>';
+            }
+        }
+    });
+    new TomSelect('#full_description_font',{
+        valueField: 'font',
+        searchField: 'title',
+        maxOptions: 150,
+        options: [
+                @foreach($allFontsInFolder as $font)
+            {id: {{$font->getInode()}}, title: '{{ stristr($font->getFilename(), '.', true)}}', font: '{{ stristr($font->getFilename(), '.', true) }}'},
+            @endforeach
+        ],
+        render: {
+            option: function(data, escape) {
+                return  '<div>' +
+                    '<span style="font-size: 2.5rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</span>' +
+                    '</div>';
+            },
+            item: function(data, escape) {
+                return  '<h4 style="font-size: 2.5rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</h4>';
+            }
+        }
+    });
+    new TomSelect('#price_font',{
+        valueField: 'font',
+        searchField: 'title',
+        maxOptions: 150,
+        options: [
+                @foreach($allFontsInFolder as $font)
+            {id: {{$font->getInode()}}, title: '{{ stristr($font->getFilename(), '.', true)}}', font: '{{ stristr($font->getFilename(), '.', true) }}'},
+            @endforeach
+        ],
+        render: {
+            option: function(data, escape) {
+                return  '<div>' +
+                    '<span style="font-size: 2.5rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</span>' +
+                    '</div>';
+            },
+            item: function(data, escape) {
+                return  '<h4 style="font-size: 2.5rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</h4>';
+            }
+        }
+    });
+</script>
 </html>
 
 

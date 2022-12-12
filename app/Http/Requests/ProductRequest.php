@@ -31,8 +31,12 @@ class ProductRequest extends FormRequest
             'additional_photos' => 'nullable|array|max:5',
             'additional_photos.*' => 'nullable|mimes:jpeg,png,jpg,gif|max:5000',
             'price' => 'required|integer',
-            'visible' => 'required|boolean',
+            'visible' => 'nullable|boolean',
             'full_description' => 'nullable|max:2500',
+            'product_delivery_info' => 'nullable|max:1200',
+            'product_payment_info' => 'nullable|max:1200',
+            'product_refund_info' => 'nullable|max:1200',
+            'product_other_info' => 'nullable|max:1200'
         ];
     }
 }

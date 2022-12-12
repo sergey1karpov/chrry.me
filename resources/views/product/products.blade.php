@@ -198,6 +198,9 @@
                 @endforeach
             </tbody>
         </table>
+        <div class="mb-2 d-flex justify-content-center">
+            {{$products->links()}}
+        </div>
     </body>
 
     @foreach($products as $product)

@@ -27,5 +27,9 @@ class ShopSettings extends Model
         'canvas_color',
         'canvas_font_color',
         'market_settings',
+        'delivery_rules',
+        'payment_rules',
+        'refund_rules',
+        'other_rules',
     ];
 }

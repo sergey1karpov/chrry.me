@@ -37,7 +37,6 @@
 
         <!-- Time -->
         <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
-        <script src="{{asset('public/js/moment.js')}}" type="text/javascript"></script>
         <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
 
         <!-- Users fonts -->
@@ -654,7 +653,7 @@
                     var id = $(this).data('id');
                     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
                     $.ajax({
-                        url: "/"+"id"+id+"/edit-profile/change-theme",
+                        url: "/"+"id"+id+"/profile/change-theme",
                         type: 'PATCH',
                         data: {_token: CSRF_TOKEN, type: type},
                         dataType: 'HTML',

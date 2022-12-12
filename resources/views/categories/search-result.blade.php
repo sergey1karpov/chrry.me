@@ -123,6 +123,12 @@
         .btn-check:focus+.btn, .btn:focus {
             box-shadow: none;
         }
+        .accordion-button:focus {
+            box-shadow: none;
+        }
+        .accordion-collapse {
+            border-radius: 10px;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -141,7 +147,6 @@
                             @if(isset($search))
                                 Фильтровать запрос "{{$search ?? null}}"
                             @endif
-
                         </button>
                     </h2>
                     <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
@@ -198,7 +203,7 @@
             @if($user->type == 'Market')
                 <div>
                     <button type="button" class="btn d-flex align-content-center" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample" style="border: 0">
-                        <span class="material-symbols-outlined" style="color: {{$user->marketSettings->btn_color}}">linear_scale</span>
+                        <span class="material-symbols-outlined" style="color: {{$user->navigation_color}}">linear_scale</span>
                     </button>
                 </div>
             @endif
@@ -211,7 +216,7 @@
         <div class="offcanvas-header text-center" style="background-color: {{$user->marketSettings->canvas_color}}">
             <h5 class="offcanvas-title" id="offcanvasExampleLabel" style="font-family: 'Inter', sans-serif; font-size: 1.2rem;color: {{$user->marketSettings->canvas_font_color}}">Категории товаров</h5>
             <button type="button" class="btn d-flex align-content-center" data-bs-dismiss="offcanvas" aria-label="Close" style="border: 0">
-                <span class="material-symbols-outlined" style="border: 0; color: {{$user->marketSettings->btn_color}}">close</span>
+                <span class="material-symbols-outlined" style="border: 0; color: {{$user->navigation_color}}">close</span>
             </button>
         </div>
         <div class="offcanvas-body text-center" style="max-width: none; background-color: {{$user->marketSettings->canvas_color}}">
@@ -231,18 +236,65 @@
                     <h5 class="offcanvas-title mt-2" id="offcanvasExampleLabel" style="font-family: 'Inter', sans-serif; font-size: 1rem;">{{$category->name}}</h5>
                 </a>
             @endforeach
-        </div>
-        <div class="offcanvas-body text-center fixed-bottom " style="max-width: none">
-            <a href="{{ route('userHomePage', ['user' => $user->slug]) }}" style="font-family: 'Inter', sans-serif; font-size: 2rem; text-decoration: none; color: #080808">
-                <span class="material-symbols-outlined" style="font-size: 25px; color: {{$user->marketSettings->btn_color}}">home</span>
-            </a>
-            <div class="mt-3">
+                <div class="accordion accordion-flush mt-5" id="accordionFlushExample">
+                    <label class="mb-3" style="font-family: 'Inter', sans-serif; font-size: 1rem; color: {{$user->navigation_color}}">Правила продавца</label>
+                    <div class="accordion-item" style="border-radius: 10px">
+                        <h2 class="accordion-header rounded" id="flush-headingOne">
+                            <button style="padding-top:8px; padding-bottom:8px; background-color: {{ $user->marketSettings->canvas_color }}; border: 0; text-decoration: none" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                <h1 style="font-family: 'Inter', sans-serif; font-size: 0.8rem; margin: 0; color: {{$user->marketSettings->canvas_font_color}}">Оплата товара</h1>
+                            </button>
+                        </h2>
+                        <div id="flush-collapseOne" class="accordion-collapse collapse rounded-4" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body rounded-4 text-start " style="white-space: pre-wrap;">
+                                <h1 style="font-family: 'Inter', sans-serif; font-size: 0.8rem; margin: 0">{{ $user->marketSettings->payment_rules }}</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item" style="border-radius: 10px">
+                        <h2 class="accordion-header" id="flush-headingTwo">
+                            <button style="padding-top:8px; padding-bottom:8px; background-color: {{ $user->marketSettings->canvas_color }}; border: 0; text-decoration: none" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                <h1 style="font-family: 'Inter', sans-serif; font-size: 0.8rem; margin: 0; color: {{$user->marketSettings->canvas_font_color}}">Информация о доставке</h1>
+                            </button>
+                        </h2>
+                        <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body text-start " style="white-space: pre-wrap;">
+                                <h1 style="font-family: 'Inter', sans-serif; font-size: 0.8rem; margin: 0">{{ $user->marketSettings->delivery_rules }}</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item" style="border-radius: 10px">
+                        <h2 class="accordion-header" id="flush-headingThree">
+                            <button style="padding-top:8px; padding-bottom:8px; background-color: {{ $user->marketSettings->canvas_color }}; border: 0; text-decoration: none" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                                <h1 style="font-family: 'Inter', sans-serif; font-size: 0.8rem; margin: 0; color: {{$user->marketSettings->canvas_font_color}}">Информация о возврате товара</h1>
+                            </button>
+                        </h2>
+                        <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body text-start " style="white-space: pre-wrap;">
+                                <h1 style="font-family: 'Inter', sans-serif; font-size: 0.8rem; margin: 0">{{ $user->marketSettings->refund_rules }}</h1>
+                            </div>
+                        </div>
+                    </div>
+                    @if($user->marketSettings->other_rules)
+                        <div class="accordion-item" style="border-radius: 10px">
+                            <h2 class="accordion-header" id="flush-headingFour">
+                                <button style="padding-top:8px; padding-bottom:8px; background-color: {{ $user->marketSettings->canvas_color }}; border: 0; text-decoration: none" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+                                    <h1 style="font-family: 'Inter', sans-serif; font-size: 0.8rem; margin: 0; color: {{$user->marketSettings->canvas_font_color}}">Общая информация о правилах магазина</h1>
+                                </button>
+                            </h2>
+                            <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body text-start " style="white-space: pre-wrap;">
+                                    <h1 style="font-family: 'Inter', sans-serif; font-size: 0.8rem; margin: 0">{{ $user->marketSettings->other_rules }}</h1>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                </div>
                 @if($user->type == 'Market')
                     @if($user->marketSettings->show_social)
-                        @if(count($user->userLinksInBar($user)) > 0)
+                        @if(count($user->userLinks(false)) > 0)
                             <nav class="navbar mt-2 mb-2">
                                 <div class="container-fluid d-flex justify-content-center">
-                                    @foreach($user->userLinksInBar($user) as $link)
+                                    @foreach($user->userLinks(false) as $link)
                                         @if($link->icon)
                                             <form method="POST" action="{{ route('clickLinkStatistic', ['user' => $user->id]) }}"> @csrf
                                                 <input type="hidden" name="link_id" value="{{$link->id}}">
@@ -261,6 +313,10 @@
                         @endif
                     @endif
                 @endif
+            <div class="offcanvas-body text-center fixed-bottom " style="max-width: none">
+                <a href="{{ route('userHomePage', ['user' => $user->slug]) }}" style="font-family: 'Inter', sans-serif; font-size: 2rem; text-decoration: none; color: #080808">
+                    <span class="material-symbols-outlined" style="font-size: 25px; color: {{$user->navigation_color}}">home</span>
+                </a>
             </div>
         </div>
     </div>
@@ -281,7 +337,6 @@
         @if(isset($user->marketSettings->cards_style))
             @if($user->marketSettings->cards_style == 'one')
                 @foreach($products as $product)
-
                     <div class="container mt-2">
                         <div class="row justify-content-center">
                             <div class="col-md-8 col-lg-6 col-xl-4">
@@ -357,6 +412,9 @@
                     @endforeach
                 </div>
             @endif
+            <div class="mb-2 mt-3 d-flex justify-content-center">
+                {{$products->links('vendor.pagination.default', ['user' => $user])}}
+            </div>
         @else
             @if(Auth::check())
                 <div class="mt-5 mb-5 me-3 ms-3 text-center">

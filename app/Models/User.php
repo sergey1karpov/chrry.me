@@ -130,7 +130,7 @@ class User extends Authenticatable
      */
     public function editUserProfile(User $user, UpdateRegisteruserRequest $request, UploadPhotoService $uploadService): void
     {
-        $user->update([
+        User::where('id', $user->id)->update([
             'name'              => $request->name,
             'description'       => $request->description,
             'background_color'  => $request->background_color,

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Http\Requests\ProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Services\ProductCardPropertiesService;
 use App\Services\UploadPhotoService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -32,6 +33,11 @@ class Product extends Model
         'link_to_order_text',
         'product_categories_id',
         'position',
+        'design_properties',
+        'product_delivery_info',
+        'product_payment_info',
+        'product_refund_info',
+        'product_other_info'
     ];
 
     public function category()
@@ -70,16 +76,34 @@ class Product extends Model
         return '../storage/app/public/' . $id . '/products/';
     }
 
+    public function setDesignProductProperties(UpdateProductRequest|ProductRequest $request, ProductCardPropertiesService $productCardPropertiesService)
+    {
+        $designProductFields = preg_grep("/^dp_/", array_keys($request->all()));
+        foreach ($designProductFields as $field) {
+            $productCardPropertiesService->addProperty($field, $request->$field);
+        }
+    }
+
+    public function getLastProduct(User $user)
+    {
+        $product = Product::where('user_id', $user->id)->orderBy('created_at', 'desc')->first();
+
+        return $product->design_properties;
+    }
+
     /**
      * Create new product
      *
      * @param User $user
      * @param ProductRequest $request
      * @param UploadPhotoService $uploadService
+     * @param ProductCardPropertiesService $productCardPropertiesService
      * @return void
      */
-    public function storeProduct(User $user, ProductRequest $request, UploadPhotoService $uploadService): void
+    public function storeProduct(User $user, ProductRequest $request, UploadPhotoService $uploadService, ProductCardPropertiesService $productCardPropertiesService): void
     {
+        $this->setDesignProductProperties($request, $productCardPropertiesService);
+
         $product = new self();
         $product->title = $request->title;
         $product->description = $request->description;
@@ -103,6 +127,13 @@ class Product extends Model
         $product->link_to_shop_text = $request->link_to_shop_text;
         $product->link_to_order_text = $request->link_to_order_text;
         $product->product_categories_id = $request->product_categories_id;
+        $product->product_delivery_info = $request->product_delivery_info;
+        $product->product_payment_info = $request->product_payment_info;
+        $product->product_refund_info = $request->product_refund_info;
+        $product->product_other_info = $request->product_other_info;
+//        $product->design_properties = serialize($productCardPropertiesService->getProperties());
+
+        $product->design_properties = isset($request->copy_styles) ? $this->getLastProduct($user) : serialize($productCardPropertiesService->getProperties());
 
         $user->products()->save($product);
     }
@@ -116,8 +147,10 @@ class Product extends Model
      * @param UploadPhotoService $uploadService
      * @return void
      */
-    public function patchProduct(User $user, Product $product, UpdateProductRequest $request, UploadPhotoService $uploadService): void
+    public function patchProduct(User $user, Product $product, UpdateProductRequest $request, UploadPhotoService $uploadService, ProductCardPropertiesService $productCardPropertiesService): void
     {
+        $this->setDesignProductProperties($request, $productCardPropertiesService);
+
         Product::where('id', $product->id)->where('user_id', $user->id)->update([
             'title' => $request->title,
             'description' => $request->description,
@@ -134,6 +167,7 @@ class Product extends Model
             'link_to_shop_text' => $request->link_to_shop_text,
             'link_to_order_text' => $request->link_to_order_text,
             'product_categories_id' => $request->product_categories_id,
+            'design_properties' => serialize($productCardPropertiesService->getProperties()),
         ]);
     }
 

@@ -43,7 +43,6 @@
 
     <!-- Time -->
     <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
-    <script src="{{asset('public/js/moment.js')}}" type="text/javascript"></script>
     <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
 
     @include('fonts.fonts')
@@ -127,6 +126,50 @@
 
         <div class="row">
 
+            <label class="form-check-label mb-2" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">
+                Информация об оплате
+            </label>
+            <div class="form-group mb-3">
+                <textarea name="payment_rules" class="form-control shadow" style="border:0" id="exampleFormControlTextarea1" rows="5">{{$user->marketSettings->payment_rules}}</textarea>
+                <h1 class="mt-2" style="font-family: 'Rubik', sans-serif; font-size: 0.8rem; line-height: 1.1">Опишите как можно подробнее о способах оплаты в вашем магазине</h1>
+            </div>
+
+            <hr>
+
+            <label class="form-check-label mb-2" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">
+                Информация о доставке
+            </label>
+            <div class="form-group mb-3">
+                <textarea name="delivery_rules" class="form-control shadow" style="border:0" id="exampleFormControlTextarea1" rows="5">{{$user->marketSettings->delivery_rules}}</textarea>
+                <h1 class="mt-2" style="font-family: 'Rubik', sans-serif; font-size: 0.8rem; line-height: 1">Опишите способы доставки ваших товаров клиенту, примерную цену доставки, сроки</h1>
+                <h1 class="mt-2" style="font-family: 'Rubik', sans-serif; font-size: 0.8rem; line-height: 1">Если вы оказываете какие нибудь услуги, напишите как и где они оказываются</h1>
+            </div>
+
+            <hr>
+
+            <label class="form-check-label mb-2" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">
+                Информация о возвратах или обменах
+            </label>
+            <div class="form-group mb-3">
+                <textarea name="refund_rules" class="form-control shadow" style="border: 0" id="exampleFormControlTextarea1" rows="5">{{$user->marketSettings->refund_rules}}</textarea>
+                <h1 class="mt-2" style="font-family: 'Rubik', sans-serif; font-size: 0.8rem; line-height: 1">Бывает что товар не подешел покупателю. Опишите как вы работаете с возвратами и обменом.</h1>
+                <h1 class="mt-2" style="font-family: 'Rubik', sans-serif; font-size: 0.8rem; line-height: 1">Если товар\услуга не подразумевает возврат, так и напишите, что бы ваши клиенты имели эту информацию в виду</h1>
+            </div>
+
+            <hr>
+
+            <label class="form-check-label mb-2" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">
+                Любая общая информация о магазине
+            </label>
+            <div class="form-group mb-3">
+                <textarea name="other_rules" class="form-control shadow" style="border: 0" id="exampleFormControlTextarea1" rows="5">{{$user->marketSettings->other_rules}}</textarea>
+                <h1 class="mt-2" style="font-family: 'Rubik', sans-serif; font-size: 0.8rem; line-height: 1">Можете указать общую информацию о вашем магазинеб товарах или услугах, которые вы оказываете</h1>
+            </div>
+
+            <hr>
+                <label class="form-check-label mb-3" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">
+                    Дизайн витрины
+                </label>
             <hr>
 
             <label class="form-check-label mb-2" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">
@@ -144,76 +187,6 @@
                     <input class="form-check-input shadow" type="radio" value="one" id="flexCheckChecked" name="cards_style" style="border: 0" @if($user->marketSettings->cards_style == 'one') checked @endif>
                 </div>
             </div>
-
-            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">
-                Округление углов карточки
-            </label>
-            <div class="mb-3 text-center d-flex justify-content-center">
-                <input type="range" class="form-range" min="1" max="100" step="1" name="card_round" id="customRange3" value="{{$user->marketSettings->card_round}}">
-            </div>
-
-            <div class="mb-1 text-center mt-2" >
-                <div class="ms-2 form-check" style="padding: 0">
-                    <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">
-                        Включить тень для карточки товара
-                    </label>
-                    <div class="form-check form-switch mb-3 d-flex justify-content-center">
-                        <input name="cards_shadow" class="form-check-input @if($user->dayVsNight) bg-secondary @endif shadow" type="checkbox" value="{{true}}" id="design-link-e" style="border: 0" @if($user->marketSettings->cards_shadow) checked @endif>
-                    </div>
-                </div>
-            </div>
-
-            <hr>
-
-            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">
-                Цвет для названия товара
-            </label>
-            <div class="mb-3 text-center d-flex justify-content-center">
-                <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" value="{{$user->marketSettings->color_title}}" name="color_title" style="height: 35px; border: 0">
-            </div>
-            <div class="mb-1 text-center mt-2" >
-                <div class="ms-2 form-check" style="padding: 0">
-                    <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">
-                        Тень для названия товара
-                    </label>
-                    <div class="form-check form-switch mb-3 d-flex justify-content-center">
-                        <input name="title_shadow" class="form-check-input @if($user->dayVsNight) bg-secondary @endif shadow" type="checkbox" value="{{true}}" id="design-link-e" style="border: 0" @if($user->marketSettings->title_shadow) checked @endif>
-                    </div>
-                </div>
-            </div>
-            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">
-                Размер шрифта для названия товара
-            </label>
-            <div class="mb-3 text-center d-flex justify-content-center">
-                <input type="range" class="form-range" min="0.9" max="1.3" step="0.1" name="title_font_size" id="customRange3" value="{{$user->marketSettings->title_font_size}}">
-            </div>
-
-            <hr>
-
-            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">
-                Цвет для цены товара
-            </label>
-            <div class="mb-3 text-center d-flex justify-content-center">
-                <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" value="{{$user->marketSettings->color_price}}" name="color_price" style="height: 35px; border: 0">
-            </div>
-            <div class="mb-1 text-center mt-2" >
-                <div class="ms-2 form-check" style="padding: 0">
-                    <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">
-                        Тень для цены продукта
-                    </label>
-                    <div class="form-check form-switch mb-3 d-flex justify-content-center">
-                        <input name="price_shadow" class="form-check-input @if($user->dayVsNight) bg-secondary @endif shadow" type="checkbox" value="{{true}}" id="design-link-e" style="border: 0" @if($user->marketSettings->price_shadow) checked @endif>
-                    </div>
-                </div>
-            </div>
-            <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">
-                Размер шрифта для цены товара
-            </label>
-            <div class="mb-3 text-center d-flex justify-content-center">
-                <input type="range" class="form-range" min="0.9" max="1.3" step="0.1" name="price_font_size" id="customRange3" value="{{$user->marketSettings->price_font_size}}">
-            </div>
-
-            <hr>
 
             <div class="mb-3 text-center">
                 <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Включить поиск товаров в вашей витрине или нет</label>

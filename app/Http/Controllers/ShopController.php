@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\MarketSettingsRequest;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class ShopController extends Controller
@@ -24,12 +24,16 @@ class ShopController extends Controller
      * Update market settings
      *
      * @param User $user
-     * @param Request $request
+     * @param MarketSettingsRequest $request
      * @return RedirectResponse
      */
-    public function marketSettingsPatch(User $user, Request $request): RedirectResponse
+    public function marketSettingsPatch(User $user, MarketSettingsRequest $request): RedirectResponse
     {
         $user->marketSettings()->update([
+            'delivery_rules' => $request->delivery_rules,
+            'payment_rules' => $request->payment_rules,
+            'refund_rules' => $request->refund_rules,
+            'other_rules' => $request->other_rules,
             'cards_style' => $request->cards_style,
             'cards_shadow' => $request->cards_shadow,
             'color_title' => $request->color_title,

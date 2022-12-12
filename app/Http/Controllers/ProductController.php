@@ -7,8 +7,10 @@ use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\User;
+use App\Services\ProductCardPropertiesService;
 use App\Services\StatsService;
 use App\Services\UploadPhotoService;
+use App\Traits\IconsAndFonts;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
@@ -17,8 +19,11 @@ use Illuminate\View\View;
 
 class ProductController extends Controller
 {
+    use IconsAndFonts;
+
     public function __construct(
-        private UploadPhotoService $uploadService,
+        private readonly UploadPhotoService $uploadService,
+        public ProductCardPropertiesService $productCardPropertiesService
     ) {}
 
     /**
@@ -29,7 +34,9 @@ class ProductController extends Controller
      */
     public function createProductForm(User $user): View
     {
-        return view('product.add-product', compact('user'));
+        $allFontsInFolder = $this->getFonts();
+
+        return view('product.add-product', compact('user', 'allFontsInFolder'));
     }
 
     /**
@@ -42,7 +49,7 @@ class ProductController extends Controller
      */
     public function addProduct(User $user, ProductRequest $request, Product $product): RedirectResponse
     {
-        $product->storeProduct($user, $request, $this->uploadService);
+        $product->storeProduct($user, $request, $this->uploadService, $this->productCardPropertiesService);
 
         return redirect()->route('editProfileForm', ['user' => $user->id])->with('success', 'Товар успешно добавлен');
     }
@@ -57,7 +64,7 @@ class ProductController extends Controller
     {
         return view('product.products', [
             'user' => $user,
-            'products' => Product::where('user_id', $user->id)->where('delete', null)->orderBy('position')->get()
+            'products' => Product::where('user_id', $user->id)->where('delete', null)->orderBy('position')->paginate(30)
         ]);
     }
 
@@ -84,7 +91,11 @@ class ProductController extends Controller
     {
         $categories = $user->productCategories;
 
-        return view('product.editProduct', compact('user', 'product', 'categories'));
+        $designProperties = unserialize($product->design_properties);
+
+        $allFontsInFolder = $this->getFonts();
+
+        return view('product.editProduct', compact('user', 'product', 'categories', 'designProperties', 'allFontsInFolder'));
     }
 
     /**
@@ -104,7 +115,7 @@ class ProductController extends Controller
             $product->uploadAdditionalPhotos($product, $request->additional_photos, $product->imgPath($user->id), $this->uploadService);
         }
 
-        $product->patchProduct($user, $product, $request, $this->uploadService);
+        $product->patchProduct($user, $product, $request, $this->uploadService, $this->productCardPropertiesService);
 
         return redirect()->route('allProducts', ['user' => $user->id])->with('success',$product->title . '" успешно обновлен!');
     }
@@ -189,13 +200,19 @@ class ProductController extends Controller
     public function showProductsInCategory(User $user, string $categorySlug): View
     {
         if($categorySlug == ProductCategory::DEFAULT_CATEGORY_SLUG) {
-            $products = $user->userProducts();
+            $products = Product::where('user_id', $user->id)
+                ->where('delete', null)
+                ->paginate(20);
+
             return view('categories.search-result', compact('user', 'categorySlug', 'products'));
         }
 
         $productCategory = ProductCategory::where('user_id', $user->id)->where('slug', $categorySlug)->firstOrFail();
 
-        $products = $productCategory->products->where('delete', null);
+        $products = Product::where('user_id', $user->id)
+            ->where('product_categories_id', $productCategory->id)
+            ->where('delete', null)
+            ->paginate(20);
 
         return view('categories.search-result', compact('user', 'categorySlug', 'productCategory', 'products'));
     }

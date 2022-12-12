@@ -116,6 +116,12 @@
             .btn-check:focus+.btn, .btn:focus {
                 box-shadow: none;
             }
+            .accordion-button:focus {
+                box-shadow: none;
+            }
+            .accordion-collapse {
+                border-radius: 10px;
+            }
         </style>
     </head>
     <body class="antialiased">
@@ -151,7 +157,7 @@
         @if($user->type == 'Market')
             <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
                 <div class="offcanvas-header text-center" style="background-color: {{$user->marketSettings->canvas_color}}">
-                    <h5 class="offcanvas-title" id="offcanvasExampleLabel" style="font-family: 'Inter', sans-serif; font-size: 1.2rem; color: {{$user->marketSettings->canvas_font_color}}">Категории товаров</h5>
+                    <h5 class="offcanvas-title" id="offcanvasExampleLabel" style="font-family: 'Inter', sans-serif; font-size: 1.2rem; color: {{$user->marketSettings->canvas_font_color}}">Меню</h5>
                     <button type="button" class="btn d-flex align-content-center" data-bs-dismiss="offcanvas" aria-label="Close" style="border: 0">
                         <span class="material-symbols-outlined" style="border: 0; color: {{$user->navigation_color}}">close</span>
                     </button>
@@ -160,7 +166,7 @@
                     @if($user->marketSettings->show_search)
                         @if($user->marketSettings->search_position == 'on_canvas' || $user->marketSettings->search_position == 'main_and_canvas')
                             <div class="d-flex justify-content-center mb-5">
-                                <div class="col-12 d-flex justify-content-center align-items-center" style="padding-right: 12px; padding-left: 12px">
+                                <div class="col-12 d-flex justify-content-center align-items-center" >
                                     <form class="" action="{{ route('fullTextSearch', ['user' => $user->slug]) }}" style="width: 100%">
                                         <input class="form-control me-2 shadow" type="search" name="search" placeholder="Поиск..." aria-label="Search" style="border: 0">
                                     </form>
@@ -173,32 +179,83 @@
                             <h5 class="offcanvas-title mt-2" id="offcanvasExampleLabel" style="font-family: 'Inter', sans-serif; font-size: 1rem;">{{$category->name}}</h5>
                         </a>
                     @endforeach
-                </div>
-                <div class="offcanvas-body text-center fixed-bottom" style="max-width: none; background-color: {{$user->marketSettings->canvas_color}}">
-                    @if($user->type == 'Market')
-                        @if($user->marketSettings->show_social)
-                            @if(count($user->userLinks(false)) > 0)
-                                <nav class="navbar mt-2 mb-2">
-                                    <div class="container-fluid d-flex justify-content-center">
-                                        @foreach($user->userLinks(false) as $link)
-                                            @if($link->icon)
-                                                <form method="POST" action="{{ route('clickLinkStatistic', ['user' => $user->id]) }}"> @csrf
-                                                    <input type="hidden" name="link_id" value="{{$link->id}}">
-                                                    <input type="hidden" name="link_url" value="{{$link->link}}">
-                                                    <button type="submit" style="border: 0; padding: 0; background-color: rgba(0, 125, 215, 0);">
-                                                        <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="
+                    <div class="accordion accordion-flush mt-5" id="accordionFlushExample">
+                        <label class="mb-3" style="font-family: 'Inter', sans-serif; font-size: 1rem; color: {{$user->navigation_color}}">Правила продавца</label>
+                        <div class="accordion-item" style="border-radius: 10px">
+                            <h2 class="accordion-header rounded" id="flush-headingOne">
+                                <button style="padding-top:8px; padding-bottom:8px; background-color: {{ $user->marketSettings->canvas_color }}; border: 0; text-decoration: none" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                    <h1 style="font-family: 'Inter', sans-serif; font-size: 0.8rem; margin: 0; color: {{$user->marketSettings->canvas_font_color}}">Оплата товара</h1>
+                                </button>
+                            </h2>
+                            <div id="flush-collapseOne" class="accordion-collapse collapse rounded-4" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body rounded-4 text-start " style="white-space: pre-wrap;">
+                                    <h1 style="font-family: 'Inter', sans-serif; font-size: 0.8rem; margin: 0">{{ $user->marketSettings->payment_rules }}</h1>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item" style="border-radius: 10px">
+                            <h2 class="accordion-header" id="flush-headingTwo">
+                                <button style="padding-top:8px; padding-bottom:8px; background-color: {{ $user->marketSettings->canvas_color }}; border: 0; text-decoration: none" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                    <h1 style="font-family: 'Inter', sans-serif; font-size: 0.8rem; margin: 0; color: {{$user->marketSettings->canvas_font_color}}">Информация о доставке</h1>
+                                </button>
+                            </h2>
+                            <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body text-start " style="white-space: pre-wrap;">
+                                    <h1 style="font-family: 'Inter', sans-serif; font-size: 0.8rem; margin: 0">{{ $user->marketSettings->delivery_rules }}</h1>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item" style="border-radius: 10px">
+                            <h2 class="accordion-header" id="flush-headingThree">
+                                <button style="padding-top:8px; padding-bottom:8px; background-color: {{ $user->marketSettings->canvas_color }}; border: 0; text-decoration: none" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                                    <h1 style="font-family: 'Inter', sans-serif; font-size: 0.8rem; margin: 0; color: {{$user->marketSettings->canvas_font_color}}">Информация о возврате товара</h1>
+                                </button>
+                            </h2>
+                            <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body text-start " style="white-space: pre-wrap;">
+                                    <h1 style="font-family: 'Inter', sans-serif; font-size: 0.8rem; margin: 0">{{ $user->marketSettings->refund_rules }}</h1>
+                                </div>
+                            </div>
+                        </div>
+                        @if($user->marketSettings->other_rules)
+                            <div class="accordion-item" style="border-radius: 10px">
+                                <h2 class="accordion-header" id="flush-headingFour">
+                                    <button style="padding-top:8px; padding-bottom:8px; background-color: {{ $user->marketSettings->canvas_color }}; border: 0; text-decoration: none" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+                                        <h1 style="font-family: 'Inter', sans-serif; font-size: 0.8rem; margin: 0; color: {{$user->marketSettings->canvas_font_color}}">Общая информация о правилах магазина</h1>
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body text-start " style="white-space: pre-wrap;">
+                                        <h1 style="font-family: 'Inter', sans-serif; font-size: 0.8rem; margin: 0">{{ $user->marketSettings->other_rules }}</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+                        @if($user->type == 'Market')
+                            @if($user->marketSettings->show_social)
+                                @if(count($user->userLinks(false)) > 0)
+                                    <nav class="navbar mt-2 mb-2">
+                                        <div class="container-fluid d-flex justify-content-center">
+                                            @foreach($user->userLinks(false) as $link)
+                                                @if($link->icon)
+                                                    <form method="POST" action="{{ route('clickLinkStatistic', ['user' => $user->id]) }}"> @csrf
+                                                        <input type="hidden" name="link_id" value="{{$link->id}}">
+                                                        <input type="hidden" name="link_url" value="{{$link->link}}">
+                                                        <button type="submit" style="border: 0; padding: 0; background-color: rgba(0, 125, 215, 0);">
+                                                            <img src="{{$link->icon}}" class="me-2 ms-2 mt-3" style="
                                                             width:{{ $user->round_links_width }}px;
                                                             filter: drop-shadow({{ $user->round_links_shadow_right }}px {{ $user->round_links_shadow_bottom }}px {{ $user->round_links_shadow_round }}px {{ $user->round_links_shadow_color }})
                                                         ">
-                                                    </button>
-                                                </form>
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                </nav>
+                                                        </button>
+                                                    </form>
+                                                @endif
+                                            @endforeach
+                                        </div>
+                                    </nav>
+                                @endif
                             @endif
                         @endif
-                    @endif
                 </div>
             </div>
         @endif

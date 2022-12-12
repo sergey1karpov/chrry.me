@@ -9,6 +9,8 @@ use App\Models\ProductCategory;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 use Illuminate\View\View;
 
 /**
@@ -60,15 +62,15 @@ class FilterAndSearchProductController extends Controller
     /**
      * @param string $search
      * @param User $user
-     * @return Collection
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function productSearch(string $search, User $user): Collection
+    public function productSearch(string $search, User $user): LengthAwarePaginator
     {
         return Product::search($search)
             ->where('user_id', $user->id)
             ->where('delete', null)
-            ->orderBy('id', 'desc')
-            ->get();
+            ->orderBy('position')
+            ->paginate(20);
     }
 
     /**
@@ -101,30 +103,48 @@ class FilterAndSearchProductController extends Controller
      * @param User $user
      * @param ProductCategory $productCategory
      * @param ProductFilterRequest $request
-     * @return Collection
+     * @return LengthAwarePaginator
      */
-    public function withOutCategoryFilter(User $user, ProductCategory $productCategory, ProductFilterRequest $request): Collection
+    public function withOutCategoryFilter(User $user, ProductCategory $productCategory, ProductFilterRequest $request): LengthAwarePaginator
     {
         $productsCollection = Product::where('user_id', $user->id)
             ->where('delete', null)
+            ->orderBy('position')
             ->get();
 
-        return ProductFilters::filter($productCategory, $productsCollection, $request);
+        $filteredProducts = ProductFilters::filter($productCategory, $productsCollection, $request);
+
+        return $this->paginate($filteredProducts);
     }
 
     /**
      * @param User $user
      * @param ProductCategory $productCategory
      * @param ProductFilterRequest $request
-     * @return Collection
+     * @return LengthAwarePaginator
      */
-    public function withCategoryFilter(User $user, ProductCategory $productCategory, ProductFilterRequest $request): Collection
+    public function withCategoryFilter(User $user, ProductCategory $productCategory, ProductFilterRequest $request): LengthAwarePaginator
     {
         $productsCollection = Product::where('user_id', $user->id)
             ->where('delete', null)
             ->where('product_categories_id', $productCategory->id)
+            ->orderBy('position', 'DESC')
             ->get();
 
-        return ProductFilters::filter($productCategory, $productsCollection, $request);
+        $filteredProducts = ProductFilters::filter($productCategory, $productsCollection, $request);
+
+        return $this->paginate($filteredProducts);
+    }
+
+    public function paginate($items, $perPage = 20, $page = null, $options = [])
+    {
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+
+        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, [
+            'path' => url()->full(),
+            'pageName' => 'page',
+        ]);
     }
 }
