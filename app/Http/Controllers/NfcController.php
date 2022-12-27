@@ -26,11 +26,11 @@ class NfcController extends Controller
      */
     public function editNewUserForm(string $utag, Request $request)
     {
-        $user = User::where('utag', $utag)->where('is_active', 0)->firstOrFail();
+        $user = User::where('utag', $utag)->where('is_active', 0)->first();
 
         if(!$user) {
             $active_user = User::where('utag', $request->segment(2))->where('is_active', 1)->first();
-            return redirect()->route('userHomePage', ['slug' => $active_user->slug]);
+            return redirect()->route('userHomePage', ['user' => $active_user->slug]);
         }
 
         return view('auth.edit-user', compact('user'));
@@ -59,6 +59,6 @@ class NfcController extends Controller
 
         Auth::login($newUser);
 
-        return redirect()->route('editProfileForm', ['id' => $newUser->id]);
+        return redirect()->route('editProfileForm', ['user' => $newUser->id]);
     }
 }

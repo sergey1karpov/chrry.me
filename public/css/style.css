@@ -1,3 +1,4 @@
+/*Profile-page*/
 body{
     background: #f1f2f2;
     background-repeat: no-repeat;
@@ -13,7 +14,6 @@ a{
 }
 .box-part{
     background:#fcfcf9;
-    border-radius:25;
     padding:20px 20px;
     margin:30px 0px;
     -webkit-box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.12);
@@ -42,4 +42,19 @@ a{
     -wekit-background-size: cover;
     background-size: cover;
     background-repeat: no-repeat;
+}
+/*Edit profile form*/
+.img-edit-profile {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    margin-right: 0;
+    background-position: center center;
+    -wekit-background-size: cover;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.ts-control {
+    border: 0;
+    box-shadow: 0px 1px 10px 2px rgba(0, 0, 0, 0.2);
 }

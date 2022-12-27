@@ -268,12 +268,13 @@
 
             @if ($message = Session::get('success'))
                 <div class="row">
-                    <div class="col-12" style="padding: 0">
-                        <div class="alert alert-info alert-dismissible fade show" role="alert" style="margin: 0;">
-                            <div class="title">
-                                <span style="font-family: 'Rubik', sans-serif; font-size: 100%; line-height: 16px; display:block; color: white;">{{$message}}</span>
-                            </div>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <div class="col-12" style="padding: 0; border-radius: 0">
+                        <div class="alert alert-success" role="alert" style="margin: 0; border: 0; background-color: #00CC66; border-radius: 0">
+                            <h4 class="alert-heading mb-3">Отправлено!</h4>
+                            <p style="font-family: 'Rubik', sans-serif; font-size: 100%; line-height: 16px; display:block; color: white;">{{$message}}</p>
+                            <hr>
+                            <p class="mb-0" style="font-family: 'Rubik', sans-serif; font-size: 80%; line-height: 16px; display:block; color: white;">В скором времени продавец обработает вашу заявку и ответит вам по одному из контактов, который вы указали в заявке.</p>
+                            <button type="button" class="btn-close mt-3" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     </div>
                 </div>

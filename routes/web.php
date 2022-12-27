@@ -47,6 +47,7 @@ Route::middleware(['web', 'root', 'locale'])->group(function () {
             Route::patch('/edit', [UserController::class, 'editUserProfile'])->name('editUserProfile');
             Route::patch('/{type}/del', [UserController::class, 'delUserAvatar'])->name('delUserAvatar');
             Route::patch('/change-theme', [UserController::class, 'changeTheme'])->name('changeTheme');
+            Route::get('/statistic', [UserController::class, 'getStats'])->name('getStats');
         });
 
         Route::get('/market-settings', [ShopController::class, 'marketSettingsForm'])->name('marketSettingsForm');
@@ -63,7 +64,7 @@ Route::middleware(['web', 'root', 'locale'])->group(function () {
             Route::delete('/{link}/delete', [LinkController::class, 'delLink'])->name('delLink');
             Route::patch('/{link}/delete-photo', [LinkController::class, 'delPhoto'])->name('delPhoto');
             Route::patch('/{link}/delete-icon', [LinkController::class, 'delLinkIcon'])->name('delLinkIcon');
-            Route::get('/{link}/statistic', [StatisticController::class, 'showClickLinkStatistic'])->name('showClickLinkStatistic');
+            Route::get('/{link}/statistic', [LinkController::class, 'showClickLinkStatistic'])->name('showClickLinkStatistic');
         });
 
         Route::group(['prefix' => 'events'], function() {
@@ -81,6 +82,8 @@ Route::middleware(['web', 'root', 'locale'])->group(function () {
             Route::get('/create', [ProductController::class, 'createProductForm'])->name('createProductForm');
             Route::post('/create', [ProductController::class, 'addProduct'])->name('addProduct');
             Route::get('/search', [ProductController::class, 'searchProducts'])->name('searchProducts');
+            Route::get('/mass-update', [ProductController::class, 'massUpdateForm'])->name('massUpdateForm');
+            Route::patch('/mass-update', [ProductController::class, 'massUpdate'])->name('massUpdate');
             Route::post('/sort', [ProductController::class, 'sortProduct'])->name('sortProduct');
             Route::get('/{product}/edit', [ProductController::class, 'showProduct'])->name('showProduct');
             Route::patch('/{product}/edit', [ProductController::class, 'editProduct'])->name('editProduct');
@@ -101,10 +104,15 @@ Route::middleware(['web', 'root', 'locale'])->group(function () {
             Route::get('/', [OrderController::class, 'orders'])->name('orders');
             Route::get('/in-work', [OrderController::class, 'ordersInWork'])->name('ordersInWork');
             Route::get('/in-processed', [OrderController::class, 'ordersProcessed'])->name('ordersProcessed');
+            Route::patch('/{order}/in-work', [OrderController::class, 'changeStatusToInWork'])->name('changeStatusToInWork');
+            Route::patch('/{order}/in-processed', [OrderController::class, 'changeStatusToInProcessed'])->name('changeStatusToInProcessed');
+            Route::delete('/{order}/delete', [OrderController::class, 'ordersReject'])->name('ordersReject');
             Route::get('/search', [OrderController::class, 'ordersSearch'])->name('ordersSearch');
             Route::get('/export', [ExportController::class, 'export'])->name('export');
-            Route::post('/{order}/order', [OrderController::class, 'order'])->name('order');
-            Route::post('/{order}/order-processed', [OrderController::class, 'orderProcessed'])->name('orderProcessed');
+        });
+
+        Route::group(['prefix' => 'statistic'], function() {
+            Route::get('/filter', [StatisticController::class, 'filterStats'])->name('filterStats');
         });
 
     });

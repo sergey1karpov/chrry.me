@@ -54,18 +54,12 @@
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
+    @include('fonts.fonts')
     <style type="text/css">
-        @if($user->banner)
-	        	body {
-            background: url({{ $user->banner }}) no-repeat center center fixed;
-            background-size: cover;
+        body {
+            background-color: {{ $designProduct['dp_bg_color']}};
         }
-        @elseif($user->banner == null & $user->background_color != null)
-				body {
-            background-color: {{$user->background_color}};
-        }
-        @endif
-			.img {
+        .img {
             width: 100px;
             height: 100px;
             border-radius: 50%;
@@ -114,6 +108,12 @@
             pointer-events: none;
         }
         .btn-check:focus+.btn, .btn:focus {
+            box-shadow: none;
+        }
+        .accordion-button:focus {
+            z-index: 3;
+            border-color: #86b7fe;
+            outline: 0;
             box-shadow: none;
         }
     </style>
@@ -169,11 +169,11 @@
                 </a>
             @endforeach
             <div class="accordion accordion-flush mt-5" id="accordionFlushExample">
-                <label class="mb-3" style="font-family: 'Inter', sans-serif; font-size: 1rem;">Правила продавца</label>
+                <label class="mb-3" style="font-family: 'Inter', sans-serif; font-size: 1rem; color: {{$user->navigation_color}}">Правила продавца</label>
                 <div class="accordion-item" style="border-radius: 10px">
                     <h2 class="accordion-header rounded" id="flush-headingOne">
                         <button style="padding-top:8px; padding-bottom:8px; background-color: {{ $user->marketSettings->canvas_color }}; border: 0; text-decoration: none" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                            <h1 style="font-family: 'Inter', sans-serif; font-size: 0.8rem; margin: 0">Оплата товара</h1>
+                            <h1 style="font-family: 'Inter', sans-serif; font-size: 0.8rem; margin: 0; color: {{$user->marketSettings->canvas_font_color}}">Оплата товара</h1>
                         </button>
                     </h2>
                     <div id="flush-collapseOne" class="accordion-collapse collapse rounded-4" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
@@ -185,7 +185,7 @@
                 <div class="accordion-item" style="border-radius: 10px">
                     <h2 class="accordion-header" id="flush-headingTwo">
                         <button style="padding-top:8px; padding-bottom:8px; background-color: {{ $user->marketSettings->canvas_color }}; border: 0; text-decoration: none" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                            <h1 style="font-family: 'Inter', sans-serif; font-size: 0.8rem; margin: 0">Информация о доставке</h1>
+                            <h1 style="font-family: 'Inter', sans-serif; font-size: 0.8rem; margin: 0; color: {{$user->marketSettings->canvas_font_color}}">Информация о доставке</h1>
                         </button>
                     </h2>
                     <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
@@ -197,7 +197,7 @@
                 <div class="accordion-item" style="border-radius: 10px">
                     <h2 class="accordion-header" id="flush-headingThree">
                         <button style="padding-top:8px; padding-bottom:8px; background-color: {{ $user->marketSettings->canvas_color }}; border: 0; text-decoration: none" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-                            <h1 style="font-family: 'Inter', sans-serif; font-size: 0.8rem; margin: 0">Информация о возврате товара</h1>
+                            <h1 style="font-family: 'Inter', sans-serif; font-size: 0.8rem; margin: 0; color: {{$user->marketSettings->canvas_font_color}}">Информация о возврате товара</h1>
                         </button>
                     </h2>
                     <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
@@ -210,7 +210,7 @@
                     <div class="accordion-item" style="border-radius: 10px">
                         <h2 class="accordion-header" id="flush-headingFour">
                             <button style="padding-top:8px; padding-bottom:8px; background-color: {{ $user->marketSettings->canvas_color }}; border: 0; text-decoration: none" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
-                                <h1 style="font-family: 'Inter', sans-serif; font-size: 0.8rem; margin: 0">Общая информация о правилах магазина</h1>
+                                <h1 style="font-family: 'Inter', sans-serif; font-size: 0.8rem; margin: 0; color: {{$user->marketSettings->canvas_font_color}}">Общая информация о правилах магазина</h1>
                             </button>
                         </h2>
                         <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
@@ -248,7 +248,7 @@
         </div>
     </div>
 @endif
-<div class="text-black" style="border:none">
+<div class="text-black" style="padding: 0;">
 
     @if($product->additional_photos)
         @php
@@ -263,14 +263,6 @@
                     </div>
                 @endforeach
             </div>
-{{--            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls{{$product->id}}" data-bs-slide="prev">--}}
-{{--                <span class="carousel-control-prev-icon" aria-hidden="true"></span>--}}
-{{--                <span class="visually-hidden">Previous</span>--}}
-{{--            </button>--}}
-{{--            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls{{$product->id}}" data-bs-slide="next">--}}
-{{--                <span class="carousel-control-next-icon" aria-hidden="true"></span>--}}
-{{--                <span class="visually-hidden">Next</span>--}}
-{{--            </button>--}}
         </div>
     @else
         <div id="carouselExampleControls{{$product->id}}" class="carousel slide" data-bs-ride="carousel">
@@ -283,27 +275,74 @@
     @endif
     <div class="card-body" style="padding: 0">
         <div class="">
-            <h5 class="card-title mb-3 mt-2 me-2 ms-2" style="font-family: 'Inter', sans-serif; font-size: 1.2rem; color: {{$user->marketSettings->color_title}}">{{$product->title}}</h5>
-            <p class="mb-4 me-2 ms-2" style="white-space: pre-wrap; font-family: 'Inter', sans-serif; color: {{$user->marketSettings->color_title}}; font-size: 0.9rem">{{$product->description}}</p>
+            <h5 class="card-title mb-3 mt-2 me-2 ms-2 {{$designProduct['dp_title_position']}}" style="
+                font-family: '{{ $designProduct['dp_title_font'] ?? 'Inter'}}', sans-serif;
+                font-size: {{ $designProduct['dp_title_font_size'] }}rem;
+                color: {{ $designProduct['dp_title_font_color'] }};
+                text-shadow: {{ $designProduct['dp_title_font_shadow_right'] }}px {{ $designProduct['dp_title_font_shadow_bottom'] }}px {{ $designProduct['dp_title_font_shadow_blur'] }}px {{ $designProduct['dp_title_font_shadow_color'] }};
+            ">{{$product->title}}</h5>
+            <p class="mb-4 me-2 ms-2 {{$designProduct['dp_description_position']}}" style="
+                white-space: pre-wrap;
+                font-family: '{{ $designProduct['dp_description_font'] ?? 'Inter'}}', sans-serif;
+                font-size: {{ $designProduct['dp_description_font_size'] }}rem;
+                color: {{ $designProduct['dp_description_font_color']}};
+                text-shadow: {{ $designProduct['dp_description_font_shadow_right'] }}px {{ $designProduct['dp_description_font_shadow_bottom'] }}px {{ $designProduct['dp_description_font_shadow_blur'] }}px {{ $designProduct['dp_description_font_shadow_color'] }};
+            ">{{$product->description}}</p>
             @if($product->full_description)
-                <p class="mb-4 me-2 ms-2" style="white-space: pre-wrap; font-family: 'Inter', sans-serif; color: {{$user->marketSettings->color_title}}; font-size: 0.9rem">{{$product->full_description}}</p>
+                <p class="mb-4 me-2 ms-2 {{$designProduct['dp_full_description_position']}}" style="
+                                white-space: pre-wrap;
+                                font-family: '{{ $designProduct['dp_full_description_font'] ?? 'Inter'}}', sans-serif;
+                                font-size: {{ $designProduct['dp_full_description_font_size'] }}rem;
+                                color: {{ $designProduct['dp_full_description_font_color']}};
+                                text-shadow: {{ $designProduct['dp_full_description_font_shadow_right'] }}px {{ $designProduct['dp_full_description_font_shadow_bottom'] }}px {{ $designProduct['dp_full_description_font_shadow_blur'] }}px {{ $designProduct['dp_full_description_font_shadow_color'] }};
+                                ">{{$product->full_description}}</p>
             @endif
         </div>
         <div class="me-2 ms-2 d-flex justify-content-between total font-weight-bold mt-5">
-            <span style="font-family: 'Inter', sans-serif; color: {{$user->marketSettings->color_title}}">Цена</span><span style="font-family: 'Inter', sans-serif; color: {{$user->marketSettings->color_title}}"><b>{{$product->price}}</b> рублей</span>
+            <span style="
+                                font-family: '{{ $designProduct['dp_price_font'] ?? 'Inter'}}', sans-serif;
+                                font-size: {{ $designProduct['dp_price_font_size'] }}rem;
+                                color: {{ $designProduct['dp_price_font_color']}};
+                                text-shadow: {{ $designProduct['dp_price_font_shadow_right'] }}px {{ $designProduct['dp_price_font_shadow_bottom'] }}px {{ $designProduct['dp_price_font_shadow_blur'] }}px {{ $designProduct['dp_price_font_shadow_color'] }};
+                            ">Цена</span><span style="
+                                font-family: '{{ $designProduct['dp_price_font'] ?? 'Inter'}}', sans-serif;
+                                font-size: {{ $designProduct['dp_price_font_size'] }}rem;
+                                color: {{ $designProduct['dp_price_font_color'] }};
+                                text-shadow: {{ $designProduct['dp_price_font_shadow_right'] }}px {{ $designProduct['dp_price_font_shadow_bottom'] }}px {{ $designProduct['dp_price_font_shadow_blur'] }}px {{ $designProduct['dp_price_font_shadow_color'] }};
+                                "><b>{{$product->price}}</b> рублей</span>
         </div>
     </div>
 </div>
 </div>
 <div class="d-grid gap-2 mt-3 me-2 ms-2 mb-2">
     @if($product->link_to_shop)
-        <a class="btn btn-primary" href="{{$product->link_to_shop}}">
-            {{$product->link_to_shop_text}}
+        <a class="btn btn-primary" href="{{$product->link_to_shop}}" style="
+            background-color: {{ $designProduct['dp_btn_color_remote'] }};
+            border-radius: {{ $designProduct['dp_btn_radius_remote'] }}px;
+            border: none;
+        ">
+            <h1 style="
+                margin-bottom: 0;
+                color: {{ $designProduct['dp_btn_text_color_remote'] }};
+                font-size: {{ $designProduct['dp_btn_text_size_remote'] }}rem;
+                font-family: '{{ $designProduct['dp_btn_text_font_remote'] ?? 'Inter'}}', sans-serif;
+                text-shadow:  {{ $designProduct['dp_btn_text_shadow_right_remote'] }}px {{ $designProduct['dp_btn_text_shadow_bottom_remote'] }}px {{ $designProduct['dp_btn_text_shadow_blur_remote'] }}px {{ $designProduct['dp_btn_text_shadow_color_remote'] }};
+            ">{{$product->link_to_shop_text}}</h1>
         </a>
     @endif
     @if($product->link_to_order_text)
-        <a class="btn btn-primary" href="{{ route('showProductOrderForm', ['user' => $user->slug, 'product' => $product->id]) }}">
-            {{$product->link_to_order_text}}
+        <a class="btn btn-primary" href="{{ route('showProductOrderForm', ['user' => $user->slug, 'product' => $product->id]) }}" style="
+            background-color: {{ $designProduct['dp_btn_color_chrry'] }};
+            border-radius: {{ $designProduct['dp_btn_radius_chrry'] }}px;
+            border: none;
+        ">
+            <h1 style="
+                margin-bottom: 0;
+                color: {{ $designProduct['dp_btn_text_color_chrry'] }};
+                font-size: {{ $designProduct['dp_btn_text_size_chrry'] }}rem;
+                font-family: '{{ $designProduct['dp_btn_text_font_chrry'] ?? 'Inter'}}', sans-serif;
+                text-shadow:  {{ $designProduct['dp_btn_text_shadow_right_chrry'] }}px {{ $designProduct['dp_btn_text_shadow_bottom_chrry'] }}px {{ $designProduct['dp_btn_text_shadow_blur_chrry'] }}px {{ $designProduct['dp_btn_text_shadow_color_chrry'] }};
+            ">{{$product->link_to_order_text}}</h1>
         </a>
     @endif
 </div>

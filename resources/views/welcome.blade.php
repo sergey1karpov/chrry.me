@@ -27,6 +27,9 @@
                 background: rgb(255,0,0);
                 background: linear-gradient(0deg, rgba(255,0,0,0.4458158263305322) 0%, rgba(255,255,255,1) 100%);
             }
+            .btn-check:focus+.btn, .btn:focus {
+                box-shadow: none;
+            }
             .section {
                 height: 100vh; /* высота секции равна высоте области просмотра */
             }

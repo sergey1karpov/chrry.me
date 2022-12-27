@@ -44,11 +44,8 @@ class UserController extends Controller
      */
     public function editProfileForm(User $user): View
     {
-        $stat = $this->statsService->getUserProfileStatistic($user);
-
-        return view('user.edit-profile', [
+        return view('user.profile', [
             'user' => $user,
-            'stat' => $stat,
             'allIconsInsideFolder' => $this->getIcons(),
             'allFontsInFolder' => $this->getFonts(),
         ]);
@@ -103,7 +100,12 @@ class UserController extends Controller
      */
     public function profileSettingsForm(User $user): View
     {
-        return view('user.edit-profile-form', compact('user'));
+        return view('user.edit-profile', compact('user'));
+    }
+
+    public function getStats(User $user)
+    {
+        return view('statistic.user_profile', compact('user'));
     }
 }
 

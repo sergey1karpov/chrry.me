@@ -23,7 +23,8 @@ class ProductController extends Controller
 
     public function __construct(
         private readonly UploadPhotoService $uploadService,
-        public ProductCardPropertiesService $productCardPropertiesService
+        public ProductCardPropertiesService $productCardPropertiesService,
+        private Product $product,
     ) {}
 
     /**
@@ -77,7 +78,9 @@ class ProductController extends Controller
      */
     public function showProductDetails(User $user, Product $product): View
     {
-        return view('product.product-details', compact('user', 'product'));
+        $designProduct = unserialize($product->getLastProductDesignFields($user));
+
+        return view('product.product-details', compact('user', 'product', 'designProduct'));
     }
 
     /**
@@ -91,11 +94,11 @@ class ProductController extends Controller
     {
         $categories = $user->productCategories;
 
-        $designProperties = unserialize($product->design_properties);
+        $designProduct = unserialize($product->design_properties);
 
         $allFontsInFolder = $this->getFonts();
 
-        return view('product.editProduct', compact('user', 'product', 'categories', 'designProperties', 'allFontsInFolder'));
+        return view('product.editProduct', compact('user', 'product', 'categories', 'designProduct', 'allFontsInFolder'));
     }
 
     /**
@@ -185,9 +188,7 @@ class ProductController extends Controller
      */
     public function statsProducts(User $user, Product $product): View
     {
-        $stats = StatsService::getProductStatistic($user, $product);
-
-        return view('product.stat-product', compact('user', 'stats'));
+        return view('product.stat-product', compact('user', 'product'));
     }
 
     /**
@@ -215,6 +216,36 @@ class ProductController extends Controller
             ->paginate(20);
 
         return view('categories.search-result', compact('user', 'categorySlug', 'productCategory', 'products'));
+    }
+
+    /**
+     * @param User $user
+     * @return Application|Factory|\Illuminate\Contracts\View\View
+     * @throws \Exception
+     */
+    public function massUpdateForm(User $user)
+    {
+        if(count($user->products) > 0) {
+            return view('product.mass-edit', [
+                'user' => $user,
+                'allFontsInFolder' => $this->getFonts(),
+                'designProduct' => unserialize($this->product->getLastProductDesignFields($user)),
+            ]);
+        }
+
+        abort(403, 'У вас нет доступных продуктов для их изменения');
+    }
+
+    /**
+     * @param User $user
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function massUpdate(User $user, Request $request)
+    {
+        $this->product->massUpdate($user, $request, $this->productCardPropertiesService);
+
+        return redirect()->back();
     }
 
     public function sortProduct(User $user)

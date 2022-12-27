@@ -114,18 +114,35 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                <label class="mt-4" style="font-size: 0.9rem"><b>1.</b> Для начала работы с заказом, откройте карточку заказа и нажмите на кнопку "В работе". Нажатие на эту кнопку будет означать что данный заказ находится в исполнении. На данном этапе
-                    свяжитесь с заказчиком одним из способов который он указал в заявке, обговорите детали сделки, оплаты и других мелочей.</label>
-                <label class="mt-4" style="font-size: 0.9rem"><b>2.</b> Как только сделка будет завершена, зайдите в карточку заявки и нажмите на кнопку "Выполнено"</label>
-                <label class="mt-4" style="font-size: 0.9rem"><b>3.</b> Все выполненные вами заявки будут хранится в соответствующем разделе, где вы можете их просматривать, фильтровать, а так же формировать свою клиентскую базу</label>
+                <label class="mt-2" style="font-size: 0.9rem"><b>1.</b> Для начала работы с системой, откройте карточку нового заказа и ознакомьтесь с ним</label>
+
+                <label class="mt-4" style="font-size: 0.9rem"><b>2.</b> Внимательно прочитайте сообщение от заказчика, свяжитесь с ним по одному из контактов который он оставил и обсудите заказ</label>
+
+                <label class="mt-4" style="font-size: 0.9rem"><b>3.</b> Далее решите, берете ли вы заказ в работу или нет и нажмите на соответствующие кнопки</label>
+                <label class="mt-1" style="font-size: 0.9rem"><b>3.1</b> Если вы отклоните заказ, то он будет удален. Если примете, то он попадет в раздел "В работе"</label>
+
+                <label class="mt-4" style="font-size: 0.9rem"><b>4.</b> Если принимаете заказ, приступите к его выполнению</label>
+
+                <label class="mt-4" style="font-size: 0.9rem"><b>5.</b> После того как заказ будет выполнен, нажмите на кнопку "Выполнить заказ"</label>
+
+                <label class="mt-4" style="font-size: 0.9rem"><b>6.</b> Заказ попдет в враздел "Обработанно" и он там будет находиться всегда</label>
+                <label class="mt-4" style="font-size: 0.9rem"><b>7.</b> Ко всему заказчик попадет в вашу "Клиентскую базу" которую можно будет скачать в одном из предложанных форматоф и работать с ней, делать рассылки и тд.</label>
             </div>
         </div>
     </div>
 </div>
 
 <div class="mt-2 mb- me-3 ms-3 d-flex justify-content-between">
-    <div class="col-6">
-        <a class="btn-sm btn-success text-center bb" type="button" style="font-family: 'Inter', sans-serif; font-size: 0.8rem; border: 0; border-top-left-radius: 3px; border-bottom-left-radius: 3px;" href="{{ route('ordersInWork', ['user' => $user->id]) }}">
+    <div class="col-4">
+        <a class="btn-sm btn-secondary text-center bb" type="button" style="border: none; font-family: 'Inter', sans-serif; font-size: 0.8rem; border: 0; border-top-left-radius: 3px; border-bottom-left-radius: 3px;" href="{{ route('orders', ['user' => $user->id]) }}">
+            Новое
+            <span class="badge" style="border: 0; margin-left: 1px; background-color: mediumseagreen">
+                {{count($user->orders->where('order_status', \App\Models\Order::NEW_ORDER))}}
+            </span>
+        </a>
+    </div>
+    <div class="col-4">
+        <a class="btn-sm btn-success text-center bb" type="button" style="font-family: 'Inter', sans-serif; font-size: 0.8rem; border: 0; border-radius: 0px;" href="{{ route('ordersInWork', ['user' => $user->id]) }}">
             В работе
             @if(count($user->orders->where('order_status', \App\Models\Order::IN_WORK_ORDER)) > 0)
                 <span class="badge" style="border: 0; margin-left: 1px; background-color: orangered">
@@ -134,8 +151,13 @@
             @endif
         </a>
     </div>
-    <div class="col-6">
-        <a class="btn-sm btn-secondary text-center bb" type="button" style="font-family: 'Inter', sans-serif; font-size: 0.8rem; border: 0; border-top-right-radius: 3px; border-bottom-right-radius: 3px;" href="{{ route('ordersProcessed', ['user' => $user->id]) }}">Обработанные заявки</a>
+    <div class="col-4">
+        <a class="btn-sm btn-secondary text-center bb" type="button" style="font-family: 'Inter', sans-serif; font-size: 0.8rem; border: 0; border-top-right-radius: 3px; border-bottom-right-radius: 3px;" href="{{ route('ordersProcessed', ['user' => $user->id]) }}">
+            Обработанно
+            <span class="badge" style="border: 0; margin-left: 1px; background-color: grey">
+                {{count($user->orders->where('order_status', \App\Models\Order::PROCESSED_ORDER))}}
+            </span>
+        </a>
     </div>
 </div>
 
@@ -189,6 +211,34 @@
             <div class="modal-dialog" style="margin: 0">
                 <div class="block-modal modal-content text-center @if($user->dayVsNight) bg-dark text-white-50 @endif shadow" style="border: 0; border-radius: 0">
                     <div class="modal-body " style="border-radius: 0">
+                        <a href="{{ route('showProductDetails', ['user' => $user->slug, 'product' => $order->product_id]) }}" style="text-decoration: none; color: black">
+                            <div class="row g-0 shadow mb-3" style="border-radius: 5px;">
+                                <div class="col-3">
+                                    @if(Route::current()->getName() == 'ordersSearch')
+                                        <img src="{{'../'.$order->product->main_photo}}" width="100" class="img-fluid" id="up" style="border-top-left-radius: 5px; border-bottom-left-radius: 5px;">
+                                    @else
+                                        <img src="{{'../'.$order->main_photo}}" width="100" class="img-fluid" id="up" style="border-top-left-radius: 5px; border-bottom-left-radius: 5px;">
+                                    @endif
+                                </div>
+                                <div class="col-9 @if($user->dayVsNight) bg-secondary @endif">
+                                    <div class="card-body p-2">
+                                        @if(Route::current()->getName() == 'ordersSearch')
+                                            <h5 class="card-title @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; font-size: 15px"><b>Название:</b> {{$order->product->title}}</h5>
+                                        @else
+                                            <h5 class="card-title @if($user->dayVsNight) text-white-50 @endif" style="font-family: 'Rubik', sans-serif; font-size: 15px"><b>Название:</b> {{$order->title}}</h5>
+                                        @endif
+                                        <h5 class="card-title @if($user->dayVsNight) text-white-50 @endif" style="margin-bottom: 0; font-family: 'Rubik', sans-serif; font-size: 13px"><b>Заказ от:</b> {{$order->created_at}}</h5>
+                                        @if($order->updated_at)
+                                            <h5 class="card-title @if($user->dayVsNight) text-white-50 @endif" style="margin-bottom: 0; font-family: 'Rubik', sans-serif; font-size: 13px"><b>Принято в работу:</b> {{$order->updated_at}}</h5>
+                                        @endif
+                                        @if($order->processed_at)
+                                            <h5 class="card-title @if($user->dayVsNight) text-white-50 @endif" style="margin-bottom: 0; font-family: 'Rubik', sans-serif; font-size: 13px"><b>Заказ выполнен:</b> {{$order->processed_at}}</h5>
+                                        @endif
+                                        <h5 class="card-title @if($user->dayVsNight) text-white-50 @endif" style="margin-bottom: 0; font-family: 'Rubik', sans-serif; font-size: 13px"><b>Заказ:</b> #{{$order->id}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
                         <div class="text-right"> <i class="fa fa-close close" data-dismiss="modal"></i> </div>
                         <div class="p-1">
                             <h5 class="text-uppercase">{{$order->client_name}}</h5>
@@ -215,7 +265,7 @@
                             @if($order->client_telegram)
                                 <div class="d-flex justify-content-between">
                                     <small>Telegram</small>
-                                    <small><a href="https://{{$order->client_telegram}}">{{$order->client_telegram}}</a></small>
+                                    <small>{{$order->client_telegram}}</small>
                                 </div>
                             @endif
                             @if($order->client_viber)
@@ -246,9 +296,11 @@
 
                             <div class="text-center mt-5">
                                 @if($order->order_status == \App\Models\Order::NEW_ORDER)
-                                    <form action="{{ route('order', ['user' => $user->id, 'order' => $order->id]) }}" method="POST"> @csrf @method('POST')
+                                    <form action="{{ route('changeStatusToInWork', ['user' => $user->id, 'order' => $order->id]) }}" method="post">
+                                        @csrf @method('PATCH')
                                 @elseif($order->order_status == \App\Models\Order::IN_WORK_ORDER)
-                                    <form action="{{ route('orderProcessed', ['user' => $user->id, 'order' => $order->id]) }}" method="POST"> @csrf @method('POST')
+                                    <form action="{{ route('changeStatusToInProcessed', ['user' => $user->id, 'order' => $order->id]) }}" method="post">
+                                        @csrf @method('PATCH')
                                 @elseif($order->order_status == \App\Models\Order::IN_WORK_ORDER)
                                     <form action="#" method="">
                                 @endif
@@ -264,6 +316,15 @@
                                     </div>
                                 </form>
                             </div>
+                            @if($order->order_status == \App\Models\Order::NEW_ORDER)
+                                <div class="text-center mt-2">
+                                    <form action="{{ route('ordersReject', ['user' => $user->id, 'order' => $order->id]) }}" method="post"> @csrf @method('DELETE')
+                                        <div class="d-grid gap-2">
+                                            <button type="submit" class="btn btn-danger">Отменить заказ</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>

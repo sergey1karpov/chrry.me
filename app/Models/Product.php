@@ -8,6 +8,7 @@ use App\Services\ProductCardPropertiesService;
 use App\Services\UploadPhotoService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Laravel\Scout\Searchable;
 
 class Product extends Model
@@ -76,7 +77,12 @@ class Product extends Model
         return '../storage/app/public/' . $id . '/products/';
     }
 
-    public function setDesignProductProperties(UpdateProductRequest|ProductRequest $request, ProductCardPropertiesService $productCardPropertiesService)
+    /**
+     * @param UpdateProductRequest|ProductRequest|Request $request
+     * @param ProductCardPropertiesService $productCardPropertiesService
+     * @return void
+     */
+    public function setDesignProductProperties(UpdateProductRequest|ProductRequest|Request $request, ProductCardPropertiesService $productCardPropertiesService)
     {
         $designProductFields = preg_grep("/^dp_/", array_keys($request->all()));
         foreach ($designProductFields as $field) {
@@ -84,7 +90,11 @@ class Product extends Model
         }
     }
 
-    public function getLastProduct(User $user)
+    /**
+     * @param User $user
+     * @return mixed
+     */
+    public function getLastProductDesignFields(User $user)
     {
         $product = Product::where('user_id', $user->id)->orderBy('created_at', 'desc')->first();
 
@@ -131,11 +141,25 @@ class Product extends Model
         $product->product_payment_info = $request->product_payment_info;
         $product->product_refund_info = $request->product_refund_info;
         $product->product_other_info = $request->product_other_info;
-//        $product->design_properties = serialize($productCardPropertiesService->getProperties());
 
-        $product->design_properties = isset($request->copy_styles) ? $this->getLastProduct($user) : serialize($productCardPropertiesService->getProperties());
+        $product->design_properties = isset($request->copy_styles) ? $this->getLastProductDesignFields($user) : serialize($productCardPropertiesService->getProperties());
 
         $user->products()->save($product);
+    }
+
+    /**
+     * @param User $user
+     * @param Request $request
+     * @param ProductCardPropertiesService $productCardPropertiesService
+     * @return void
+     */
+    public function massUpdate(User $user, Request $request, ProductCardPropertiesService $productCardPropertiesService)
+    {
+        $this->setDesignProductProperties($request, $productCardPropertiesService);
+
+        Product::where('user_id', $user->id)->update([
+            'design_properties' => serialize($productCardPropertiesService->getProperties())
+        ]);
     }
 
     /**
@@ -145,6 +169,7 @@ class Product extends Model
      * @param Product $product
      * @param UpdateProductRequest $request
      * @param UploadPhotoService $uploadService
+     * @param ProductCardPropertiesService $productCardPropertiesService
      * @return void
      */
     public function patchProduct(User $user, Product $product, UpdateProductRequest $request, UploadPhotoService $uploadService, ProductCardPropertiesService $productCardPropertiesService): void

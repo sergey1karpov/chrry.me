@@ -170,7 +170,7 @@
 
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label" style="font-family: 'Rubik', sans-serif; ">* Выберите категорию</label>
-                <select class="form-select shadow" aria-label="Default select example" style="border: 0" name="product_categories_id">
+                <select class="form-select shadow @if($user->dayVsNight) bg-secondary @endif" aria-label="Default select example" style="border: 0" name="product_categories_id">
                     @foreach($user->productCategories as $c)
                         <option value="{{$c->id}}">{{$c->name}}</option>
                     @endforeach
@@ -206,30 +206,32 @@
                 </div>
             </div>
 
-            <div class="mb-3 text-center" style="background-color: orangered">
-                <div class="ms-2 form-check" style="padding: 0">
-                    <div class="form-check form-switch mb-3">
-                        <input name="copy_styles" class="form-check-input @if($user->dayVsNight) bg-secondary @endif shadow" type="checkbox" value="{{true}}" id="design-link-e" style="border: 0">
-                        <label style="font-family: 'Rubik', sans-serif; font-size: 12px; color: #FFFFFF">Если использовать этот переключатель, то при создании нового продукта, вам не нужно будет
-                        заново устанавливать все параметры стиля. Они автоматически скопируются с вашего последнего продукта.</label>
+            @if(count($user->products) > 0)
+                <div class="mb-3 text-center" style="background-color: orangered">
+                    <div class="ms-2 form-check" style="padding: 0">
+                        <div class="form-check form-switch mb-3">
+                            <input name="copy_styles" class="form-check-input @if($user->dayVsNight) bg-secondary @endif shadow" type="checkbox" value="{{true}}" id="design-link-e" style="border: 0">
+                            <label style="font-family: 'Rubik', sans-serif; font-size: 12px; color: #FFFFFF">Если использовать этот переключатель, то при создании нового продукта, вам не нужно будет
+                            заново устанавливать все параметры стиля. Они автоматически скопируются с вашего последнего продукта.</label>
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endif
 
             <hr>
                 <div class="accordion accordion-flush" id="accordionFlushExample">
                     <div class="accordion-item">
-                        <h2 class="accordion-header" id="flush-headingOne">
-                            <button style="border: 0; text-decoration: none" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                        <h2 class="accordion-header @if($user->dayVsNight) bg-secondary @endif" id="flush-headingOne">
+                            <button style="border: 0; text-decoration: none" class="accordion-button collapsed @if($user->dayVsNight) bg-secondary @endif" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
                                 Параметры дизайна карточки продукта
                             </button>
                         </h2>
-                        <div style="background-color: #f1f2f2" id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                        <div style="background-color: #f1f2f2" id="flush-collapseOne" class="accordion-collapse collapse @if($user->dayVsNight) bg-dark text-white-50 @endif" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
 
                             <div class=" mb-3">
                                 <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Цвет фона карточки</label>
                                 <div class="mb-3 text-center d-flex justify-content-center">
-                                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" name="dp_card_bg_color" style="height: 35px; border: 0">
+                                    <input id="bg-color" type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" name="dp_bg_color" style="height: 35px; border: 0" value="#ECECE2">
                                 </div>
                             </div>
 
@@ -252,31 +254,39 @@
                             <div class=" mb-3">
                                 <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Цвет заголовка</label>
                                 <div class="mb-3 text-center d-flex justify-content-center">
-                                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" name="dp_title_color" style="height: 35px; border: 0">
+                                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" name="dp_title_font_color" style="height: 35px; border: 0">
                                 </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Располложение заголовка</label>
+                                <select name="dp_title_position" class="form-select shadow" aria-label="Default select example" style="border: 0">
+                                    <option value="text-start" selected>По левой стороне</option>
+                                    <option value="text-end">По правой</option>
+                                    <option value="text-center">По центру</option>
+                                </select>
                             </div>
                             <div class=" mb-3">
                                 <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Цвет тени заголовка</label>
                                 <div class="mb-3 text-center d-flex justify-content-center">
-                                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" name="dp_title_shadow_color" style="height: 35px; border: 0">
+                                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" name="dp_title_font_shadow_color" style="height: 35px; border: 0">
                                 </div>
                             </div>
                             <div class=" mb-3">
                                 <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Смещение тени в право</label>
                                 <div class="mb-3 text-center d-flex justify-content-center">
-                                    <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="0" name="dp_title_shadow_right">
+                                    <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="0" name="dp_title_font_shadow_right">
                                 </div>
                             </div>
                             <div class=" mb-3">
                                 <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Смещение тени в низ</label>
                                 <div class="mb-3 text-center d-flex justify-content-center">
-                                    <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="0" name="dp_title_shadow_bottom">
+                                    <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="0" name="dp_title_font_shadow_bottom">
                                 </div>
                             </div>
                             <div class=" mb-3">
                                 <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Четкость тени</label>
                                 <div class="mb-3 text-center d-flex justify-content-center">
-                                    <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="0" name="dp_title_shadow_blur">
+                                    <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="0" name="dp_title_font_shadow_blur">
                                 </div>
                             </div>
 
@@ -299,31 +309,39 @@
                             <div class=" mb-3">
                                 <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Цвет короткого описания</label>
                                 <div class="mb-3 text-center d-flex justify-content-center">
-                                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" name="dp_description_color" style="height: 35px; border: 0">
+                                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" name="dp_description_font_color" style="height: 35px; border: 0">
                                 </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Располложение короткого описания</label>
+                                <select name="dp_description_position" class="form-select shadow" aria-label="Default select example" style="border: 0">
+                                    <option value="text-start" selected>По левой стороне</option>
+                                    <option value="text-end">По правой</option>
+                                    <option value="text-center">По центру</option>
+                                </select>
                             </div>
                             <div class=" mb-3">
                                 <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Цвет тени короткого описания</label>
                                 <div class="mb-3 text-center d-flex justify-content-center">
-                                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" name="dp_description_shadow_color" style="height: 35px; border: 0">
+                                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" name="dp_description_font_shadow_color" style="height: 35px; border: 0">
                                 </div>
                             </div>
                             <div class=" mb-3">
                                 <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Смещение тени в право</label>
                                 <div class="mb-3 text-center d-flex justify-content-center">
-                                    <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="0" name="dp_description_shadow_right">
+                                    <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="0" name="dp_description_font_shadow_right">
                                 </div>
                             </div>
                             <div class=" mb-3">
                                 <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Смещение тени в низ</label>
                                 <div class="mb-3 text-center d-flex justify-content-center">
-                                    <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="0" name="dp_description_shadow_bottom">
+                                    <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="0" name="dp_description_font_shadow_bottom">
                                 </div>
                             </div>
                             <div class=" mb-3">
                                 <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Четкость тени</label>
                                 <div class="mb-3 text-center d-flex justify-content-center">
-                                    <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="0" name="dp_description_shadow_blur">
+                                    <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="0" name="dp_description_font_shadow_blur">
                                 </div>
                             </div>
 
@@ -346,31 +364,39 @@
                             <div class=" mb-3">
                                 <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Цвет полного описания</label>
                                 <div class="mb-3 text-center d-flex justify-content-center">
-                                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" name="dp_full_description_color" style="height: 35px; border: 0">
+                                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" name="dp_full_description_font_color" style="height: 35px; border: 0">
                                 </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Располложение полного описания</label>
+                                <select name="dp_full_description_position" class="form-select shadow" aria-label="Default select example" style="border: 0">
+                                    <option value="text-start" selected>По левой стороне</option>
+                                    <option value="text-end">По правой</option>
+                                    <option value="text-center">По центру</option>
+                                </select>
                             </div>
                             <div class=" mb-3">
                                 <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Цвет тени полного описания</label>
                                 <div class="mb-3 text-center d-flex justify-content-center">
-                                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" name="dp_full_description_shadow_color" style="height: 35px; border: 0">
+                                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" name="dp_full_description_font_shadow_color" style="height: 35px; border: 0">
                                 </div>
                             </div>
                             <div class=" mb-3">
                                 <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Смещение тени в право</label>
                                 <div class="mb-3 text-center d-flex justify-content-center">
-                                    <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="0" name="dp_full_description_shadow_right">
+                                    <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="0" name="dp_full_description_font_shadow_right">
                                 </div>
                             </div>
                             <div class=" mb-3">
                                 <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Смещение тени в низ</label>
                                 <div class="mb-3 text-center d-flex justify-content-center">
-                                    <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="0" name="dp_full_description_shadow_bottom">
+                                    <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="0" name="dp_full_description_font_shadow_bottom">
                                 </div>
                             </div>
                             <div class=" mb-3">
                                 <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Четкость тени</label>
                                 <div class="mb-3 text-center d-flex justify-content-center">
-                                    <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="0" name="dp_full_description_shadow_blur">
+                                    <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="0" name="dp_full_description_font_shadow_blur">
                                 </div>
                             </div>
 
@@ -393,31 +419,31 @@
                             <div class=" mb-3">
                                 <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Цвет цены</label>
                                 <div class="mb-3 text-center d-flex justify-content-center">
-                                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" name="dp_price_color" style="height: 35px; border: 0">
+                                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" name="dp_price_font_color" style="height: 35px; border: 0">
                                 </div>
                             </div>
                             <div class=" mb-3">
                                 <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Цвет тени цены</label>
                                 <div class="mb-3 text-center d-flex justify-content-center">
-                                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" name="dp_price_shadow_color" style="height: 35px; border: 0">
+                                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" name="dp_price_font_shadow_color" style="height: 35px; border: 0">
                                 </div>
                             </div>
                             <div class=" mb-3">
                                 <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Смещение тени в право</label>
                                 <div class="mb-3 text-center d-flex justify-content-center">
-                                    <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="0" name="dp_price_shadow_right">
+                                    <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="0" name="dp_price_font_shadow_right">
                                 </div>
                             </div>
                             <div class=" mb-3">
                                 <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Смещение тени в низ</label>
                                 <div class="mb-3 text-center d-flex justify-content-center">
-                                    <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="0" name="dp_price_shadow_bottom">
+                                    <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="0" name="dp_price_font_shadow_bottom">
                                 </div>
                             </div>
                             <div class=" mb-3">
                                 <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Четкость тени</label>
                                 <div class="mb-3 text-center d-flex justify-content-center">
-                                    <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="0" name="dp_price_shadow_blur">
+                                    <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="0" name="dp_price_font_shadow_blur">
                                 </div>
                             </div>
 
@@ -428,43 +454,55 @@
                             <div class=" mb-3">
                                 <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Цвет кнопки на внешний ресурс</label>
                                 <div class="mb-3 text-center d-flex justify-content-center">
-                                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" name="dp_btn_bg_color_outher" style="height: 35px; border: 0">
+                                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" name="dp_btn_color_remote" style="height: 35px; border: 0" value="#20B2AA">
                                 </div>
                             </div>
                             <div class=" mb-3">
-                                <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Цвет кнопки на внешний ресурс</label>
+                                <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Цвет текста кнопки на внешний ресурс</label>
                                 <div class="mb-3 text-center d-flex justify-content-center">
-                                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" name="dp_btn_text_color_outher" style="height: 35px; border: 0">
+                                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" name="dp_btn_text_color_remote" style="height: 35px; border: 0">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Выбор шрифта для кнопки</label>
+                                <div class="col-12">
+                                    <select id="btn_outher_font" data-placeholder="Поиск шрифта для цены"  autocomplete="off" name="dp_btn_text_font_remote"></select>
+                                </div>
+                            </div>
+                            <div class=" mb-3">
+                                <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Размер шрифта для кнопки</label>
+                                <div class="mb-3 text-center d-flex justify-content-center">
+                                    <input type="range" class="form-range" min="0.8" max="4" step="0.1" id="customRange3" style="height: 35px; border: 0" value="1" name="dp_btn_text_size_remote">
                                 </div>
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Округление кнопки на внешний ресурс</label>
                                 <div class="mb-3 text-center d-flex justify-content-center">
-                                    <input type="range" class="form-range" min="1" max="50" step="1" id="customRange2" name="dp_btn_rounded_outher" value="1">
+                                    <input type="range" class="form-range" min="1" max="50" step="1" id="customRange2" name="dp_btn_radius_remote" value="1">
                                 </div>
                             </div>
                             <div class=" mb-3">
-                                <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Цвет тени кнопки на внешний ресурс</label>
+                                <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Цвет тени текста кнопки на внешний ресурс</label>
                                 <div class="mb-3 text-center d-flex justify-content-center">
-                                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" name="dp_btn_rounded_outher_shadow_color" style="height: 35px; border: 0">
+                                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" name="dp_btn_text_shadow_color_remote" style="height: 35px; border: 0">
                                 </div>
                             </div>
                             <div class=" mb-3">
                                 <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Смещение тени в право</label>
                                 <div class="mb-3 text-center d-flex justify-content-center">
-                                    <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="0" name="dp_btn_rounded_outher_shadow_right">
+                                    <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="0" name="dp_btn_text_shadow_right_remote">
                                 </div>
                             </div>
                             <div class=" mb-3">
                                 <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Смещение тени в низ</label>
                                 <div class="mb-3 text-center d-flex justify-content-center">
-                                    <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="0" name="dp_btn_rounded_outher_shadow_bottom">
+                                    <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="0" name="dp_btn_text_shadow_bottom_remote">
                                 </div>
                             </div>
                             <div class=" mb-3">
                                 <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Четкость тени</label>
                                 <div class="mb-3 text-center d-flex justify-content-center">
-                                    <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="0" name="dp_btn_rounded_outher_shadow_blur">
+                                    <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="0" name="dp_btn_text_shadow_blur_remote">
                                 </div>
                             </div>
 
@@ -475,77 +513,56 @@
                             <div class=" mb-3">
                                 <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Цвет кнопки на страницу заказа</label>
                                 <div class="mb-3 text-center d-flex justify-content-center">
-                                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" name="dp_btn_bg_color_chrry" style="height: 35px; border: 0">
+                                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" name="dp_btn_color_chrry" style="height: 35px; border: 0" value="#20B2AA">
                                 </div>
                             </div>
                             <div class=" mb-3">
-                                <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Цвет кнопки на страницу заказа</label>
+                                <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Цвет текста кнопки на страницу заказа</label>
                                 <div class="mb-3 text-center d-flex justify-content-center">
                                     <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" name="dp_btn_text_color_chrry" style="height: 35px; border: 0">
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Округление кнопки на страницу заказа</label>
-                                <div class="mb-3 text-center d-flex justify-content-center">
-                                    <input type="range" class="form-range" min="1" max="50" step="1" id="customRange2" name="dp_btn_rounded_chrry" value="1">
+                                <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Выбор шрифта для кнопки</label>
+                                <div class="col-12">
+                                    <select id="btn_chrry_font" data-placeholder="Поиск шрифта для цены"  autocomplete="off" name="dp_btn_text_font_chrry"></select>
                                 </div>
                             </div>
                             <div class=" mb-3">
-                                <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Цвет тени кнопки на страницу заказа</label>
+                                <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Размер шрифта для кнопки</label>
                                 <div class="mb-3 text-center d-flex justify-content-center">
-                                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" name="dp_btn_rounded_chrry_shadow_color" style="height: 35px; border: 0">
+                                    <input type="range" class="form-range" min="0.8" max="4" step="0.1" id="customRange3" style="height: 35px; border: 0" value="1" name="dp_btn_text_size_chrry">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label mb-2" style="font-family: 'Rubik', sans-serif;">Округление кнопки на страницу заказа</label>
+                                <div class="mb-3 text-center d-flex justify-content-center">
+                                    <input type="range" class="form-range" min="1" max="50" step="1" id="customRange2" name="dp_btn_radius_chrry" value="1">
+                                </div>
+                            </div>
+                            <div class=" mb-3">
+                                <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Цвет тени текста кнопки на страницу заказа</label>
+                                <div class="mb-3 text-center d-flex justify-content-center">
+                                    <input type="color" class="form-control @if($user->dayVsNight) bg-secondary @endif shadow p-1" name="dp_btn_text_shadow_color_chrry" style="height: 35px; border: 0">
                                 </div>
                             </div>
                             <div class=" mb-3">
                                 <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Смещение тени в право</label>
                                 <div class="mb-3 text-center d-flex justify-content-center">
-                                    <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="0" name="dp_btn_rounded_chrry_shadow_right">
+                                    <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="0" name="dp_btn_text_shadow_right_chrry">
                                 </div>
                             </div>
                             <div class=" mb-3">
                                 <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Смещение тени в низ</label>
                                 <div class="mb-3 text-center d-flex justify-content-center">
-                                    <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="0" name="dp_btn_rounded_chrry_shadow_bottom">
+                                    <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="0" name="dp_btn_text_shadow_bottom_chrry">
                                 </div>
                             </div>
                             <div class=" mb-3">
                                 <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Четкость тени</label>
                                 <div class="mb-3 text-center d-flex justify-content-center">
-                                    <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="0" name="dp_btn_rounded_chrry_shadow_blur">
+                                    <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" style="height: 35px; border: 0" value="0" name="dp_btn_text_shadow_blur_chrry">
                                 </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-                <label class="form-check-label mb-2 mt-3" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif; font-size: 0.8rem">В настройках магазина вы навернека уже описывали правила своего магазина. Но иногда бывает нужно написать правила
-                для конкретного товара. Можете использовать эти поля</label>
-
-                <div class="accordion accordion-flush mb-3" id="accordionFlushExample">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="flush-headingOne">
-                            <button style="border: 0; text-decoration: none" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-rules" aria-expanded="false" aria-controls="flush-collapseOne">
-                                Правила магазина
-                            </button>
-                        </h2>
-                        <div style="background-color: #f1f2f2" id="flush-rules" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-
-                            <div class="form-group mb-3">
-                                <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Информация о доставке</label>
-                                <textarea class="form-control" name="product_delivery_info" id="exampleFormControlTextarea1" rows="3"></textarea>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Информация об оплате</label>
-                                <textarea class="form-control" id="exampleFormControlTextarea1" name="product_payment_info" rows="3"></textarea>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Информация о возвратах\обменах</label>
-                                <textarea class="form-control" id="exampleFormControlTextarea1" name="product_refund_info" rows="3"></textarea>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label class="form-check-label mb-1" for="flexCheckChecked" style="font-family: 'Rubik', sans-serif;">Любая общая информация</label>
-                                <textarea class="form-control" id="exampleFormControlTextarea1" name="product_other_info" rows="3"></textarea>
                             </div>
 
                         </div>
@@ -560,6 +577,46 @@
 
 </body>
 <script>
+    new TomSelect('#btn_chrry_font',{
+        valueField: 'font',
+        searchField: 'title',
+        maxOptions: 150,
+        options: [
+                @foreach($allFontsInFolder as $font)
+            {id: {{$font->getInode()}}, title: '{{ stristr($font->getFilename(), '.', true)}}', font: '{{ stristr($font->getFilename(), '.', true) }}'},
+            @endforeach
+        ],
+        render: {
+            option: function(data, escape) {
+                return  '<div>' +
+                    '<span style="font-size: 2.5rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</span>' +
+                    '</div>';
+            },
+            item: function(data, escape) {
+                return  '<h4 style="font-size: 2.5rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</h4>';
+            }
+        }
+    });
+    new TomSelect('#btn_outher_font',{
+        valueField: 'font',
+        searchField: 'title',
+        maxOptions: 150,
+        options: [
+                @foreach($allFontsInFolder as $font)
+            {id: {{$font->getInode()}}, title: '{{ stristr($font->getFilename(), '.', true)}}', font: '{{ stristr($font->getFilename(), '.', true) }}'},
+            @endforeach
+        ],
+        render: {
+            option: function(data, escape) {
+                return  '<div>' +
+                    '<span style="font-size: 2.5rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</span>' +
+                    '</div>';
+            },
+            item: function(data, escape) {
+                return  '<h4 style="font-size: 2.5rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</h4>';
+            }
+        }
+    });
     new TomSelect('#title_font',{
         valueField: 'font',
         searchField: 'title',

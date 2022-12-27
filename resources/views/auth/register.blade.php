@@ -1,123 +1,126 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>chrry.me</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+<script>
+    function onSubmit(token) {
+        document.getElementById("register-form").submit();
+    }
+</script>
 
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Overpass+Mono&display=swap" rel="stylesheet">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;600&display=swap" rel="stylesheet">
-        <style type="text/css">
-            html {
-                height: 100%;
-            }
-            body {
-                min-height: 100%;
-                background-color: #F8F9FB;
-            }
-            .section {
-                height: 100vh; /* высота секции равна высоте области просмотра */
-            }
-            @font-face {
-                font-family: FuturisVolumeC; /* Имя шрифта */
-                src: url({{asset('public/font/FuturisVolumeC.ttf')}}); /* Путь к файлу со шрифтом */
-            }
-        </style>
-    </head>
-    <body class="antialiased">
-        <div class="section d-flex align-items-center justify-content-center ms-4 me-4">
-            <div class="" >
-                <div class="text-center">
-                    <a href="{{ route('welcome') }}">
-                        <img src="https://i.ibb.co/3dJD25v/new-logo.png" class="img-fluid">
+<x-guest-layout>
+    <x-auth-card>
+
+        <x-slot name="logo">
+            {{-- <a href="/">
+                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+            </a> --}}
+        </x-slot>
+
+        <!-- Validation Errors -->
+        <div class="text-center">
+            <x-auth-validation-errors class="mb-4" :errors="$errors" />
+        </div>
+
+        <div class="m-4">
+
+            <p class=" mt-3 mb-10 text-4xl font-black text-gray-900 text-dark">
+                Join to
+                <span class="before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-red-500 relative inline-block">
+                        <a href="{{ route('welcome') }}"><span class="relative text-white">CHRRY.ME</span></a>
+                    </span>
+            </p>
+
+            <form method="POST" action="{{ route('register') }}" class="text-center" id="register-form"> @csrf
+
+                <!-- Name -->
+                <div class="mt-5">
+                    <label for="name" class="block mb-2 text-sm font-medium text-gray-900 text-dark">Profile name</label>
+                    <input type="text"
+                           name="name"
+                           id="name"
+                           class="bg-gray-100 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-400 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           placeholder="Elon Musk"
+                           required>
+                </div>
+
+                <!-- Slug -->
+                <div class="mt-4">
+                    <label for="website-admin" class="block mb-2 text-sm font-medium text-gray-900 text-dark">Slug</label>
+                    <div class="flex">
+                        <span class="inline-flex items-center px-3 bg-gray-100 text-gray-900 text-sm rounded-l-lg focus:ring-blue-500 focus:border-blue-500 block p-3 dark:placeholder-gray-400 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            chrry.me/
+                        </span>
+                        <input type="text"
+                               name="slug"
+                               id="website-admin"
+                               class="bg-gray-100 text-gray-900 text-sm rounded-r-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-400 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                               placeholder="elonmusk">
+                    </div>
+                </div>
+
+                <!-- Email Address -->
+                <div class="mt-4">
+                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 text-dark">Email address</label>
+                    <input type="email"
+                           name="email"
+                           id="email"
+                           class="bg-gray-100 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-400 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           placeholder="elon.musk@starlink.com"
+                           required>
+                </div>
+
+                <!-- Password -->
+                <div class="mt-4">
+                    <label for="password" class="block mb-2 text-sm font-medium text-gray-900 text-dark">Password</label>
+                    <input type="password"
+                           name="password"
+                           id="password"
+                           class="bg-gray-100 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-400 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           placeholder="•••••••••"
+                           required>
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="mt-4">
+                    <label for="password_confirmation" class="block mb-2 text-sm font-medium text-gray-900 text-dark">Confirm Password</label>
+                    <input type="password"
+                           name="password_confirmation"
+                           id="password_confirmation"
+                           class="bg-gray-100 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-400 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           placeholder="•••••••••"
+                           required>
+                </div>
+
+                <div class="mt-4">
+                    <button type="submit"
+                            class="g-recaptcha w-full text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-2 font-medium rounded-lg text px-5 py-2.5 text-center mr-2 mb-2"
+                            data-sitekey="6LdjE5siAAAAAFns6LrPthCLLu4niq3WG_coMFJA"
+                            data-callback='onSubmit'
+                            data-action='submit'>
+                        {{ __('Create account') }}
+                    </button>
+                </div>
+
+                <div class="mt-">
+                    <button type="button" class="w-full text-white bg-[#4285F4] hover:bg-[#4285F4]/90 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text px-5 py-2.5 text-center inline-flex items-center justify-center dark:focus:ring-[#4285F4]/55 mr-2 mb-2">
+                        <svg class="mr-2 -ml-1 w-4 h-4" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512"><path fill="currentColor" d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"></path></svg>
+                        Sign in with Google
+                    </button>
+                </div>
+
+                <div class="mt-4 flex justify-center">
+                    <h1 class="font-sans text-sm text-gray-600 hover:text-gray-900">{{ __("Do you already have an account? ") }}</h1><a class="ml-1 font-sans underline text-sm text-red-500 hover:text-gray-900" href="{{ route('login') }}">
+                        {{ __("Log in") }}
                     </a>
                 </div>
-                <div class="col-12">
-                    <x-guest-layout>
-                        <x-auth-card>
-                            <x-slot name="logo">
-                                {{-- <a href="/">
-                                    <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-                                </a> --}}
-                            </x-slot>
-
-                            <!-- Validation Errors -->
-                            <x-auth-validation-errors class="mb-4" :errors="$errors" />
-
-                            <form method="POST" action="{{ route('register') }}" class="text-center">
-                                @csrf
-
-                                <!-- Name -->
-                                <div>
-                                    <x-label for="name" :value="__('Имя профиля')" style="font-family: 'Rubik', sans-serif;"/>
-
-                                    <x-input id="name" class="form-control" type="text" name="name" :value="old('name')" required style="border-radius: 0px; border-top: 0; border-left: 0; border-right: 0;" />
-                                </div>
-
-                                <!-- Name -->
-                                <div class="mt-4">
-                                    <x-label for="name" :value="__('Адрес страницы')" style="font-family: 'Rubik', sans-serif;"/>
-                                    <div class="input-group mb-3">
-                                        <span class="input-group-text" id="basic-addon3" style="border-radius: 0px; border-top: 0; border-left: 0; border-right: 0; background-color: white;">chrry.me/</span>
-                                        <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="slug" :value="old('slug')" required style="border-radius: 0px; border-top: 0; border-left: 0; border-right: 0;">
-                                    </div>
-                                </div>
-
-                                <!-- Email Address -->
-                                <div class="mt-4">
-                                    <x-label for="email" :value="__('Ваша почта')" style="font-family: 'Rubik', sans-serif;"/>
-
-                                    <x-input id="email" class="form-control" type="email" name="email" :value="old('email')" required style="border-radius: 0px; border-top: 0; border-left: 0; border-right: 0;"/>
-                                </div>
-
-                                <!-- Password -->
-                                <div class="mt-4">
-                                    <x-label for="password" :value="__('Пароль')" style="font-family: 'Rubik', sans-serif;"/>
-
-                                    <x-input id="password" class="form-control"
-                                                    type="password"
-                                                    name="password"
-                                                    required autocomplete="new-password" style="border-radius: 0px; border-top: 0; border-left: 0; border-right: 0;"/>
-                                </div>
-
-                                <!-- Confirm Password -->
-                                <div class="mt-4">
-                                    <x-label for="password_confirmation" :value="__('Повторите пароль')" style="font-family: 'Rubik', sans-serif;"/>
-
-                                    <x-input id="password_confirmation" class="form-control"
-                                                    type="password"
-                                                    name="password_confirmation" required style="border-radius: 0px; border-top: 0; border-left: 0; border-right: 0;"/>
-                                </div>
-
-                                <div class="flex items-center justify-content-center mt-4">
-
-                                    <div class="d-grid ">
-                                        <x-button class="btn" style="font-family: 'Rubik', sans-serif; border: 0; background-color: #e83100; color: white;">
-                                            {{ __('Регистрация') }}
-                                        </x-button>
-                                    </div>
-
-                                </div>
-                            </form>
-                        </x-auth-card>
-                    </x-guest-layout>
-                </div>
-
-                <div class="mb-4 mt-4 text-sm text-gray-600 text-center" style="font-family: 'Overpass Mono', monospace;">
-                    <h1 class="display mb-3" style="font-size:1.1rem; font-family: 'Rubik', sans-serif;">Для быстрой регистрации можете использовать одну из соц. сетей</h1>
-                    <a href="{{route('auth', ['social' => 'vk'])}}"><img src="https://cdn-icons-png.flaticon.com/512/145/145813.png" width="50"></a>
-                    <a href="{{route('auth', ['social' => 'yandex'])}}"><img src="https://monobit.ru/wp-content/uploads/2021/03/TtYT-Do9haj2FSn2BgK4u_7Rbm-Q2Q9huE1o4dPa74q9NUayDMm0_QVInoQWklXdWw-1.png" width="50"></a>
-                </div>
-            </div>
+            </form>
         </div>
-    </body>
-</html>
+
+    </x-auth-card>
+</x-guest-layout>
+
+
+{{--<div class="mb-4 mt-4 text-sm text-gray-600 text-center" style="font-family: 'Overpass Mono', monospace;">--}}
+{{--    <h1 class="display mb-3" style="font-size:1.1rem; font-family: 'Rubik', sans-serif;">Для быстрой регистрации можете использовать одну из соц. сетей</h1>--}}
+{{--    <a href="{{route('auth', ['social' => 'vk'])}}"><img src="https://cdn-icons-png.flaticon.com/512/145/145813.png" width="50"></a>--}}
+{{--    <a href="{{route('auth', ['social' => 'yandex'])}}"><img src="https://monobit.ru/wp-content/uploads/2021/03/TtYT-Do9haj2FSn2BgK4u_7Rbm-Q2Q9huE1o4dPa74q9NUayDMm0_QVInoQWklXdWw-1.png" width="50"></a>--}}
+{{--</div>--}}
+
 

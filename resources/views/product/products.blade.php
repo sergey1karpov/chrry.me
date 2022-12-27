@@ -143,6 +143,16 @@
             </nav>
         </div>
 
+        @if(count($user->products) > 0)
+            <div class="text-center mt-2 mb-2" style="background-color: #333333">
+                <a href="{{ route('massUpdateForm', ['user' => $user->id]) }}">
+                    <h1 class="">
+                        <label class="p-3" style="font-family: 'Inter', sans-serif; font-size: 1.1rem; color: whitesmoke">Массовое изменение стилей карточек</label>
+                    </h1>
+                </a>
+            </div>
+        @endif
+
         <div class="text-center ms-3 ml-3 mt-2 mb-2">
             <label style="font-family: 'Rubik', sans-serif; font-size: 12px">Если хотите поменять продукты местами, дотроньтесь до изображения нужного вам продукта и перенесите его на нужную позицию</label>
         </div>

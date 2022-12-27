@@ -26,7 +26,7 @@ class OrderController extends Controller
         $this->order->sendOrder($user, $product, $request);
 
         return redirect()->route('userHomePage', ['user' => $user->slug])
-            ->with('success', 'Ваша заявка отправленна');
+            ->with('success', 'Ваша заявка создана');
     }
 
     /**
@@ -54,6 +54,12 @@ class OrderController extends Controller
         return view('product.orders', compact('user', 'orders'));
     }
 
+    public function ordersReject(User $user, Order $order) {
+        $order->delete();
+
+        return redirect()->back();
+    }
+
     public function ordersSearch(User $user, Request $request)
     {
         $orders = Order::search($request->search)
@@ -72,9 +78,10 @@ class OrderController extends Controller
      * @param Request $request
      * @return RedirectResponse
      */
-    public function order(User $user, Order $order, Request $request)
+    public function changeStatusToInWork(User $user, Order $order, Request $request): RedirectResponse
     {
         $order->order($user, $order, $request);
+
         return redirect()->back();
     }
 
@@ -83,9 +90,9 @@ class OrderController extends Controller
      *
      * @param int $userId
      * @param Order $order
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    public function orderProcessed(User $user, Order $order)
+    public function changeStatusToInProcessed(User $user, Order $order): RedirectResponse
     {
         Order::where('id', $order->id)->where('user_id', $user->id)->update([
             'processed' => 1,

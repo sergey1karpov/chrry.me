@@ -32,7 +32,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->route('editProfileForm', ['id' => Auth::user()->id]);
+        return redirect()->route('editProfileForm', ['user' => Auth::user()->id]);
     }
 
     /**

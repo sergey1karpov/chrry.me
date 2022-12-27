@@ -52,7 +52,7 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('editProfileForm', ['id' => Auth::user()->id]);
+        return redirect()->route('editProfileForm', ['user' => Auth::user()->id]);
 
     }
 }

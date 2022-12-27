@@ -140,6 +140,11 @@ class LinkController extends Controller
         return redirect()->back();
     }
 
+    public function showClickLinkStatistic(User $user, Link $link): View|Factory|Application
+    {
+        return view('link.stat', compact('user', 'link'));
+    }
+
     /**
      * Full-text search in admin panel
      *
