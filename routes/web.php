@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\FilterAndSearchProductController;
@@ -9,8 +10,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShopController;
-use App\Http\Middleware\LocaleMiddleware;
-use App\Http\Middleware\RootMiddleware;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LinkController;
@@ -39,12 +39,34 @@ Route::post('/{user:id}/order-product/{product:id}', [OrderController::class, 's
 Route::post('/{user}/link', [StatisticController::class, 'clickLinkStatistic'])->name('clickLinkStatistic');
 Route::post('/{user}/product-stats', [StatisticController::class, 'productStats'])->name('productStats');
 
+Route::get('check/two-factor', [AuthenticatedSessionController::class, 'twoFactorForm'])->name('twoFactorForm');
+Route::post('check/hash', [AuthenticatedSessionController::class, 'hashCheck'])->name('hashCheck');
+
 Route::middleware(['web', 'root', 'locale'])->group(function () {
     Route::group(['prefix' => 'id{user}'], function () {
+
         Route::group(['prefix' => 'profile'], function () {
             Route::get('/', [UserController::class, 'editProfileForm'])->name('editProfileForm');
-            Route::get('/settings', [UserController::class, 'profileSettingsForm'])->name('profileSettingsForm');
-            Route::patch('/edit', [UserController::class, 'editUserProfile'])->name('editUserProfile');
+
+            Route::get('/profile-settings', [UserController::class, 'profileSettingsForm'])->name('profileSettingsForm');
+            Route::get('/design-settings', [UserController::class, 'designSettingsForm'])->name('designSettingsForm');
+
+            Route::patch('/updateProfile', [UserController::class, 'editUserProfile'])->name('editUserProfile');
+
+            Route::patch('/updateAvatar', [UserController::class, 'updateAvatar'])->name('updateAvatar');
+            Route::patch('/updateLogotype', [UserController::class, 'updateLogotype'])->name('updateLogotype');
+            Route::patch('/updateAvatarVsLogotype', [UserController::class, 'updateAvatarVsLogotype'])->name('updateAvatarVsLogotype');
+            Route::patch('/updateBackgroundImage', [UserController::class, 'updateBackgroundImage'])->name('updateBackgroundImage');
+            Route::patch('/updateFavicon', [UserController::class, 'updateFavicon'])->name('updateFavicon');
+            Route::patch('/updateColors', [UserController::class, 'updateColors'])->name('updateColors');
+            Route::patch('/updateSocialBar', [UserController::class, 'updateSocialBar'])->name('updateSocialBar');
+            Route::patch('/updateChrryLogo', [UserController::class, 'updateChrryLogo'])->name('updateChrryLogo');
+
+            Route::patch('/updatePassword', [UserController::class, 'updatePassword'])->name('updatePassword');
+            Route::patch('/updateTwoFactorAuth', [UserController::class, 'updateTwoFactorAuth'])->name('updateTwoFactorAuth');
+
+
+
             Route::patch('/{type}/del', [UserController::class, 'delUserAvatar'])->name('delUserAvatar');
             Route::patch('/change-theme', [UserController::class, 'changeTheme'])->name('changeTheme');
             Route::get('/statistic', [UserController::class, 'getStats'])->name('getStats');

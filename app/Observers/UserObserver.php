@@ -8,7 +8,7 @@ class UserObserver
 {
     public static function flush() {
         $chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $parth = substr(str_shuffle($chars), 0, 15);
+        $parth = substr(str_shuffle($chars), 0, 30);
         return $parth;
     }
     /**

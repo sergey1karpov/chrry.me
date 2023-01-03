@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AvatarRequest;
+use App\Http\Requests\BackgroundRequest;
+use App\Http\Requests\ChangePasswordRequest;
+use App\Http\Requests\FaviconRequest;
+use App\Http\Requests\LogotypeRequest;
 use App\Jobs\ProfileViewJob;
 use App\Models\User;
 use App\Services\UploadPhotoService;
@@ -11,7 +16,10 @@ use App\Services\CreateProfileViewStatistics;
 use App\Traits\IconsAndFonts;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
@@ -46,8 +54,6 @@ class UserController extends Controller
     {
         return view('user.profile', [
             'user' => $user,
-            'allIconsInsideFolder' => $this->getIcons(),
-            'allFontsInFolder' => $this->getFonts(),
         ]);
     }
 
@@ -60,7 +66,7 @@ class UserController extends Controller
      */
     public function editUserProfile(User $user, UpdateRegisteruserRequest $request): RedirectResponse
     {
-        $user->editUserProfile($user, $request, $this->uploadService);
+        $user->editUserProfile($user, $request);
 
         return redirect()->back()->with('success', 'Профиль изменен!');
     }
@@ -92,20 +98,104 @@ class UserController extends Controller
         return response()->json('changed');
     }
 
-    /**
-     * Show edit profile form
-     *
-     * @param User $user
-     * @return View
-     */
     public function profileSettingsForm(User $user): View
     {
-        return view('user.edit-profile', compact('user'));
+        return view('user.profile-form', compact('user'));
+    }
+
+    public function designSettingsForm(User $user): View
+    {
+        return view('user.design-form', compact('user'));
     }
 
     public function getStats(User $user)
     {
         return view('statistic.user_profile', compact('user'));
+    }
+
+    public function updateAvatar(User $user, AvatarRequest $request)
+    {
+        $user->updateAvatar($user, $request, $this->uploadService);
+
+        return redirect()->back();
+    }
+
+    public function updateLogotype(User $user, LogotypeRequest $request)
+    {
+        $user->updateLogotype($user, $request, $this->uploadService);
+
+        return redirect()->back();
+    }
+
+    public function updateAvatarVsLogotype(User $user, Request $request)
+    {
+        $user->updateAvatarVsLogotype($user, $request);
+
+        return redirect()->back();
+    }
+
+    public function updateBackgroundImage(User $user, BackgroundRequest $request)
+    {
+        $user->updateBackgroundImage($user, $request, $this->uploadService);
+
+        return redirect()->back();
+    }
+
+    public function updateFavicon(User $user, FaviconRequest $request)
+    {
+        $user->updateFavicon($user, $request, $this->uploadService);
+
+        return redirect()->back();
+    }
+
+    public function updateColors(User $user, Request $request)
+    {
+        $user->updateColors($user, $request);
+
+        return redirect()->back();
+    }
+
+    public function updateSocialBar(User $user, Request $request)
+    {
+        $user->updateSocialBar($user, $request);
+
+        return redirect()->back();
+    }
+
+    public function updateChrryLogo(User $user, Request $request)
+    {
+        $user->updateChrryLogo($user, $request);
+
+        return redirect()->back();
+    }
+
+    /**
+     * Change user password
+     *
+     * @param User $user
+     * @param ChangePasswordRequest $request
+     * @return RedirectResponse
+     * @throws ValidationException
+     */
+    public function updatePassword(User $user, ChangePasswordRequest $request)
+    {
+        if(Hash::check($request->old_password, $request->user()->password)) {
+
+            User::where('id', $user->id)->update([
+                'password' => Hash::make($request->password)
+            ]);
+
+            return redirect()->back();
+        }
+
+        throw ValidationException::withMessages(['Old password' => 'Your old password is not correct']);
+    }
+
+    public function updateTwoFactorAuth(User $user, Request $request)
+    {
+        $user->updateTwoFactorAuth($user, $request);
+
+        return redirect()->back();
     }
 }
 

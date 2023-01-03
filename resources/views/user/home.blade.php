@@ -283,12 +283,22 @@
 	        <div class="d-flex justify-content-center text-center">
 		      	<div class="text-center" style="margin-top: 25px">
 
-                    @if(isset($user->logotype))
+                    @if($user->avatar_vs_logotype == 'Logotype')
                         <div class="d-flex justify-content-center">
                             <img src="{{$user->logotype}}" class="img-fluid" width="{{$user->logotype_size}}" style="
                                 filter: drop-shadow({{$user->logotype_shadow_right}}px {{$user->logotype_shadow_bottom}}px {{$user->logotype_shadow_round}}px {{$user->logotype_shadow_color}});
                             ">
                         </div>
+                        @if(!$user->logotype)
+                            <h2 class="mt-4" style="font-family: 'Rubik', sans-serif; color: #464646; font-weight: 600 ; font-size: 20px; @if($user->name_color) color: {{$user->name_color}}; @endif ">
+                                {{ $user->name }}
+                                @if($user->verify == 1)
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-patch-check-fill mb-1" viewBox="0 0 16 16" style="color: {{$user->verify_color}}">
+                                        <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
+                                    </svg>
+                                @endif
+                            </h2>
+                        @endif
                     @else
                         @if($user->avatar)
                             <div class="d-flex justify-content-center">

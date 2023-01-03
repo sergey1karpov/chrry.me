@@ -67,6 +67,7 @@ class Kernel extends HttpKernel
         'locale' => \App\Http\Middleware\LocaleMiddleware::class,
         'root' => \App\Http\Middleware\RootMiddleware::class,
         'links.count' => \App\Http\Middleware\CheckCountLinksMiddleware::class,
-        'events.count' => \App\Http\Middleware\CheckCountEventsMiddleware::class
+        'events.count' => \App\Http\Middleware\CheckCountEventsMiddleware::class,
+        'two.factor' => \App\Http\Middleware\TwoFactorMiddleware::class,
     ];
 }

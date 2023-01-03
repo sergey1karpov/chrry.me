@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class UpdateRegisteruserRequest extends FormRequest
 {
@@ -25,18 +27,15 @@ class UpdateRegisteruserRequest extends FormRequest
     {
         return [
             'name' => 'required|min:3|max:100',
-            'slug' => 'nullable|unique:users|min:3|max:150|alpha_dash',
+            'slug' => ['min:3', 'max:150', 'alpha_dash', Rule::unique('users')->ignore(Auth::user()->id)],
             'description' => 'nullable|max:150',
             'name_color' => 'nullable',
             'description_color' => 'nullable',
             'verify_color' => 'nullable',
             'background_color' => 'nullable',
-            'banner' => 'nullable|mimes:jpeg,png,jpg,gif|max:10000',
-            'avatar' => 'nullable|mimes:jpeg,png,jpg,gif|max:10000',
-            'favicon' => 'nullable|mimes:jpeg,png,jpg,gif|max:10000',
             'locale' => 'nullable',
             'social' => 'nullable',
-            'logotype' => 'nullable|mimes:png',
+            'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore(Auth::user()->id)],
         ];
     }
 }

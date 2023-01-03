@@ -9,6 +9,7 @@ use App\Services\CreateClickLinkStatistics;
 use App\Services\CreateProductsViewStatistics;
 use App\Services\StatsService;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -54,57 +55,60 @@ class StatisticController extends Controller
 
     public function filterStats(User $user, Request $request)
     {
+        $from = Carbon::parse($request->query('from'))->format('Y-m-d');
+        $to = Carbon::parse($request->query('to'))->format('Y-m-d');
+
         $stats['count'] = DB::table($request->query('table'))
             ->where('user_id', $user->id)
-            ->when($request->query('table') == 'stats_product', function ($query) use ($request) {
+            ->when($request->query('table') == 'stats_product', function ($query) use ($from, $to, $request) {
                 $query->where('product_id', $request->query('product'))
-                    ->whereBetween('created_at', [$request->query('from'), $request->query('to')]);
+                    ->whereBetween('created_at', [$from, $to]);
             })
-            ->when($request->query('table') == 'stats', function ($query) use ($request) {
-                $query->whereBetween('created_at', [$request->query('from'), $request->query('to')]);
+            ->when($request->query('table') == 'stats', function ($query) use ($from, $to, $request) {
+                $query->whereBetween('created_at', [$from, $to]);
             })
-            ->when($request->query('table') == 'link_stat', function ($query) use ($request) {
+            ->when($request->query('table') == 'link_stat', function ($query) use ($from, $to, $request) {
                 $query->where('link_id', $request->query('link'))
-                    ->whereBetween('created_at', [$request->query('from'), $request->query('to')]);
+                    ->whereBetween('created_at', [$from, $to]);
             })->get();
 
         $stats['city'] = DB::table($request->query('table'))
             ->where('user_id', $user->id)
-            ->when($request->query('table') == 'stats_product', function ($query) use ($request) {
+            ->when($request->query('table') == 'stats_product', function ($query) use ($from, $to, $request) {
                 $query->select('city', DB::raw('COUNT(city) as count'))->orderByRaw('COUNT(city) DESC')
                     ->where('product_id', $request->query('product'))
-                    ->whereBetween('created_at', [$request->query('from'), $request->query('to')])
+                    ->whereBetween('created_at', [$from, $to])
                     ->groupBy('city');
             })
-            ->when($request->query('table') == 'stats', function ($query) use ($request) {
+            ->when($request->query('table') == 'stats', function ($query) use ($from, $to, $request) {
                 $query->select('city', DB::raw('COUNT(city) as count'))->orderByRaw('COUNT(city) DESC')
-                    ->whereBetween('created_at', [$request->query('from'), $request->query('to')])
+                    ->whereBetween('created_at', [$from, $to])
                     ->groupBy('city');
             })
-            ->when($request->query('table') == 'link_stat', function ($query) use ($request) {
+            ->when($request->query('table') == 'link_stat', function ($query) use ($from, $to, $request) {
                 $query->select('city', DB::raw('COUNT(city) as count'))->orderByRaw('COUNT(city) DESC')
                     ->where('link_id', $request->query('link'))
-                    ->whereBetween('created_at', [$request->query('from'), $request->query('to')])
+                    ->whereBetween('created_at', [$from, $to])
                     ->groupBy('city');
             })->get();
 
         $stats['country'] = DB::table($request->query('table'))
             ->where('user_id', $user->id)
-            ->when($request->query('table') == 'stats_product', function ($query) use ($request) {
+            ->when($request->query('table') == 'stats_product', function ($query) use ($from, $to, $request) {
                 $query->select('country', DB::raw('COUNT(country) as count'))->orderByRaw('COUNT(country) DESC')
                     ->where('product_id', $request->query('product'))
-                    ->whereBetween('created_at', [$request->query('from'), $request->query('to')])
+                    ->whereBetween('created_at', [$from, $to])
                     ->groupBy('country');
             })
-            ->when($request->query('table') == 'stats', function ($query) use ($request) {
+            ->when($request->query('table') == 'stats', function ($query) use ($from, $to, $request) {
                 $query->select('country', DB::raw('COUNT(country) as count'))->orderByRaw('COUNT(country) DESC')
-                    ->whereBetween('created_at', [$request->query('from'), $request->query('to')])
+                    ->whereBetween('created_at', [$from, $to])
                     ->groupBy('country');
             })
-            ->when($request->query('table') == 'link_stat', function ($query) use ($request) {
+            ->when($request->query('table') == 'link_stat', function ($query) use ($from, $to, $request) {
                 $query->select('country', DB::raw('COUNT(country) as count'))->orderByRaw('COUNT(country) DESC')
                     ->where('link_id', $request->query('link'))
-                    ->whereBetween('created_at', [$request->query('from'), $request->query('to')])
+                    ->whereBetween('created_at', [$from, $to])
                     ->groupBy('country');
             })->get();
 
