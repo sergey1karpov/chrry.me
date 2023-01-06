@@ -31,7 +31,6 @@
         <div class="sm:mt-12 w-full">
             <div class="mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8">
                 <form action="{{ route('editUserProfile', ['user' => Auth::user()->id]) }}" method="post" enctype="multipart/form-data"> @csrf @method('PATCH')
-                    <input type="hidden" name="background_color" value="{{$user->background_color}}">
                     <div class="mb-6 text-center">
                         <label for="name" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Name</label>
                         <input value="{{$user->name}}" type="text" name="name" id="name" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-[#0f0f0f] dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
@@ -112,31 +111,5 @@
 
         </div>
     <section>
-
-{{--    <section class="flex justify-center m-5">--}}
-{{--        <div class="sm:mt-12 w-full">--}}
-{{--            <div class="mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8">--}}
-{{--                <form>--}}
-{{--                    <div class="mb-6 text-center">--}}
-{{--                        <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Old password</label>--}}
-{{--                        <input placeholder="********" type="password" name="name" id="name" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-[#0f0f0f] dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">--}}
-{{--                    </div>--}}
-{{--                    <div class="mb-6 text-center">--}}
-{{--                        <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">New password</label>--}}
-{{--                        <input placeholder="********" type="password" name="slug" id="slug" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-[#0f0f0f] dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">--}}
-{{--                    </div>--}}
-{{--                    <div class="mb-6 text-center">--}}
-{{--                        <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Re-New password</label>--}}
-{{--                        <input placeholder="********" type="password" name="slug" id="slug" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-[#0f0f0f] dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">--}}
-{{--                    </div>--}}
-{{--                    <div class="mt-3">--}}
-{{--                        <button type="submit" class="mt-2 border border-indigo-600 w-full inline-block rounded-lg bg-indigo-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">--}}
-{{--                            Update password--}}
-{{--                        </button>--}}
-{{--                    </div>--}}
-{{--                </form>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    <section>--}}
 
 </x-app-layout>

@@ -68,6 +68,16 @@ class LinkController extends Controller
         return redirect()->back()->with('success', 'Мультиссылка добавлена!');
     }
 
+    public function editLinkForm(User $user, Link $link)
+    {
+        return view('link.edit-link', [
+            'user' => $user,
+            'link' => $link,
+            'allIconsInsideFolder' => $this->getIcons(),
+            'allFontsInFolder' => $this->getFonts(),
+        ]);
+    }
+
     /**
      * Update link
      *
@@ -80,7 +90,17 @@ class LinkController extends Controller
     {
         $link->editLink($user, $link, $request, $this->uploadService);
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Link successfully updated');
+    }
+
+    public function editAllLinkForm(User $user)
+    {
+        return view('link.edit-all', [
+            'user' => $user,
+            'allIconsInsideFolder' => $this->getIcons(),
+            'allFontsInFolder' => $this->getFonts(),
+            'link' => Link::where('user_id', $user->id)->orderBy('id', 'desc')->first(),
+        ]);
     }
 
     /**
@@ -95,7 +115,7 @@ class LinkController extends Controller
     {
         $link->editAll($user, $request);
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Links successfully updated');
     }
 
     /**
@@ -103,13 +123,13 @@ class LinkController extends Controller
      *
      * @param User $user
      * @param Link $link
-     * @return JsonResponse
+     * @return RedirectResponse
      */
-    public function delPhoto(User $user, Link $link): JsonResponse
+    public function delPhoto(User $user, Link $link): RedirectResponse
     {
         $link->deleteLinkImage($user, $link, $this->uploadService);
 
-        return response()->json('deleted');
+        return redirect()->back()->with('success', 'Photo deleted successfully');
     }
 
     /**
@@ -117,13 +137,13 @@ class LinkController extends Controller
      *
      * @param User $user
      * @param Link $link
-     * @return JsonResponse
+     * @return RedirectResponse
      */
-    public function delLinkIcon(User $user, Link $link): JsonResponse
+    public function delLinkIcon(User $user, Link $link): RedirectResponse
     {
         Link::where('user_id', $user->id)->where('id', $link->id)->update(['icon' => null]);
 
-        return response()->json('deleted');
+        return redirect()->back()->with('success', 'Icon deleted successfully');
     }
 
     /**
@@ -137,7 +157,7 @@ class LinkController extends Controller
     {
         $link->dropLink($link, $this->uploadService);
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Link deleted successfully');
     }
 
     public function showClickLinkStatistic(User $user, Link $link): View|Factory|Application

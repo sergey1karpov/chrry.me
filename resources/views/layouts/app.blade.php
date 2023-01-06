@@ -10,7 +10,6 @@
         <script src="https://cdn.tailwindcss.com"></script>
 
         <!-- Flowbite -->
-        <script src="https://unpkg.com/flowbite@1.5.5/dist/flowbite.js"></script>
         <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.5/dist/flowbite.min.css" />
 
         <!-- Flowbite DatePicker-->
@@ -18,6 +17,26 @@
 
         <!-- JQuery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+        <!-- Tom Select -->
+        <link href="https://cdn.jsdelivr.net/npm/tom-select@2.0.3/dist/css/tom-select.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/tom-select@2.0.3/dist/js/tom-select.complete.min.js"></script>
+
+        <!-- Animation animate.style -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+
+        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js" integrity="sha256-6XMVI0zB8cRzfZjqKcD01PBsAy3FlDASrlC8SxCpInY=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+
+        <style>
+            .ts-dropdown-content {
+                /*align-items: flex-start;*/
+                /*flex-wrap: nowrap;*/
+                /*height: 100%;*/
+            }
+        </style>
+
     </head>
     <body class="body-block font-sans antialiased @if($attributes['user']['dayVsNight'] == 1) bg-black @endif">
 
@@ -108,6 +127,10 @@
                 });
             });
         </script>
+
+        <!-- Flowbite -->
+        <script src="https://unpkg.com/flowbite@1.5.5/dist/flowbite.js"></script>
+
     </body>
 </html>
 

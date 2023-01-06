@@ -36,18 +36,6 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
-//        $user = User::where('email', $request->email)->first();
-//        if(!$user) {
-//            throw ValidationException::withMessages(['user' => 'User not found']);
-//        }
-//        if($user->two_factor_auth == true) {
-//            AuthenticatedSessionController::generateHash($user);
-//
-//            $url = URL::temporarySignedRoute('twoFactorForm', now()->addMinutes(1), ['user' => $user->id]);
-//
-//            return redirect()->to($url);
-//        }
-
         $request->authenticate();
 
         $request->session()->regenerate();

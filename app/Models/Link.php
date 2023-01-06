@@ -132,14 +132,14 @@ class Link extends Model
         Link::where('id', $link->id)->where('user_id', $user->id)->update([
             'title'                => $request->title ?? $link->title,
             'link'                 => $request->link ?? $link->link,
-            'shadow'               => $request->shadow,
-            'rounded'              => $request->rounded,
+            'shadow'               => $request->shadow ?? $link->shadow,
+            'rounded'              => $request->rounded ?? $link->rounded,
             'title_color'          => $request->title_color ?? $link->title_color,
             'background_color'     => isset($request->background_color) ?
                 ColorConvertorService::convertBackgroundColor($request->background_color) :
                 $link->background_color,
-            'title_color_hex'      => $request->title_color,
-            'background_color_hex' => $request->background_color,
+            'title_color_hex'      => $request->title_color ?? $link->title_color,
+            'background_color_hex' => $request->background_color ?? $link->background_color,
             'photo'                => isset($request->photo) ?
                 $uploadService->savePhoto(
                     photo: $request->photo,
@@ -153,12 +153,12 @@ class Link extends Model
             'pinned'               => isset($request->pinned) ? 1 : 0,
             'animation'            => $request->animation,
             'font'                 => $request->font ?? $link->font,
-            'font_size'            => $request->font_size,
-            'text_shadow_color'    => $request->text_shadow_color,
-            'text_shadow_blur'     => $request->text_shadow_blur,
-            'text_shadow_bottom'   => $request->text_shadow_bottom,
-            'text_shadow_right'    => $request->text_shadow_right,
-            'bold'                 => $request->bold,
+            'font_size'            => $request->font_size ?? $link->font_size,
+            'text_shadow_color'    => $request->text_shadow_color ?? $link->text_shadow_color,
+            'text_shadow_blur'     => $request->text_shadow_blur ?? $link->text_shadow_blur,
+            'text_shadow_bottom'   => $request->text_shadow_bottom ?? $link->text_shadow_bottom,
+            'text_shadow_right'    => $request->text_shadow_right ?? $link->text_shadow_right,
+            'bold'                 => $request->bold ?? $link->bold,
         ]);
     }
 

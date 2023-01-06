@@ -26,7 +26,7 @@ class UpdateLinkRequest extends FormRequest
         return [
             'title' => 'min:1|max:100',
             'link'  => 'url',
-            'photo' => 'nullable|mimes:jpeg,png,jpg,gif|max:5000',
+            'photo' => 'nullable|mimes:jpeg,png,jpg,gif|max:10000',
         ];
     }
 }

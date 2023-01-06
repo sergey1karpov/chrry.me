@@ -80,8 +80,10 @@ Route::middleware(['web', 'root', 'locale'])->group(function () {
             Route::get('/create', [LinkController::class, 'createLinkForm'])->name('createLinkForm');
             Route::post('/create', [LinkController::class, 'addLink'])->name('addLink')->middleware('links.count');
             Route::get('/search', [LinkController::class, 'searchLink'])->name('searchLink');
-            Route::patch('/edit', [LinkController::class, 'editLink'])->name('editLink');
-            Route::patch('/edit-all', [LinkController::class, 'editAllLink'])->name('editAllLink');
+            Route::get('/{link}/edit', [LinkController::class, 'editLinkForm'])->name('editLinkForm');
+            Route::patch('{link}/edit-link', [LinkController::class, 'editLink'])->name('editLink');
+            Route::get('/edit-all', [LinkController::class, 'editAllLinkForm'])->name('editAllLinkForm');
+            Route::patch('/edit-all-links', [LinkController::class, 'editAllLink'])->name('editAllLink');
             Route::post('/sort', [LinkController::class, 'sortLink'])->name('sortLink');
             Route::delete('/{link}/delete', [LinkController::class, 'delLink'])->name('delLink');
             Route::patch('/{link}/delete-photo', [LinkController::class, 'delPhoto'])->name('delPhoto');

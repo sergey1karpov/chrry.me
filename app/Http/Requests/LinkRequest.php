@@ -26,7 +26,7 @@ class LinkRequest extends FormRequest
         return [
             'title' => 'required|min:1|max:100',
             'link'  => 'required|url',
-            'photo' => 'nullable|mimes:jpeg,png,jpg,gif|max:5000',
+            'photo' => 'nullable|mimes:jpeg,png,jpg,gif|max:10000',
         ];
     }
 }

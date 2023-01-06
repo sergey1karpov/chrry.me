@@ -9,8 +9,8 @@
                             <input data-id="{{$user->id}}" name="theme" type="checkbox" id="theme" class="sr-only peer form-check-input" @if($user->dayVsNight == 1) checked @endif style="border: none">
                             <div class="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-red-600"></div>
                             <span class="switch-text ml-3 text-sm font-medium @if($user->dayVsNight == 1) text-gray-300 @endif">
-                                    @if($user->dayVsNight == 1) Light on @else Light off @endif
-                                </span>
+                                @if($user->dayVsNight == 1) Light on @else Light off @endif
+                            </span>
                         </label>
                     </div>
                     <div>
@@ -38,7 +38,7 @@
 
     <section class="content-block text-white @if($user->dayVsNight == 1) bg-black @endif">
         <div class="mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8">
-            {{--            <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">--}}
+
             <div class="">
 
                 <div class="group block">
@@ -173,33 +173,10 @@
                     </div>
                 </div>
 
-                {{--                <form method="POST" action="{{ route('logout') }}"> @csrf--}}
-                {{--                    <button class="group block mt-7 w-full" type="submit">--}}
-                {{--                        <div class=" card-block block rounded-xl @if($user->dayVsNight == 1) bg-[#0f0f0f] border-4 @endif border-[#0f0f0f] p-8 shadow-xl transition hover:border-gray-900/50 hover:shadow-gray-900/50 group-hover:-translate-x-1 group-hover:-translate-y-1 group-hover:shadow-gray-900/50">--}}
-                {{--                            <span class="inline-block rounded bg-indigo-900 p-2 text-white">--}}
-                {{--                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-10 w-10 text-white">--}}
-                {{--                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />--}}
-                {{--                                </svg>--}}
-                {{--                            </span>--}}
-                {{--                            <h2 class="mt-4 text-3xl font-bold @if($user->dayVsNight == 1) text-white @else text-black @endif text-block2">Logout</h2>--}}
-                {{--                        </div>--}}
-                {{--                    </button>--}}
-                {{--                </form>--}}
-
             </div>
         </div>
     </section>
 
 </x-app-layout>
 
-
-
-
-
-{{--<form method="POST" action="{{ route('logout') }}">--}}
-{{--    @csrf--}}
-{{--    <button class="block1 nav-link text-muted mt-2 @if($user->dayVsNight) bg-dark @endif" style="padding:  0; border: 0; outline: none; background-color:white;">--}}
-{{--        <h4 class="@if($user->dayVsNight) text-white @endif" style="font-family: 'Rubik', sans-serif; font-size: 1rem">@lang('app.exit')</h4>--}}
-{{--    </button>--}}
-{{--</form>--}}
 
