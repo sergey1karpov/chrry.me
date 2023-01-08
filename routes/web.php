@@ -93,11 +93,14 @@ Route::middleware(['web', 'root', 'locale'])->group(function () {
 
         Route::group(['prefix' => 'events'], function() {
             Route::get('/', [EventController::class, 'allEvents'])->name('allEvents');
+            Route::get('/edit-all', [EventController::class, 'editAllEventsForm'])->name('editAllEventsForm');
             Route::get('/create', [EventController::class, 'createEventForm'])->name('createEventForm');
             Route::post('/create', [EventController::class, 'addEvent'])->name('addEvent')->middleware('events.count');
             Route::get('/search', [EventController::class, 'searchEvent'])->name('searchEvent');
             Route::patch('/edit-all', [EventController::class, 'editAllEvent'])->name('editAllEvent');
+            Route::get('/{event}/edit-event', [EventController::class, 'editEventForm'])->name('editEventForm');
             Route::patch('/{event}/edit', [EventController::class, 'editEvent'])->name('editEvent');
+            Route::patch('/{event}/edit-banner', [EventController::class, 'editEventBanner'])->name('editEventBanner');
             Route::delete('/{event}/delete', [EventController::class, 'deleteEvent'])->name('deleteEvent');
         });
 

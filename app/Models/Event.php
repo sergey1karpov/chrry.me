@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use App\Http\Requests\EventRequest;
+use App\Http\Requests\UpdateEventBannerRequest;
 use App\Http\Requests\UpdateEventRequest;
 use App\Services\ColorConvertorService;
 use App\Services\UploadPhotoService;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Http\Request;
 use Laravel\Scout\Searchable;
 
@@ -72,6 +74,13 @@ class Event extends Model
         'bold_time',
     ];
 
+//    protected function date(): Attribute
+//    {
+//        return Attribute::make(
+//            set: fn ($value) => Carbon::parse($value)->format('Y-m-d'),
+//        );
+//    }
+
     /**
      * Path to save photo for event
      *
@@ -101,7 +110,7 @@ class Event extends Model
             'description' => $request->description,
             'location'    => $request->location,
             'time'        => $request->time,
-            'date'        => $request->date,
+            'date'        => Carbon::parse($request->date)->format('Y-m-d'),
             'banner'      => $uploadService->savePhoto(
                 photo: $request->banner,
                 path: $this->imgPath($user->id),
@@ -139,6 +148,20 @@ class Event extends Model
         ]);
     }
 
+    public function editEventBanner(User $user, Event $event, UpdateEventBannerRequest $request, UploadPhotoService $uploadService)
+    {
+        Event::where('id', $event->id)->where('user_id', $user->id)->update([
+            'banner'      => isset($request->banner) ?
+                $uploadService->savePhoto(
+                    photo: $request->banner,
+                    path: $this->imgPath($user->id),
+                    size: 500,
+                    dropImagePath: $event->banner
+                ) :
+                $event->banner,
+        ]);
+    }
+
     /**
      * Update event
      *
@@ -148,23 +171,15 @@ class Event extends Model
      * @param UploadPhotoService $uploadService
      * @return void
      */
-    public function editEvent(User $user, Event $event, UpdateEventRequest $request, UploadPhotoService $uploadService)
+    public function editEvent(User $user, Event $event, UpdateEventRequest $request)
     {
-        Event::where('id', $event->id)->update([
+        Event::where('id', $event->id)->where('user_id', $user->id)->update([
             'title'       => $request->title ?? $event->title,
             'description' => $request->description ?? $event->description,
             'city'        => $request->city ?? $event->city,
             'location'    => $request->location ?? $event->location,
             'time'        => $request->time ?? $event->time,
-            'date'        => $request->date ?? $event->date,
-            'banner'      => isset($request->banner) ?
-                $uploadService->savePhoto(
-                    photo: $request->banner,
-                    path: $this->imgPath($user->id),
-                    size: 500,
-                    dropImagePath: $event->banner
-                ) :
-                $event->banner,
+            'date'        => Carbon::parse($request->date)->format('Y-m-d') ?? $event->date,
             'video'       => $request->video,
             'media'       => $request->media,
             'tickets'     => $request->tickets,
@@ -213,8 +228,8 @@ class Event extends Model
             'date_font_size'        => $request->date_font_size,
             'date_font_color'       => $request->date_font_color,
             'transparency'          => $request->transparency,
-            'background_color_rgba' => ColorConvertorService::convertBackgroundColor($request->background_color_hex),
             'background_color_hex'  => $request->background_color_hex,
+            'background_color_rgba' => ColorConvertorService::convertBackgroundColor($request->background_color_hex),
             'event_round'           => $request->event_round,
             'location_text_shadow_color'  => $request->location_text_shadow_color,
             'location_text_shadow_blur'   => $request->location_text_shadow_blur,

@@ -68,7 +68,7 @@ class UserController extends Controller
     {
         $user->editUserProfile($user, $request);
 
-        return redirect()->back()->with('success', 'Профиль изменен!');
+        return redirect()->back()->with('success', 'Profile settings have been changed!');
     }
 
     /**

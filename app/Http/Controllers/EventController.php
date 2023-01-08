@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateEventBannerRequest;
 use App\Http\Requests\UpdateEventRequest;
 use App\Services\UploadPhotoService;
 use App\Traits\IconsAndFonts;
@@ -49,7 +50,7 @@ class EventController extends Controller
     {
         $event->createEvent($user, $request, $this->uploadService);
 
-        return redirect()->back()->with('success', 'Мероприятие добавлено!');
+        return redirect()->back()->with('success', 'Event added successfully! You can add more...');
     }
 
     /**
@@ -66,6 +67,26 @@ class EventController extends Controller
         ]);
     }
 
+    public function editAllEventsForm(User $user)
+    {
+        return view('event.edit-all', [
+            'user' => $user,
+            'allIconsInsideFolder' => $this->getIcons(),
+            'allFontsInFolder' => $this->getFonts(),
+            'event' => Event::where('user_id', $user->id)->orderBy('id', 'desc')->first(),
+        ]);
+    }
+
+    public function editEventForm(User $user, Event $event)
+    {
+        return view('event.edit-event', [
+            'user' => $user,
+            'event' => $event,
+            'allIconsInsideFolder' => $this->getIcons(),
+            'allFontsInFolder' => $this->getFonts(),
+        ]);
+    }
+
     /**
      * Update event
      *
@@ -76,9 +97,16 @@ class EventController extends Controller
      */
     public function editEvent(User $user, Event $event, UpdateEventRequest $request)
     {
-        $event->editEvent($user, $event, $request, $this->uploadService);
+        $event->editEvent($user, $event, $request);
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Event updated successfully');
+    }
+
+    public function editEventBanner(User $user, Event $event, UpdateEventBannerRequest $request)
+    {
+        $event->editEventBanner($user, $event, $request, $this->uploadService);
+
+        return redirect()->back()->with('success', 'Event banner updated successfully');
     }
 
     /**
@@ -92,7 +120,7 @@ class EventController extends Controller
     {
         $event->dropEvent($event, $this->uploadService);
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Event deleted successfully!');
     }
 
     /**
@@ -107,7 +135,7 @@ class EventController extends Controller
     {
         $event->editAll($user, $request);
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Events updated successfully!');
     }
 
     /**

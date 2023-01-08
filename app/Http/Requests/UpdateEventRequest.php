@@ -28,7 +28,6 @@ class UpdateEventRequest extends FormRequest
             'location' => 'required|max:255',
             'time' => 'required|max:50',
             'date' => 'nullable',
-            'banner' => 'nullable|mimes:jpeg,png,jpg,gif|max:5000',
             'description' => 'max:2500'
         ];
     }

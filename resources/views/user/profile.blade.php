@@ -75,12 +75,12 @@
                             Create and manage your events
                         </p>
                         <div class="inline-flex rounded-md mt-4" role="group">
-                            <button type="submit" class="inline-block rounded border border-indigo-900 bg-indigo-900 px-9 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
+                            <a href="{{ route('createEventForm', ['user' => $user->id]) }}" class="inline-block rounded border border-indigo-900 bg-indigo-900 px-9 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
                                 CREATE
-                            </button>
-                            <button type="submit" class="ml-3 inline-block rounded border border-indigo-900 bg-indigo-900 px-9 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
+                            </a>
+                            <a href="{{ route('allEvents', ['user' => $user->id]) }}" class="ml-3 inline-block rounded border border-indigo-900 bg-indigo-900 px-9 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
                                 MANAGE
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>

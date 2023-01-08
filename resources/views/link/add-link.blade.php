@@ -178,7 +178,7 @@
     <section>
 
     <script>
-        $( document ).ready(function(){ //Если не пуст
+        $( document ).ready(function(){
             $('#check_last_link').on('change', function(){
                 if ($(this).is(':checked')) {
                     switchStatus = $(this).is(':checked');

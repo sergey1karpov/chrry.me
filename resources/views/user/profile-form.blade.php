@@ -27,6 +27,25 @@
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
     </div>
 
+    @if ($message = Session::get('success'))
+        <div class="text-center flex justify-center">
+            <div class="w-full text-center">
+                <div class="mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8">
+                    <div id="alert-3" class="flex p-4 mb-4 text-green-700 bg-green-100 rounded-lg dark:bg-gray-800 dark:text-green-400" role="alert">
+                        <span class="sr-only">Info</span>
+                        <div class="ml-3 text-sm font-medium">
+                            <span class="font-medium">{{$message}}</span>
+                        </div>
+                        <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-green-100 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex h-8 w-8 dark:bg-gray-800 dark:text-green-400 dark:hover:bg-gray-700" data-dismiss-target="#alert-3" aria-label="Close">
+                            <span class="sr-only">Close</span>
+                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
     <section class="flex justify-center m-5">
         <div class="sm:mt-12 w-full">
             <div class="mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8">
