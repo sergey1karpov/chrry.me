@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Enums\EntityPropertiesPrefix;
 use App\Http\Requests\UpdateLinkRequest;
-use App\Services\ColorConvertorService;
+use App\Http\Requests\UpdatePhotoRequest;
+use App\Services\PropertiesService;
 use App\Services\UploadPhotoService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -23,41 +25,53 @@ class Link extends Model
     protected $fillable = [
         'title',
         'link',
-        'title_color',
-        'background_color',
-        'title_color_hex',
-        'background_color_hex',
         'photo',
-        'shadow',
-        'rounded',
-        'transparency',
         'position',
         'type',
         'user_id',
         'icon',
         'pinned',
         'animation',
-        'font',
-        'place',
-        'font_size',
-        'text_shadow_color',
-        'text_shadow_blur',
-        'text_shadow_bottom',
-        'text_shadow_right',
-        'bold',
+        'properties',
+        'animation_speed'
     ];
 
-    public function searchableAs()
+    public function searchableAs(): string
     {
         return 'links_index';
     }
 
-    public function toSearchableArray()
+    public function toSearchableArray(): array
     {
         return [
             'id'    => $this->id,
             'title' => $this->title,
         ];
+    }
+
+    /**
+     * @field_prefix dl_
+     * @param UpdateLinkRequest|LinkRequest|Request $request
+     * @param PropertiesService $propertiesService
+     * @return void
+     */
+    public function setDesignLinkProperties(UpdateLinkRequest|LinkRequest|Request $request, PropertiesService $propertiesService): void
+    {
+        $designProductFields = preg_grep("/^" . EntityPropertiesPrefix::Link->value ."/", array_keys($request->all()));
+        foreach ($designProductFields as $field) {
+            $propertiesService->addProperty($field, $request->$field);
+        }
+    }
+
+    /**
+     * @param User $user
+     * @return string|null
+     */
+    public function getLastLinkDesignFields(User $user): ?string
+    {
+        $event = Link::where('user_id', $user->id)->orderBy('created_at', 'desc')->first();
+
+        return $event->properties;
     }
 
     /**
@@ -72,93 +86,77 @@ class Link extends Model
     }
 
     /**
-     * Add new link
+     * Create new link
      *
      * @param User $user
      * @param LinkRequest $request
      * @param UploadPhotoService $uploadService
+     * @param PropertiesService $propertiesService
      * @return void
      */
-    public function addLink(User $user, LinkRequest $request, UploadPhotoService $uploadService)
+    public function addLink(User $user, LinkRequest $request, UploadPhotoService $uploadService, PropertiesService $propertiesService): void
     {
-        $lastLink = Link::where('user_id', $user->id)->orderBy('created_at', 'desc')->first();
+        $this->setDesignLinkProperties($request, $propertiesService);
 
         Link::create([
             'type'      => 'LINK',
             'user_id'   => Auth::user()->id,
             'title'     => $request->title,
             'link'      => $request->link,
+            'icon'      => $request->icon,
             'photo'     => isset($request->photo) ?
                 $uploadService->savePhoto(
                     photo: $request->photo,
                     path: $this->imgPath($user->id),
                     size: 200
-                ) :
-                null,
-            'pinned'    => isset($request->pinned) ? 1 : 0,
-            'icon'      => $request->icon,
+                ) : null,
+            'pinned' => isset($request->pinned) ? 1:0,
             'animation' => $request->animation,
-
-            'title_color'          => isset($request->check_last_link) ? $lastLink->title_color : $request->title_color,
-            'background_color'     => isset($request->check_last_link) ?
-                $lastLink->background_color :
-                ColorConvertorService::convertBackgroundColor($request->background_color),
-            'title_color_hex'      => isset($request->check_last_link) ? $lastLink->title_color_hex : $request->title_color,
-            'background_color_hex' => isset($request->check_last_link) ? $lastLink->background_color_hex : $request->background_color,
-            'shadow'               => isset($request->check_last_link) ? $lastLink->shadow : $request->shadow,
-            'rounded'              => isset($request->check_last_link) ? $lastLink->rounded : $request->rounded,
-            'transparency'         => isset($request->check_last_link) ? $lastLink->transparency : $request->transparency,
-            'font'                 => isset($request->check_last_link) ? $lastLink->font : $request->font,
-            'font_size'            => isset($request->check_last_link) ? $lastLink->font_size : $request->font_size,
-            'text_shadow_color'    => isset($request->check_last_link) ? $lastLink->text_shadow_color : $request->text_shadow_color,
-            'text_shadow_blur'     => isset($request->check_last_link) ? $lastLink->text_shadow_blur : $request->text_shadow_blur,
-            'text_shadow_bottom'   => isset($request->check_last_link) ? $lastLink->text_shadow_bottom : $request->text_shadow_bottom,
-            'text_shadow_right'    => isset($request->check_last_link) ? $lastLink->text_shadow_right : $request->text_shadow_right,
-            'bold'                 => isset($request->check_last_link) ? $lastLink->bold : $request->bold,
+            'animation_speed' => $request->animation_speed,
+            'properties' => isset($request->check_last_link) ? $this->getLastLinkDesignFields($user) : serialize($propertiesService->getProperties()),
         ]);
     }
 
     /**
      * Update link
      *
-     * @param int $userId
+     * @param User $user
      * @param Link $link
-     * @param UpdateLinkRequest $request
-     * @param UploadPhotoService $uploadService
+     * @param PropertiesService $propertiesService
+     * @param LinkRequest $request
      * @return void
      */
-    public function editLink(User $user, Link $link, UpdateLinkRequest $request, UploadPhotoService $uploadService): void
+    public function editLink(User $user, Link $link, PropertiesService $propertiesService, LinkRequest $request): void
     {
+        $this->setDesignLinkProperties($request, $propertiesService);
+
         Link::where('id', $link->id)->where('user_id', $user->id)->update([
             'title'                => $request->title ?? $link->title,
             'link'                 => $request->link ?? $link->link,
-            'shadow'               => $request->shadow ?? $link->shadow,
-            'rounded'              => $request->rounded ?? $link->rounded,
-            'title_color'          => $request->title_color ?? $link->title_color,
-            'background_color'     => isset($request->background_color) ?
-                ColorConvertorService::convertBackgroundColor($request->background_color) :
-                $link->background_color,
-            'title_color_hex'      => $request->title_color ?? $link->title_color,
-            'background_color_hex' => $request->background_color ?? $link->background_color,
-            'photo'                => isset($request->photo) ?
-                $uploadService->savePhoto(
-                    photo: $request->photo,
-                    path: $this->imgPath($user->id),
-                    size: 200,
-                    dropImagePath: $link->photo
-                ) :
-                $link->photo,
             'icon'                 => $request->icon ?? $link->icon,
-            'transparency'         => $request->transparency ?? $link->transparency,
             'pinned'               => isset($request->pinned) ? 1 : 0,
-            'animation'            => $request->animation,
-            'font'                 => $request->font ?? $link->font,
-            'font_size'            => $request->font_size ?? $link->font_size,
-            'text_shadow_color'    => $request->text_shadow_color ?? $link->text_shadow_color,
-            'text_shadow_blur'     => $request->text_shadow_blur ?? $link->text_shadow_blur,
-            'text_shadow_bottom'   => $request->text_shadow_bottom ?? $link->text_shadow_bottom,
-            'text_shadow_right'    => $request->text_shadow_right ?? $link->text_shadow_right,
-            'bold'                 => $request->bold ?? $link->bold,
+            'animation' => $request->animation,
+            'animation_speed' => $request->animation_speed,
+            'properties' => serialize($propertiesService->getProperties()),
+        ]);
+    }
+
+    public function updateIcon(User $user, Link $link, Request $request)
+    {
+        Link::where('id', $link->id)->where('user_id', $user->id)->update([
+            'icon' => $request->icon ?? $link->icon,
+        ]);
+    }
+
+    public function updatePhoto(User $user, Link $link, UploadPhotoService $uploadService, UpdatePhotoRequest $request)
+    {
+        Link::where('id', $link->id)->where('user_id', $user->id)->update([
+            'photo' => $uploadService->savePhoto(
+                photo: $request->photo,
+                path: $this->imgPath($user->id),
+                size: 200,
+                dropImagePath: $link->photo
+            )
         ]);
     }
 
@@ -166,26 +164,16 @@ class Link extends Model
      * Mass update links
      *
      * @param User $user
-     * @param Request $request
+     * @param UpdateLinkRequest $request
+     * @param PropertiesService $propertiesService
      * @return void
      */
-    public function editAll(User $user, Request $request) : void
+    public function editAll(User $user, UpdateLinkRequest $request, PropertiesService $propertiesService) : void
     {
+        $this->setDesignLinkProperties($request, $propertiesService);
+
         Link::where('user_id', $user->id)->update([
-            'title_color'          => $request->title_color,
-            'background_color'     => ColorConvertorService::convertBackgroundColor($request->background_color),
-            'background_color_hex' => $request->background_color,
-            'title_color_hex'      => $request->title_color,
-            'transparency'         => $request->transparency,
-            'shadow'               => $request->shadow,
-            'rounded'              => $request->rounded,
-            'font'                 => $request->font ?? 'Inter',
-            'font_size'            => $request->font_size,
-            'text_shadow_color'    => $request->text_shadow_color,
-            'text_shadow_blur'     => $request->text_shadow_blur,
-            'text_shadow_bottom'   => $request->text_shadow_bottom,
-            'text_shadow_right'    => $request->text_shadow_right,
-            'bold'                 => $request->bold,
+            'properties' => serialize($propertiesService->getProperties()),
         ]);
     }
 

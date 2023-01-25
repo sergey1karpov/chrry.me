@@ -2,7 +2,7 @@
 
 namespace App\Contracts;
 
-interface ProductCardPropertiesInterface
+interface PropertiesInterface
 {
     public function addProperty($property, $value);
 

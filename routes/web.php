@@ -10,7 +10,6 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShopController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LinkController;
@@ -47,12 +46,9 @@ Route::middleware(['web', 'root', 'locale'])->group(function () {
 
         Route::group(['prefix' => 'profile'], function () {
             Route::get('/', [UserController::class, 'editProfileForm'])->name('editProfileForm');
-
             Route::get('/profile-settings', [UserController::class, 'profileSettingsForm'])->name('profileSettingsForm');
             Route::get('/design-settings', [UserController::class, 'designSettingsForm'])->name('designSettingsForm');
-
             Route::patch('/updateProfile', [UserController::class, 'editUserProfile'])->name('editUserProfile');
-
             Route::patch('/updateAvatar', [UserController::class, 'updateAvatar'])->name('updateAvatar');
             Route::patch('/updateLogotype', [UserController::class, 'updateLogotype'])->name('updateLogotype');
             Route::patch('/updateAvatarVsLogotype', [UserController::class, 'updateAvatarVsLogotype'])->name('updateAvatarVsLogotype');
@@ -61,15 +57,12 @@ Route::middleware(['web', 'root', 'locale'])->group(function () {
             Route::patch('/updateColors', [UserController::class, 'updateColors'])->name('updateColors');
             Route::patch('/updateSocialBar', [UserController::class, 'updateSocialBar'])->name('updateSocialBar');
             Route::patch('/updateChrryLogo', [UserController::class, 'updateChrryLogo'])->name('updateChrryLogo');
-
             Route::patch('/updatePassword', [UserController::class, 'updatePassword'])->name('updatePassword');
             Route::patch('/updateTwoFactorAuth', [UserController::class, 'updateTwoFactorAuth'])->name('updateTwoFactorAuth');
-
-
-
             Route::patch('/{type}/del', [UserController::class, 'delUserAvatar'])->name('delUserAvatar');
             Route::patch('/change-theme', [UserController::class, 'changeTheme'])->name('changeTheme');
             Route::get('/statistic', [UserController::class, 'getStats'])->name('getStats');
+            Route::get('/statistic/filter-stat', [UserController::class, 'profileFilterStatistic'])->name('profileFilterStatistic');
         });
 
         Route::get('/market-settings', [ShopController::class, 'marketSettingsForm'])->name('marketSettingsForm');
@@ -82,6 +75,8 @@ Route::middleware(['web', 'root', 'locale'])->group(function () {
             Route::get('/search', [LinkController::class, 'searchLink'])->name('searchLink');
             Route::get('/{link}/edit', [LinkController::class, 'editLinkForm'])->name('editLinkForm');
             Route::patch('{link}/edit-link', [LinkController::class, 'editLink'])->name('editLink');
+            Route::patch('{link}/edit-link-icon', [LinkController::class, 'updateIcon'])->name('updateIcon');
+            Route::patch('{link}/edit-link-photo', [LinkController::class, 'updatePhoto'])->name('updatePhoto');
             Route::get('/edit-all', [LinkController::class, 'editAllLinkForm'])->name('editAllLinkForm');
             Route::patch('/edit-all-links', [LinkController::class, 'editAllLink'])->name('editAllLink');
             Route::post('/sort', [LinkController::class, 'sortLink'])->name('sortLink');
@@ -89,14 +84,17 @@ Route::middleware(['web', 'root', 'locale'])->group(function () {
             Route::patch('/{link}/delete-photo', [LinkController::class, 'delPhoto'])->name('delPhoto');
             Route::patch('/{link}/delete-icon', [LinkController::class, 'delLinkIcon'])->name('delLinkIcon');
             Route::get('/{link}/statistic', [LinkController::class, 'showClickLinkStatistic'])->name('showClickLinkStatistic');
+            Route::get('/{link}/filter-stat', [LinkController::class, 'filterStatistic'])->name('filterStatistic');
         });
 
         Route::group(['prefix' => 'events'], function() {
-            Route::get('/', [EventController::class, 'allEvents'])->name('allEvents');
+            Route::get('/', [EventController::class, 'allEvents'])->name('allEvents')->middleware('count.events');
             Route::get('/edit-all', [EventController::class, 'editAllEventsForm'])->name('editAllEventsForm');
             Route::get('/create', [EventController::class, 'createEventForm'])->name('createEventForm');
             Route::post('/create', [EventController::class, 'addEvent'])->name('addEvent')->middleware('events.count');
             Route::get('/search', [EventController::class, 'searchEvent'])->name('searchEvent');
+            Route::get('/settings', [EventController::class, 'settings'])->name('settings');
+            Route::patch('/settings-edit', [EventController::class, 'settingsEdit'])->name('settingsEdit');
             Route::patch('/edit-all', [EventController::class, 'editAllEvent'])->name('editAllEvent');
             Route::get('/{event}/edit-event', [EventController::class, 'editEventForm'])->name('editEventForm');
             Route::patch('/{event}/edit', [EventController::class, 'editEvent'])->name('editEvent');
@@ -121,9 +119,9 @@ Route::middleware(['web', 'root', 'locale'])->group(function () {
 
         Route::group(['prefix' => 'categories'], function() {
             Route::get('/', [ProductCategoryController::class, 'allCategories'])->name('allCategories');
-            Route::post('/create', [ProductCategoryController::class, 'createCategory'])->name('createCategory');
+            Route::post('/create', [ProductCategoryController::class, 'createCategory'])->name('createCategory')->middleware('check.slug');
             Route::post('/sort', [ProductCategoryController::class, 'sortCategory'])->name('sortCategory');
-            Route::patch('/{category}/edit', [ProductCategoryController::class, 'editCategory'])->name('editCategory');
+            Route::patch('/{category}/edit', [ProductCategoryController::class, 'editCategory'])->name('editCategory')->middleware('update.category');
             Route::delete('/{category}/delete', [ProductCategoryController::class, 'deleteCategory'])->name('deleteCategory');
         });
 
@@ -138,10 +136,6 @@ Route::middleware(['web', 'root', 'locale'])->group(function () {
             Route::get('/export', [ExportController::class, 'export'])->name('export');
         });
 
-        Route::group(['prefix' => 'statistic'], function() {
-            Route::get('/filter', [StatisticController::class, 'filterStats'])->name('filterStats');
-        });
-
     });
 });
 
@@ -152,8 +146,6 @@ Route::group(['middleware' => 'guest'], function() {
 
     Route::patch('{id}/confirm-registration', [AuthController::class, 'changeUserEmail'])->name('changeUserEmail');
 });
-
-
 
 
 

@@ -4,9 +4,12 @@ namespace App\Services;
 
 use App\Api\IpApiConnection;
 use App\Contracts\StatisticInterface;
+use App\Models\Link;
 use App\Models\LinkStat;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CreateClickLinkStatistics implements StatisticInterface
 {

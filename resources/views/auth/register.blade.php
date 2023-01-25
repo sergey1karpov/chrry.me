@@ -20,77 +20,76 @@
 
         <div class="m-4">
 
-            <p class=" mt-3 mb-10 text-4xl font-black text-gray-900 text-dark">
-                Join to
-                <span class="before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-red-500 relative inline-block">
-                        <a href="{{ route('welcome') }}"><span class="relative text-white">CHRRY.ME</span></a>
-                    </span>
-            </p>
+            <div class="flex justify-center mb-10">
+                <a href="http://chrry.me/" class="flex items-center mb-4">
+                    <img src="https://i.ibb.co/3dJD25v/new-logo.png" class="mr-3 h-15" alt="CHRRY.ME" />
+                </a>
+            </div>
 
             <form method="POST" action="{{ route('register') }}" class="text-center" id="register-form"> @csrf
 
                 <!-- Name -->
                 <div class="mt-5">
-                    <label for="name" class="block mb-2 text-sm font-medium text-gray-900 text-dark">Profile name</label>
+{{--                    <label for="name" class="block mb-2 text-sm font-medium text-gray-900 text-dark">Profile name</label>--}}
                     <input type="text"
                            name="name"
                            id="name"
-                           class="bg-gray-100 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-400 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                           placeholder="Elon Musk"
+                           class="bg-gray-900 text-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-500 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           placeholder="Profile name"
                            required>
                 </div>
 
                 <!-- Slug -->
                 <div class="mt-4">
-                    <label for="website-admin" class="block mb-2 text-sm font-medium text-gray-900 text-dark">Slug</label>
+{{--                    <label for="website-admin" class="block mb-2 text-sm font-medium text-gray-900 text-dark">Slug</label>--}}
                     <div class="flex">
-                        <span class="inline-flex items-center px-3 bg-gray-100 text-gray-900 text-sm rounded-l-lg focus:ring-blue-500 focus:border-blue-500 block p-3 dark:placeholder-gray-400 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <span class="inline-flex rounded-l-lg bg-gray-900 text-gray-500 text-sm focus:ring-blue-500 focus:border-blue-500 block p-3 dark:placeholder-gray-500 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             chrry.me/
                         </span>
                         <input type="text"
                                name="slug"
                                id="website-admin"
-                               class="bg-gray-100 text-gray-900 text-sm rounded-r-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-400 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                               placeholder="elonmusk">
+                               class="bg-gray-900 text-gray-300 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-500 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500 text-sm rounded-r-lg w-full "
+                               placeholder="slug">
                     </div>
                 </div>
 
                 <!-- Email Address -->
                 <div class="mt-4">
-                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 text-dark">Email address</label>
+{{--                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 text-dark">Email address</label>--}}
                     <input type="email"
                            name="email"
                            id="email"
-                           class="bg-gray-100 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-400 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                           placeholder="elon.musk@starlink.com"
+                           class="bg-gray-900 text-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-500 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           placeholder="Email"
                            required>
                 </div>
 
                 <!-- Password -->
                 <div class="mt-4">
-                    <label for="password" class="block mb-2 text-sm font-medium text-gray-900 text-dark">Password</label>
+{{--                    <label for="password" class="block mb-2 text-sm font-medium text-gray-900 text-dark">Password</label>--}}
                     <input type="password"
                            name="password"
                            id="password"
-                           class="bg-gray-100 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-400 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                           placeholder="•••••••••"
+                           class="bg-gray-900 text-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-500 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           placeholder="Password"
                            required>
                 </div>
 
                 <!-- Confirm Password -->
                 <div class="mt-4">
-                    <label for="password_confirmation" class="block mb-2 text-sm font-medium text-gray-900 text-dark">Confirm Password</label>
+{{--                    <label for="password_confirmation" class="block mb-2 text-sm font-medium text-gray-900 text-dark">Confirm Password</label>--}}
                     <input type="password"
                            name="password_confirmation"
                            id="password_confirmation"
-                           class="bg-gray-100 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-400 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                           placeholder="•••••••••"
+                           class="bg-gray-900 text-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-500 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           placeholder="Repeat password"
                            required>
                 </div>
 
                 <div class="mt-4">
                     <button type="submit"
-                            class="g-recaptcha w-full text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-2 font-medium rounded-lg text px-5 py-2.5 text-center mr-2 mb-2"
+                            class="g-recaptcha w-full text-white bg-gradient-to-r from-red-500 to-red-800 hover:bg-gradient-to-bl focus:ring-2 font-medium rounded-lg text px-5 py-2.5 text-center mr-2 "
                             data-sitekey="6LdjE5siAAAAAFns6LrPthCLLu4niq3WG_coMFJA"
                             data-callback='onSubmit'
                             data-action='submit'>
@@ -98,12 +97,12 @@
                     </button>
                 </div>
 
-                <div class="mt-">
-                    <button type="button" class="w-full text-white bg-[#4285F4] hover:bg-[#4285F4]/90 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text px-5 py-2.5 text-center inline-flex items-center justify-center dark:focus:ring-[#4285F4]/55 mr-2 mb-2">
-                        <svg class="mr-2 -ml-1 w-4 h-4" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512"><path fill="currentColor" d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"></path></svg>
-                        Sign in with Google
-                    </button>
-                </div>
+{{--                <div class="mt-4">--}}
+{{--                    <button type="button" class="w-full text-white bg-[#4285F4] hover:bg-[#4285F4]/90 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text px-5 py-2.5 text-center inline-flex items-center justify-center dark:focus:ring-[#4285F4]/55 mr-2 mb-2">--}}
+{{--                        <svg class="mr-2 -ml-1 w-4 h-4" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512"><path fill="currentColor" d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"></path></svg>--}}
+{{--                        Sign in with Google--}}
+{{--                    </button>--}}
+{{--                </div>--}}
 
                 <div class="mt-4 flex justify-center">
                     <h1 class="font-sans text-sm text-gray-600 hover:text-gray-900">{{ __("Do you already have an account? ") }}</h1><a class="ml-1 font-sans underline text-sm text-red-500 hover:text-gray-900" href="{{ route('login') }}">

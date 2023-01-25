@@ -4,23 +4,33 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LinkRequest;
 use App\Http\Requests\UpdateLinkRequest;
+use App\Http\Requests\UpdatePhotoRequest;
 use App\Models\Link;
+use App\Models\LinkStat;
 use App\Models\User;
+use App\Services\CreateClickLinkStatistics;
+use App\Services\PropertiesService;
+use App\Services\StatsService;
 use App\Services\UploadPhotoService;
 use App\Traits\IconsAndFonts;
+use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class LinkController extends Controller
 {
     use IconsAndFonts;
 
     public function __construct(
-        private readonly UploadPhotoService $uploadService
+        private readonly UploadPhotoService $uploadService,
+        private readonly StatsService       $statsService,
+        public PropertiesService            $propertiesService,
+        public Link                         $link
     ) {}
 
     /**
@@ -63,16 +73,24 @@ class LinkController extends Controller
      */
     public function addLink(User $user, Link $link, LinkRequest $request): RedirectResponse
     {
-        $link->addLink($user, $request, $this->uploadService);
+        $link->addLink($user, $request, $this->uploadService, $this->propertiesService);
 
         return redirect()->back()->with('success', 'Мультиссылка добавлена!');
     }
 
-    public function editLinkForm(User $user, Link $link)
+    /**
+     * Edit link form
+     *
+     * @param User $user
+     * @param Link $link
+     * @return Application|Factory|View
+     */
+    public function editLinkForm(User $user, Link $link): View|Factory|Application
     {
         return view('link.edit-link', [
             'user' => $user,
             'link' => $link,
+            'properties' => (object) unserialize($link->properties),
             'allIconsInsideFolder' => $this->getIcons(),
             'allFontsInFolder' => $this->getFonts(),
         ]);
@@ -83,23 +101,54 @@ class LinkController extends Controller
      *
      * @param User $user
      * @param Link $link
-     * @param UpdateLinkRequest $request
+     * @param LinkRequest $request
      * @return RedirectResponse
      */
-    public function editLink(User $user, Link $link, UpdateLinkRequest $request): RedirectResponse
+    public function editLink(User $user, Link $link, LinkRequest $request): RedirectResponse
     {
-        $link->editLink($user, $link, $request, $this->uploadService);
+        $link->editLink($user, $link, $this->propertiesService, $request);
 
         return redirect()->back()->with('success', 'Link successfully updated');
     }
 
-    public function editAllLinkForm(User $user)
+    /**
+     * @param User $user
+     * @param Link $link
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function updateIcon(User $user, Link $link, Request $request): RedirectResponse
+    {
+        $this->link->updateIcon($user, $link, $request);
+
+        return redirect()->back()->with('success', 'Icon successfully updated');
+    }
+
+    /**
+     * @param User $user
+     * @param Link $link
+     * @param UpdatePhotoRequest $request
+     * @return RedirectResponse
+     */
+    public function updatePhoto(User $user, Link $link, UpdatePhotoRequest $request): RedirectResponse
+    {
+        $this->link->updatePhoto($user, $link, $this->uploadService, $request);
+
+        return redirect()->back()->with('success', 'Photo successfully updated');
+    }
+
+    /**
+     * @param User $user
+     * @return Application|Factory|View
+     */
+    public function editAllLinkForm(User $user): View|Factory|Application
     {
         return view('link.edit-all', [
             'user' => $user,
             'allIconsInsideFolder' => $this->getIcons(),
             'allFontsInFolder' => $this->getFonts(),
             'link' => Link::where('user_id', $user->id)->orderBy('id', 'desc')->first(),
+            'properties' => (object) unserialize($this->link->getLastLinkDesignFields($user)),
         ]);
     }
 
@@ -111,9 +160,9 @@ class LinkController extends Controller
      * @param Request $request
      * @return RedirectResponse
      */
-    public function editAllLink(User $user, Link $link, Request $request): RedirectResponse
+    public function editAllLink(User $user, Link $link, UpdateLinkRequest $request): RedirectResponse
     {
-        $link->editAll($user, $request);
+        $link->editAll($user, $request, $this->propertiesService);
 
         return redirect()->back()->with('success', 'Links successfully updated');
     }
@@ -160,9 +209,26 @@ class LinkController extends Controller
         return redirect()->back()->with('success', 'Link deleted successfully');
     }
 
+    /**
+     * @param User $user
+     * @param Link $link
+     * @return View|Factory|Application
+     */
     public function showClickLinkStatistic(User $user, Link $link): View|Factory|Application
     {
         return view('link.stat', compact('user', 'link'));
+    }
+
+    public function filterStatistic(User $user, Link $link, Request $request)
+    {
+        $request->validate([
+            'from' => 'required',
+            'to' => 'required',
+        ]);
+
+        $stats = $this->statsService->getClickLinkStatistic($user, $link, $request);
+
+        return view('link.stat', compact('user', 'link', 'stats'));
     }
 
     /**

@@ -113,6 +113,18 @@ class UserController extends Controller
         return view('statistic.user_profile', compact('user'));
     }
 
+    public function profileFilterStatistic(User $user, Request $request)
+    {
+        $request->validate([
+            'from' => 'required',
+            'to' => 'required',
+        ]);
+
+        $stats = $this->statsService->getProfileStatistic($user, $request);
+
+        return view('statistic.user_profile', compact('user', 'stats'));
+    }
+
     public function updateAvatar(User $user, AvatarRequest $request)
     {
         $user->updateAvatar($user, $request, $this->uploadService);

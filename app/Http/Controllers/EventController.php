@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\MassUpdateEventRequest;
 use App\Http\Requests\UpdateEventBannerRequest;
 use App\Http\Requests\UpdateEventRequest;
+use App\Models\EventSetting;
+use App\Services\PropertiesService;
 use App\Services\UploadPhotoService;
 use App\Traits\IconsAndFonts;
 use Illuminate\Contracts\Foundation\Application;
@@ -13,7 +16,6 @@ use Illuminate\Http\Request;
 use App\Models\Event;
 use App\Models\User;
 use App\Http\Requests\EventRequest;
-use Illuminate\Support\Facades\File;
 use Illuminate\View\View;
 
 class EventController extends Controller
@@ -21,8 +23,39 @@ class EventController extends Controller
     use IconsAndFonts;
 
     public function __construct (
-        private readonly UploadPhotoService $uploadService
+        private readonly UploadPhotoService $uploadService,
+        public PropertiesService            $propertiesService,
+        private readonly Event              $event,
     ) {}
+
+    /**
+     * @param User $user
+     * @return Application|Factory|\Illuminate\Contracts\View\View
+     */
+    public function settings(User $user): \Illuminate\Contracts\View\View|Factory|Application
+    {
+        return view('event.settings', compact('user'));
+    }
+
+    /**
+     * Edit event themes
+     *
+     * @param User $user
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function settingsEdit(User $user, Request $request): RedirectResponse
+    {
+        EventSetting::updateOrCreate(
+            ['user_id' => $user->id],
+            [
+                'close_card_type' => $request->type_close_card,
+                'open_card_type' => $request->open_card_type,
+            ]
+        );
+
+        return redirect()->back()->with('success', 'Profile settings successfully updated!');
+    }
 
     /**
      * Show form to create new Event
@@ -48,7 +81,7 @@ class EventController extends Controller
      */
     public function addEvent(User $user, Event $event, EventRequest $request): RedirectResponse
     {
-        $event->createEvent($user, $request, $this->uploadService);
+        $event->createEvent($user, $request, $this->uploadService, $this->propertiesService);
 
         return redirect()->back()->with('success', 'Event added successfully! You can add more...');
     }
@@ -67,6 +100,10 @@ class EventController extends Controller
         ]);
     }
 
+    /**
+     * @param User $user
+     * @return Application|Factory|\Illuminate\Contracts\View\View
+     */
     public function editAllEventsForm(User $user)
     {
         return view('event.edit-all', [
@@ -74,9 +111,15 @@ class EventController extends Controller
             'allIconsInsideFolder' => $this->getIcons(),
             'allFontsInFolder' => $this->getFonts(),
             'event' => Event::where('user_id', $user->id)->orderBy('id', 'desc')->first(),
+            'properties' => (object) unserialize($this->event->getLastEventDesignFields($user)),
         ]);
     }
 
+    /**
+     * @param User $user
+     * @param Event $event
+     * @return Application|Factory|\Illuminate\Contracts\View\View
+     */
     public function editEventForm(User $user, Event $event)
     {
         return view('event.edit-event', [
@@ -84,6 +127,7 @@ class EventController extends Controller
             'event' => $event,
             'allIconsInsideFolder' => $this->getIcons(),
             'allFontsInFolder' => $this->getFonts(),
+            'properties' => (object) unserialize($event->properties),
         ]);
     }
 
@@ -97,12 +141,18 @@ class EventController extends Controller
      */
     public function editEvent(User $user, Event $event, UpdateEventRequest $request)
     {
-        $event->editEvent($user, $event, $request);
+        $event->editEvent($user, $event, $request, $this->propertiesService);
 
         return redirect()->back()->with('success', 'Event updated successfully');
     }
 
-    public function editEventBanner(User $user, Event $event, UpdateEventBannerRequest $request)
+    /**
+     * @param User $user
+     * @param Event $event
+     * @param UpdateEventBannerRequest $request
+     * @return RedirectResponse
+     */
+    public function editEventBanner(User $user, Event $event, UpdateEventBannerRequest $request): RedirectResponse
     {
         $event->editEventBanner($user, $event, $request, $this->uploadService);
 
@@ -120,6 +170,10 @@ class EventController extends Controller
     {
         $event->dropEvent($event, $this->uploadService);
 
+        if(count($user->events) == 0) {
+            return redirect()->route('editProfileForm', ['user' => $user->id]);
+        }
+
         return redirect()->back()->with('success', 'Event deleted successfully!');
     }
 
@@ -128,12 +182,12 @@ class EventController extends Controller
      *
      * @param User $user
      * @param Event $event
-     * @param Request $request
+     * @param MassUpdateEventRequest $request
      * @return RedirectResponse
      */
-    public function editAllEvent(User $user, Event $event, Request $request): RedirectResponse
+    public function editAllEvent(User $user, Event $event, MassUpdateEventRequest $request): RedirectResponse
     {
-        $event->editAll($user, $request);
+        $event->editAll($user, $request, $this->propertiesService);
 
         return redirect()->back()->with('success', 'Events updated successfully!');
     }

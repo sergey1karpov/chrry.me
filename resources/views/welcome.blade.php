@@ -4,103 +4,54 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>chrry.me</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
-
-        {{-- Шрифт для бля хедера --}}
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Train+One&display=swap" rel="stylesheet">
-
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
-
-        <style type="text/css">
-            html {
-                height: 100%;
-            }
-            body {
-                min-height: 100%;
-                /*background-color: #F8F9FB;*/
-                background: rgb(255,0,0);
-                background: linear-gradient(0deg, rgba(255,0,0,0.4458158263305322) 0%, rgba(255,255,255,1) 100%);
-            }
-            .btn-check:focus+.btn, .btn:focus {
-                box-shadow: none;
-            }
-            .section {
-                height: 100vh; /* высота секции равна высоте области просмотра */
-            }
-            @font-face {
-                font-family: FuturisVolumeC; /* Имя шрифта */
-                src: url({{asset('public/font/FuturisVolumeC.ttf')}}); /* Путь к файлу со шрифтом */
-            }
-        </style>
+        <script src="https://cdn.tailwindcss.com"></script>
     </head>
-    <body class="h-100 text-center text-dark">
+    <body class="static bg-black h-screen flex items-center justify-center">
 
-        {{-- Section 1 --}}
-        <div class="cover-container w-100 h-100 p-3 mx-auto section d-flex align-items-center justify-content-center" >
-            <main class="text-center">
-
-                <div class="row d-flex flex-row fixed-top ms-" style="margin-left: 10px;">
-                    <div class="col-12 d-flex justify-content-start" style="padding: 0">
-                        <button style="padding-left:0;padding-right:0" class="btn " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
-                            <img src="https://i.ibb.co/J3RSWtS/arrow-icon-banner-freeuse-stock-next-icon-vector-11553389091crmgqevjd3.png" width="17">
-                        </button>
-                        <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
-                            <div class="offcanvas-header bg-light">
-                                <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">
-                                    <img src="https://i.ibb.co/ZSgV4Tn/2.png" width="90">
-                                </h5>
-                                <button style="padding-left:0;padding-right:0" class="btn " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
-                                    <img src="https://i.ibb.co/hKFmVN0/arrow-icon-banner-freeuse-stock-next-icon-vector-11553389091crmgqevjd33.png" width="17">
-                                </button>
-                            </div>
-                            <div class="offcanvas-body">
-                                <ul class="navbar-nav me-auto mb-lg-0">
-                                    <li class="nav-item">
-                                        {{-- <a class="nav-link" aria-current="page" href="{{ route('shop') }}" style="font-family: 'Roboto', sans-serif; color: black;font-size: 1rem">Магазин</a> --}}
-                                    </li>
-                                    @if (Route::has('login'))
-                                        @auth
-                                            <li class="nav-item">
-                                                <a class="nav-link" aria-current="page" href="{{ route('userHomePage',  ['user' => Auth::user()->slug]) }}" style="font-family: 'Roboto', sans-serif; color: black;font-size: 1rem">Профиль</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" aria-current="page" href="{{ route('editProfileForm',  ['user' => Auth::user()->id]) }}" style="font-family: 'Roboto', sans-serif; color: black;font-size: 1rem">Настройки</a>
-                                            </li>
-                                            <li class="nav-item d-flex justify-content-center">
-                                                <form class="text-center" method="POST" action="{{ route('logout') }}">
-                                                    @csrf
-                                                    <button class="nav-link" style="border: 0; outline: none; background-color: white;font-family: 'Roboto', sans-serif; color: black;font-size: 1rem">Выйти</button>
-                                                </form>
-                                            </li>
-                                        @else
-                                            <li class="nav-item">
-                                                <a class="nav-link" aria-current="page" href="{{ route('login') }}" style="font-family: 'Roboto', sans-serif; color: black;font-size: 1rem">Войти</a>
-                                            </li>
-                                            @if (Route::has('register'))
-                                                <li class="nav-item">
-                                                    <a class="nav-link" aria-current="page" href="{{ route('register') }}" style="font-family: 'Roboto', sans-serif; color: black;font-size: 1rem">Регистрация</a>
-                                                </li>
-                                            @endif
-                                        @endauth
-                                    @endif
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row d-flex justify-content-center">
-                    <div class="col-12" style="padding: 0">
-                        <img src="https://i.ibb.co/ZSgV4Tn/2.png" class="img-fluid">
-                    </div>
-                </div>
-            </main>
+        <div class="absolute top-0 left-0 text-red-500 p-2 ml-1 " type="button" data-drawer-target="drawer-example" data-drawer-show="drawer-example" aria-controls="drawer-example">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
         </div>
 
+        <div id="drawer-example" class="fixed z-40 h-screen p-4 overflow-y-auto bg-[#0d0d0d] w-full dark:bg-[#0d0d0d] transition-transform left-0 top-0 -translate-x-full" tabindex="-1" aria-labelledby="drawer-label">
+            <button type="button" data-drawer-hide="drawer-example" aria-controls="drawer-example" class="text-red-500 bg-transparent hover:bg-[#0d0d0d] hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 right-2.5 inline-flex items-center dark:hover:bg-[#0d0d0d] dark:hover:text-white" >
+                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                <span class="sr-only">Close menu</span>
+            </button>
+            <div class="flex flex-col items-center justify-center h-screen">
+                @if (Route::has('login'))
+                    @auth
+                        <div class="nav-item">
+                            <a class="text-red-500" aria-current="page" href="{{ route('userHomePage',  ['user' => Auth::user()->slug]) }}">PROFILE</a>
+                        </div>
+                        <div class="nav-item">
+                            <a class="text-red-500" aria-current="page" href="{{ route('editProfileForm',  ['user' => Auth::user()->id]) }}">HOME</a>
+                        </div>
+                        <div class="nav-item d-flex justify-content-center">
+                            <form class="text-center" method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button class="text-red-500">LOG OUT</button>
+                            </form>
+                        </div>
+                    @else
+                        <div class="nav-item">
+                            <a class="text-red-500" aria-current="page" href="{{ route('login') }}">LOG IN</a>
+                        </div>
+                        @if (Route::has('register'))
+                            <div class="nav-item mt-2">
+                                <a class="text-red-500" aria-current="page" href="{{ route('register') }}">REGISTER</a>
+                            </div>
+                        @endif
+                    @endauth
+                @endif
+            </div>
+        </div>
+
+        <div class="ml-2 mr-2 text-center">
+            <img src="https://i.ibb.co/s2QGFBb/rrrrrrrrrrrrrrrrrrrrrrrrrr.png" class="img">
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.2/flowbite.min.js"></script>
     </body>
 </html>

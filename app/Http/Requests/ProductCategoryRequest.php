@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ProductCategoryRequest extends FormRequest
 {
@@ -23,9 +24,11 @@ class ProductCategoryRequest extends FormRequest
      */
     public function rules()
     {
+        $slug = $this->request->get("slug");
+
         return [
             'name' => 'required|min:3|max:50',
-            'slug' => 'required|min:3|max:255|alpha_dash',
+            'slug' => ['required','min:3','max:255','alpha_dash', Rule::unique('product_categories')->ignore($slug,'slug')],
         ];
     }
 }

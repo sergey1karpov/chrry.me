@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
+use App\Enums\EntityPropertiesPrefix;
 use App\Http\Requests\ProductRequest;
 use App\Http\Requests\UpdateProductRequest;
-use App\Services\ProductCardPropertiesService;
+use App\Services\PropertiesService;
 use App\Services\UploadPhotoService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -79,14 +80,14 @@ class Product extends Model
 
     /**
      * @param UpdateProductRequest|ProductRequest|Request $request
-     * @param ProductCardPropertiesService $productCardPropertiesService
+     * @param PropertiesService $propertiesService
      * @return void
      */
-    public function setDesignProductProperties(UpdateProductRequest|ProductRequest|Request $request, ProductCardPropertiesService $productCardPropertiesService)
+    public function setDesignProductProperties(UpdateProductRequest|ProductRequest|Request $request, PropertiesService $propertiesService)
     {
-        $designProductFields = preg_grep("/^dp_/", array_keys($request->all()));
+        $designProductFields = preg_grep("/^" . EntityPropertiesPrefix::Product->value . "/", array_keys($request->all()));
         foreach ($designProductFields as $field) {
-            $productCardPropertiesService->addProperty($field, $request->$field);
+            $propertiesService->addProperty($field, $request->$field);
         }
     }
 
@@ -107,12 +108,12 @@ class Product extends Model
      * @param User $user
      * @param ProductRequest $request
      * @param UploadPhotoService $uploadService
-     * @param ProductCardPropertiesService $productCardPropertiesService
+     * @param PropertiesService $propertiesService
      * @return void
      */
-    public function storeProduct(User $user, ProductRequest $request, UploadPhotoService $uploadService, ProductCardPropertiesService $productCardPropertiesService): void
+    public function storeProduct(User $user, ProductRequest $request, UploadPhotoService $uploadService, PropertiesService $propertiesService): void
     {
-        $this->setDesignProductProperties($request, $productCardPropertiesService);
+        $this->setDesignProductProperties($request, $propertiesService);
 
         $product = new self();
         $product->title = $request->title;
@@ -142,7 +143,7 @@ class Product extends Model
         $product->product_refund_info = $request->product_refund_info;
         $product->product_other_info = $request->product_other_info;
 
-        $product->design_properties = isset($request->copy_styles) ? $this->getLastProductDesignFields($user) : serialize($productCardPropertiesService->getProperties());
+        $product->design_properties = isset($request->copy_styles) ? $this->getLastProductDesignFields($user) : serialize($propertiesService->getProperties());
 
         $user->products()->save($product);
     }
@@ -150,15 +151,15 @@ class Product extends Model
     /**
      * @param User $user
      * @param Request $request
-     * @param ProductCardPropertiesService $productCardPropertiesService
+     * @param PropertiesService $propertiesService
      * @return void
      */
-    public function massUpdate(User $user, Request $request, ProductCardPropertiesService $productCardPropertiesService)
+    public function massUpdate(User $user, Request $request, PropertiesService $propertiesService)
     {
-        $this->setDesignProductProperties($request, $productCardPropertiesService);
+        $this->setDesignProductProperties($request, $propertiesService);
 
         Product::where('user_id', $user->id)->update([
-            'design_properties' => serialize($productCardPropertiesService->getProperties())
+            'design_properties' => serialize($propertiesService->getProperties())
         ]);
     }
 
@@ -169,12 +170,12 @@ class Product extends Model
      * @param Product $product
      * @param UpdateProductRequest $request
      * @param UploadPhotoService $uploadService
-     * @param ProductCardPropertiesService $productCardPropertiesService
+     * @param PropertiesService $productCardPropertiesService
      * @return void
      */
-    public function patchProduct(User $user, Product $product, UpdateProductRequest $request, UploadPhotoService $uploadService, ProductCardPropertiesService $productCardPropertiesService): void
+    public function patchProduct(User $user, Product $product, UpdateProductRequest $request, UploadPhotoService $uploadService, PropertiesService $propertiesService): void
     {
-        $this->setDesignProductProperties($request, $productCardPropertiesService);
+        $this->setDesignProductProperties($request, $propertiesService);
 
         Product::where('id', $product->id)->where('user_id', $user->id)->update([
             'title' => $request->title,
@@ -192,7 +193,7 @@ class Product extends Model
             'link_to_shop_text' => $request->link_to_shop_text,
             'link_to_order_text' => $request->link_to_order_text,
             'product_categories_id' => $request->product_categories_id,
-            'design_properties' => serialize($productCardPropertiesService->getProperties()),
+            'design_properties' => serialize($propertiesService->getProperties()),
         ]);
     }
 

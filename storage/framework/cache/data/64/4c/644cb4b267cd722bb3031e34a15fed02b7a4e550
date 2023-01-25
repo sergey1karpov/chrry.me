@@ -1,0 +1,11 @@
+9999999999s:271:"<div 
+    class="laravel-embed__responsive-wrapper" 
+    style="padding-bottom: 75%"
+>
+    <div class="laravel-embed__fallback">
+        <p>
+            Sorry, we were unable to embed<br />
+            <strong>https://red</strong>
+        </p>
+    </div>
+</div>";

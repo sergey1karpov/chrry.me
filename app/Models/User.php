@@ -72,6 +72,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function eventSettings()
+    {
+        return $this->hasOne(EventSetting::class);
+    }
+
     public function links(): HasMany
     {
         return $this->hasMany(Link::class);
@@ -109,7 +114,7 @@ class User extends Authenticatable
 
     public function userLinksInBar(User $user): Collection
     {
-        return Link::where('user_id', $user->id)->where('pinned', false)->orderBy('position')->get();
+        return $this->links()->where('user_id', $this->id)->orderBy('position')->get();
     }
 
     public function imgPath(int $id): string
@@ -137,7 +142,6 @@ class User extends Authenticatable
      *
      * @param User $user
      * @param UpdateRegisteruserRequest $request
-     * @param UploadPhotoService $uploadService
      * @return void
      */
     public function editUserProfile(User $user, UpdateRegisteruserRequest $request): void
@@ -154,9 +158,13 @@ class User extends Authenticatable
             'background_color_rgb' => isset($request->background_color) ? ColorConvertorService::convertBackgroundColor($request->background_color) : $user->background_color_rgb,
         ]);
 
-        if($request->type == 'Market') {
-            $this->createDefaultMarketSettings($user->id);
+        if($request->type == 'Events') {
+            $this->createDefaultEventSettings($user);
         }
+
+//        if($request->type == 'Market') {
+//            $this->createDefaultMarketSettings($user->id);
+//        }
     }
 
     /**
@@ -327,6 +335,19 @@ class User extends Authenticatable
                 'name' => 'Все товары',
                 'slug' => 'all',
                 'user_id' => $userId,
+            ]);
+        }
+    }
+
+    public function createDefaultEventSettings(User $user)
+    {
+        $settings = EventSetting::where('user_id', $user->id)->first();
+
+        if(!$settings) {
+            EventSetting::create([
+                'user_id' => $user->id,
+                'close_card_type' => 1,
+                'open_card_type' => 1,
             ]);
         }
     }

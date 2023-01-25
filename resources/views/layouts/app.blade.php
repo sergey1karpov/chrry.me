@@ -29,6 +29,8 @@
         <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js" integrity="sha256-6XMVI0zB8cRzfZjqKcD01PBsAy3FlDASrlC8SxCpInY=" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
 
+        <x-embed-styles />
+
         <style>
             .ts-dropdown-content {
                 /*align-items: flex-start;*/
@@ -38,31 +40,31 @@
         </style>
 
     </head>
-    <body class="body-block font-sans antialiased @if($attributes['user']['dayVsNight'] == 1) bg-black @endif">
+    <body class="body-block font-sans antialiased @if($attributes['user']['dayVsNight'] == 1) bg-black @else bg-gradient-to-r from-rose-100 to-teal-100 @endif">
 
-        <div class="content-block min-h-screen @if($attributes['user']['dayVsNight'] == 1) bg-black @endif">
+        <div class="content-block min-h-screen @if($attributes['user']['dayVsNight'] == 1) bg-black @else bg-gradient-to-r from-rose-100 to-teal-100 @endif">
             <main>
                 {{ $slot }}
             </main>
         </div>
 
-        <footer class="footer-block mt-5 p-5 shadow md:px-6 md:py-8 navbar-fixed-bottom @if($attributes['user']['dayVsNight'] == 1) bg-black @endif">
+        <footer class="footer-block mt-5 p-5 shadow md:px-6 md:py-8 navbar-fixed-bottom @if($attributes['user']['dayVsNight'] == 1) bg-black @else bg-gradient-to-r from-rose-100 to-teal-100 @endif">
             <div class="">
                 <div class="flex justify-center">
-                    <a href="https://flowbite.com/" class="flex items-center mb-4">
-                        <img src="https://i.ibb.co/3dJD25v/new-logo.png" class="mr-3 h-6" alt="Flowbite Logo" />
+                    <a href="http://chrry.me/" class="flex items-center mb-4">
+                        <img src="https://i.ibb.co/3dJD25v/new-logo.png" class="mr-3 h-6" alt="CHRRY.ME Logo" />
                     </a>
                 </div>
                 <div class="flex justify-center">
                     <ul class="flex flex-wrap items-center mb-6 text-sm text-gray-500 sm:mb-0 dark:text-gray-400">
                         <li>
-                            <a href="#" class="mr-4 hover:underline md:mr-6 ">About</a>
+                            <a href="#" class="mr-4 hover:underline md:mr-6 ">About us</a>
                         </li>
                         <li>
-                            <a href="#" class="mr-4 hover:underline md:mr-6">Privacy Policy</a>
+                            <a href="#" class="mr-4 hover:underline md:mr-6">FAQ</a>
                         </li>
                         <li>
-                            <a href="#" class="mr-4 hover:underline md:mr-6 ">Licensing</a>
+                            <a href="#" class="mr-4 hover:underline md:mr-6 ">Contacts</a>
                         </li>
                         <li>
                             <form method="POST" action="{{ route('logout') }}"> @csrf
@@ -76,7 +78,7 @@
             </div>
             <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
             <div class="flex justify-center">
-                <span class="block text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2022 <a href="https://flowbite.com/" class="hover:underline">Flowbite™</a>. All Rights Reserved.</span>
+                <span class="block text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2022 <a href="http://chrry.me/" class="hover:underline">CHRRY.ME™</a>. All Rights Reserved.</span>
             </div>
         </footer>
 
@@ -99,24 +101,24 @@
                         success: function (){
                             if(type) { //Add night mode
                                 console.log('Sleep');
-                                $(".body-block").addClass('bg-black');
+                                $(".body-block").addClass('bg-black').removeClass('bg-gradient-to-r from-rose-100 to-teal-100');
                                 $(".text-block").addClass('text-white');
                                 $(".text-block2").removeClass('text-black');
-                                $(".header-block").addClass('bg-black');
-                                $(".footer-block").addClass('bg-black');
-                                $(".content-block").addClass('bg-black');
+                                $(".header-block").addClass('bg-black').removeClass('bg-gradient-to-r from-rose-100 to-teal-100');
+                                $(".footer-block").addClass('bg-black').removeClass('bg-gradient-to-r from-rose-100 to-teal-100');
+                                $(".content-block").addClass('bg-black').removeClass('bg-gradient-to-r from-rose-100 to-teal-100');
                                 $(".switch-text").addClass('text-gray-300');
                                 $(".switch-text").html('Light on');
                                 $(".btn-block").addClass('dark:border-white').addClass('dark:text-white');
                                 $(".card-block").addClass('bg-[#0f0f0f] border-4')
                             } else { //Add day mode
                                 console.log('Wake up!');
-                                $(".body-block").removeClass('bg-black');
+                                $(".body-block").removeClass('bg-black').addClass('bg-gradient-to-r from-rose-100 to-teal-100');
                                 $(".text-block").removeClass('text-white');
                                 $(".text-block2").addClass('text-black');
-                                $(".header-block").removeClass('bg-black');
-                                $(".footer-block").removeClass('bg-black');
-                                $(".content-block").removeClass('bg-black');
+                                $(".header-block").removeClass('bg-black').addClass('bg-gradient-to-r from-rose-100 to-teal-100');
+                                $(".footer-block").removeClass('bg-black').addClass('bg-gradient-to-r from-rose-100 to-teal-100');
+                                $(".content-block").removeClass('bg-black').addClass('bg-gradient-to-r from-rose-100 to-teal-100');
                                 $(".switch-text").removeClass('text-gray-300');
                                 $(".switch-text").html('Light off');
                                 $(".btn-block").removeClass('dark:border-white').removeClass('dark:text-white');
@@ -128,10 +130,8 @@
             });
         </script>
 
-        <!-- Flowbite -->
         <script src="https://unpkg.com/flowbite@1.5.5/dist/flowbite.js"></script>
 
     </body>
 </html>
 
-{{--border-4 border-black group-hover:-translate-x-2 group-hover:-translate-y-2 group-hover:shadow-[8px_8px_0_0_#000]--}}

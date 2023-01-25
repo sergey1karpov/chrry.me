@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\User;
 use App\Services\UploadPhotoService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class ProductCategoryController extends Controller
@@ -30,7 +31,7 @@ class ProductCategoryController extends Controller
     /**
      * @param User $user
      * @param ProductCategoryRequest $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function createCategory(User $user, ProductCategoryRequest $request)
     {
@@ -45,9 +46,9 @@ class ProductCategoryController extends Controller
      * @param User $user
      * @param ProductCategory $category
      * @param ProductCategoryRequest $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    public function editCategory(User $user, ProductCategory $category, ProductCategoryRequest $request)
+    public function editCategory(User $user, ProductCategory $category, ProductCategoryRequest $request): RedirectResponse
     {
         $category->update(['name' => $request->name, 'slug' => $request->slug]);
 
@@ -57,19 +58,19 @@ class ProductCategoryController extends Controller
     /**
      * @param User $user
      * @param ProductCategory $category
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function deleteCategory(User $user, ProductCategory $category)
     {
         if($category->slug == 'all') {
-            return redirect()->back()->with('success', 'У нас так не принято');
+            return redirect()->back()->with('success', 'No! no, no... Please stop');
         }
 
         $this->deleteRelationProducts($user, $category);
 
         $category->delete();
 
-        return redirect()->back()->with('success', 'Категория удалена');
+        return redirect()->back()->with('success', 'Category has been deleted!');
     }
 
     /**

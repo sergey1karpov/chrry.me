@@ -6,6 +6,7 @@ use App\Interfaces\Statistic;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class Stats extends Model implements Statistic
@@ -14,25 +15,21 @@ class Stats extends Model implements Statistic
 
     protected $table = 'stats';
 
-    protected $fillable = ['user_id', 'guest_ip'];
+//    public $timestamps = false;
 
-    public function scopeTodayProfileView($query, $user)
-    {
-        return $query->where('created_at', Carbon::today())->where('user_id', $user);
-    }
+    protected $fillable = [
+        'user_id',
+        'guest_ip',
+        'country',
+        'city',
+        'country_code',
+        'created_at',
+    ];
 
-    public function scopeCountView($query, $cityOrCountry)
+    public function scopeStat($query, $from, $to)
     {
-        return $query->select($cityOrCountry, DB::raw('COUNT('.$cityOrCountry.') as count'))->orderByRaw('COUNT('.$cityOrCountry.') DESC')->groupBy($cityOrCountry);
-    }
-
-    public function scopeMonthProfileView($query, $user)
-    {
-        return $query->whereMonth('created_at', Carbon::now()->month)->where('user_id', $user);
-    }
-
-    public function scopeYearProfileView($query, $user)
-    {
-        return $query->whereYear('updated_at', Carbon::now()->year)->where('user_id', $user);
+        return $query->where('user_id', Auth::user()->id)
+            ->where('created_at', '>=', Carbon::parse($from)->format('Y-m-d H:i:00'))
+            ->where('created_at', '<=', Carbon::parse($to)->format('Y-m-d H:i:00'));
     }
 }

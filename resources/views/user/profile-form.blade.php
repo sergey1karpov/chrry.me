@@ -48,7 +48,7 @@
 
     <section class="flex justify-center m-5">
         <div class="sm:mt-12 w-full">
-            <div class="mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8">
+            <div class="mx-auto max-w-screen-xl sm:px-6 lg:px-8">
                 <form action="{{ route('editUserProfile', ['user' => Auth::user()->id]) }}" method="post" enctype="multipart/form-data"> @csrf @method('PATCH')
                     <div class="mb-6 text-center">
                         <label for="name" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Name</label>
@@ -78,7 +78,7 @@
                         <select name="type" id="type" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-[#0f0f0f] dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
                             <option @if($user->type == 'Links') selected @endif value="Links">Links</option>
                             <option @if($user->type == 'Events') selected @endif value="Events">Events</option>
-                            <option @if($user->type == 'Market') selected @endif value="Market">Market</option>
+{{--                            <option @if($user->type == 'Market') selected @endif value="Market">Market</option>--}}
                         </select>
                     </div>
                     <div class="mt-3">
@@ -89,7 +89,7 @@
                 </form>
             </div>
 
-            <div class="mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 mt-20">
+            <div class="mx-auto max-w-screen-xl sm:px-6 lg:px-8 mt-20">
                 <form action="{{ route('updatePassword', ['user' => $user->id]) }}" method="post"> @csrf @method('PATCH')
                     <div class="mb-6 text-center">
                         <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Old password</label>
@@ -111,7 +111,7 @@
                 </form>
             </div>
 
-            <div class="mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 mt-20 mb-20">
+            <div class="mx-auto max-w-screen-xl sm:px-6 lg:px-8 mt-20 mb-20">
                 <form action="{{ route('updateTwoFactorAuth', ['user' => $user->id]) }}" method="post"> @csrf @method('PATCH')
                     <div class="mb-6 text-center">
                         <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Two-factor authentication</label>

@@ -1,0 +1,11 @@
+9999999999s:325:"<div 
+    class="laravel-embed__responsive-wrapper" 
+    style="padding-bottom: 75%"
+>
+    <iframe 
+        src="https://www.youtube-nocookie.com/embed/sv3cQ3tFGQg" 
+        frameborder="0" 
+        allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" 
+        allowfullscreen>
+    </iframe>
+</div>";

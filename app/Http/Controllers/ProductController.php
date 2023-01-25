@@ -7,7 +7,7 @@ use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\User;
-use App\Services\ProductCardPropertiesService;
+use App\Services\PropertiesService;
 use App\Services\StatsService;
 use App\Services\UploadPhotoService;
 use App\Traits\IconsAndFonts;
@@ -23,8 +23,8 @@ class ProductController extends Controller
 
     public function __construct(
         private readonly UploadPhotoService $uploadService,
-        public ProductCardPropertiesService $productCardPropertiesService,
-        private Product $product,
+        public PropertiesService            $propertiesService,
+        private readonly Product            $product,
     ) {}
 
     /**
@@ -50,7 +50,7 @@ class ProductController extends Controller
      */
     public function addProduct(User $user, ProductRequest $request, Product $product): RedirectResponse
     {
-        $product->storeProduct($user, $request, $this->uploadService, $this->productCardPropertiesService);
+        $product->storeProduct($user, $request, $this->uploadService, $this->propertiesService);
 
         return redirect()->route('editProfileForm', ['user' => $user->id])->with('success', 'Товар успешно добавлен');
     }
@@ -118,7 +118,7 @@ class ProductController extends Controller
             $product->uploadAdditionalPhotos($product, $request->additional_photos, $product->imgPath($user->id), $this->uploadService);
         }
 
-        $product->patchProduct($user, $product, $request, $this->uploadService, $this->productCardPropertiesService);
+        $product->patchProduct($user, $product, $request, $this->uploadService, $this->propertiesService);
 
         return redirect()->route('allProducts', ['user' => $user->id])->with('success',$product->title . '" успешно обновлен!');
     }
@@ -186,10 +186,10 @@ class ProductController extends Controller
      * @param Product $product
      * @return View
      */
-    public function statsProducts(User $user, Product $product): View
-    {
-        return view('product.stat-product', compact('user', 'product'));
-    }
+//    public function statsProducts(User $user, Product $product): View
+//    {
+//        return view('product.stat-product', compact('user', 'product'));
+//    }
 
     /**
      * Products in category
@@ -243,7 +243,7 @@ class ProductController extends Controller
      */
     public function massUpdate(User $user, Request $request)
     {
-        $this->product->massUpdate($user, $request, $this->productCardPropertiesService);
+        $this->product->massUpdate($user, $request, $this->propertiesService);
 
         return redirect()->back();
     }

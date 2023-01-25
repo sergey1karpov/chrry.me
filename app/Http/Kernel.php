@@ -69,5 +69,8 @@ class Kernel extends HttpKernel
         'links.count' => \App\Http\Middleware\CheckCountLinksMiddleware::class,
         'events.count' => \App\Http\Middleware\CheckCountEventsMiddleware::class,
         'two.factor' => \App\Http\Middleware\TwoFactorMiddleware::class,
+        'count.events' => \App\Http\Middleware\CheckCountUserEventsMiddleware::class,
+        'check.slug' => \App\Http\Middleware\CheckCategorySlugMiddleware::class,
+        'update.category' => \App\Http\Middleware\UpdateProductCategoryMiddleware::class,
     ];
 }

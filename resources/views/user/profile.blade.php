@@ -28,9 +28,11 @@
             <div class="mt-4">
                 <h1 class="text-block mt-4 text-3xl font-bold flex @if($user->dayVsNight == 1) text-white @endif">
                     {{$user->name}}
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 ml-3 mt-1">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
-                    </svg>
+                    @if($user->verify == 1)
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 ml-3 mt-1">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
+                        </svg>
+                    @endif
                 </h1>
             </div>
         </div>
@@ -63,77 +65,82 @@
                     </div>
                 </div>
 
-                <div class="group block mt-7">
-                    <div class="card-block block rounded-xl @if($user->dayVsNight == 1) bg-[#0f0f0f] border-4 @endif border-[#0f0f0f] p-8 shadow-xl transition hover:border-blue-500/50 hover:shadow-blue-500/50 group-hover:-translate-x-1 group-hover:-translate-y-1 group-hover:shadow-blue-500/50">
-                        <span class="inline-block rounded bg-indigo-900 p-2 text-white">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-10 w-10 text-white">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
-                            </svg>
-                        </span>
-                        <h2 class="mt-4 text-3xl font-bold @if($user->dayVsNight == 1) text-white @else text-black @endif text-block2">Event</h2>
-                        <p class="mt-1 text-lg font-medium leading-relaxed text-gray-500">
-                            Create and manage your events
-                        </p>
-                        <div class="inline-flex rounded-md mt-4" role="group">
-                            <a href="{{ route('createEventForm', ['user' => $user->id]) }}" class="inline-block rounded border border-indigo-900 bg-indigo-900 px-9 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
-                                CREATE
-                            </a>
-                            <a href="{{ route('allEvents', ['user' => $user->id]) }}" class="ml-3 inline-block rounded border border-indigo-900 bg-indigo-900 px-9 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
-                                MANAGE
-                            </a>
+                @if($user->type == 'Events')
+                    <div class="group block mt-7">
+                        <div class="card-block block rounded-xl @if($user->dayVsNight == 1) bg-[#0f0f0f] border-4 @endif border-[#0f0f0f] p-8 shadow-xl transition hover:border-blue-500/50 hover:shadow-blue-500/50 group-hover:-translate-x-1 group-hover:-translate-y-1 group-hover:shadow-blue-500/50">
+                            <span class="inline-block rounded bg-indigo-900 p-2 text-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-10 w-10 text-white">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+                                </svg>
+                            </span>
+                            <h2 class="mt-4 text-3xl font-bold @if($user->dayVsNight == 1) text-white @else text-black @endif text-block2">Event</h2>
+                            <p class="mt-1 text-lg font-medium leading-relaxed text-gray-500">
+                                Create and manage your events
+                            </p>
+                            <div class="flex-wrap rounded-md mt-1" role="group">
+                                <a href="{{ route('createEventForm', ['user' => $user->id]) }}" class="mt-3 mr-2 inline-block rounded border border-indigo-900 bg-indigo-900 px-9 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
+                                    CREATE
+                                </a>
+                                @if(count($user->events) > 0)
+                                    <a href="{{ route('allEvents', ['user' => $user->id]) }}" class="mt-3 mr-2 inline-block rounded border border-indigo-900 bg-indigo-900 px-9 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
+                                        MANAGE
+                                    </a>
+                                @endif
+                                <a href="{{ route('settings', ['user' => $user->id]) }}" class="mt-3 inline-block rounded border border-indigo-900 bg-indigo-900 px-9 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
+                                    THEMES
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endif
 
-                <div class="group block mt-7">
-                    <div class="card-block block rounded-xl @if($user->dayVsNight == 1) bg-[#0f0f0f] border-4 @endif border-[#0f0f0f] p-8 shadow-xl transition hover:border-pink-500/50 hover:shadow-pink-500/50 group-hover:-translate-x-1 group-hover:-translate-y-1 group-hover:shadow-pink-500/50">
-                        <div class="flex justify-between items-center">
-                            <div>
-                                <span class="inline-block rounded bg-indigo-900 p-2 text-white">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-10 w-10 text-white">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
-                                    </svg>
-                                </span>
+                @if($user->type == 'Market')
+                    <div class="group block mt-7">
+                        <div class="card-block block rounded-xl @if($user->dayVsNight == 1) bg-[#0f0f0f] border-4 @endif border-[#0f0f0f] p-8 shadow-xl transition hover:border-pink-500/50 hover:shadow-pink-500/50 group-hover:-translate-x-1 group-hover:-translate-y-1 group-hover:shadow-pink-500/50">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <span class="inline-block rounded bg-indigo-900 p-2 text-white">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-10 w-10 text-white">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                                        </svg>
+                                    </span>
+                                </div>
+                                <div>
+                                    <button class="text-lg font-medium inline-flex items-center justify-center w-11 h-11 mr-2 text-pink-100 transition-colors duration-150 bg-green-500 rounded-full focus:shadow-outline hover:bg-pink-800">
+                                        {{count($user->orders->where('order_status', \App\Models\Order::NEW_ORDER))}}
+                                    </button>
+                                    <button class="text-lg font-medium inline-flex items-center justify-center w-11 h-11 mr-2 text-pink-100 transition-colors duration-150 bg-blue-500 rounded-full focus:shadow-outline hover:bg-pink-800">
+                                        {{count($user->orders->where('order_status', \App\Models\Order::IN_WORK_ORDER))}}
+                                    </button>
+                                    <button class="text-lg font-medium inline-flex items-center justify-center w-11 h-11 text-pink-100 transition-colors duration-150 bg-slate-500 rounded-full focus:shadow-outline hover:bg-pink-800">
+                                        {{count($user->orders->where('order_status', \App\Models\Order::PROCESSED_ORDER))}}
+                                    </button>
+                                </div>
                             </div>
-                            <div>
-                                <button class="text-lg font-medium inline-flex items-center justify-center w-11 h-11 mr-2 text-pink-100 transition-colors duration-150 bg-green-500 rounded-full focus:shadow-outline hover:bg-pink-800">
-                                    {{count($user->orders->where('order_status', \App\Models\Order::NEW_ORDER))}}
-                                </button>
-                                <button class="text-lg font-medium inline-flex items-center justify-center w-11 h-11 mr-2 text-pink-100 transition-colors duration-150 bg-blue-500 rounded-full focus:shadow-outline hover:bg-pink-800">
-                                    {{count($user->orders->where('order_status', \App\Models\Order::IN_WORK_ORDER))}}
-                                </button>
-                                <button class="text-lg font-medium inline-flex items-center justify-center w-11 h-11 text-pink-100 transition-colors duration-150 bg-slate-500 rounded-full focus:shadow-outline hover:bg-pink-800">
-                                    {{count($user->orders->where('order_status', \App\Models\Order::PROCESSED_ORDER))}}
-                                </button>
+                            <h2 class="mt-4 text-3xl font-bold @if($user->dayVsNight == 1) text-white @else text-black @endif text-block2">Market</h2>
+                            <p class="mt-1 text-lg font-medium leading-relaxed text-gray-500">
+                                Create a new product, work with orders and build your customer base
+                            </p>
+                            <div class="flex-wrap rounded-md mt-2" role="group">
+                                <a href="{{ route('createProductForm', ['user' => $user->id]) }}" type="submit" class="mr-2 mt-3 inline-block rounded border border-indigo-900 bg-indigo-900 px-9 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
+                                    CREATE
+                                </a>
+                                <a href="{{ route('allProducts', ['user' => $user->id]) }}" type="submit" class="mr-2 mt-3 inline-block rounded border border-indigo-900 bg-indigo-900 px-9 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
+                                    PRODUCTS
+                                </a>
+                                <a href="{{ route('orders', ['user' => $user->id]) }}" type="submit" class="mr-2 mt-3 inline-block rounded border border-indigo-900 bg-indigo-900 px-9 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
+                                    ORDERS
+                                </a>
+                                <a href="{{ route('allCategories', ['user' => $user->id]) }}" type="submit" class="mr-2 mt-3 inline-block rounded border border-indigo-900 bg-indigo-900 px-9 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
+                                    CATEGORIES
+                                </a>
+                                <a href="{{ route('marketSettingsForm', ['user' => $user->id]) }}" type="submit" class="mt-3 inline-block rounded border border-indigo-900 bg-indigo-900 px-9 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
+                                    MARKET SETTINGS
+                                </a>
                             </div>
-                        </div>
-                        <h2 class="mt-4 text-3xl font-bold @if($user->dayVsNight == 1) text-white @else text-black @endif text-block2">Market</h2>
-                        <p class="mt-1 text-lg font-medium leading-relaxed text-gray-500">
-                            Create a new product, work with orders and build your customer base
-                        </p>
-                        <div class="inline-flex rounded-md mt-4" role="group">
-                            <a href="{{ route('createProductForm', ['user' => $user->id]) }}" type="submit" class="inline-block rounded border border-indigo-900 bg-indigo-900 px-9 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
-                                CREATE
-                            </a>
-                            <a href="{{ route('allProducts', ['user' => $user->id]) }}" type="submit" class="ml-3 inline-block rounded border border-indigo-900 bg-indigo-900 px-9 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
-                                PRODUCTS
-                            </a>
-                        </div>
-                        <div class="inline-flex rounded-md mt-3" role="group">
-                            <a href="{{ route('orders', ['user' => $user->id]) }}" type="submit" class="inline-block rounded border border-indigo-900 bg-indigo-900 px-9 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
-                                ORDERS
-                            </a>
-                            <a href="{{ route('allCategories', ['user' => $user->id]) }}" type="submit" class="ml-3 inline-block rounded border border-indigo-900 bg-indigo-900 px-9 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
-                                CATEGORIES
-                            </a>
-                        </div>
-                        <div class="inline-flex rounded-md mt-3" role="group">
-                            <a href="{{ route('marketSettingsForm', ['user' => $user->id]) }}" type="submit" class="inline-block rounded border border-indigo-900 bg-indigo-900 px-9 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
-                                MARKET SETTINGS
-                            </a>
                         </div>
                     </div>
-                </div>
+                @endif
 
                 <a class="group block mt-7" href="{{ route('getStats', ['user' => $user->id]) }}">
                     <div class="card-block block rounded-xl @if($user->dayVsNight == 1) bg-[#0f0f0f] border-4 @endif border-[#0f0f0f] p-8 shadow-xl transition hover:border-purple-500/50 hover:shadow-purple-500/50 group-hover:-translate-x-1 group-hover:-translate-y-1 group-hover:shadow-purple-500/50">
@@ -143,10 +150,10 @@
                             </svg>
                         </span>
                         <h2 class="mt-4 text-3xl font-bold @if($user->dayVsNight == 1) text-white @else text-black @endif text-block2">Statistic</h2>
-                        <p class="mt-1 text-lg font-medium leading-relaxed text-gray-500">
+                        <p class="mt-1 mb-3 text-lg font-medium leading-relaxed text-gray-500">
                             View the statistics of visits to your profile
                         </p>
-                        <p class="mt-3 text-sm font-medium leading-relaxed @if($user->dayVsNight == 1) text-white @else text-black @endif text-block2">Today views: 25</p>
+                        <span class=" bg-indigo-100 text-indigo-900 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">Today views: {{ count(App\Models\Stats::where('user_id', $user->id)->where('created_at', today())->get()) }}</span>
                     </div>
                 </a>
 

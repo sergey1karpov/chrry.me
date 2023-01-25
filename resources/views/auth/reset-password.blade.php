@@ -24,12 +24,11 @@
 
         <div class="mt-4">
 
-            <p class=" mt-3 mb-10 text-4xl font-black text-gray-900 text-dark">
-                Reset password for
-                <span class="before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-red-500 relative inline-block">
-                    <a href="{{ route('welcome') }}"><span class="relative text-white">CHRRY.ME</span></a>
-                </span>
-            </p>
+            <div class="flex justify-center mb-10">
+                <a href="http://chrry.me/" class="flex items-center mb-4">
+                    <img src="https://i.ibb.co/3dJD25v/new-logo.png" class="mr-3 h-15" alt="CHRRY.ME" />
+                </a>
+            </div>
 
             <form method="POST" action="{{ route('password.update') }}" class="text-center" id="reset-pass">
                 @csrf
@@ -45,40 +44,40 @@
                 {{--            </div>--}}
                 <!-- Email Address -->
                 <div class="mt-4">
-                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 text-dark">Email address</label>
+{{--                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 text-dark">Email address</label>--}}
                     <input type="email"
                            name="email"
                            id="email"
-                           class="bg-gray-100 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-400 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           class="bg-gray-900 text-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-500 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500"
                            value="{{$request->email}}"
                            required>
                 </div>
 
                 <!-- Password -->
                 <div class="mt-4">
-                    <label for="password" class="block mb-2 text-sm font-medium text-gray-900 text-dark">Password</label>
+{{--                    <label for="password" class="block mb-2 text-sm font-medium text-gray-900 text-dark">Password</label>--}}
                     <input type="password"
                            name="password"
                            id="password"
-                           class="bg-gray-100 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-400 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                           placeholder="•••••••••"
+                           class="bg-gray-900 text-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-500 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           placeholder="New password"
                            required>
                 </div>
 
                 <!-- Confirm Password -->
                 <div class="mt-4">
-                    <label for="password_confirmation" class="block mb-2 text-sm font-medium text-gray-900 text-dark">Confirm Password</label>
+{{--                    <label for="password_confirmation" class="block mb-2 text-sm font-medium text-gray-900 text-dark">Confirm Password</label>--}}
                     <input type="password"
                            name="password_confirmation"
                            id="password_confirmation"
-                           class="bg-gray-100 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-400 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                           placeholder="•••••••••"
+                           class="bg-gray-900 text-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-500 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           placeholder="Repeat new password"
                            required>
                 </div>
 
                 <div class="mt-4">
                     <button type="submit"
-                            class="g-recaptcha w-full text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-2 font-medium rounded-lg text px-5 py-2.5 text-center mr-2 mb-2"
+                            class="g-recaptcha w-full text-white bg-gradient-to-r from-red-500 to-red-800 hover:bg-gradient-to-bl focus:ring-2 font-medium rounded-lg text px-5 py-2.5 text-center mr-2"
                             data-sitekey="6LdjE5siAAAAAFns6LrPthCLLu4niq3WG_coMFJA"
                             data-callback='onSubmit'
                             data-action='submit'>

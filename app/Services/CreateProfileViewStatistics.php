@@ -52,7 +52,7 @@ class CreateProfileViewStatistics implements StatisticInterface
         Stats::create([
             'user_id'      => $user->id,
             'guest_ip'     => $guest_ip,
-            'created_at'   => Carbon::today(),
+            'created_at'   => today(),
             'city'         => $data['city'] ?? null,
             'country'      => $data['country'] ?? null,
             'country_code' => $data['country'] ?? null,
