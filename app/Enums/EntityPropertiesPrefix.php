@@ -2,9 +2,10 @@
 
 namespace App\Enums;
 
-enum EntityPropertiesPrefix: string
+//Enum 8.1
+class EntityPropertiesPrefix
 {
-    case Product = 'dp_';
-    case Event = 'de_';
-    case Link = 'dl_';
+    const Product = 'dp_';
+    const Event = 'de_';
+    const Link = 'dl_';
 }

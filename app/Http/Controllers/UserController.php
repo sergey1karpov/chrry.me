@@ -26,9 +26,9 @@ class UserController extends Controller
     use IconsAndFonts;
 
     public function __construct(
-        private readonly UploadPhotoService          $uploadService,
-        private readonly StatsService                $statsService,
-        private readonly CreateProfileViewStatistics $statistics,
+        private UploadPhotoService          $uploadService,
+        private StatsService                $statsService,
+        private CreateProfileViewStatistics $statistics,
     ) {}
 
     /**

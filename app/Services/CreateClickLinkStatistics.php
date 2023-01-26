@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 
 class CreateClickLinkStatistics implements StatisticInterface
 {
-    public function __construct(private readonly IpApiConnection $connection) {}
+    public function __construct(private IpApiConnection $connection) {}
 
     /**
      * @param User $user

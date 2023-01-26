@@ -57,7 +57,7 @@ class Link extends Model
      */
     public function setDesignLinkProperties(UpdateLinkRequest|LinkRequest|Request $request, PropertiesService $propertiesService): void
     {
-        $designProductFields = preg_grep("/^" . EntityPropertiesPrefix::Link->value ."/", array_keys($request->all()));
+        $designProductFields = preg_grep("/^" . EntityPropertiesPrefix::Link ."/", array_keys($request->all()));
         foreach ($designProductFields as $field) {
             $propertiesService->addProperty($field, $request->$field);
         }

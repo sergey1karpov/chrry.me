@@ -3,7 +3,9 @@
 namespace App\Services;
 
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManagerStatic as Image;
 
 class UploadPhotoService
@@ -69,10 +71,15 @@ class UploadPhotoService
      * @param string $path
      * @param int $size
      * @param string|null $dropImagePath
+     * @param string|null $imageType
      * @return string
      */
-    public function savePhoto(UploadedFile $photo, string $path, int $size, string $dropImagePath = null): string
+    public function savePhoto(UploadedFile $photo, string $path, int $size, string $dropImagePath = null, string $imageType = null): string
     {
+        if($photo->getClientOriginalExtension() == 'gif') {
+            return $this->saveGif($photo, $imageType);
+        }
+
         if($dropImagePath != null) {
             $this->deletePhotoFromFolder($dropImagePath);
         }
@@ -84,6 +91,27 @@ class UploadPhotoService
         $image->save($path . '/' .$photo->hashName());
 
         return $image->dirname . '/' . $image->basename;
+    }
+
+    /**
+     * Gif uploader
+     *
+     * @param UploadedFile $photo
+     * @param string $imageType
+     * @return string
+     */
+    public function saveGif(UploadedFile $photo, string $imageType)
+    {
+        if(Auth::user()->avatar && $imageType == 'avatar') {
+            $this->deletePhotoFromFolder(Auth::user()->avatar);
+        }
+
+        if(Auth::user()->banner && $imageType == 'banner') {
+            $this->deletePhotoFromFolder(Auth::user()->banner);
+        }
+
+        $url = Storage::putFile('public/' . Auth::user()->id, $photo);
+        return '../storage/app/'.$url;
     }
 
     /**

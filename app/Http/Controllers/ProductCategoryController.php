@@ -13,8 +13,8 @@ use Illuminate\Http\Request;
 class ProductCategoryController extends Controller
 {
     public function __construct(
-        private readonly Product $pr,
-        private readonly UploadPhotoService $photoService
+        private Product $pr,
+        private UploadPhotoService $photoService
     ) {}
 
     /**

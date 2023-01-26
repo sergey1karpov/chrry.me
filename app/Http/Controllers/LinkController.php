@@ -27,8 +27,8 @@ class LinkController extends Controller
     use IconsAndFonts;
 
     public function __construct(
-        private readonly UploadPhotoService $uploadService,
-        private readonly StatsService       $statsService,
+        private UploadPhotoService $uploadService,
+        private StatsService       $statsService,
         public PropertiesService            $propertiesService,
         public Link                         $link
     ) {}

@@ -48,10 +48,10 @@
         @endif
     </style>
 </head>
-<body class="relative">
+<body class="relative flex flex-col min-h-screen">
 
     <header aria-label="Page Header" class="header-block">
-        <div class="fixed mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8">
             <div class="flex items-center sm:justify-between sm:gap-4">
                 <div class="flex flex-1 items-center justify-between gap-8 ">
                     @auth
@@ -72,13 +72,13 @@
         <div class="text-center mb-2">
             @if($user->avatar_vs_logotype == 'Logotype')
                 <div class="flex justify-center">
-                    <img src="{{$user->logotype}}" width="{{$user->logotype_size}}" style="filter: drop-shadow({{$user->logotype_shadow_right}}px {{$user->logotype_shadow_bottom}}px {{$user->logotype_shadow_round}}px {{$user->logotype_shadow_color}});">
+                    <img src="{{$user->logotype}}" class="pl-3 pr-3" width="{{$user->logotype_size}}" style="filter: drop-shadow({{$user->logotype_shadow_right}}px {{$user->logotype_shadow_bottom}}px {{$user->logotype_shadow_round}}px {{$user->logotype_shadow_color}});">
                 </div>
                 @if(!$user->logotype)
-                    <h2 class="mt-4" style="font-family: 'Rubik', sans-serif; color: #464646; font-weight: 600 ; font-size: 20px; @if($user->name_color) color: {{$user->name_color}}; @endif ">
+                    <h2 class="mt-4 flex justify-center items-center" style="font-family: 'Rubik', sans-serif; color: #464646; font-weight: 600 ; font-size: 20px; @if($user->name_color) color: {{$user->name_color}}; @endif ">
                         {{ $user->name }}
                         @if($user->verify == 1)
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-patch-check-fill mb-1" viewBox="0 0 16 16" style="color: {{$user->verify_color}}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="ml-2 mt-1 bi bi-patch-check-fill mb-1" viewBox="0 0 16 16" style="color: {{$user->verify_color}}">
                                 <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
                             </svg>
                         @endif
@@ -90,10 +90,10 @@
                         <img src="{{$user->avatar}}" class="w-32 rounded-full mt-20">
                     </div>
                 @endif
-                <h2 class="mt-4" style="font-family: 'Rubik', sans-serif; color: #464646; font-weight: 600 ; font-size: 20px; @if($user->name_color) color: {{$user->name_color}}; @endif ">
+                <h2 class="mt-4 flex justify-center items-center" style="font-family: 'Rubik', sans-serif; color: #464646; font-weight: 600 ; font-size: 20px; @if($user->name_color) color: {{$user->name_color}}; @endif ">
                     {{ $user->name }}
                     @if($user->verify == 1)
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-patch-check-fill mb-1" viewBox="0 0 16 16" style="color: {{$user->verify_color}}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="ml-2 mt-1 bi bi-patch-check-fill mb-1" viewBox="0 0 16 16" style="color: {{$user->verify_color}}">
                             <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
                         </svg>
                     @endif
@@ -405,7 +405,7 @@
     </bottom-links-bar>
 
     @if($user->show_logo == true)
-        <footer class="footer-block mt-20 p-5 shadow md:px-6 md:py-8 navbar-fixed-bottom" style="background-color: rgba(0, 0, 0, .5);">
+        <footer class="sticky top-[100vh] footer-block mt-20 p-5 shadow md:px-6 md:py-8 navbar-fixed-bottom" style="background-color: rgba(0, 0, 0, .5);">
             <div class="">
                 <div class="flex justify-center">
                     <a href="http://chrry.me/" class="flex items-center mb-4">

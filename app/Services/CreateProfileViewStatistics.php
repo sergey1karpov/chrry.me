@@ -10,7 +10,7 @@ use Illuminate\Support\Carbon;
 
 class CreateProfileViewStatistics implements StatisticInterface
 {
-    public function __construct(private readonly IpApiConnection $connection) {}
+    public function __construct(private IpApiConnection $connection) {}
 
     /**
      * @param User $user

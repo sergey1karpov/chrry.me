@@ -65,7 +65,7 @@ class Event extends Model
      */
     public function setDesignEventProperties(UpdateEventRequest|EventRequest|Request $request, PropertiesService $propertiesService): void
     {
-        $designProductFields = preg_grep("/^" . EntityPropertiesPrefix::Event->value ."/", array_keys($request->all()));
+        $designProductFields = preg_grep("/^" . EntityPropertiesPrefix::Event ."/", array_keys($request->all()));
         foreach ($designProductFields as $field) {
             $propertiesService->addProperty($field, $request->$field);
         }

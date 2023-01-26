@@ -85,7 +85,7 @@
                                     <tr data-index="{{$link->id}}" data-position="{{$link->position}}">
                                         <td>
                                             <div class="justify-center text-center" data-index="{{$link->id}}" data-position="{{$link->position}}">
-                                                <div class="{{$link->animation}} row card ms-1 me-1 {{$properties['dl_shadow']}}" style="animation-duration: {{$link->animation_speed}}s; background-color:rgba({{$properties['dl_background_color']}}, {{$properties['dl_transparency']}}); border: 0; margin-top: 12px; border-radius: {{$properties['dl_rounded']}}px; background-position: center;">
+                                                <div class="{{$link->animation}} {{$properties['dl_border']}} row card ms-1 me-1 {{$properties['dl_shadow']}}" style="animation-duration: {{$link->animation_speed}}s; border-color: {{$properties['dl_border_color']}}; background-color:rgba({{$properties['dl_background_color']}}, {{$properties['dl_transparency']}}); margin-top: 12px; border-radius: {{$properties['dl_rounded']}}px; background-position: center;">
                                                     <div class="flex align-center justify-between" style="padding-left: 4px; padding-right: 4px">
                                                         <div class="col-span-1 flex items-center flex-none">
                                                             @if($link->icon)

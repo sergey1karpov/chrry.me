@@ -183,7 +183,8 @@ class User extends Authenticatable
                     photo: $request->avatar,
                     path: $this->imgPath($user->id),
                     size: 500,
-                    dropImagePath: $user->avatar
+                    dropImagePath: $user->avatar,
+                    imageType: 'avatar',
                 ) :
                 $user->avatar,
         ]);
@@ -246,7 +247,8 @@ class User extends Authenticatable
                     photo: $request->banner,
                     path: $this->imgPath($user->id),
                     size: 2000,
-                    dropImagePath: $user->banner
+                    dropImagePath: $user->banner,
+                    imageType: 'banner',
                 ) :
                 $user->banner,
         ]);

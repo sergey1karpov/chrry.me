@@ -23,9 +23,9 @@ class EventController extends Controller
     use IconsAndFonts;
 
     public function __construct (
-        private readonly UploadPhotoService $uploadService,
+        private  UploadPhotoService $uploadService,
         public PropertiesService            $propertiesService,
-        private readonly Event              $event,
+        private Event              $event,
     ) {}
 
     /**

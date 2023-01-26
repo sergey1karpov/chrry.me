@@ -103,7 +103,7 @@
                         </button>
                     </div>
                 </form>
-                @if($user->favicon)
+                @if($link->photo)
                     <div class="mt-3">
                         <form action="{{ route('delPhoto', ['user' => Auth::user()->id, 'link' => $link->id]) }}" method="POST"> @csrf @method('PATCH')
                             <input type="hidden" id="photoId{{$link->id}}" value="{{$link->id}}">
@@ -142,7 +142,7 @@
                         </button>
                     </div>
                 </form>
-                @if($user->favicon)
+                @if($link->icon)
                     <div class="mt-3">
                         <form action="{{ route('delLinkIcon', ['user' => Auth::user()->id, 'link' => $link->id]) }}" method="POST"> @csrf @method('PATCH')
                             <input type="hidden" id="linkId{{$link->id}}" value="{{$link->id}}">

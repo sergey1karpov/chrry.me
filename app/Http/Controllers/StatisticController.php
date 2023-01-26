@@ -20,8 +20,8 @@ use Illuminate\Support\Facades\DB;
 class StatisticController extends Controller
 {
     public function __construct (
-        private readonly CreateClickLinkStatistics $linkStatistics,
-        private readonly CreateProductsViewStatistics $productStatistics,
+        private CreateClickLinkStatistics $linkStatistics,
+        private CreateProductsViewStatistics $productStatistics,
     ) {}
 
     public function clickLinkStatistic(User $user, Request $request): RedirectResponse
