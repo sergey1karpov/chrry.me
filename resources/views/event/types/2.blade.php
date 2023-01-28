@@ -1,6 +1,6 @@
 <div class="col-lg-12 allalbums">
     <ul class="list-group list-group-flush">
-        <li class="{{$properties->de_border}} list-group-item list-group-item-action text-center pt-2 pb-2" style="border-color: {{$properties->de_border_color}}; background-color: rgba({{$properties->de_background_color_rgba}}, {{$properties->de_transparency}}); border-radius: {{$properties->de_event_round}}px;">
+        <li class="{{$properties->de_border ?? null}} list-group-item list-group-item-action text-center pt-2 pb-2" style="border-color: {{$properties->de_border_color ?? null}}; background-color: rgba({{$properties->de_background_color_rgba}}, {{$properties->de_transparency}}); border-radius: {{$properties->de_event_round}}px;">
             <div class="row text-center">
                 <div class="col-12 text-center mt-3 mb-3" style="padding: 0">
                     <div class="@if($properties->de_text_position == 'justify-start') ml-2 @endif @if($properties->de_text_position == 'justify-end') mr-2 @endif flex flex-wrap {{$properties->de_text_position}}">

@@ -352,16 +352,28 @@
                                     <div class="mb-10 text-center">
                                         <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Border</label>
                                         <select name="de_border" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
-                                            <option @if($properties->de_border == 'border-0') selected @endif value="border-0">None</option>
-                                            <option @if($properties->de_border == 'border') selected @endif value="border">Border 1</option>
-                                            <option @if($properties->de_border == 'border-2') selected @endif value="border-2">Border 2</option>
-                                            <option @if($properties->de_border == 'border-4') selected @endif value="border-4">Border 4</option>
-                                            <option @if($properties->de_border == 'border-8') selected @endif value="border-8">Border 8</option>
+                                            @if(isset($properties->de_border))
+                                                <option @if($properties->de_border == 'border-0') selected @endif value="border-0">None</option>
+                                                <option @if($properties->de_border == 'border') selected @endif value="border">Border 1</option>
+                                                <option @if($properties->de_border == 'border-2') selected @endif value="border-2">Border 2</option>
+                                                <option @if($properties->de_border == 'border-4') selected @endif value="border-4">Border 4</option>
+                                                <option @if($properties->de_border == 'border-8') selected @endif value="border-8">Border 8</option>
+                                            @else
+                                                <option value="border-0">None</option>
+                                                <option selected value="border">Border 1</option>
+                                                <option value="border-2">Border 2</option>
+                                                <option value="border-4">Border 4</option>
+                                                <option value="border-8">Border 8</option>
+                                            @endif
                                         </select>
                                     </div>
                                     <div class="mb-10 text-center">
                                         <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Border color</label>
-                                        <input type="color" value="{{$properties->de_border_color}}" name="de_border_color" id="logotype_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
+                                        @if(isset($properties->de_border_color))
+                                            <input type="color" value="{{$properties->de_border_color}}" name="de_border_color" id="logotype_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
+                                        @else
+                                            <input type="color" value="#000000" name="de_border_color" id="logotype_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
+                                        @endif
                                     </div>
                                 @endif
                                 <div class="mb-8 text-center">
@@ -683,10 +695,6 @@
                                 <div class="mb-8 text-center">
                                     <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Open card background color</label>
                                     <input type="color" value="{{$properties->de_oc_bg_color}}" name="de_oc_bg_color" id="logotype_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
-                                </div>
-                                <div class="mb-6 text-center">
-                                    <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Ticket button text</label>
-                                    <input name="oc_btn_text" value="{{$event->oc_btn_text}}" maxlength="100" id="title" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
                                 </div>
                                 <div class="mb-8 text-center">
                                     <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Ticket button font</label>

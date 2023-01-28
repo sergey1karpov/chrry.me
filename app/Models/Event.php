@@ -192,7 +192,6 @@ class Event extends Model
         $this->setDesignEventProperties($request, $propertiesService);
 
         Event::where('user_id', $user->id)->update([
-            'oc_btn_text' => $request->oc_btn_text,
             'properties' => serialize($propertiesService->getProperties()),
         ]);
     }
