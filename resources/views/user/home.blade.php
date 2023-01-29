@@ -87,7 +87,7 @@
             @else
                 @if($user->avatar)
                     <div class="flex justify-center">
-                        <img src="{{$user->avatar}}" class="w-32 rounded-full mt-20">
+                        <img src="{{$user->avatar}}" class="w-32 rounded-full mt-3">
                     </div>
                 @endif
                 <h2 class="mt-4 flex justify-center items-center" style="font-family: 'Rubik', sans-serif; color: #464646; font-weight: 600 ; font-size: 20px; @if($user->name_color) color: {{$user->name_color}}; @endif ">
