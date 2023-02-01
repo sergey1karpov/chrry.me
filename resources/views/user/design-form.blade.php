@@ -47,7 +47,7 @@
                         <p class="mt-1 text-sm @if($user->dayVsNight == 1) text-gray-500 @else text-gray-500 @endif" id="avatar">PNG, JPG, JPEG or GIF (MAX Size. 10mb).</p>
                     </div>
                     <div class="mt-3">
-                        <button type="submit" class="mt-2 w-full inline-block rounded-lg px-12 py-2 text-sm font-medium @if($user->dayVsNight == 1) border border-indigo-600 bg-indigo-900 hover:text-indigo-600 focus:outline-none text-gray-300 hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500 @else bg-gray-200 text-indigo-600 @endif">
+                        <button type="submit" class="mt-2 border border-indigo-600 w-full inline-block rounded-lg bg-indigo-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
                             Update avatar
                         </button>
                     </div>
@@ -56,7 +56,7 @@
                     <div class="mt-3">
                         <form action="{{ route('delUserAvatar', ['user' => $user->id, 'type' => 'avatar']) }}" method="POST"> @csrf @method('PATCH')
                             <input id="type-avatar" type="hidden" name="type" value="avatar">
-                            <button type="submit" class=" w-full inline-block rounded-lg px-12 py-2 text-sm font-medium @if($user->dayVsNight == 1) border border-red-600 bg-red-900 hover:text-red-600 focus:outline-none text-gray-300 hover:bg-transparent hover:text-red-600 focus:outline-none focus:ring active:text-red-500 @else bg-gray-200 text-red-600 @endif">
+                            <button type="submit" class="border border-red-600 w-full inline-block rounded-lg bg-red-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-red-600 focus:outline-none focus:ring active:text-red-500">
                                 Delete
                             </button>
                         </form>
@@ -107,7 +107,7 @@
                         </div>
 
                     <div class="mt-3">
-                        <button type="submit" class="mt-2 w-full inline-block rounded-lg px-12 py-2 text-sm font-medium @if($user->dayVsNight == 1) border border-indigo-600 bg-indigo-900 hover:text-indigo-600 focus:outline-none text-gray-300 hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500 @else bg-gray-200 text-indigo-600 @endif">
+                        <button type="submit" class="mt-2 border border-indigo-600 w-full inline-block rounded-lg bg-indigo-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
                             Update logotype
                         </button>
                     </div>
@@ -116,7 +116,7 @@
                     <div class="mt-3">
                         <form action="{{ route('delUserAvatar', ['user' => $user->id, 'type' => 'logotype']) }}" method="POST"> @csrf @method('PATCH')
                             <input id="type-logotype" type="hidden" name="type" value="logotype">
-                            <button type="submit" class=" w-full inline-block rounded-lg px-12 py-2 text-sm font-medium @if($user->dayVsNight == 1) border border-red-600 bg-red-900 hover:text-red-600 focus:outline-none text-gray-300 hover:bg-transparent hover:text-red-600 focus:outline-none focus:ring active:text-red-500 @else bg-gray-200 text-red-600 @endif">
+                            <button type="submit" class="border border-red-600 w-full inline-block rounded-lg bg-red-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-red-600 focus:outline-none focus:ring active:text-red-500">
                                 Delete
                             </button>
                         </form>
@@ -154,8 +154,8 @@
                         </div>
                     </div>
                     <div class="mt-3">
-                        <button type="submit" class="mt-2 w-full inline-block rounded-lg px-12 py-2 text-sm font-medium @if($user->dayVsNight == 1) border border-indigo-600 bg-indigo-900 hover:text-indigo-600 focus:outline-none text-gray-300 hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500 @else bg-gray-200 text-indigo-600 @endif">
-                            Update background image
+                        <button type="submit" class="mt-2 border border-indigo-600 w-full inline-block rounded-lg bg-indigo-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
+                            Change
                         </button>
                     </div>
                 </form>
@@ -178,7 +178,7 @@
                         <p class="mt-1 text-sm @if($user->dayVsNight == 1) text-gray-500 @else text-gray-500 @endif" id="banner">PNG, JPG, JPEG or GIF (MAX Size. 10mb).</p>
                     </div>
                     <div class="mt-3">
-                        <button type="submit" class="mt-2 w-full inline-block rounded-lg px-12 py-2 text-sm font-medium @if($user->dayVsNight == 1) border border-indigo-600 bg-indigo-900 hover:text-indigo-600 focus:outline-none text-gray-300 hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500 @else bg-gray-200 text-indigo-600 @endif">
+                        <button type="submit" class="mt-2 border border-indigo-600 w-full inline-block rounded-lg bg-indigo-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
                             Update background image
                         </button>
                     </div>
@@ -187,7 +187,7 @@
                     <div class="mt-3">
                         <form action="{{ route('delUserAvatar', ['user' => $user->id, 'type' => 'banner']) }}" method="POST"> @csrf @method('PATCH')
                             <input id="type-avatar" type="hidden" name="type" value="avatar">
-                            <button type="submit" class=" w-full inline-block rounded-lg px-12 py-2 text-sm font-medium @if($user->dayVsNight == 1) border border-red-600 bg-red-900 hover:text-red-600 focus:outline-none text-gray-300 hover:bg-transparent hover:text-red-600 focus:outline-none focus:ring active:text-red-500 @else bg-gray-200 text-red-600 @endif">
+                            <button type="submit" class="border border-red-600 w-full inline-block rounded-lg bg-red-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-red-600 focus:outline-none focus:ring active:text-red-500">
                                 Delete
                             </button>
                         </form>
@@ -212,7 +212,7 @@
                         <p class="mt-1 text-sm @if($user->dayVsNight == 1) text-gray-500 @else text-gray-500 @endif" id="favicon">PNG, JPG or GIF (MAX Size. 5mb).</p>
                     </div>
                     <div class="mt-3">
-                        <button type="submit" class="mt-2 w-full inline-block rounded-lg px-12 py-2 text-sm font-medium @if($user->dayVsNight == 1) border border-indigo-600 bg-indigo-900 hover:text-indigo-600 focus:outline-none text-gray-300 hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500 @else bg-gray-200 text-indigo-600 @endif">
+                        <button type="submit" class="mt-2 border border-indigo-600 w-full inline-block rounded-lg bg-indigo-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
                             Update favicon
                         </button>
                     </div>
@@ -221,7 +221,7 @@
                     <div class="mt-3">
                         <form action="{{ route('delUserAvatar', ['user' => $user->id, 'type' => 'favicon']) }}" method="POST"> @csrf @method('PATCH')
                             <input id="type-avatar" type="hidden" name="type" value="avatar">
-                            <button type="submit" class=" w-full inline-block rounded-lg px-12 py-2 text-sm font-medium @if($user->dayVsNight == 1) border border-red-600 bg-red-900 hover:text-red-600 focus:outline-none text-gray-300 hover:bg-transparent hover:text-red-600 focus:outline-none focus:ring active:text-red-500 @else bg-gray-200 text-red-600 @endif">
+                            <button type="submit" class="border border-red-600 w-full inline-block rounded-lg bg-red-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-red-600 focus:outline-none focus:ring active:text-red-500">
                                 Delete
                             </button>
                         </form>
@@ -254,7 +254,7 @@
                         </div>
                     </div>
                     <div class="mt-3">
-                        <button type="submit" class="mt-2 w-full inline-block rounded-lg px-12 py-2 text-sm font-medium @if($user->dayVsNight == 1) border border-indigo-600 bg-indigo-900 hover:text-indigo-600 focus:outline-none text-gray-300 hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500 @else bg-gray-200 text-indigo-600 @endif">
+                        <button type="submit" class="mt-2 border border-indigo-600 w-full inline-block rounded-lg bg-indigo-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
                             Update
                         </button>
                     </div>
@@ -299,7 +299,7 @@
                         <input value="{{$user->round_links_shadow_color}}" type="color" name="round_links_shadow_color" id="round_links_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-[#0f0f0f] dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
                     </div>
                     <div class="mt-3">
-                        <button type="submit" class="mt-2 w-full inline-block rounded-lg px-12 py-2 text-sm font-medium @if($user->dayVsNight == 1) border border-indigo-600 bg-indigo-900 hover:text-indigo-600 focus:outline-none text-gray-300 hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500 @else bg-gray-200 text-indigo-600 @endif">
+                        <button type="submit" class="mt-2 border border-indigo-600 w-full inline-block rounded-lg bg-indigo-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
                             Update
                         </button>
                     </div>
@@ -316,7 +316,7 @@
                         </select>
                     </div>
                     <div class="mt-3">
-                        <button type="submit" class="mt-2 w-full inline-block rounded-lg px-12 py-2 text-sm font-medium @if($user->dayVsNight == 1) border border-indigo-600 bg-indigo-900 hover:text-indigo-600 focus:outline-none text-gray-300 hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500 @else bg-gray-200 text-indigo-600 @endif">
+                        <button type="submit" class="mt-2 border border-indigo-600 w-full inline-block rounded-lg bg-indigo-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
                             Update
                         </button>
                     </div>

@@ -61,7 +61,7 @@
                                 @elseif($link->icon == false && $link->photo == true)
                                     <img class="mt-1 mb-1" src="{{'../../'.$link->photo}}" style="width:50px; border-radius: {{$properties->dl_rounded}}px;">
                                 @else
-                                    <img src="https://digiltable.com/wp-content/uploads/edd/2021/09/Sexy-lady-logo-Pornhub-logo.png" style="width:50px; border-radius: {{$properties['dl_rounded']}}px; opacity: 0;">
+                                    <img src="https://digiltable.com/wp-content/uploads/edd/2021/09/Sexy-lady-logo-Pornhub-logo.png" style="width:50px; border-radius: {{$properties->dl_rounded}}px; opacity: 0;">
                                 @endif
                             </div>
                         </div>
