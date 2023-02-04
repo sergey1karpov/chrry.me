@@ -68,7 +68,7 @@ class AuthenticatedSessionController extends Controller
      */
     public static function generateHash(User $user)
     {
-        $hash = UserObserver::flush();
+        $hash = rand();
 
         UserHash::updateOrCreate(
             ['user_id' =>  $user->id],
