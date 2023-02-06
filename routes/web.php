@@ -9,6 +9,7 @@ use App\Http\Controllers\NfcController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\QRCodeController;
 use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -63,6 +64,10 @@ Route::middleware(['web', 'root', 'locale'])->group(function () {
             Route::patch('/change-theme', [UserController::class, 'changeTheme'])->name('changeTheme');
             Route::get('/statistic', [UserController::class, 'getStats'])->name('getStats');
             Route::get('/statistic/filter-stat', [UserController::class, 'profileFilterStatistic'])->name('profileFilterStatistic');
+
+            Route::get('/qrcode-settings', [QRCodeController::class, 'setQrSettingsForm'])->name('setQrSettingsForm');
+            Route::post('/qrcode-generate', [QRCodeController::class, 'generateQrCode'])->name('generateQrCode');
+            Route::get('/qrcode-download', [QRCodeController::class, 'qrDownload'])->name('qrDownload');
         });
 
         Route::get('/market-settings', [ShopController::class, 'marketSettingsForm'])->name('marketSettingsForm');

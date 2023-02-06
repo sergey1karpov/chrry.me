@@ -17,6 +17,7 @@
         "laravel/tinker": "^2.7",
         "maatwebsite/excel": "^3.1",
         "psr/simple-cache": "2.0",
+        "simplesoftwareio/simple-qrcode": "^4.2",
         "snapappointments/bootstrap-select": "^1.13",
         "socialiteproviders/vkontakte": "^5.0",
         "socialiteproviders/yandex": "^4.1",
