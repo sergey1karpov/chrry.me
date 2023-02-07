@@ -67,7 +67,9 @@ Route::middleware(['web', 'root', 'locale'])->group(function () {
 
             Route::get('/qrcode-settings', [QRCodeController::class, 'setQrSettingsForm'])->name('setQrSettingsForm');
             Route::post('/qrcode-generate', [QRCodeController::class, 'generateQrCode'])->name('generateQrCode');
+            Route::post('/qrcode-upload-logo', [QRCodeController::class, 'uploadLogotype'])->name('uploadLogotype');
             Route::get('/qrcode-download', [QRCodeController::class, 'qrDownload'])->name('qrDownload');
+            Route::patch('/qrcode-drop-logo', [QRCodeController::class, 'dropQrLogotype'])->name('dropQrLogotype');
         });
 
         Route::get('/market-settings', [ShopController::class, 'marketSettingsForm'])->name('marketSettingsForm');

@@ -29,16 +29,44 @@
 
     <div class="m-5 flex justify-center drop-shadow-lg">
         @if($user->qrCode)
-            {!! $user->qrCode->code !!}
+        <img src="{{'/'.$user->qrCode->code}}" width="300">
         @endif
     </div>
     <div class="m-5 flex justify-center drop-shadow-lg">
         @if($user->qrCode)
-            <a href="{{ route('qrDownload', ['user' => $user->id]) }}">Download QR</a>
+            <a class="font-semibold text-gray-900 underline dark:text-indigo-600 decoration-indigo-600" href="{{ route('qrDownload', ['user' => $user->id]) }}">Download QrCode (PNG)</a>
         @endif
     </div>
 
-
+    <section class="flex justify-center m-5">
+        <div class="sm:mt-12 w-full">
+            <div class="mx-auto max-w-screen-xl sm:px-6 lg:px-8 mt-20 mb-20">
+                @if($user->qrCode->logotype)
+                    <div class="flex justify-center mb-10">
+                        <img src="{{ '/'.$user->qrCode->logotype }}" width="200">
+                    </div>
+                @endif
+                <form action="{{ route('uploadLogotype', ['user' => $user->id]) }}" method="post" enctype="multipart/form-data"> @csrf
+                    <div class="mb-3 text-center">
+                        <input name="logo" class="mt-3 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400" aria-describedby="avatar" id="avatar" type="file">
+                        <p class="mt-1 text-sm @if($user->dayVsNight == 1) text-gray-500 @else text-gray-500 @endif" id="avatar">Only PNG (MAX Size. 10mb).</p>
+                    </div>
+                    <button type="submit" class="mt-3 border border-indigo-600 w-full inline-block rounded-lg bg-indigo-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
+                        Upload file
+                    </button>
+                </form>
+                @if($user->qrCode->logotype)
+                    <div class="mt-3">
+                        <form action="{{ route('dropQrLogotype', ['user' => $user->id, 'type' => 'avatar']) }}" method="POST"> @csrf @method('PATCH')
+                            <button type="submit" class="border border-red-600 w-full inline-block rounded-lg bg-red-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-red-600 focus:outline-none focus:ring active:text-red-500">
+                                Delete
+                            </button>
+                        </form>
+                    </div>
+                @endif
+            </div>
+        </div>
+    </section>
 
     <section class="flex justify-center m-5">
         <div class="sm:mt-12 w-full">
@@ -194,6 +222,10 @@
                             <option value="round">Round</option>
                         </select>
                     </div>
+                    @if($user->qrCode->logotype)
+                        <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Size logo</label>
+                        <input id="steps-range" type="range" name="logo_size" min="0.1" max="0.9" step="0.1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
+                    @endif
                     <button type="submit" class="mt-8 border border-indigo-600 w-full inline-block rounded-lg bg-indigo-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
                         Generate QrCode
                     </button>
