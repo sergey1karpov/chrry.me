@@ -8,4 +8,5 @@ class EntityPropertiesPrefix
     const Product = 'dp_';
     const Event = 'de_';
     const Link = 'dl_';
+    const User = 'du_';
 }

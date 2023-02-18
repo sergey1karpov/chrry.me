@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\EntityPropertiesPrefix;
 use App\Http\Requests\AvatarRequest;
 use App\Http\Requests\BackgroundRequest;
 use App\Http\Requests\FaviconRequest;
@@ -9,6 +10,7 @@ use App\Http\Requests\ImgRequest;
 use App\Http\Requests\LogotypeRequest;
 use App\Http\Requests\UpdateRegisteruserRequest;
 use App\Services\ColorConvertorService;
+use App\Services\PropertiesService;
 use App\Services\UploadPhotoService;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -29,37 +31,14 @@ class User extends Authenticatable
         'password',
         'slug',
         'description',
-        'name_color',
-        'description_color',
-        'verify_color',
-        'banner',
-        'avatar',
         'is_active',
         'locale',
         'type',
-        'show_social',
-        'social',
-        'favicon',
         'dayVsNight',
-        'vk_id',
-        'yandex_id',
         'social_links_bar',
         'show_logo',
         'links_bar_position',
-        'background_color_rgb',
-        'logotype',
-        'logotype_size',
-        'logotype_shadow_right',
-        'logotype_shadow_bottom',
-        'logotype_shadow_round',
-        'logotype_shadow_color',
         'avatar_vs_logotype',
-        'round_links_width',
-        'round_links_shadow_right',
-        'round_links_shadow_bottom',
-        'round_links_shadow_round',
-        'round_links_shadow_color',
-        'navigation_color',
         'two_factor_auth',
     ];
 
@@ -71,6 +50,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * UserSettings hasOne relation
+     *
+     * @return HasOne
+     */
+    public function settings(): HasOne
+    {
+        return $this->hasOne(UserSettings::class);
+    }
 
     public function eventSettings()
     {
@@ -143,6 +132,21 @@ class User extends Authenticatable
     }
 
     /**
+     * @field_prefix dl_
+     * @param LogotypeRequest|Request $request
+     * @param PropertiesService $propertiesService
+     * @return void
+     */
+    public function setDesignLinkProperties(LogotypeRequest|Request $request, PropertiesService $propertiesService): void
+    {
+        $designProductFields = preg_grep("/^" . EntityPropertiesPrefix::User ."/", array_keys($request->all()));
+        //Тут соеденить поля?
+        foreach ($designProductFields as $field) {
+            $propertiesService->addProperty($field, $request->$field);
+        }
+    }
+
+    /**
      * Edit user profile
      *
      * @param User $user
@@ -158,18 +162,15 @@ class User extends Authenticatable
             'slug'              => $request->slug ?? $user->slug,
             'locale'            => $request->locale,
             'type'              => $request->type,
-//            'show_social'       => $request->show_social ?? $user->show_social,
-//            'social'            => $request->social ?? $user->social,
-            'background_color_rgb' => isset($request->background_color) ? ColorConvertorService::convertBackgroundColor($request->background_color) : $user->background_color_rgb,
         ]);
 
         if($request->type == 'Events') {
             $this->createDefaultEventSettings($user);
         }
 
-//        if($request->type == 'Market') {
-//            $this->createDefaultMarketSettings($user->id);
-//        }
+        if($request->type == 'Market') {
+            $this->createDefaultMarketSettings($user->id);
+        }
     }
 
     /**
@@ -180,19 +181,23 @@ class User extends Authenticatable
      * @param UploadPhotoService $uploadService
      * @return void
      */
-    public function updateAvatar(User $user, AvatarRequest $request, UploadPhotoService $uploadService)
+    public function updateAvatar(User $user, AvatarRequest $request, UploadPhotoService $uploadService): void
     {
-        User::where('id', $user->id)->update([
-            'avatar' => isset($request->avatar) ?
-                $uploadService->savePhoto(
-                    photo: $request->avatar,
-                    path: $this->imgPath($user->id),
-                    size: 500,
-                    dropImagePath: $user->avatar,
-                    imageType: 'avatar',
-                ) :
-                $user->avatar,
-        ]);
+        UserSettings::updateOrCreate(
+            ['user_id' => $user->id],
+            [
+                'user_id' => $user->id,
+                'avatar' => isset($request->avatar) ?
+                    $uploadService->savePhoto(
+                        photo: $request->avatar,
+                        path: $this->imgPath($user->id),
+                        size: 500,
+                        dropImagePath: $user->settings->avatar,
+                        imageType: 'avatar',
+                    ) :
+                    $user->settings->avatar,
+            ]
+        );
     }
 
     /**
@@ -201,25 +206,28 @@ class User extends Authenticatable
      * @param User $user
      * @param LogotypeRequest $request
      * @param UploadPhotoService $uploadService
+     * @param PropertiesService $propertiesService
      * @return void
      */
-    public function updateLogotype(User $user, LogotypeRequest $request, UploadPhotoService $uploadService)
+    public function updateLogotype(User $user, LogotypeRequest $request, UploadPhotoService $uploadService, PropertiesService $propertiesService): void
     {
-        User::where('id', $user->id)->update([
-            'logotype'           => isset($request->logotype) ?
-                $uploadService->saveUserLogotype(
-                    photo: $request->logotype,
-                    size: 500,
-                    path: $this->imgPath($user->id),
-                    dropImagePath: $user->logotype,
-                ) :
-                $user->logotype,
-            'logotype_size' => $request->logotype_size,
-            'logotype_shadow_right' => $request->logotype_shadow_right,
-            'logotype_shadow_bottom' => $request->logotype_shadow_bottom,
-            'logotype_shadow_round' => $request->logotype_shadow_round,
-            'logotype_shadow_color' => $request->logotype_shadow_color,
-        ]);
+        $this->setDesignLinkProperties($request, $propertiesService);
+
+        UserSettings::updateOrCreate(
+            ['user_id' => $user->id],
+            [
+                'user_id'  => $user->id,
+                'logotype' => isset($request->logotype) ?
+                    $uploadService->saveUserLogotype(
+                        photo: $request->logotype,
+                        size: 500,
+                        path: $this->imgPath($user->id),
+                        dropImagePath: $user->settings->logotype,
+                    ) :
+                    $user->settings->logotype,
+                'properties' => serialize($propertiesService->getProperties())
+            ]
+        );
     }
 
     /**
@@ -229,7 +237,7 @@ class User extends Authenticatable
      * @param Request $request
      * @return void
      */
-    public function updateAvatarVsLogotype(User $user, Request $request)
+    public function updateAvatarVsLogotype(User $user, Request $request): void
     {
         User::where('id', $user->id)->update([
             'avatar_vs_logotype' => $request->avatar_vs_logotype,
@@ -246,17 +254,21 @@ class User extends Authenticatable
      */
     public function updateBackgroundImage(User $user, BackgroundRequest $request, UploadPhotoService $uploadService)
     {
-        User::where('id', $user->id)->update([
-            'banner' => isset($request->banner) ?
-                $uploadService->savePhoto(
-                    photo: $request->banner,
-                    path: $this->imgPath($user->id),
-                    size: 2000,
-                    dropImagePath: $user->banner,
-                    imageType: 'banner',
-                ) :
-                $user->banner,
-        ]);
+        UserSettings::updateOrCreate(
+            ['user_id' => $user->id],
+            [
+                'user_id' => $user->id,
+                'banner' => isset($request->banner) ?
+                    $uploadService->savePhoto(
+                        photo: $request->banner,
+                        path: $this->imgPath($user->id),
+                        size: 2000,
+                        dropImagePath: $user->settings->banner,
+                        imageType: 'banner',
+                    ) :
+                    $user->settings->banner,
+            ]
+        );
     }
 
     /**
@@ -265,34 +277,41 @@ class User extends Authenticatable
      * @param UploadPhotoService $uploadService
      * @return void
      */
-    public function updateFavicon(User $user, FaviconRequest $request, UploadPhotoService $uploadService)
+    public function updateFavicon(User $user, FaviconRequest $request, UploadPhotoService $uploadService): void
     {
-        User::where('id', $user->id)->update([
-            'favicon' => isset($request->favicon) ?
-                $uploadService->savePhoto(
-                    photo: $request->favicon,
-                    path: $this->imgPath($user->id),
-                    size: 40,
-                    dropImagePath: $user->favicon
-                ) :
-                $user->favicon,
-        ]);
+        UserSettings::updateOrCreate(
+            ['user_id' => $user->id],
+            [
+                'user_id' => $user->id,
+                'favicon' => isset($request->favicon) ?
+                    $uploadService->savePhoto(
+                        photo: $request->favicon,
+                        path: $this->imgPath($user->id),
+                        size: 40,
+                        dropImagePath: $user->settings->favicon
+                    ) :
+                    $user->settings->favicon,
+            ]
+        );
     }
 
-    public function updateColors(User $user, Request $request)
+    public function updateDesignSettings(User $user, Request $request, PropertiesService $propertiesService)
     {
+//        $request->add([
+//            'de_background_color_rgba' => ColorConvertorService::convertBackgroundColor($this->request->get('de_background_color_hex')),
+//            'de_background_color_hex' => $this->request->get('de_background_color_hex'),
+//        ]);
+
+        dd($request);
+
+        $this->setDesignLinkProperties($request, $propertiesService);
+
         User::where('id', $user->id)->update([
             'background_color'  => $request->background_color,
             'name_color'        => $request->name_color,
             'description_color' => $request->description_color,
             'verify_color'      => $request->verify_color,
             'navigation_color'  => $request->navigation_color,
-        ]);
-    }
-
-    public function updateSocialBar(User $user, Request $request)
-    {
-        User::where('id', $user->id)->update([
             'social_links_bar'  => $request->social_links_bar,
             'links_bar_position' => $request->links_bar_position,
             'round_links_width' => $request->round_links_width,
@@ -300,12 +319,6 @@ class User extends Authenticatable
             'round_links_shadow_bottom' => $request->round_links_shadow_bottom,
             'round_links_shadow_round' => $request->round_links_shadow_round,
             'round_links_shadow_color' => $request->round_links_shadow_color,
-        ]);
-    }
-
-    public function updateChrryLogo(User $user, Request $request)
-    {
-        User::where('id', $user->id)->update([
             'show_logo' => $request->show_logo,
         ]);
     }
@@ -369,9 +382,9 @@ class User extends Authenticatable
      */
     public function deleteUserImages(User $user, string $type, UploadPhotoService $uploadService): void
     {
-        User::where('id', $user->id)->update([$type => null]);
+        $uploadService->deletePhotoFromFolder($user->settings->$type);
 
-        $uploadService->deletePhotoFromFolder($user->$type);
+        UserSettings::where('user_id', $user->id)->update([$type => null]);
     }
 
     /**

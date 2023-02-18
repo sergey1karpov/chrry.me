@@ -29,8 +29,8 @@ class LinkController extends Controller
     public function __construct(
         private UploadPhotoService $uploadService,
         private StatsService       $statsService,
-        public PropertiesService            $propertiesService,
-        public Link                         $link
+        public PropertiesService   $propertiesService,
+        public Link                $link
     ) {}
 
     /**

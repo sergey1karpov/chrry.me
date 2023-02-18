@@ -12,8 +12,8 @@
 
                     <a type="button" class="group flex shrink-0 items-center rounded-lg transition" href="{{ route('userHomePage', ['user' => $user->slug]) }}">
                         <span class="sr-only">Menu</span>
-                        @if($user->avatar)
-                            <img alt="Man" src="{{ '/'.$user->avatar }}" class="h-10 w-10 rounded-full object-cover"/>
+                        @if($user->settings->avatar)
+                            <img alt="Man" src="{{ '/'.$user->settings->avatar }}" class="h-10 w-10 rounded-full object-cover"/>
                         @else
                             <img alt="Man" src="https://camo.githubusercontent.com/eb6a385e0a1f0f787d72c0b0e0275bc4516a261b96a749f1cd1aa4cb8736daba/68747470733a2f2f612e736c61636b2d656467652e636f6d2f64663130642f696d672f617661746172732f6176615f303032322d3531322e706e67" class="h-10 w-10 rounded-full object-cover"/>
                         @endif
@@ -28,12 +28,12 @@
     </div>
 
     <div class="m-5 flex justify-center drop-shadow-lg">
-        @if($user->qrCode)
-        <img src="{{'/'.$user->qrCode->code}}" width="300">
+        @if($user->qrCode->code)
+            <img src="{{'/'.$user->qrCode->code}}" width="300">
         @endif
     </div>
     <div class="m-5 flex justify-center drop-shadow-lg">
-        @if($user->qrCode)
+        @if($user->qrCode->code)
             <a class="font-semibold text-gray-900 underline dark:text-indigo-600 decoration-indigo-600" href="{{ route('qrDownload', ['user' => $user->id]) }}">Download QrCode (PNG)</a>
         @endif
     </div>

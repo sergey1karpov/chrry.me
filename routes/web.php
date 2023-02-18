@@ -55,9 +55,7 @@ Route::middleware(['web', 'root', 'locale'])->group(function () {
             Route::patch('/updateAvatarVsLogotype', [UserController::class, 'updateAvatarVsLogotype'])->name('updateAvatarVsLogotype');
             Route::patch('/updateBackgroundImage', [UserController::class, 'updateBackgroundImage'])->name('updateBackgroundImage');
             Route::patch('/updateFavicon', [UserController::class, 'updateFavicon'])->name('updateFavicon');
-            Route::patch('/updateColors', [UserController::class, 'updateColors'])->name('updateColors');
-            Route::patch('/updateSocialBar', [UserController::class, 'updateSocialBar'])->name('updateSocialBar');
-            Route::patch('/updateChrryLogo', [UserController::class, 'updateChrryLogo'])->name('updateChrryLogo');
+            Route::patch('/updateDesignSettings', [UserController::class, 'updateDesignSettings'])->name('updateDesignSettings');
             Route::patch('/updatePassword', [UserController::class, 'updatePassword'])->name('updatePassword');
             Route::patch('/updateTwoFactorAuth', [UserController::class, 'updateTwoFactorAuth'])->name('updateTwoFactorAuth');
             Route::patch('/{type}/del', [UserController::class, 'delUserAvatar'])->name('delUserAvatar');

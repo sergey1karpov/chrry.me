@@ -36,25 +36,25 @@
             <div class="flex flex-col items-center justify-center h-screen">
                 @if (Route::has('login'))
                     @auth
-                        <div class="nav-item">
-                            <a class="text-white text-base font-medium" aria-current="page" href="{{ route('userHomePage',  ['user' => Auth::user()->slug]) }}">{{Auth::user()->slug}}</a>
+                        <div class="nav-item mb-1">
+                            <a class="text-white text-2xl font-medium" aria-current="page" href="{{ route('userHomePage',  ['user' => Auth::user()->slug]) }}">{{Auth::user()->slug}}</a>
                         </div>
                         <div class="nav-item">
-                            <a class="text-white text-base font-medium" aria-current="page" href="{{ route('editProfileForm',  ['user' => Auth::user()->id]) }}">Домой</a>
+                            <a class="text-white text-2xl font-medium" aria-current="page" href="{{ route('editProfileForm',  ['user' => Auth::user()->id]) }}">Settings</a>
                         </div>
                         <div class="nav-item d-flex justify-content-center">
                             <form class="text-center" method="POST" action="{{ route('logout') }}">
                                 @csrf
-                                <button class="text-white text-base font-medium">Выход</button>
+                                <button class="text-white text-2xl font-medium">Exit</button>
                             </form>
                         </div>
                     @else
                         <div class="nav-item">
-                            <a class="text-red-500" aria-current="page" href="{{ route('login') }}">Войти</a>
+                            <a class="text-white text-2xl font-medium" aria-current="page" href="{{ route('login') }}">LogIn</a>
                         </div>
                         @if (Route::has('register'))
                             <div class="nav-item mt-2">
-                                <a class="text-red-500" aria-current="page" href="{{ route('register') }}">Регистрация</a>
+                                <a class="text-white text-2xl font-medium" aria-current="page" href="{{ route('register') }}">Register</a>
                             </div>
                         @endif
                     @endauth
@@ -69,7 +69,7 @@
                         <img src="https://i.ibb.co/HBYTmyj/2.png" class="img ml-5" width="100">
                     </p>
                     <h1 class="mt-3 ml-5 mr-5 text-[48px] font-bold leading-[4rem] tracking-tight text-white" style="line-height: 1.05; letter-spacing: -0.02em; font-family: 'Open Sans', sans-serif;">Засуньте все свои ссылки в одно место..</h1>
-                    <p class="mt-6 ml-5 mr-5 text-lg font-medium leading-relaxed text-gray-100 opacity-85" style="line-height: 1.05; letter-spacing: -0.04em;">Создайте сервис мультиссылок или афишу со своим уникальным дизайном. Отслеживайте статистику по просмотрам профиля и кликам. Вкусно кушайте!</p>
+                    <p class="mt-6 ml-5 mr-5 text-lg font-medium leading-relaxed text-gray-100 opacity-85" style="line-height: 1.05; letter-spacing: -0.04em;">Создайте сервис мультиссылок или афишу со своим уникальным дизайном. Отслеживайте статистику по просмотрам профиля и кликам. Генерируйте красивые QR коды со ссылокой на свою страницу и вкусно кушайте!</p>
                 </div>
 
                 <div class="mt-6 ml-5 flex items-center justify-start gap-4">
@@ -83,8 +83,8 @@
         <div class="flex flex-col w-full overflow-x-hidden bg-[#FCC7D1]">
             <div class="mx-auto max-w-[43rem]">
                 <div class="text-start">
-                    <h1 class="mt-6 ml-5 mr-5 text-[2.5rem] font-bold leading-[4rem] tracking-tight text-[#3A273B]" style="line-height: 1.05; letter-spacing: -0.02em; font-family: 'Open Sans', sans-serif;">Ссылки</h1>
-                    <p class="mt-6 ml-5 mr-5 text-lg font-medium leading-relaxed opacity-85 text-[#3A273B]" style="line-height: 1.05; letter-spacing: -0.04em;">Вы можете добавить более 50 ссылок. В качестве изображения загружайте обычные картинки, гифки или иконки из нашей коллекции. Широкие возможности кастомизации ссылок. Отслеживайте каждый уникальный клик по вашей ссылке</p>
+                    <h1 class="mt-20 ml-5 mr-5 text-[2.5rem] font-bold leading-[4rem] tracking-tight text-[#3A273B]" style="line-height: 1.05; letter-spacing: -0.02em; font-family: 'Open Sans', sans-serif;">Ссылки</h1>
+                    <p class="mt-6 ml-5 mr-5 text-lg font-medium leading-relaxed opacity-85 text-[#3A273B]" style="line-height: 1.05; letter-spacing: -0.04em;">Вы можете добавить более 50 ссылок. В качестве изображения загружайте обычные картинки, гифки или иконки из нашей коллекции. Широкие возможности кастомизации ссылок. Отслеживайте каждый уникальный клик</p>
                 </div>
 
                 <navigation>
@@ -92,11 +92,11 @@
 
 
                                 <div class="flex justify-center">
-                                    <img src="https://i.ibb.co/3k2SWbt/giphy-1-1.gif" class="w-32 rounded-full mt-3">
+                                    <img src="https://i.ibb.co/zVG3p57/exercise-1.gif" class="w-32 rounded-full mt-3">
                                 </div>
 
                             <h2 class="mt-5 flex justify-center items-center" style="font-family: 'Rubik', sans-serif; font-weight: 600 ; font-size: 20px; color: white; ">
-                                Jack Black
+                                Arnold Schwarzenegger
 
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="ml-2 mt-1 bi bi-patch-check-fill mb-1" viewBox="0 0 16 16" style="color: dodgerblue">
                                         <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
@@ -221,7 +221,7 @@
                     </div>
                 </div>
 
-                <div class="mb-10 mx-auto max-w-screen-xl px-4 pt-4 sm:px-6 lg:px-8">
+                <div class="mb-20 mx-auto max-w-screen-xl px-4 pt-4 sm:px-6 lg:px-8">
                     <div class="group block">
                         <table class="table w-full">
                             <tbody>
@@ -232,7 +232,7 @@
                                             <div class="border-4 shadow-lg border-white row card ms-1 me-1" style="animation-duration: 2s; background-color: rgba(255, 255, 128, .5); border-radius: 50px; background-position: center;">
                                                 <div class="flex align-center justify-between" style="padding-left: 4px; padding-right: 4px">
                                                     <div class="col-span-1 flex items-center flex-none">
-                                                        <img class="mt-1 mb-1" src="https://media1.giphy.com/media/qwLObm1ctXSN2UptC6/giphy.gif?cid=790b7611c229f6c040343965a39b315874cb98f6643c1df6&rid=giphy.gif&ct=s" style="width:50px; border-radius: 50px;">
+                                                        <img class="mt-1 mb-1" src="https://media3.giphy.com/media/kg1WHzX4DktONZ1HSI/giphy.webp?cid=ecf05e47yoeqnh5yz0l9ze3syhjwuj0c0xl5or04seqa3fb7&rid=giphy.webp&ct=g" style="width:50px; border-radius: 50px;">
                                                     </div>
                                                     <button type="submit" style="border: 0; padding: 0; background-color: rgba(0, 125, 215, 0);">
                                                         <div class="col-span-10 text-center flex items-center">
@@ -265,11 +265,11 @@
         <div class="flex flex-col w-full overflow-x-hidden bg-[#FEE3A2]">
             <div class="mx-auto max-w-[43rem]">
                 <div class="text-start">
-                    <h1 class="mt-6 ml-5 mr-5 text-[2.5rem] font-bold leading-[4rem] tracking-tight text-[#538736]" style="line-height: 1.05; letter-spacing: -0.02em; font-family: 'Open Sans', sans-serif;">Афиша</h1>
+                    <h1 class="mt-20 ml-5 mr-5 text-[2.5rem] font-bold leading-[4rem] tracking-tight text-[#538736]" style="line-height: 1.05; letter-spacing: -0.02em; font-family: 'Open Sans', sans-serif;">Афиша</h1>
                     <p class="mt-6 ml-5 mr-5 text-lg font-medium leading-relaxed text-[#538736] opacity-85" style="line-height: 1.05; letter-spacing: -0.04em;">Идеальное решение для музыкантов. Создайте список своих событий, придайте им уникальный дизайн и поделитесь ссылкой на профиль со своими фанами. </p>
                 </div>
 
-                <div class="px-5 col-lg-12 allalbums mt-8 drop-shadow-md animate__animated animate__pulse animate__infinite infinite" style="animation-duration: 2s;">
+                <div class="px-5 col-lg-12 allalbums mt-12 drop-shadow-md animate__animated animate__pulse animate__infinite infinite" style="animation-duration: 2s;">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item list-group-item-action text-center">
                             <article class="overflow-hidden shadow transition " style="border-radius: 15px;">
@@ -297,7 +297,7 @@
                     </ul>
                 </div>
 
-                <div class="px-5 mb-10 mt-8 col-lg-12 allalbums drop-shadow-md">
+                <div class="px-5 mb-20 mt-8 col-lg-12 allalbums drop-shadow-md">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item list-group-item-action text-center" style="border-radius: 15px;">
                             <div href="#" class="relative block overflow-hidden bg-[url(https://www.castlerock.ru/upload/iblock/734/734255d58e2a6bb1e411c59970002214.jpg)] bg-cover bg-center bg-no-repeat" style="border-radius: 15px;">

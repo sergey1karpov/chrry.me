@@ -9,11 +9,14 @@ use App\Http\Requests\FaviconRequest;
 use App\Http\Requests\LogotypeRequest;
 use App\Jobs\ProfileViewJob;
 use App\Models\User;
+use App\Services\PropertiesService;
 use App\Services\UploadPhotoService;
 use App\Http\Requests\UpdateRegisteruserRequest;
 use App\Services\StatsService;
 use App\Services\CreateProfileViewStatistics;
 use App\Traits\IconsAndFonts;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
@@ -29,6 +32,7 @@ class UserController extends Controller
         private UploadPhotoService          $uploadService,
         private StatsService                $statsService,
         private CreateProfileViewStatistics $statistics,
+        public PropertiesService            $propertiesService,
     ) {}
 
     /**
@@ -98,22 +102,50 @@ class UserController extends Controller
         return response()->json('changed');
     }
 
+    /**
+     * User profile settings forms
+     *
+     * @param User $user
+     * @return View
+     */
     public function profileSettingsForm(User $user): View
     {
         return view('user.profile-form', compact('user'));
     }
 
+    /**
+     * Profile design settings forms
+     *
+     * @param User $user
+     * @return View
+     */
     public function designSettingsForm(User $user): View
     {
-        return view('user.design-form', compact('user'));
+        return view('user.design-form', [
+            'user' => $user,
+            'properties' => (object) unserialize($user->settings->properties),
+        ]);
     }
 
-    public function getStats(User $user)
+    /**
+     * Profile view stats
+     *
+     * @param User $user
+     * @return Application|Factory|\Illuminate\Contracts\View\View
+     */
+    public function getStats(User $user): \Illuminate\Contracts\View\View|Factory|Application
     {
         return view('statistic.user_profile', compact('user'));
     }
 
-    public function profileFilterStatistic(User $user, Request $request)
+    /**
+     * Filtered user profile view stats
+     *
+     * @param User $user
+     * @param Request $request
+     * @return Application|Factory|\Illuminate\Contracts\View\View
+     */
+    public function profileFilterStatistic(User $user, Request $request): \Illuminate\Contracts\View\View|Factory|Application
     {
         $request->validate([
             'from' => 'required',
@@ -125,60 +157,88 @@ class UserController extends Controller
         return view('statistic.user_profile', compact('user', 'stats'));
     }
 
-    public function updateAvatar(User $user, AvatarRequest $request)
+    /**
+     * Update user avatar
+     *
+     * @param User $user
+     * @param AvatarRequest $request
+     * @return RedirectResponse
+     */
+    public function updateAvatar(User $user, AvatarRequest $request): RedirectResponse
     {
         $user->updateAvatar($user, $request, $this->uploadService);
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Avatar updated successfully');
     }
 
+    /**
+     * Update user logotype
+     *
+     * @param User $user
+     * @param LogotypeRequest $request
+     * @return RedirectResponse
+     */
     public function updateLogotype(User $user, LogotypeRequest $request)
     {
-        $user->updateLogotype($user, $request, $this->uploadService);
+        $user->updateLogotype($user, $request, $this->uploadService, $this->propertiesService);
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Logotype updated successfully');
     }
 
-    public function updateAvatarVsLogotype(User $user, Request $request)
+    /**
+     * Avatar vs. Logotype
+     *
+     * @param User $user
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function updateAvatarVsLogotype(User $user, Request $request): RedirectResponse
     {
         $user->updateAvatarVsLogotype($user, $request);
 
-        return redirect()->back();
+        return redirect()->back()->with('success', $request->avatar_vs_logotype . ' is publish');
     }
 
-    public function updateBackgroundImage(User $user, BackgroundRequest $request)
+    /**
+     * Update bg image
+     *
+     * @param User $user
+     * @param BackgroundRequest $request
+     * @return RedirectResponse
+     */
+    public function updateBackgroundImage(User $user, BackgroundRequest $request): RedirectResponse
     {
         $user->updateBackgroundImage($user, $request, $this->uploadService);
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Background image updated successfully');;
     }
 
-    public function updateFavicon(User $user, FaviconRequest $request)
+    /**
+     * Update favicon
+     *
+     * @param User $user
+     * @param FaviconRequest $request
+     * @return RedirectResponse
+     */
+    public function updateFavicon(User $user, FaviconRequest $request): RedirectResponse
     {
         $user->updateFavicon($user, $request, $this->uploadService);
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Favicon updated successfully');
     }
 
-    public function updateColors(User $user, Request $request)
+    /**
+     * Update user design settings
+     *
+     * @param User $user
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function updateDesignSettings(User $user, Request $request): RedirectResponse
     {
-        $user->updateColors($user, $request);
+        $user->updateDesignSettings($user, $request, $this->propertiesService);
 
-        return redirect()->back();
-    }
-
-    public function updateSocialBar(User $user, Request $request)
-    {
-        $user->updateSocialBar($user, $request);
-
-        return redirect()->back();
-    }
-
-    public function updateChrryLogo(User $user, Request $request)
-    {
-        $user->updateChrryLogo($user, $request);
-
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Settings updated successfully');
     }
 
     /**
