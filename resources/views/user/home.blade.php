@@ -4,9 +4,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{$user->name}}</title>
+    <title>{{$user->seo->title ?? $user->name}}</title>
+    @if(isset($user->seo->description))
+        <meta name="description" content="{{ $user->seo->description }}" />
+    @endif
 
-    <link rel="icon" type="image/x-icon" href="{{$user->favicon}}">
+    @if(isset($user->seo->keywords))
+        <meta name="keywords" content="{{ implode(', ', unserialize($user->seo->keywords)) }}" />
+    @endif
+
+    <link rel="icon" type="image/x-icon" href="{{$user->settings->favicon}}">
 
     <!-- Tailwind Css -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -36,14 +43,14 @@
     <x-embed-styles />
 
     <style type="text/css">
-        @if($user->banner)
+        @if($user->settings->banner)
 	        	body {
-            background: url({{ $user->banner }}) no-repeat center center fixed;
+            background: url({{ $user->settings->banner }}) no-repeat center center fixed;
             background-size: cover;
         }
-        @elseif($user->banner == null & $user->background_color != null)
+        @elseif($user->settings->banner == null & $user->settings->background_color != null)
 				body {
-            background-color: {{$user->background_color}};
+            background-color: {{$user->settings->background_color}};
         }
         @endif
     </style>
@@ -69,16 +76,24 @@
     </header>
 
     <navigation>
-        <div class="text-center mb-2">
-            @if($user->avatar_vs_logotype == 'Logotype')
-                <div class="flex justify-center">
-                    <img src="{{$user->logotype}}" class="pl-3 pr-3" width="{{$user->logotype_size}}" style="filter: drop-shadow({{$user->logotype_shadow_right}}px {{$user->logotype_shadow_bottom}}px {{$user->logotype_shadow_round}}px {{$user->logotype_shadow_color}});">
+        <div class="mx-auto max-w-screen-xl px-4 pb-4 sm:px-6 lg:px-8 text-center">
+            @if($user->settings->avatar_vs_logotype == 'Logotype')
+                <div class="flex justify-center mb-3 mt-3">
+                    <img src="{{$user->settings->logotype}}" class="" width="{{$user->settings->logotype_size}}" style="
+                        filter: drop-shadow({{$user->settings->logotype_shadow_right}}px {{$user->settings->logotype_shadow_bottom}}px {{$user->settings->logotype_shadow_round}}px {{$user->settings->logotype_shadow_color}});
+                        @if($user->settings->logotype_shadow_right) margin-right:{{$user->settings->logotype_shadow_right}}px; @endif
+                    ">
                 </div>
-                @if(!$user->logotype)
-                    <h2 class="mt-4 flex justify-center items-center" style="font-family: 'Rubik', sans-serif; color: #464646; font-weight: 600 ; font-size: 20px; @if($user->name_color) color: {{$user->name_color}}; @endif ">
+                @if(!$user->settings->logotype)
+                    <h2 class="mt-4 flex justify-center items-center" style="
+                        font-family: {{ $user->settings->name_font ?? 'Rubik' }}, sans-serif;
+                        text-shadow:{{$user->settings->name_font_shadow_right ?? 0}}px {{$user->settings->name_font_shadow_bottom ?? 0}}px {{$user->settings->name_font_shadow_blur ?? 0}}px {{$user->settings->name_font_shadow_color ?? '#464646'}} ;
+                        font-size: {{ $user->settings->name_font_size ?? 1}}rem;
+                        color: {{ $user->settings->name_color ?? '#464646'}};
+                    ">
                         {{ $user->name }}
                         @if($user->verify == 1)
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="ml-2 mt-1 bi bi-patch-check-fill mb-1" viewBox="0 0 16 16" style="color: {{$user->verify_color}}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="ml-3 mt-1 bi bi-patch-check-fill mb-1" viewBox="0 0 16 16" style="color: {{$user->settings->verify_color}}">
                                 <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
                             </svg>
                         @endif
@@ -87,28 +102,39 @@
             @else
                 @if($user->settings->avatar)
                     <div class="flex justify-center">
-                        <img src="{{$user->settings->avatar}}" class="w-32 rounded-full mt-3">
+                        <img src="{{$user->settings->avatar}}" class="w-32 rounded-full">
                     </div>
                 @endif
-                <h2 class="mt-4 flex justify-center items-center" style="font-family: 'Rubik', sans-serif; color: #464646; font-weight: 600 ; font-size: 20px; @if($user->name_color) color: {{$user->name_color}}; @endif ">
+                <h2 class="mt-4 flex justify-center items-center" style="
+                    font-family: {{ $user->settings->name_font ?? 'Rubik' }}, sans-serif;
+                    text-shadow:{{$user->settings->name_font_shadow_right ?? 0}}px {{$user->settings->name_font_shadow_bottom ?? 0}}px {{$user->settings->name_font_shadow_blur ?? 0}}px {{$user->settings->name_font_shadow_color ?? '#464646'}} ;
+                    font-size: {{ $user->settings->name_font_size ?? 1}}rem;
+                    color: {{ $user->settings->name_color ?? '#464646'}};
+                ">
                     {{ $user->name }}
                     @if($user->verify == 1)
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="ml-2 mt-1 bi bi-patch-check-fill mb-1" viewBox="0 0 16 16" style="color: {{$user->verify_color}}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="ml-4 mt-1 bi bi-patch-check-fill mb-1" viewBox="0 0 16 16" style="color: {{$user->settings->verify_color}}">
                             <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
                         </svg>
                     @endif
                 </h2>
                 @if($user->description)
-                    <p class="mt-2" style="font-family: 'Rubik', sans-serif; font-size: 0.9rem; @if($user->description_color) color: {{$user->description_color}}; @endif">{{ $user->description }}</p>
+                    <p class="mt-2" style="
+                        font-family: {{ $user->settings->description_font ?? 'Rubik' }}, sans-serif;
+                        text-shadow:{{$user->settings->description_font_shadow_right ?? 0}}px {{$user->settings->description_font_shadow_bottom ?? 0}}px {{$user->settings->description_font_shadow_blur ?? 0}}px {{$user->settings->description_font_shadow_color ?? '#464646'}} ;
+                        font-size: {{ $user->settings->description_font_size ?? 0.9}}rem;
+                        color: {{ $user->settings->description_color ?? '#464646'}};
+{{--                        @if($user->settings->description_font_shadow_right) margin-right: {{$user->settings->description_font_shadow_right}}px @endif--}}
+                    ">{{ $user->description }}</p>
                 @endif
             @endif
         </div>
     </navigation>
 
     <top-links-bar>
-        <div class="flex justify-evenly mb-10">
-            @if($user->social_links_bar == 1)
-                @if($user->links_bar_position == 'top')
+        <div class="flex justify-evenly mb-5">
+            @if($user->settings->social_links_bar == 1)
+                @if($user->settings->links_bar_position == 'top')
                     @if(count($user->userLinks(false)) > 0)
                         <nav class="navbar mt-2">
                             <div class="flex flex-wrap justify-center">
@@ -118,7 +144,7 @@
                                             <input type="hidden" name="link_id" value="{{$link->id}}">
                                             <input type="hidden" name="link_url" value="{{$link->link}}">
                                             <button type="submit" style="border: 0; padding: 0; background-color: rgba(0, 125, 215, 0);">
-                                                <img src="{{$link->icon}}" class="ml-2 mr-2 mt-3 " style="width:{{ $user->round_links_width }}px; filter: drop-shadow({{ $user->round_links_shadow_right }}px {{ $user->round_links_shadow_bottom }}px {{ $user->round_links_shadow_round }}px {{ $user->round_links_shadow_color }})">
+                                                <img src="{{$link->icon}}" class="ml-2 mr-2 mt-3 " style="width:{{ $user->settings->round_links_width }}px; filter: drop-shadow({{ $user->settings->round_links_shadow_right }}px {{ $user->settings->round_links_shadow_bottom }}px {{ $user->settings->round_links_shadow_round }}px {{ $user->settings->round_links_shadow_color }})">
                                             </button>
                                         </form>
                                     @endif
@@ -133,7 +159,7 @@
 
     @if($user->type == 'Links')
         <links>
-            @if($user->social_links_bar == 0)
+            @if($user->settings->social_links_bar == 0)
                 @if(count($user->userLinks(false)) > 0)
                     <div class="mx-auto max-w-screen-xl px-4 pt-4 sm:px-6 lg:px-8">
                         <div class="group block">
@@ -145,11 +171,20 @@
                                     @endphp
                                     <tr data-index="{{$link->id}}" data-position="{{$link->position}}">
                                         <td>
-                                            <div class="mb-4 justify-center text-center" data-index="{{$link->id}}" data-position="{{$link->position}}">
+                                            <div class="mb-5 justify-center text-center" data-index="{{$link->id}}" data-position="{{$link->position}}">
                                                 <form method="POST" action="{{ route('clickLinkStatistic', ['user' => $user->id]) }}"> @csrf
                                                     <input type="hidden" name="link_id" value="{{$link->id}}">
                                                     <input type="hidden" name="link_url" value="{{$link->link}}">
-                                                    <div class="{{$link->animation}} {{$properties['dl_border']}} row card ms-1 me-1 {{$properties['dl_shadow']}}" style="animation-duration: {{$link->animation_speed}}s; border-color: {{$properties['dl_border_color']}}; background-color:rgba({{$properties['dl_background_color']}}, {{$properties['dl_transparency']}}); border-radius: {{$properties['dl_rounded']}}px; background-position: center;">
+                                                    <div class="{{$link->animation}} {{$properties['dl_border']}} row card ms-1 me-1" style="
+                                                        animation-duration: {{$link->animation_speed}}s;
+                                                        border-color: {{$properties['dl_border_color']}};
+                                                        background-color:rgba({{$properties['dl_background_color']}}, {{$properties['dl_transparency']}});
+                                                        border-radius: {{$properties['dl_rounded']}}px;
+                                                        background-position: center;
+                                                        box-shadow: {{$properties['dl_link_block_shadow_right']}}px {{$properties['dl_link_block_shadow_bottom']}}px {{$properties['dl_link_block_shadow_blur']}}px {{$properties['dl_link_block_shadow_color']}};
+                                                        @if($properties['dl_link_block_shadow_right']) margin-right: {{$properties['dl_link_block_shadow_right']}}px; @endif
+                                                        @if($properties['dl_text_shadow_bottom']) margin-bottom: {{$properties['dl_text_shadow_bottom']}}px; @endif
+                                                    ">
                                                         <div class="flex align-center justify-between" style="padding-left: 4px; padding-right: 4px">
                                                             <div class="col-span-1 flex items-center flex-none">
                                                                 @if($link->icon)
@@ -157,13 +192,24 @@
                                                                 @elseif($link->icon == false && $link->photo == true)
                                                                     <img class="mt-1 mb-1" src="{{$link->photo}}" style="width:50px; border-radius: {{$properties['dl_rounded']}}px;">
                                                                 @else
-                                                                    <img src="https://digiltable.com/wp-content/uploads/edd/2021/09/Sexy-lady-logo-Pornhub-logo.png" style="width:50px; border-radius: {{$properties['dl_rounded']}}px; opacity: 0;">
+                                                                    <img class="mt-1 mb-1" src="https://digiltable.com/wp-content/uploads/edd/2021/09/Sexy-lady-logo-Pornhub-logo.png" style="width:50px; border-radius: {{$properties['dl_rounded']}}px; opacity: 0;">
                                                                 @endif
                                                             </div>
                                                             <button type="submit" style="border: 0; padding: 0; background-color: rgba(0, 125, 215, 0);">
                                                                 <div class="col-span-10 text-center flex items-center">
                                                                     <div class="ml-3 mr-3">
-                                                                        <h4 class="text-ellipsis" style="text-shadow:{{$properties['dl_text_shadow_right']}}px {{$properties['dl_text_shadow_bottom']}}px {{$properties['dl_text_shadow_blur']}}px {{$properties['dl_text_shadow_color']}} ;font-family: '{{$properties['dl_font']}}', sans-serif; line-height: 1.5; font-size: {{$properties['dl_font_size']}}rem; margin: 0;color: {{$properties['dl_title_color']}}; @if($link->photo == '' && $link->photos == '') margin-top: 14px; margin-bottom: 14px @endif">{{$link->title}}</h4>
+                                                                        <h4 class="text-ellipsis" style="
+                                                                            text-shadow:{{$properties['dl_text_shadow_right']}}px {{$properties['dl_text_shadow_bottom']}}px {{$properties['dl_text_shadow_blur']}}px {{$properties['dl_text_shadow_color']}};
+                                                                            font-family: '{{$properties['dl_font']}}', sans-serif;
+                                                                            line-height: 1.5;
+                                                                            font-size: {{$properties['dl_font_size']}}rem;
+                                                                            margin: 0;
+                                                                            color: {{$properties['dl_title_color']}};
+                                                                            @if($link->photo == '' && $link->icon == '') margin-top: 14px; margin-bottom: 14px; @endif
+                                                                            @if($properties['dl_text_shadow_bottom']) margin-bottom: {{$properties['dl_text_shadow_bottom']}}px; @endif
+                                                                            @if($properties['dl_text_shadow_right']) margin-right: {{$properties['dl_text_shadow_right']}}px; @endif
+                                                                            @if($properties['dl_link_block_shadow_right']) margin-left: {{$properties['dl_link_block_shadow_right']}}px @endif
+                                                                        ">{{$link->title}}</h4>
                                                                     </div>
                                                                 </div>
                                                             </button>
@@ -217,11 +263,20 @@
                                     @endphp
                                     <tr data-index="{{$link->id}}" data-position="{{$link->position}}">
                                         <td>
-                                            <div class="mb-4 justify-center text-center" data-index="{{$link->id}}" data-position="{{$link->position}}">
+                                            <div class="mb-5 justify-center text-center" data-index="{{$link->id}}" data-position="{{$link->position}}">
                                                 <form method="POST" action="{{ route('clickLinkStatistic', ['user' => $user->id]) }}"> @csrf
                                                     <input type="hidden" name="link_id" value="{{$link->id}}">
                                                     <input type="hidden" name="link_url" value="{{$link->link}}">
-                                                    <div class="{{$link->animation}} {{$properties['dl_border']}} row card ms-1 me-1 {{$properties['dl_shadow']}}" style="animation-duration: {{$link->animation_speed}}s; border-color: {{$properties['dl_border_color']}}; background-color:rgba({{$properties['dl_background_color']}}, {{$properties['dl_transparency']}}); border-radius: {{$properties['dl_rounded']}}px; background-position: center;">
+                                                    <div class="{{$link->animation}} {{$properties['dl_border']}} row card ms-1 me-1" style="
+                                                        animation-duration: {{$link->animation_speed}}s;
+                                                        border-color: {{$properties['dl_border_color']}};
+                                                        background-color:rgba({{$properties['dl_background_color']}}, {{$properties['dl_transparency']}});
+                                                        border-radius: {{$properties['dl_rounded']}}px;
+                                                        background-position: center;
+                                                        box-shadow: {{$properties['dl_link_block_shadow_right']}}px {{$properties['dl_link_block_shadow_bottom']}}px {{$properties['dl_link_block_shadow_blur']}}px {{$properties['dl_link_block_shadow_color']}};
+                                                        @if($properties['dl_link_block_shadow_right']) margin-right: {{$properties['dl_link_block_shadow_right']}}px; @endif
+                                                        @if($properties['dl_link_block_shadow_bottom']) margin-bottom: {{$properties['dl_link_block_shadow_bottom']}}px; @endif
+                                                    ">
                                                         <div class="flex align-center justify-between" style="padding-left: 4px; padding-right: 4px">
                                                             <div class="col-span-1 flex items-center flex-none">
                                                                 @if($link->icon)
@@ -229,13 +284,24 @@
                                                                 @elseif($link->icon == false && $link->photo == true)
                                                                     <img class="mt-1 mb-1" src="{{$link->photo}}" style="width:50px; border-radius: {{$properties['dl_rounded']}}px;">
                                                                 @else
-                                                                    <img src="https://digiltable.com/wp-content/uploads/edd/2021/09/Sexy-lady-logo-Pornhub-logo.png" style="width:50px; border-radius: {{$properties['dl_rounded']}}px; opacity: 0;">
+                                                                    <img class="mt-1 mb-1" src="https://digiltable.com/wp-content/uploads/edd/2021/09/Sexy-lady-logo-Pornhub-logo.png" style="width:50px; border-radius: {{$properties['dl_rounded']}}px; opacity: 0;">
                                                                 @endif
                                                             </div>
                                                             <button type="submit" style="border: 0; padding: 0; background-color: rgba(0, 125, 215, 0);">
                                                                 <div class="col-span-10 text-center flex items-center">
                                                                     <div class="ml-3 mr-3">
-                                                                        <h4 class="text-ellipsis" style="text-shadow:{{$properties['dl_text_shadow_right']}}px {{$properties['dl_text_shadow_bottom']}}px {{$properties['dl_text_shadow_blur']}}px {{$properties['dl_text_shadow_color']}} ;font-family: '{{$properties['dl_font']}}', sans-serif; line-height: 1.5; font-size: {{$properties['dl_font_size']}}rem; margin: 0;color: {{$properties['dl_title_color']}}; @if($link->photo == '' && $link->photos == '') margin-top: 14px; margin-bottom: 14px @endif">{{$link->title}}</h4>
+                                                                        <h4 class="text-ellipsis" style="
+                                                                            text-shadow:{{$properties['dl_text_shadow_right']}}px {{$properties['dl_text_shadow_bottom']}}px {{$properties['dl_text_shadow_blur']}}px {{$properties['dl_text_shadow_color']}};
+                                                                            font-family: '{{$properties['dl_font']}}', sans-serif;
+                                                                            line-height: 1.5;
+                                                                            font-size: {{$properties['dl_font_size']}}rem;
+                                                                            margin: 0;
+                                                                            color: {{$properties['dl_title_color']}};
+                                                                            @if($link->photo == '' && $link->icon == '') margin-top: 14px; margin-bottom: 14px; @endif
+                                                                            @if($properties['dl_text_shadow_bottom']) margin-bottom: {{$properties['dl_text_shadow_bottom']}}px; @endif
+                                                                            @if($properties['dl_text_shadow_right']) margin-right: {{$properties['dl_text_shadow_right']}}px; @endif
+                                                                            @if($properties['dl_link_block_shadow_right']) margin-left: {{$properties['dl_link_block_shadow_right']}}px @endif
+                                                                        ">{{$link->title}}</h4>
                                                                     </div>
                                                                 </div>
                                                             </button>
@@ -278,7 +344,7 @@
                         </div>
                     </div>
                 @endif
-            @elseif($user->social_links_bar == 1)
+            @elseif($user->settings->social_links_bar == 1)
                 <div class="mx-auto max-w-screen-xl px-4 pb-4 sm:px-6 lg:px-8  mt-5">
                     <div class="group block">
                         <table class="table w-full">
@@ -289,25 +355,45 @@
                                 @endphp
                                 <tr data-index="{{$link->id}}" data-position="{{$link->position}}">
                                     <td>
-                                        <div class="mb-4 justify-center text-center" data-index="{{$link->id}}" data-position="{{$link->position}}">
+                                        <div class="mb-5 justify-center text-center" data-index="{{$link->id}}" data-position="{{$link->position}}">
                                             <form method="POST" action="{{ route('clickLinkStatistic', ['user' => $user->id]) }}"> @csrf
                                                 <input type="hidden" name="link_id" value="{{$link->id}}">
                                                 <input type="hidden" name="link_url" value="{{$link->link}}">
-                                                <div class="{{$link->animation}} {{$properties['dl_border']}} row card ms-1 me-1 {{$properties['dl_shadow']}}" style="animation-duration: {{$link->animation_speed}}s; border-color: {{$properties['dl_border_color']}}; background-color:rgba({{$properties['dl_background_color']}}, {{$properties['dl_transparency']}}); border-radius: {{$properties['dl_rounded']}}px; background-position: center;">
+                                                <div class="{{$link->animation}} {{$properties['dl_border']}} row card ms-1 me-1 " style="
+                                                        animation-duration: {{$link->animation_speed}}s;
+                                                        border-color: {{$properties['dl_border_color']}};
+                                                        background-color:rgba({{$properties['dl_background_color']}}, {{$properties['dl_transparency']}});
+                                                        border-radius: {{$properties['dl_rounded']}}px;
+                                                        background-position: center;
+                                                        box-shadow: {{$properties['dl_link_block_shadow_right']}}px {{$properties['dl_link_block_shadow_bottom']}}px {{$properties['dl_link_block_shadow_blur']}}px {{$properties['dl_link_block_shadow_color']}};
+                                                        @if($properties['dl_link_block_shadow_right']) margin-right: {{$properties['dl_link_block_shadow_right']}}px; @endif
+                                                        @if($properties['dl_text_shadow_bottom']) margin-bottom: {{$properties['dl_text_shadow_bottom']}}px; @endif
+                                                    ">
                                                     <div class="flex align-center justify-between" style="padding-left: 4px; padding-right: 4px">
                                                         <div class="col-span-1 flex items-center flex-none">
                                                             @if($link->icon)
                                                                 <img class="mt-1 mb-1" src="{{$link->icon}}" style="width:50px; border-radius: {{$properties['dl_rounded']}}px;">
                                                             @elseif($link->icon == false && $link->photo == true)
                                                                 <img class="mt-1 mb-1" src="{{$link->photo}}" style="width:50px; border-radius: {{$properties['dl_rounded']}}px;">
-                                                            @else
-                                                                <img src="https://digiltable.com/wp-content/uploads/edd/2021/09/Sexy-lady-logo-Pornhub-logo.png" style="width:50px; border-radius: {{$properties['dl_rounded']}}px; opacity: 0;">
+                                                            @elseif($link->icon == false && $link->photo == false)
+                                                               <img class="mt-1 mb-1" src="https://digiltable.com/wp-content/uploads/edd/2021/09/Sexy-lady-logo-Pornhub-logo.png" style="width:50px; border-radius: {{$properties['dl_rounded']}}px; opacity: 0;">
                                                             @endif
                                                         </div>
                                                         <button type="submit" style="border: 0; padding: 0; background-color: rgba(0, 125, 215, 0);">
                                                             <div class="col-span-10 text-center flex items-center">
                                                                 <div class="ml-3 mr-3">
-                                                                    <h4 class="text-ellipsis" style="text-shadow:{{$properties['dl_text_shadow_right']}}px {{$properties['dl_text_shadow_bottom']}}px {{$properties['dl_text_shadow_blur']}}px {{$properties['dl_text_shadow_color']}} ;font-family: '{{$properties['dl_font']}}', sans-serif; line-height: 1.5; font-size: {{$properties['dl_font_size']}}rem; margin: 0;color: {{$properties['dl_title_color']}}; @if($link->photo == '' && $link->photos == '') margin-top: 14px; margin-bottom: 14px @endif">{{$link->title}}</h4>
+                                                                    <h4 class="text-ellipsis" style="
+                                                                        text-shadow:{{$properties['dl_text_shadow_right']}}px {{$properties['dl_text_shadow_bottom']}}px {{$properties['dl_text_shadow_blur']}}px {{$properties['dl_text_shadow_color']}};
+                                                                        font-family: '{{$properties['dl_font']}}', sans-serif;
+                                                                        line-height: 1.5;
+                                                                        font-size: {{$properties['dl_font_size']}}rem;
+                                                                        margin: 0;
+                                                                        color: {{$properties['dl_title_color']}};
+                                                                        @if($link->photo == '' && $link->icon == '') margin-top: 14px; margin-bottom: 14px; @endif
+                                                                        @if($properties['dl_text_shadow_bottom']) margin-bottom: {{$properties['dl_text_shadow_bottom']}}px; @endif
+                                                                        @if($properties['dl_text_shadow_right']) margin-right: {{$properties['dl_text_shadow_right']}}px; @endif
+                                                                        @if($properties['dl_link_block_shadow_right']) margin-left: {{$properties['dl_link_block_shadow_right']}}px @endif
+                                                                    ">{{$link->title}}</h4>
                                                                 </div>
                                                             </div>
                                                         </button>
@@ -361,8 +447,13 @@
                         $properties = (object) unserialize($event->properties)
                     @endphp
                     @if($properties->de_show_modal == 0)<a href="{{$event->tickets}}">@endif
-                        <div class="container mb-4" @if($properties->de_show_modal == 1) data-modal-target="default" data-modal-toggle="popup-modal{{$event->id}}" type="button" @endif>
-                            <div class="{{$event->event_animation}}" style="animation-duration: {{$event->animation_speed}}s;">
+                        <div class="container mb-5" @if($properties->de_show_modal == 1) data-modal-target="default" data-modal-toggle="popup-modal{{$event->id}}" type="button" @endif>
+                            <div class="{{$event->event_animation}}" style="
+                                animation-duration: {{$event->animation_speed}}s;
+                                border-radius: {{$properties->de_event_round}}px;
+                                box-shadow: {{$properties->de_event_card_shadow_right}}px {{$properties->de_event_card_shadow_bottom}}px {{$properties->de_event_card_shadow_blur}}px {{$properties->de_event_card_shadow_color}};
+                                @if($properties->de_event_card_shadow_right) margin-right: {{$properties->de_event_card_shadow_right}}px @endif
+                            ">
                                 @include('event.types.' . $user->eventSettings->close_card_type, ['event' => $event, 'properties' => (object) unserialize($event->properties)])
                             </div>
                         </div>
@@ -380,8 +471,8 @@
 
     <bottom-links-bar>
         <div class="flex justify-evenly mb-20">
-            @if($user->social_links_bar == 1)
-                @if($user->links_bar_position == 'bottom')
+            @if($user->settings->social_links_bar == 1)
+                @if($user->settings->links_bar_position == 'bottom')
                     @if(count($user->userLinks(false)) > 0)
                         <nav class="navbar mt-2">
                             <div class="flex flex-wrap justify-center">
@@ -391,7 +482,7 @@
                                             <input type="hidden" name="link_id" value="{{$link->id}}">
                                             <input type="hidden" name="link_url" value="{{$link->link}}">
                                             <button type="submit" style="border: 0; padding: 0; background-color: rgba(0, 125, 215, 0);">
-                                                <img src="{{$link->icon}}" class="ml-2 mr-2 mt-3 " style="width:{{ $user->round_links_width }}px; filter: drop-shadow({{ $user->round_links_shadow_right }}px {{ $user->round_links_shadow_bottom }}px {{ $user->round_links_shadow_round }}px {{ $user->round_links_shadow_color }})">
+                                                <img src="{{$link->icon}}" class="ml-2 mr-2 mt-3 " style="width:{{ $user->settings->round_links_width }}px; filter: drop-shadow({{ $user->settings->round_links_shadow_right }}px {{ $user->settings->round_links_shadow_bottom }}px {{ $user->settings->round_links_shadow_round }}px {{ $user->settings->round_links_shadow_color }})">
                                             </button>
                                         </form>
                                     @endif
@@ -404,38 +495,28 @@
         </div>
     </bottom-links-bar>
 
-    @if($user->show_logo == true)
-        <footer class="sticky top-[100vh] footer-block mt-20 p-5 shadow md:px-6 md:py-8 navbar-fixed-bottom" style="background-color: rgba(0, 0, 0, .5);">
-            <div class="">
-                <div class="flex justify-center">
-                    <a href="http://chrry.me/" class="flex items-center mb-4">
-                        <img src="https://i.ibb.co/3dJD25v/new-logo.png" class="mr-3 h-6" alt="CHRRY.ME Logo" />
+    @if($user->settings->show_logo == true)
+        <footer class="sticky top-[100vh] footer-block mt-20 p-2 shadow md:px-6 md:py-8 navbar-fixed-bottom" style="background-color: rgba(0, 0, 0, .9);">
+            <div class="flex justify-between items-center">
+                <div class="flex justify-center items-center">
+                    <a href="http://chrry.me/" class="flex items-center">
+                        <img src="https://i.ibb.co/HBYTmyj/2.png" class="mr-3 h-6" alt="CHRRY.ME Logo" />
                     </a>
                 </div>
-                <div class="flex justify-center">
-                    <ul class="flex flex-wrap items-center mb-6 text-sm text-gray-500 sm:mb-0 dark:text-gray-400">
+                <div class="flex justify-center items-center">
+                    <ul class="flex flex-wrap items-center text-sm text-gray-500 sm:mb-0 dark:text-gray-400">
                         <li>
-                            <a href="#" class="mr-4 hover:underline md:mr-6 ">About us</a>
-                        </li>
-                        <li>
-                            <a href="#" class="mr-4 hover:underline md:mr-6">FAQ</a>
-                        </li>
-                        <li>
-                            <a href="#" class="mr-4 hover:underline md:mr-6 ">Contacts</a>
+                            <a href="{{route('contacts')}}" class="mr-4 hover:underline md:mr-6 text-sm font-semibold">Contacts</a>
                         </li>
                         <li>
                             <form method="POST" action="{{ route('logout') }}"> @csrf
                                 <button type="submit">
-                                    <span href="#" class="hover:underline">Logout</span>
+                                    <span href="#" class="hover:underline text-sm font-semibold">Logout</span>
                                 </button>
                             </form>
                         </li>
                     </ul>
                 </div>
-            </div>
-            <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
-            <div class="flex justify-center">
-                <span class="block text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2022 <a href="http://chrry.me/" class="hover:underline">CHRRY.ME™</a>. All Rights Reserved.</span>
             </div>
         </footer>
     @endif

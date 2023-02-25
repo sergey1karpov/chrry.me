@@ -51,8 +51,17 @@
     <section class="flex justify-center ">
         <div class="w-full mx-auto max-w-screen-xl px-4 lg:px-8 sm:px-8">
             <div id="design" class="px-4 py-4 mb-8 w-full mx-auto max-w-screen-xl shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
-                <h1 class="mb-8 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl @if($user->dayVsNight == 1) text-white @else text-black @endif">Now your <span class="text-indigo-600 dark:text-indigo-500">link</span> looks like this</h1>
-                <div class="{{$link->animation}} {{$properties->dl_border}} row card ms-1 me-1 {{$properties->dl_shadow}}" style="border-color: {{$properties->dl_border_color}} ;background-color:rgba({{$properties->dl_background_color}}, {{$properties->dl_transparency}}); margin-top: 12px; border-radius: {{$properties->dl_rounded}}px; background-position: center;">
+                <h1 class="mb-8 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl @if($user->dayVsNight == 1) text-white @else text-black @endif">Now your last <span class="text-indigo-600 dark:text-indigo-500">link</span> looks like this</h1>
+                <div class="{{$link->animation}} {{$properties->dl_border}} row card ms-1 me-1" style="
+                    border-color: {{$properties->dl_border_color}};
+                    background-color:rgba({{$properties->dl_background_color}}, {{$properties->dl_transparency}});
+                    margin-top: 12px;
+                    border-radius: {{$properties->dl_rounded}}px;
+                    background-position: center;
+                    box-shadow: {{$properties->dl_link_block_shadow_right}}px {{$properties->dl_link_block_shadow_bottom}}px {{$properties->dl_link_block_shadow_blur}}px {{$properties->dl_link_block_shadow_color}};
+                    @if($properties->dl_link_block_shadow_right) margin-right: {{$properties->dl_link_block_shadow_right}}px; @endif
+                    @if($properties->dl_link_block_shadow_bottom) margin-bottom: {{$properties->dl_link_block_shadow_bottom}}px; @endif
+                ">
                     <div class="flex align-center justify-between" style="padding-left: 4px; padding-right: 4px">
                         <div class="col-span-1 flex items-center flex-none">
                             <div class="col-span-1 flex items-center flex-none">
@@ -67,7 +76,18 @@
                         </div>
                         <div class="col-span-10 text-center flex items-center">
                             <div class="ml-3 mr-3">
-                                <h4 class="text-ellipsis" style="text-shadow:{{$properties->dl_text_shadow_right}}px {{$properties->dl_text_shadow_bottom}}px {{$properties->dl_text_shadow_blur}}px {{$properties->dl_text_shadow_color}} ;font-family: '{{$properties->dl_font}}', sans-serif; line-height: 1.5; font-size: {{$properties->dl_font_size}}rem; margin: 0;color: {{$properties->dl_title_color}}; @if($link->photo == '' && $link->photos == '') margin-top: 14px; margin-bottom: 14px @endif">{{$link->title}}</h4>
+                                <h4 class="text-ellipsis" style="
+                                    text-shadow:{{$properties->dl_text_shadow_right}}px {{$properties->dl_text_shadow_bottom}}px {{$properties->dl_text_shadow_blur}}px {{$properties->dl_text_shadow_color}};
+                                    font-family: '{{$properties->dl_font}}', sans-serif;
+                                    line-height: 1.5;
+                                    font-size: {{$properties->dl_font_size}}rem;
+                                    margin: 0;
+                                    color: {{$properties->dl_title_color}};
+                                    @if($link->photo == '' && $link->icon == '') margin-top: 14px; margin-bottom: 14px; @endif
+                                    @if($properties->dl_text_shadow_bottom) margin-bottom: {{$properties->dl_text_shadow_bottom}}px; @endif
+                                    @if($properties->dl_text_shadow_right) margin-right: {{$properties->dl_text_shadow_right}}px; @endif
+                                    @if($properties->dl_link_block_shadow_right) margin-left: {{$properties->dl_link_block_shadow_right}}px @endif
+                                ">{{$link->title}}</h4>
                             </div>
                         </div>
                         <div id="up" class="col-span-1 flex items-center flex-none">
@@ -84,7 +104,7 @@
             <div id="design" class="px-4 py-4 mb-8 w-full mx-auto max-w-screen-xl shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
                 <form action="{{ route('editAllLink', ['user' => Auth::user()->id]) }}" method="post" enctype="multipart/form-data"> @csrf @method('PATCH')
 
-                    <div class="mb-3 text-center">
+                    <div class="mb-6 text-center">
                         <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Text color</label>
                         <input type="color" name="dl_title_color" id="title_color" value="{{$properties->dl_title_color}}" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-[#0c0c0c] dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
                     </div>
@@ -102,48 +122,56 @@
                             <option @if($properties->dl_font_size == 1) selected @endif value="1">3</option>
                             <option @if($properties->dl_font_size == 1.1) selected @endif value="1.1">4</option>
                             <option @if($properties->dl_font_size == 1.2) selected @endif value="1.2">5</option>
+                            <option @if($properties->dl_font_size == 1.3) selected @endif value="1.3">6</option>
+                            <option @if($properties->dl_font_size == 1.4) selected @endif value="1.4">7</option>
+                            <option @if($properties->dl_font_size == 1.5) selected @endif value="1.5">8</option>
                         </select>
                     </div>
                     <div class="mb-6 text-center">
                         <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Background color</label>
                         <input type="color" name="dl_background_color" id="background_color" value="{{$properties->dl_background_color_hex}}" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-[#0c0c0c] dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
                     </div>
-                    <div class="mb-3 text-center">
+                    <div class="mb-6 text-center">
                         <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Text shadow color</label>
                         <input type="color" name="dl_text_shadow_color" value="{{$properties->dl_text_shadow_color}}" id="logotype_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-[#0f0f0f] dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
                     </div>
-                    <div class="mb-3 text-center">
+                    <div class="mb-6 text-center">
                         <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Text shadow right</label>
-                        <input id="steps-range" type="range" name="dl_text_shadow_right" value="{{$properties->dl_text_shadow_right}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-700 @endif">
-                    </div>
-                    <div class="mb-3 text-center">
-                        <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Text shadow bottom</label>
-                        <input id="steps-range" type="range" name="dl_text_shadow_bottom" value="{{$properties->dl_text_shadow_bottom}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-700 @endif">
-                    </div>
-                    <div class="mb-3 text-center">
-                        <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Text shadow blur</label>
-                        <input id="steps-range" type="range" name="dl_text_shadow_blur" value="{{$properties->dl_text_shadow_blur}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-700 @endif">
-                    </div>
-                    <div class="mb-3 text-center">
-                        <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Background transparency</label>
-                        <input id="steps-range" type="range" name="dl_transparency" min="0.0" max="1.0" step="0.1" value="{{$properties->dl_transparency}}" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-700 @endif">
+                        <input id="steps-range" type="range" name="dl_text_shadow_right" value="{{$properties->dl_text_shadow_right}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                     </div>
                     <div class="mb-6 text-center">
-                        <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Link shadow</label>
-                        <select name="dl_shadow" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
-                            <option @if($properties->dl_shadow == 'shadow-none') selected @endif value="shadow-none">None</option>
-                            <option @if($properties->dl_shadow == 'shadow-sm') selected @endif value="shadow-sm">1</option>
-                            <option @if($properties->dl_shadow == 'shadow-md') selected @endif value="shadow-md">2</option>
-                            <option @if($properties->dl_shadow == 'shadow-lg') selected @endif value="shadow-lg">3</option>
-                            <option @if($properties->dl_shadow == 'shadow-xl') selected @endif value="shadow-xl">4</option>
-                            <option @if($properties->dl_shadow == 'shadow-2xl') selected @endif value="shadow-2xl">5</option>
-                        </select>
+                        <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Text shadow bottom</label>
+                        <input id="steps-range" type="range" name="dl_text_shadow_bottom" value="{{$properties->dl_text_shadow_bottom}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                     </div>
-                    <div class="mb-3 text-center">
+                    <div class="mb-6 text-center">
+                        <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Text shadow blur</label>
+                        <input id="steps-range" type="range" name="dl_text_shadow_blur" value="{{$properties->dl_text_shadow_blur}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
+                    </div>
+                    <div class="mb-6 text-center">
+                        <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Background transparency</label>
+                        <input id="steps-range" type="range" name="dl_transparency" min="0.0" max="1.0" step="0.1" value="{{$properties->dl_transparency}}" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
+                    </div>
+                    <div class="mb-6 text-center">
+                        <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Link shadow color</label>
+                        <input type="color" value="{{$properties->dl_link_block_shadow_color}}" name="dl_link_block_shadow_color" id="logotype_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
+                    </div>
+                    <div class="mb-6 text-center">
+                        <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Link shadow right</label>
+                        <input id="steps-range" type="range" name="dl_link_block_shadow_right" value="{{$properties->dl_link_block_shadow_right}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
+                    </div>
+                    <div class="mb-6 text-center">
+                        <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Link shadow bottom</label>
+                        <input id="steps-range" type="range" name="dl_link_block_shadow_bottom" value="{{$properties->dl_link_block_shadow_bottom}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
+                    </div>
+                    <div class="mb-6 text-center">
+                        <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Link shadow blur</label>
+                        <input id="steps-range" type="range" name="dl_link_block_shadow_blur" value="{{$properties->dl_link_block_shadow_blur}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
+                    </div>
+                    <div class="mb-6 text-center">
                         <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Rounded borders</label>
-                        <input id="steps-range" type="range" name="dl_rounded" min="1" max="50" step="1" value="{{$properties->dl_rounded}}" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-700 @endif">
+                        <input id="steps-range" type="range" name="dl_rounded" min="1" max="50" step="1" value="{{$properties->dl_rounded}}" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                     </div>
-                    <div class="mb-10 text-center">
+                    <div class="mb-6 text-center">
                         <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Border</label>
                         <select name="dl_border" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
                             <option @if($properties->dl_border == 'border-0') selected @endif value="border-0">None</option>
@@ -153,7 +181,7 @@
                             <option @if($properties->dl_border == 'border-8') selected @endif value="border-8">Border 8</option>
                         </select>
                     </div>
-                    <div class="mb-10 text-center">
+                    <div class="mb-6 text-center">
                         <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Border color</label>
                         <input type="color" value="{{$properties->dl_border_color}}" name="dl_border_color" id="logotype_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
                     </div>

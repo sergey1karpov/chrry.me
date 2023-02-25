@@ -13,7 +13,7 @@ class IndexController extends Controller
 
     public function contacts()
     {
-
+        return view('index.contacts');
     }
 
     public function sendContactMail()
@@ -24,5 +24,10 @@ class IndexController extends Controller
     public function aboutUs()
     {
 
+    }
+
+    public function rules()
+    {
+        return view('index.rules');
     }
 }

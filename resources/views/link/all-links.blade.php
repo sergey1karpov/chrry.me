@@ -59,7 +59,7 @@
             <div class="">
                 <div class="group block">
                     <div class="card-block block rounded-xl @if($user->dayVsNight == 1) bg-[#0f0f0f] border-4 @endif border-[#0f0f0f] p-8 shadow-xl transition hover:border-red-600/50 hover:shadow-red-600/50 group-hover:-translate-x-1 group-hover:-translate-y-1 group-hover:shadow-red-600/50">
-                        <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl @if($user->dayVsNight == 1) text-gray-50 @else text-black @endif">Mass update</h1>
+                        <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl lg:text-6xl @if($user->dayVsNight == 1) text-gray-50 @else text-gray-900 @endif">Mass update</h1>
                         <p class="mb-6 text-lg font-normal text-gray-500 lg:text-xl  dark:text-gray-400">Use this feature if you want to change the design of all links at once</p>
                         <a href="{{ route('editAllLinkForm', ['user' => $user->id]) }}" type="" class="inline-block rounded border border-indigo-900 bg-indigo-900 px-9 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
                             UPDATE
@@ -85,7 +85,17 @@
                                     <tr data-index="{{$link->id}}" data-position="{{$link->position}}">
                                         <td>
                                             <div class="justify-center text-center" data-index="{{$link->id}}" data-position="{{$link->position}}">
-                                                <div class="{{$link->animation}} {{$properties['dl_border']}} row card ms-1 me-1 {{$properties['dl_shadow']}}" style="animation-duration: {{$link->animation_speed}}s; border-color: {{$properties['dl_border_color']}}; background-color:rgba({{$properties['dl_background_color']}}, {{$properties['dl_transparency']}}); margin-top: 12px; border-radius: {{$properties['dl_rounded']}}px; background-position: center;">
+                                                <div class="{{$link->animation}} {{$properties['dl_border']}} row card ms-1 me-1" style="
+                                                    animation-duration: {{$link->animation_speed}}s;
+                                                    border-color: {{$properties['dl_border_color']}};
+                                                    background-color:rgba({{$properties['dl_background_color']}}, {{$properties['dl_transparency']}});
+                                                    margin-top: 12px;
+                                                    border-radius: {{$properties['dl_rounded']}}px;
+                                                    background-position: center;
+                                                    box-shadow: {{$properties['dl_link_block_shadow_right']}}px {{$properties['dl_link_block_shadow_bottom']}}px {{$properties['dl_link_block_shadow_blur']}}px {{$properties['dl_link_block_shadow_color']}};
+                                                    @if($properties['dl_link_block_shadow_right']) margin-right: {{$properties['dl_link_block_shadow_right']}}px; @endif
+                                                    @if($properties['dl_link_block_shadow_bottom']) margin-bottom: {{$properties['dl_link_block_shadow_bottom']}}px @endif
+                                                ">
                                                     <div class="flex align-center justify-between" style="padding-left: 4px; padding-right: 4px">
                                                         <div class="col-span-1 flex items-center flex-none">
                                                             @if($link->icon)
@@ -98,7 +108,18 @@
                                                         </div>
                                                         <div class="col-span-10 text-center flex items-center">
                                                             <div class="ml-3 mr-3">
-                                                                <h4 class="text-ellipsis" style="text-shadow:{{$properties['dl_text_shadow_right']}}px {{$properties['dl_text_shadow_bottom']}}px {{$properties['dl_text_shadow_blur']}}px {{$properties['dl_text_shadow_color']}} ;font-family: '{{$properties['dl_font']}}', sans-serif; line-height: 1.5; font-size: {{$properties['dl_font_size']}}rem; margin: 0;color: {{$properties['dl_title_color']}}; @if($link->photo == '' && $link->photos == '') margin-top: 14px; margin-bottom: 14px @endif">{{$link->title}}</h4>
+                                                                <h4 class="text-ellipsis" style="
+                                                                    text-shadow:{{$properties['dl_text_shadow_right']}}px {{$properties['dl_text_shadow_bottom']}}px {{$properties['dl_text_shadow_blur']}}px {{$properties['dl_text_shadow_color']}};
+                                                                    font-family: '{{$properties['dl_font']}}', sans-serif;
+                                                                    line-height: 1.5;
+                                                                    font-size: {{$properties['dl_font_size']}}rem;
+                                                                    margin: 0;
+                                                                    color: {{$properties['dl_title_color']}};
+                                                                    @if($link->photo == '' && $link->icon == '') margin-top: 14px; margin-bottom: 14px; @endif
+                                                                    @if($properties['dl_text_shadow_bottom']) margin-bottom: {{$properties['dl_text_shadow_bottom']}}px; @endif
+                                                                    @if($properties['dl_text_shadow_right']) margin-right: {{$properties['dl_text_shadow_right']}}px; @endif
+                                                                    @if($properties['dl_link_block_shadow_right']) margin-left: {{$properties['dl_link_block_shadow_right']}}px @endif
+                                                                ">{{$link->title}}</h4>
                                                             </div>
                                                         </div>
                                                         <div id="up" class="col-span-1 flex items-center flex-none">
@@ -150,7 +171,17 @@
                                 <tr data-index="{{$link->id}}" data-position="{{$link->position}}">
                                     <td>
                                         <div class="justify-center text-center" data-index="{{$link->id}}" data-position="{{$link->position}}">
-                                            <div class="{{$link->animation}} {{$properties['dl_border']}} row card ms-1 me-1 {{$properties['dl_shadow']}}" style="animation-duration: {{$link->animation_speed}}s; border-color: {{$properties['dl_border_color']}}; background-color:rgba({{$properties['dl_background_color']}}, {{$properties['dl_transparency']}}); margin-top: 12px; border-radius: {{$properties['dl_rounded']}}px; background-position: center;">
+                                            <div class="{{$link->animation}} {{$properties['dl_border']}} row card ms-1 me-1" style="
+                                                animation-duration: {{$link->animation_speed}}s;
+                                                border-color: {{$properties['dl_border_color']}};
+                                                background-color:rgba({{$properties['dl_background_color']}}, {{$properties['dl_transparency']}});
+                                                margin-top: 12px;
+                                                border-radius: {{$properties['dl_rounded']}}px;
+                                                background-position: center;
+                                                box-shadow: {{$properties['dl_link_block_shadow_right']}}px {{$properties['dl_link_block_shadow_bottom']}}px {{$properties['dl_link_block_shadow_blur']}}px {{$properties['dl_link_block_shadow_color']}};
+                                                @if($properties['dl_link_block_shadow_right']) margin-right: {{$properties['dl_link_block_shadow_right']}}px; @endif
+                                                @if($properties['dl_link_block_shadow_bottom']) margin-bottom: {{$properties['dl_link_block_shadow_bottom']}}px @endif
+                                            ">
                                                 <div class="flex align-center justify-between" style="padding-left: 4px; padding-right: 4px">
                                                     <div class="col-span-1 flex items-center flex-none">
                                                         @if($link->icon)
@@ -163,7 +194,18 @@
                                                     </div>
                                                     <div class="col-span-10 text-center flex items-center">
                                                         <div class="ml-3 mr-3">
-                                                            <h4 class="text-ellipsis" style="text-shadow:{{$properties['dl_text_shadow_right']}}px {{$properties['dl_text_shadow_bottom']}}px {{$properties['dl_text_shadow_blur']}}px {{$properties['dl_text_shadow_color']}} ;font-family: '{{$properties['dl_font']}}', sans-serif; line-height: 1.5; font-size: {{$properties['dl_font_size']}}rem; margin: 0;color: {{$properties['dl_title_color']}}; @if($link->photo == '' && $link->photos == '') margin-top: 14px; margin-bottom: 14px @endif">{{$link->title}}</h4>
+                                                            <h4 class="text-ellipsis" style="
+                                                                text-shadow:{{$properties['dl_text_shadow_right']}}px {{$properties['dl_text_shadow_bottom']}}px {{$properties['dl_text_shadow_blur']}}px {{$properties['dl_text_shadow_color']}};
+                                                                font-family: '{{$properties['dl_font']}}', sans-serif;
+                                                                line-height: 1.5;
+                                                                font-size: {{$properties['dl_font_size']}}rem;
+                                                                margin: 0;
+                                                                color: {{$properties['dl_title_color']}};
+                                                                @if($link->photo == '' && $link->icon == '') margin-top: 14px; margin-bottom: 14px; @endif
+                                                                @if($properties['dl_text_shadow_bottom']) margin-bottom: {{$properties['dl_text_shadow_bottom']}}px; @endif
+                                                                @if($properties['dl_text_shadow_right']) margin-right: {{$properties['dl_text_shadow_right']}}px; @endif
+                                                                @if($properties['dl_link_block_shadow_right']) margin-left: {{$properties['dl_link_block_shadow_right']}}px @endif
+                                                            ">{{$link->title}}</h4>
                                                         </div>
                                                     </div>
                                                     <div id="up" class="col-span-1 flex items-center flex-none">

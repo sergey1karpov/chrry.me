@@ -94,9 +94,12 @@
                             <select name="dl_font_size" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
                                 <option value="0.8">1</option>
                                 <option value="0.9">2</option>
-                                <option value="1">3</option>
+                                <option selected value="1">3</option>
                                 <option value="1.1">4</option>
                                 <option value="1.2">5</option>
+                                <option value="1.3">6</option>
+                                <option value="1.4">7</option>
+                                <option value="1.5">8</option>
                             </select>
                         </div>
                         <div class="mb-10 text-center">
@@ -128,15 +131,20 @@
                             <input id="steps-range" type="range" name="dl_transparency" min="0.0" max="1.0" step="0.1" value="0.9" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                         </div>
                         <div class="mb-10 text-center">
-                            <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Link shadow</label>
-                            <select name="dl_shadow" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
-                                <option selected value="shadow-none">None</option>
-                                <option value="shadow-sm">1</option>
-                                <option value="shadow-md">2</option>
-                                <option value="shadow-lg">3</option>
-                                <option value="shadow-xl">4</option>
-                                <option value="shadow-2xl">5</option>
-                            </select>
+                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Link shadow color</label>
+                            <input type="color" name="dl_link_block_shadow_color" id="logotype_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
+                        </div>
+                        <div class="mb-10 text-center">
+                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Link shadow right</label>
+                            <input id="steps-range" type="range" name="dl_link_block_shadow_right" value="0" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
+                        </div>
+                        <div class="mb-10 text-center">
+                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Link shadow bottom</label>
+                            <input id="steps-range" type="range" name="dl_link_block_shadow_bottom" value="0" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
+                        </div>
+                        <div class="mb-10 text-center">
+                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Link shadow blur</label>
+                            <input id="steps-range" type="range" name="dl_link_block_shadow_blur" value="0" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                         </div>
                         <div class="mb-10 text-center">
                             <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Rounded borders</label>

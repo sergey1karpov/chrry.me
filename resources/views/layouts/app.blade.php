@@ -48,37 +48,27 @@
             </main>
         </div>
 
-        <footer class="footer-block mt-5 p-5 shadow md:px-6 md:py-8 navbar-fixed-bottom @if($attributes['user']['dayVsNight'] == 1) bg-black @else bg-gradient-to-r from-rose-100 to-teal-100 @endif">
-            <div class="">
-                <div class="flex justify-center">
-                    <a href="http://chrry.me/" class="flex items-center mb-4">
+        <footer class="sticky top-[100vh] footer-block p-2 shadow md:px-6 md:py-8 navbar-fixed-bottom" style="background-color: rgba(0, 0, 0, .9);">
+            <div class="flex justify-between items-center ml-2 mr-2 mb-2">
+                <div class="flex justify-center items-center">
+                    <a href="http://chrry.me/" class="flex items-center">
                         <img src="https://i.ibb.co/HBYTmyj/2.png" class="mr-3 h-6" alt="CHRRY.ME Logo" />
                     </a>
                 </div>
-                <div class="flex justify-center">
-                    <ul class="flex flex-wrap items-center mb-6 text-sm text-gray-500 sm:mb-0 dark:text-gray-400">
+                <div class="flex justify-center items-center">
+                    <ul class="flex flex-wrap items-center text-sm text-gray-500 sm:mb-0 dark:text-gray-400">
                         <li>
-                            <a href="#" class="mr-4 hover:underline md:mr-6 ">About us</a>
-                        </li>
-                        <li>
-                            <a href="#" class="mr-4 hover:underline md:mr-6">FAQ</a>
-                        </li>
-                        <li>
-                            <a href="#" class="mr-4 hover:underline md:mr-6 ">Contacts</a>
+                            <a href="{{route('contacts')}}" class="mr-4 hover:underline md:mr-6 text-sm font-semibold">Contacts</a>
                         </li>
                         <li>
                             <form method="POST" action="{{ route('logout') }}"> @csrf
                                 <button type="submit">
-                                    <span href="#" class="hover:underline">Logout</span>
+                                    <span href="#" class="hover:underline text-sm font-semibold">Logout</span>
                                 </button>
                             </form>
                         </li>
                     </ul>
                 </div>
-            </div>
-            <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
-            <div class="flex justify-center">
-                <span class="block text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2022 <a href="http://chrry.me/" class="hover:underline">CHRRY.ME™</a>. All Rights Reserved.</span>
             </div>
         </footer>
 

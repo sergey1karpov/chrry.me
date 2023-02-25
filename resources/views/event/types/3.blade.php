@@ -2,7 +2,7 @@
     <ul class="list-group list-group-flush">
         <li class="list-group-item list-group-item-action text-center" style="border-radius: {{$properties->de_event_round}}px;">
             <div href="#" class="relative block overflow-hidden bg-[url({{'/'.$event->banner}})] bg-cover bg-center bg-no-repeat" style="border-radius: {{$properties->de_event_round}}px;">
-                <div class="relative bg-black bg-opacity-40 p-8 pt-32 text-white">
+                <div class="relative bg-black bg-opacity-10 p-8 pt-32 text-white">
                     <div class="flex flex-wrap {{$properties->de_text_position}}">
                         <h2 class="text-2xl mr-2 font-extrabold dark:text-white" style="text-shadow:{{$properties->de_city_text_shadow_right}}px {{$properties->de_city_text_shadow_bottom}}px {{$properties->de_city_text_shadow_blur}}px {{$properties->de_city_text_shadow_color}} ;font-family: '{{$properties->de_city_font}}', sans-serif; font-size: {{$properties->de_city_font_size}}em; padding: 0; color: {{$properties->de_city_font_color}}">
                             {{$event->city}}

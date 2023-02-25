@@ -7,8 +7,10 @@ use App\Http\Requests\BackgroundRequest;
 use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\FaviconRequest;
 use App\Http\Requests\LogotypeRequest;
+use App\Http\Requests\VerifyRequest;
 use App\Jobs\ProfileViewJob;
 use App\Models\User;
+use App\Models\Verification;
 use App\Services\PropertiesService;
 use App\Services\UploadPhotoService;
 use App\Http\Requests\UpdateRegisteruserRequest;
@@ -32,7 +34,7 @@ class UserController extends Controller
         private UploadPhotoService          $uploadService,
         private StatsService                $statsService,
         private CreateProfileViewStatistics $statistics,
-        public PropertiesService            $propertiesService,
+        private User                        $user,
     ) {}
 
     /**
@@ -123,7 +125,7 @@ class UserController extends Controller
     {
         return view('user.design-form', [
             'user' => $user,
-            'properties' => (object) unserialize($user->settings->properties),
+            'allFontsInFolder' => $this->getFonts(),
         ]);
     }
 
@@ -180,7 +182,7 @@ class UserController extends Controller
      */
     public function updateLogotype(User $user, LogotypeRequest $request)
     {
-        $user->updateLogotype($user, $request, $this->uploadService, $this->propertiesService);
+        $user->updateLogotype($user, $request, $this->uploadService);
 
         return redirect()->back()->with('success', 'Logotype updated successfully');
     }
@@ -236,7 +238,7 @@ class UserController extends Controller
      */
     public function updateDesignSettings(User $user, Request $request): RedirectResponse
     {
-        $user->updateDesignSettings($user, $request, $this->propertiesService);
+        $user->updateDesignSettings($user, $request);
 
         return redirect()->back()->with('success', 'Settings updated successfully');
     }
@@ -263,11 +265,57 @@ class UserController extends Controller
         throw ValidationException::withMessages(['Old password' => 'Your old password is not correct']);
     }
 
-    public function updateTwoFactorAuth(User $user, Request $request)
+    /**
+     * On\Off two-factor auth
+     *
+     * @param User $user
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function updateTwoFactorAuth(User $user, Request $request): RedirectResponse
     {
         $user->updateTwoFactorAuth($user, $request);
 
         return redirect()->back();
+    }
+
+    /**
+     * @param User $user
+     * @return Application|Factory|\Illuminate\Contracts\View\View
+     */
+    public function verify(User $user)
+    {
+        return view('user.verify', compact('user'));
+    }
+
+    /**
+     * Verify user profile
+     *
+     * @param User $user
+     * @param VerifyRequest $request
+     * @return RedirectResponse
+     */
+    public function verifyProfile(User $user, VerifyRequest $request): RedirectResponse
+    {
+        $verifyRequest = Verification::where('user_id', $user->id)->first();
+
+        if($verifyRequest) {
+            return redirect()->back()->with('success', 'You have already applied for verification. Wait for it to be reviewed.');
+        }
+
+        Verification::create([
+            'user_id' => $user->id,
+            'profile_address' => 'chrry.me/' . $user->slug,
+            'description' => $request->description,
+            'contacts' => $request->contacts,
+            'photo' => $this->uploadService->savePhoto(
+                photo: $request->photo,
+                path: $this->user->imgPath($user->id),
+                size: 1000
+            )
+        ]);
+
+        return redirect()->back()->with('success', 'Profile verification request sent');
     }
 }
 

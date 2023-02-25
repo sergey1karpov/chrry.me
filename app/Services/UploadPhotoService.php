@@ -77,6 +77,9 @@ class UploadPhotoService
     public function savePhoto(UploadedFile $photo, string $path, int $size, string $dropImagePath = null, string $imageType = null): string
     {
         if($photo->getClientOriginalExtension() == 'gif') {
+            if($dropImagePath) {
+                $this->deletePhotoFromFolder($dropImagePath);
+            }
             return $this->saveGif($photo, $imageType);
         }
 
@@ -100,14 +103,19 @@ class UploadPhotoService
      * @param string $imageType
      * @return string
      */
-    public function saveGif(UploadedFile $photo, string $imageType)
+    public function saveGif(UploadedFile $photo, string $imageType): string
     {
-        if(Auth::user()->avatar && $imageType == 'avatar') {
-            $this->deletePhotoFromFolder(Auth::user()->avatar);
+        if(Auth::user()->settings->avatar && $imageType == 'avatar') {
+            $this->deletePhotoFromFolder(Auth::user()->settings->avatar);
         }
 
-        if(Auth::user()->banner && $imageType == 'banner') {
-            $this->deletePhotoFromFolder(Auth::user()->banner);
+        if(Auth::user()->settings->banner && $imageType == 'banner') {
+            $this->deletePhotoFromFolder(Auth::user()->settings->banner);
+        }
+
+        if($imageType == 'link') {
+            $url = Storage::putFile('public/' . Auth::user()->id .'/links', $photo);
+            return '../storage/app/'.$url;
         }
 
         $url = Storage::putFile('public/' . Auth::user()->id, $photo);

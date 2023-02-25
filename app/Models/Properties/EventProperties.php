@@ -46,7 +46,12 @@ class EventProperties
      * @de_transparency - Card bg transparency
      * @de_event_round - Card border radius
      * @de_text_position - Card text position
-     * @de_block_shadow - Card shadow
+     *
+     * @de_event_card_shadow_right
+     * @de_event_card_shadow_bottom
+     * @de_event_card_shadow_blur
+     * @de_event_card_shadow_color
+     *
      * @de_border - Card border
      * @de_border_color - Card border color
      * @de_show_modal - Card show\hide modal window

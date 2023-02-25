@@ -54,7 +54,12 @@
                 <h1 class="mb-8 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl @if($user->dayVsNight == 1) text-white @else text-black @endif">Now your <span class="text-indigo-600 dark:text-indigo-500">event</span> looks like this</h1>
                 <div class="container mt-2">
                     @if($properties->de_show_modal == 0)<a href="{{$event->tickets}}">@endif
-                        <div style="animation-duration: {{$event->animation_speed}}s;" class="w-full col-lg-12 allalbums {{$event->event_animation}}" @if($properties->de_show_modal == 1) data-modal-target="default" data-modal-toggle="popup-modal" type="button" @endif>
+                        <div class="w-full col-lg-12 allalbums {{$event->event_animation}}" @if($properties->de_show_modal == 1) data-modal-target="default" data-modal-toggle="popup-modal" type="button" @endif style="
+                            animation-duration: {{$event->animation_speed}}s;
+                            border-radius: {{$properties->de_event_round}}px;
+                            box-shadow: {{$properties->de_event_card_shadow_right}}px {{$properties->de_event_card_shadow_bottom}}px {{$properties->de_event_card_shadow_blur}}px {{$properties->de_event_card_shadow_color}};
+                            @if($properties->de_event_card_shadow_right) margin-right: {{$properties->de_event_card_shadow_right}}px @endif
+                        ">
                             @include('event.types.' . $user->eventSettings->close_card_type, ['event' => $event])
                         </div>
                     @if($properties->de_show_modal == 0)</a>@endif
@@ -102,11 +107,11 @@
                     <div class="px-4 py-4 mb-8 w-full mx-auto max-w-screen-xl shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
                         <div class="mb-6 text-center">
                             <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600"><mark class="px-2 text-white bg-indigo-900 rounded dark:bg-indigo-900">City</mark></label>
-                            <input value="{{$event->city}}" name="city" maxlength="100" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif shadow-sm dark:placeholder-gray-400 ">
+                            <input value="{{$event->city}}" name="city" maxlength="100" style="border: none" class="mt-1 bg-gray-50 text-gray-500 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif shadow-sm dark:placeholder-gray-400 ">
                         </div>
                         <div class="mb-6 text-center">
                             <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600"><mark class="px-2 text-white bg-indigo-900 rounded dark:bg-indigo-900">Location</mark></label>
-                            <input value="{{$event->location}}" name="location" maxlength="100" id="title" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif shadow-sm dark:placeholder-gray-400 ">
+                            <input value="{{$event->location}}" name="location" maxlength="100" id="title" style="border: none" class="mt-1 bg-gray-50 text-gray-500 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif shadow-sm dark:placeholder-gray-400 ">
                         </div>
                         <div class="mb-6 text-center">
                             <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600"><mark class="px-2 text-white bg-indigo-900 rounded dark:bg-indigo-900">Event date</mark></label>
@@ -114,24 +119,24 @@
                                 <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                                     <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
                                 </div>
-                                <input id="datepicker" name="date" value="{{ Carbon\Carbon::parse($event->date)->format('m/d/Y') }}" datepicker type="text" style="border: none" class="bg-gray-50 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif " placeholder="Select date">
+                                <input id="datepicker" name="date" value="{{ Carbon\Carbon::parse($event->date)->format('m/d/Y') }}" datepicker type="text" style="border: none" class="bg-gray-50 text-gray-500 text-sm rounded-lg block w-full pl-10 p-2.5 @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif " placeholder="Select date">
                             </div>
                         </div>
                         <div class="mb-6 text-center">
                             <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600"><mark class="px-2 text-white bg-indigo-900 rounded dark:bg-indigo-900">Time</mark></label>
-                            <input name="time" value="{{$event->time}}" maxlength="100" id="title" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif shadow-sm dark:placeholder-gray-400 ">
+                            <input name="time" value="{{$event->time}}" maxlength="100" id="title" style="border: none" class="mt-1 bg-gray-50 text-gray-500 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif shadow-sm dark:placeholder-gray-400 ">
                         </div>
                         <div class="mb-6 text-center">
                             <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Description</label>
-                            <textarea id="message" rows="4" name="description" style="border: none" class="mt-1 block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg focus:ring-blue-500 focus:border-blue-500 @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{$event->description}}</textarea>
+                            <textarea id="message" rows="4" name="description" style="border: none" class="mt-1 block p-2.5 w-full text-sm text-gray-500 bg-gray-50 rounded-lg focus:ring-blue-500 focus:border-blue-500 @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{$event->description}}</textarea>
                         </div>
                         <div class="mb-6 text-center">
                             <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Title</label>
-                            <input name="title" value="{{$event->title}}" maxlength="100" id="title" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif shadow-sm dark:placeholder-gray-400 ">
+                            <input name="title" value="{{$event->title}}" maxlength="100" id="title" style="border: none" class="mt-1 bg-gray-50 text-gray-500 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif shadow-sm dark:placeholder-gray-400 ">
                         </div>
                         <div class="mb-6 text-center">
                             <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Link to sell tickets</label>
-                            <input name="tickets" value="{{$event->tickets}}" id="title" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif shadow-sm dark:placeholder-gray-400 ">
+                            <input name="tickets" value="{{$event->tickets}}" id="title" style="border: none" class="mt-1 bg-gray-50 text-gray-500 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif shadow-sm dark:placeholder-gray-400 ">
                         </div>
                         <div class="mb-6 text-center">
                             <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Ticket button text</label>
@@ -169,7 +174,7 @@
                                     </div>
                                     <div class="mb-8 text-center">
                                         <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Font size </label>
-                                        <select name="de_city_font_size" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif shadow-sm dark:placeholder-gray-400 ">
+                                        <select name="de_city_font_size" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) dark:bg-gray-600 text-gray-500 @endif shadow-sm dark:placeholder-gray-400 ">
                                             <option @if($properties->de_city_font_size == 0.8) selected @endif value="0.8">1</option>
                                             <option @if($properties->de_city_font_size == 0.9) selected @endif value="0.9">2</option>
                                             <option @if($properties->de_city_font_size == 1) selected @endif value="1">3</option>
@@ -178,6 +183,8 @@
                                             <option @if($properties->de_city_font_size == 1.3) selected @endif value="1.3">6</option>
                                             <option @if($properties->de_city_font_size == 1.4) selected @endif value="1.4">7</option>
                                             <option @if($properties->de_city_font_size == 1.5) selected @endif value="1.5">8</option>
+                                            <option @if($properties->de_city_font_size == 1.7) selected @endif value="1.7">9</option>
+                                            <option @if($properties->de_city_font_size == 1.9) selected @endif value="1.9">10</option>
                                         </select>
                                     </div>
                                     <div class="mb-8 text-center">
@@ -232,6 +239,8 @@
                                             <option @if($properties->de_location_font_size == 1.3) selected @endif value="1.3">6</option>
                                             <option @if($properties->de_location_font_size == 1.4) selected @endif value="1.4">7</option>
                                             <option @if($properties->de_location_font_size == 1.5) selected @endif value="1.5">8</option>
+                                            <option @if($properties->de_location_font_size == 1.7) selected @endif value="1.7">9</option>
+                                            <option @if($properties->de_location_font_size == 1.9) selected @endif value="1.9">10</option>
                                         </select>
                                     </div>
                                     <div class="mb-8 text-center">
@@ -286,6 +295,8 @@
                                             <option @if($properties->de_date_font_size == 1.3) selected @endif value="1.3">6</option>
                                             <option @if($properties->de_date_font_size == 1.4) selected @endif value="1.4">7</option>
                                             <option @if($properties->de_date_font_size == 1.5) selected @endif value="1.5">8</option>
+                                            <option @if($properties->de_date_font_size == 1.7) selected @endif value="1.7">9</option>
+                                            <option @if($properties->de_date_font_size == 1.9) selected @endif value="1.9">10</option>
                                         </select>
                                     </div>
                                     <div class="mb-8 text-center">
@@ -348,6 +359,8 @@
                                             <option @if($properties->de_time_font_size == 1.3) selected @endif value="1.3">6</option>
                                             <option @if($properties->de_time_font_size == 1.4) selected @endif value="1.4">7</option>
                                             <option @if($properties->de_time_font_size == 1.5) selected @endif value="1.5">8</option>
+                                            <option @if($properties->de_time_font_size == 1.7) selected @endif value="1.7">9</option>
+                                            <option @if($properties->de_time_font_size == 1.9) selected @endif value="1.9">10</option>
                                         </select>
                                     </div>
                                     <div class="mb-8 text-center">
@@ -412,17 +425,24 @@
                                             <option @if($properties->de_text_position == 'justify-end') selected @endif value="justify-end">Right</option>
                                         </select>
                                     </div>
+
                                     <div class="mb-10 text-center">
-                                        <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Event shadow</label>
-                                        <select name="de_block_shadow" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif shadow-sm dark:placeholder-gray-400 ">
-                                            <option @if($properties->de_block_shadow == 'shadow-none') selected @endif value="shadow-none">None</option>
-                                            <option @if($properties->de_block_shadow == 'shadow-sm') selected @endif value="shadow-sm">1</option>
-                                            <option @if($properties->de_block_shadow == 'shadow-md') selected @endif value="shadow-md">2</option>
-                                            <option @if($properties->de_block_shadow == 'shadow-lg') selected @endif value="shadow-lg">3</option>
-                                            <option @if($properties->de_block_shadow == 'shadow-xl') selected @endif value="shadow-xl">4</option>
-                                            <option @if($properties->de_block_shadow == 'shadow-2xl') selected @endif value="shadow-2xl">5</option>
-                                        </select>
+                                        <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Event shadow color</label>
+                                        <input type="color" value="{{$properties->de_event_card_shadow_color}}" name="de_event_card_shadow_color" id="logotype_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
                                     </div>
+                                    <div class="mb-10 text-center">
+                                        <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Event shadow right</label>
+                                        <input id="steps-range" type="range" name="de_event_card_shadow_right" value="{{$properties->de_event_card_shadow_right}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
+                                    </div>
+                                    <div class="mb-10 text-center">
+                                        <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Event shadow bottom</label>
+                                        <input id="steps-range" type="range" name="de_event_card_shadow_bottom" value="{{$properties->de_event_card_shadow_bottom}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
+                                    </div>
+                                    <div class="mb-10 text-center">
+                                        <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Event shadow blur</label>
+                                        <input id="steps-range" type="range" name="de_event_card_shadow_blur" value="{{$properties->de_event_card_shadow_blur}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
+                                    </div>
+
                                     @if($user->eventSettings->close_card_type == 1 || $user->eventSettings->close_card_type == 2)
                                         <div class="mb-10 text-center">
                                             <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Border</label>

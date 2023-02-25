@@ -59,7 +59,7 @@ class QRCodeController extends Controller
      */
     public function generateQrCode(User $user, Request $request)
     {
-        if($user->qrCode->code) {
+        if(isset($user->qrCode->code)) {
             $this->uploadService->deletePhotoFromFolder($user->qrCode->code);
         }
 
@@ -83,7 +83,7 @@ class QRCodeController extends Controller
 
     public function generateColorQrWithFile(User $user, Request $request, string $qrPath): void
     {
-        if($user->qrCode->logotype) {
+        if(isset($user->qrCode->logotype)) {
             QrCode::format('png')
                 ->merge(base_path($this->getLogoToQr($user)), $request->logo_size, true)
                 ->size(1500)
@@ -98,7 +98,7 @@ class QRCodeController extends Controller
                 ->generate(route('userHomePage', ['user' =>  $user->slug]), $qrPath);
         }
 
-        if(!$user->qrCode->logotype) {
+        if(!isset($user->qrCode->logotype)) {
             QrCode::format('png')
                 ->size(1500)
                 ->margin(1)
@@ -115,7 +115,7 @@ class QRCodeController extends Controller
 
     public function generateGradientWithFile(User $user, Request $request, string $qrPath): void
     {
-        if($user->qrCode->logotype) {
+        if(isset($user->qrCode->logotype)) {
             QrCode::format('png')
                 ->merge(base_path($this->getLogoToQr($user)), $request->logo_size, true)
                 ->size(1500)
@@ -126,7 +126,7 @@ class QRCodeController extends Controller
                 ->generate(route('userHomePage', ['user' =>  $user->slug]), $qrPath);
         }
 
-        if(!$user->qrCode->logotype) {
+        if(!isset($user->qrCode->logotype)) {
             QrCode::format('png')
                 ->size(1500)
                 ->margin(1)

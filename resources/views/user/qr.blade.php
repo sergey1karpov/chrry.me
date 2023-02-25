@@ -28,26 +28,27 @@
     </div>
 
     <div class="m-5 flex justify-center drop-shadow-lg">
-        @if($user->qrCode->code)
+        @if(isset($user->qrCode->code))
             <img src="{{'/'.$user->qrCode->code}}" width="300">
         @endif
     </div>
     <div class="m-5 flex justify-center drop-shadow-lg">
-        @if($user->qrCode->code)
+        @if(isset($user->qrCode->code))
             <a class="font-semibold text-gray-900 underline dark:text-indigo-600 decoration-indigo-600" href="{{ route('qrDownload', ['user' => $user->id]) }}">Download QrCode (PNG)</a>
         @endif
     </div>
 
     <section class="flex justify-center m-5">
         <div class="sm:mt-12 w-full">
-            <div class="mx-auto max-w-screen-xl sm:px-6 lg:px-8 mt-20 mb-20">
-                @if($user->qrCode->logotype)
+            <div class="mx-auto max-w-screen-xl sm:px-6 lg:px-8 mb-10">
+                @if(isset($user->qrCode->logotype))
                     <div class="flex justify-center mb-10">
                         <img src="{{ '/'.$user->qrCode->logotype }}" width="200">
                     </div>
                 @endif
                 <form action="{{ route('uploadLogotype', ['user' => $user->id]) }}" method="post" enctype="multipart/form-data"> @csrf
                     <div class="mb-3 text-center">
+                        <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Upload logo for your QR</label>
                         <input name="logo" class="mt-3 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400" aria-describedby="avatar" id="avatar" type="file">
                         <p class="mt-1 text-sm @if($user->dayVsNight == 1) text-gray-500 @else text-gray-500 @endif" id="avatar">Only PNG (MAX Size. 10mb).</p>
                     </div>
@@ -55,7 +56,7 @@
                         Upload file
                     </button>
                 </form>
-                @if($user->qrCode->logotype)
+                @if(isset($user->qrCode->logotype))
                     <div class="mt-3">
                         <form action="{{ route('dropQrLogotype', ['user' => $user->id, 'type' => 'avatar']) }}" method="POST"> @csrf @method('PATCH')
                             <button type="submit" class="border border-red-600 w-full inline-block rounded-lg bg-red-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-red-600 focus:outline-none focus:ring active:text-red-500">
@@ -70,7 +71,7 @@
 
     <section class="flex justify-center m-5">
         <div class="sm:mt-12 w-full">
-            <div class="mx-auto max-w-screen-xl sm:px-6 lg:px-8 mt-20 mb-20">
+            <div class="mx-auto max-w-screen-xl sm:px-6 lg:px-8 mb-20">
                 <form action="{{ route('generateQrCode', ['user' => $user->id]) }}" method="post" enctype="multipart/form-data"> @csrf
                     <div class="mb-6 text-center">
                         <label for="type" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Color type</label>
@@ -120,11 +121,11 @@
                             <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Qr background color</label>
                             <input type="color" value="#ffffff" name="qr_bg_color" id="logotype_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-[#0f0f0f] dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
                         </div>
-                        <div class="mb-3 text-center">
+                        <div class="mb-9 text-center">
                             <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Qr color</label>
                             <input type="color" value="#000000" name="qr_color" id="logotype_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-[#0f0f0f] dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
                         </div>
-                        <div id="block-14" class="mb-8 w-full mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
+                        <div id="block-14" class="mb-8 w-full mx-auto max-w-screen-xl  sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
                             <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white dark:bg-gray-900 text-gray-900 dark:text-white" data-inactive-classes="text-gray-500 dark:text-gray-400">
                                 <h2 id="accordion-flush-heading-1">
                                     <button type="button" class="rounded-lg flex items-center justify-between w-full px-2 py-5 font-medium text-left text-gray-500  border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-1" aria-expanded="false" aria-controls="accordion-flush-body-1">
@@ -133,7 +134,7 @@
                                     </button>
                                 </h2>
                                 <div id="accordion-flush-body-1" class="hidden" aria-labelledby="accordion-flush-heading-1">
-                                    <div class="py-2 font-light border-gray-200 dark:border-gray-700">
+                                    <div class="py-2 px-4 font-light border-gray-200 dark:border-gray-700">
                                         <div class="mb-3 text-center">
                                             <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Qr background color</label>
                                             <input type="color" value="#000000" name="eye_1_color" id="logotype_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-[#0f0f0f] dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
@@ -154,7 +155,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="block-14" class="mb-8 w-full mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
+                        <div id="block-14" class="mb-8 w-full mx-auto max-w-screen-xl sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
                             <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white dark:bg-gray-900 text-gray-900 dark:text-white" data-inactive-classes="text-gray-500 dark:text-gray-400">
                                 <h2 id="accordion-flush-heading-2">
                                     <button type="button" class="rounded-lg flex items-center justify-between w-full px-2 py-5 font-medium text-left text-gray-500  border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-2" aria-expanded="false" aria-controls="accordion-flush-body-2">
@@ -163,7 +164,7 @@
                                     </button>
                                 </h2>
                                 <div id="accordion-flush-body-2" class="hidden" aria-labelledby="accordion-flush-heading-2">
-                                    <div class="py-2 font-light border-gray-200 dark:border-gray-700">
+                                    <div class="py-2 px-4 font-light border-gray-200 dark:border-gray-700">
                                         <div class="mb-3 text-center">
                                             <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Qr background color</label>
                                             <input type="color" value="#000000" name="eye_2_color" id="logotype_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-[#0f0f0f] dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
@@ -184,7 +185,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="block-14" class="mb-8 w-full mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
+                        <div id="block-14" class="mb-8 w-full mx-auto max-w-screen-xl sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
                             <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white dark:bg-gray-900 text-gray-900 dark:text-white" data-inactive-classes="text-gray-500 dark:text-gray-400">
                                 <h2 id="accordion-flush-heading-3">
                                     <button type="button" class="rounded-lg flex items-center justify-between w-full px-2 py-5 font-medium text-left text-gray-500  border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-3" aria-expanded="false" aria-controls="accordion-flush-body-3">
@@ -193,7 +194,7 @@
                                     </button>
                                 </h2>
                                 <div id="accordion-flush-body-3" class="hidden" aria-labelledby="accordion-flush-heading-3">
-                                    <div class="py-2 font-light border-gray-200 dark:border-gray-700">
+                                    <div class="py-2 px-4 font-light border-gray-200 dark:border-gray-700">
                                         <div class="mb-3 text-center">
                                             <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Qr background color</label>
                                             <input type="color" value="#000000" name="eye_3_color" id="logotype_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-[#0f0f0f] dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
@@ -222,7 +223,7 @@
                             <option value="round">Round</option>
                         </select>
                     </div>
-                    @if($user->qrCode->logotype)
+                    @if(isset($user->qrCode->logotype))
                         <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Size logo</label>
                         <input id="steps-range" type="range" name="logo_size" min="0.1" max="0.9" step="0.1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                     @endif

@@ -35,6 +35,13 @@
                     @endif
                 </h1>
             </div>
+            @if($user->verify == 0 || $user->verify == null)
+                <div class="mt-2">
+                    <a href="{{ route('verify', ['user' => $user->id]) }}">
+                        <span class="bg-yellow-100 text-yellow-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-yellow-900 dark:text-yellow-300">Verification request</span>
+                    </a>
+                </div>
+            @endif
         </div>
     </header>
 
@@ -186,7 +193,7 @@
                             <a href="{{ route('designSettingsForm', ['user' => $user->id]) }}" type="submit" class="mr-2 mt-3 inline-block rounded border border-indigo-900 bg-indigo-900 px-9 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
                                 DESIGN
                             </a>
-                            <a href="{{ route('designSettingsForm', ['user' => $user->id]) }}" type="submit" class="mr-2 mt-3 inline-block rounded border border-indigo-900 bg-indigo-900 px-9 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
+                            <a href="{{ route('seo', ['user' => $user->id]) }}" type="submit" class="mr-2 mt-3 inline-block rounded border border-indigo-900 bg-indigo-900 px-9 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
                                 SEO
                             </a>
                         </div>

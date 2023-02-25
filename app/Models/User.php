@@ -2,15 +2,11 @@
 
 namespace App\Models;
 
-use App\Enums\EntityPropertiesPrefix;
 use App\Http\Requests\AvatarRequest;
 use App\Http\Requests\BackgroundRequest;
 use App\Http\Requests\FaviconRequest;
-use App\Http\Requests\ImgRequest;
 use App\Http\Requests\LogotypeRequest;
 use App\Http\Requests\UpdateRegisteruserRequest;
-use App\Services\ColorConvertorService;
-use App\Services\PropertiesService;
 use App\Services\UploadPhotoService;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -51,11 +47,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    /**
-     * UserSettings hasOne relation
-     *
-     * @return HasOne
-     */
     public function settings(): HasOne
     {
         return $this->hasOne(UserSettings::class);
@@ -64,6 +55,11 @@ class User extends Authenticatable
     public function eventSettings()
     {
         return $this->hasOne(EventSetting::class);
+    }
+
+    public function seo()
+    {
+        return $this->hasOne(SEO::class);
     }
 
     public function qrCode()
@@ -132,21 +128,6 @@ class User extends Authenticatable
     }
 
     /**
-     * @field_prefix dl_
-     * @param LogotypeRequest|Request $request
-     * @param PropertiesService $propertiesService
-     * @return void
-     */
-    public function setDesignLinkProperties(LogotypeRequest|Request $request, PropertiesService $propertiesService): void
-    {
-        $designProductFields = preg_grep("/^" . EntityPropertiesPrefix::User ."/", array_keys($request->all()));
-        //Тут соеденить поля?
-        foreach ($designProductFields as $field) {
-            $propertiesService->addProperty($field, $request->$field);
-        }
-    }
-
-    /**
      * Edit user profile
      *
      * @param User $user
@@ -206,13 +187,10 @@ class User extends Authenticatable
      * @param User $user
      * @param LogotypeRequest $request
      * @param UploadPhotoService $uploadService
-     * @param PropertiesService $propertiesService
      * @return void
      */
-    public function updateLogotype(User $user, LogotypeRequest $request, UploadPhotoService $uploadService, PropertiesService $propertiesService): void
+    public function updateLogotype(User $user, LogotypeRequest $request, UploadPhotoService $uploadService): void
     {
-        $this->setDesignLinkProperties($request, $propertiesService);
-
         UserSettings::updateOrCreate(
             ['user_id' => $user->id],
             [
@@ -225,7 +203,11 @@ class User extends Authenticatable
                         dropImagePath: $user->settings->logotype,
                     ) :
                     $user->settings->logotype,
-                'properties' => serialize($propertiesService->getProperties())
+                'logotype_size'          => $request->logotype_size,
+                'logotype_shadow_right'  => $request->logotype_shadow_right,
+                'logotype_shadow_bottom' => $request->logotype_shadow_bottom,
+                'logotype_shadow_round'  => $request->logotype_shadow_round,
+                'logotype_shadow_color'  => $request->logotype_shadow_color
             ]
         );
     }
@@ -239,9 +221,12 @@ class User extends Authenticatable
      */
     public function updateAvatarVsLogotype(User $user, Request $request): void
     {
-        User::where('id', $user->id)->update([
-            'avatar_vs_logotype' => $request->avatar_vs_logotype,
-        ]);
+        UserSettings::updateOrCreate(
+            ['user_id' => $user->id],
+            [
+                'avatar_vs_logotype' => $request->avatar_vs_logotype,
+            ]
+        );
     }
 
     /**
@@ -295,32 +280,41 @@ class User extends Authenticatable
         );
     }
 
-    public function updateDesignSettings(User $user, Request $request, PropertiesService $propertiesService)
+    public function updateDesignSettings(User $user, Request $request)
     {
-//        $request->add([
-//            'de_background_color_rgba' => ColorConvertorService::convertBackgroundColor($this->request->get('de_background_color_hex')),
-//            'de_background_color_hex' => $this->request->get('de_background_color_hex'),
-//        ]);
+        UserSettings::updateOrCreate(
+            ['user_id' => $user->id],
+            [
+                'user_id' => $user->id,
+                'background_color'  => $request->background_color,
+                'name_color'        => $request->name_color,
+                'description_color' => $request->description_color,
+                'verify_color'      => $request->verify_color,
+                'navigation_color'  => $request->navigation_color,
+                'social_links_bar'  => $request->social_links_bar,
+                'links_bar_position' => $request->links_bar_position,
+                'round_links_width' => $request->round_links_width,
+                'round_links_shadow_right' => $request->round_links_shadow_right,
+                'round_links_shadow_bottom' => $request->round_links_shadow_bottom,
+                'round_links_shadow_round' => $request->round_links_shadow_round,
+                'round_links_shadow_color' => $request->round_links_shadow_color,
+                'show_logo' => $request->show_logo,
 
-        dd($request);
-
-        $this->setDesignLinkProperties($request, $propertiesService);
-
-        User::where('id', $user->id)->update([
-            'background_color'  => $request->background_color,
-            'name_color'        => $request->name_color,
-            'description_color' => $request->description_color,
-            'verify_color'      => $request->verify_color,
-            'navigation_color'  => $request->navigation_color,
-            'social_links_bar'  => $request->social_links_bar,
-            'links_bar_position' => $request->links_bar_position,
-            'round_links_width' => $request->round_links_width,
-            'round_links_shadow_right' => $request->round_links_shadow_right,
-            'round_links_shadow_bottom' => $request->round_links_shadow_bottom,
-            'round_links_shadow_round' => $request->round_links_shadow_round,
-            'round_links_shadow_color' => $request->round_links_shadow_color,
-            'show_logo' => $request->show_logo,
-        ]);
+                'name_font' => $request->name_font,
+                'name_font_size' => $request->name_font_size,
+                'name_font_shadow_right' => $request->name_font_shadow_right,
+                'name_font_shadow_bottom' => $request->name_font_shadow_bottom,
+                'name_font_shadow_blur' => $request->name_font_shadow_blur,
+                'name_font_shadow_color' => $request->name_font_shadow_color,
+                'description_font' => $request->description_font,
+                'description_font_size' => $request->description_font_size,
+                'description_font_shadow_right' => $request->description_font_shadow_right,
+                'description_font_shadow_bottom' => $request->description_font_shadow_bottom,
+                'description_font_shadow_blur' => $request->description_font_shadow_blur,
+                'description_font_shadow_color' => $request->description_font_shadow_color,
+                'verify_icon_type' => $request->verify_icon_type,
+            ]
+        );
     }
 
     /**

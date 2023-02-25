@@ -150,6 +150,8 @@
                                             <option selected value="1.3">6</option>
                                             <option value="1.4">7</option>
                                             <option value="1.5">8</option>
+                                            <option value="1.7">9</option>
+                                            <option value="1.9">10</option>
                                         </select>
                                     </div>
                                     <div class="mb-8 text-center">
@@ -204,6 +206,8 @@
                                             <option selected value="1.3">6</option>
                                             <option value="1.4">7</option>
                                             <option value="1.5">8</option>
+                                            <option value="1.7">9</option>
+                                            <option value="1.9">10</option>
                                         </select>
                                     </div>
                                     <div class="mb-8 text-center">
@@ -258,6 +262,8 @@
                                             <option value="1.3">6</option>
                                             <option value="1.4">7</option>
                                             <option value="1.5">8</option>
+                                            <option value="1.7">9</option>
+                                            <option value="1.9">10</option>
                                         </select>
                                     </div>
                                     <div class="mb-8 text-center">
@@ -320,6 +326,8 @@
                                             <option value="1.3">6</option>
                                             <option value="1.4">7</option>
                                             <option value="1.5">8</option>
+                                            <option value="1.7">9</option>
+                                            <option value="1.9">10</option>
                                         </select>
                                     </div>
                                     <div class="mb-8 text-center">
@@ -384,17 +392,24 @@
                                             <option value="justify-end">Right</option>
                                         </select>
                                     </div>
+
                                     <div class="mb-10 text-center">
-                                        <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Event shadow</label>
-                                        <select name="de_block_shadow" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
-                                            <option value="shadow-none">None</option>
-                                            <option value="shadow-sm">1</option>
-                                            <option selected value="shadow-md">2</option>
-                                            <option value="shadow-lg">3</option>
-                                            <option value="shadow-xl">4</option>
-                                            <option value="shadow-2xl">5</option>
-                                        </select>
+                                        <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Event shadow color</label>
+                                        <input type="color" name="de_event_card_shadow_color" id="logotype_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
                                     </div>
+                                    <div class="mb-10 text-center">
+                                        <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Event shadow right</label>
+                                        <input id="steps-range" type="range" name="de_event_card_shadow_right" value="0" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
+                                    </div>
+                                    <div class="mb-10 text-center">
+                                        <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Event shadow bottom</label>
+                                        <input id="steps-range" type="range" name="de_event_card_shadow_bottom" value="0" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
+                                    </div>
+                                    <div class="mb-10 text-center">
+                                        <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Event shadow blur</label>
+                                        <input id="steps-range" type="range" name="de_event_card_shadow_blur" value="0" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
+                                    </div>
+
                                     @if($user->eventSettings->close_card_type == 1 || $user->eventSettings->close_card_type == 2)
                                         <div class="mb-10 text-center">
                                             <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Border</label>

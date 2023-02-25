@@ -17,9 +17,13 @@ class LinkProperties
      * @dl_text_shadow_blur - Link text shadow blur
      * @dl_background_color - Bg color => @dl_background_color_hex
      * @dl_transparency - Bg transparency
-     * @dl_shadow - Card shadow
+     * @dl_link_block_shadow_right
+     * @dl_link_block_shadow_bottom
+     * @dl_link_block_shadow_blur
+     * @dl_link_block_shadow_color
      * @dl_rounded - Card border radius
      * @dl_border - Card border
      * @dl_border_color - Card border color
      */
 }
+

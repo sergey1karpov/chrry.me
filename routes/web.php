@@ -4,12 +4,14 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\FilterAndSearchProductController;
+use App\Http\Controllers\IndexController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\NfcController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\QRCodeController;
+use App\Http\Controllers\SEOController;
 use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -62,12 +64,13 @@ Route::middleware(['web', 'root', 'locale'])->group(function () {
             Route::patch('/change-theme', [UserController::class, 'changeTheme'])->name('changeTheme');
             Route::get('/statistic', [UserController::class, 'getStats'])->name('getStats');
             Route::get('/statistic/filter-stat', [UserController::class, 'profileFilterStatistic'])->name('profileFilterStatistic');
-
             Route::get('/qrcode-settings', [QRCodeController::class, 'setQrSettingsForm'])->name('setQrSettingsForm');
             Route::post('/qrcode-generate', [QRCodeController::class, 'generateQrCode'])->name('generateQrCode');
             Route::post('/qrcode-upload-logo', [QRCodeController::class, 'uploadLogotype'])->name('uploadLogotype');
             Route::get('/qrcode-download', [QRCodeController::class, 'qrDownload'])->name('qrDownload');
             Route::patch('/qrcode-drop-logo', [QRCodeController::class, 'dropQrLogotype'])->name('dropQrLogotype');
+            Route::get('/verify', [UserController::class, 'verify'])->name('verify');
+            Route::post('/verify-profile', [UserController::class, 'verifyProfile'])->name('verifyProfile');
         });
 
         Route::get('/market-settings', [ShopController::class, 'marketSettingsForm'])->name('marketSettingsForm');
@@ -141,6 +144,10 @@ Route::middleware(['web', 'root', 'locale'])->group(function () {
             Route::get('/export', [ExportController::class, 'export'])->name('export');
         });
 
+        Route::group(['prefix' => 'seo'], function () {
+            Route::get('/', [SEOController::class, 'seo'])->name('seo');
+            Route::post('/set-seo', [SEOController::class, 'setSeo'])->name('setSeo');
+        });
     });
 });
 
@@ -152,7 +159,8 @@ Route::group(['middleware' => 'guest'], function() {
     Route::patch('{id}/confirm-registration', [AuthController::class, 'changeUserEmail'])->name('changeUserEmail');
 });
 
-
+Route::get('service/contacts', [IndexController::class, 'contacts'])->name('contacts');
+Route::get('service/rules', [IndexController::class, 'rules'])->name('rules');
 
 
 

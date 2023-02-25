@@ -54,7 +54,11 @@
                 <h1 class="mb-8 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl @if($user->dayVsNight == 1) text-white @else text-black @endif">Now your last <span class="text-indigo-600 dark:text-indigo-500">event</span> looks like this</h1>
                 @if($properties->de_show_modal == 0)<a href="{{$event->tickets}}">@endif
                     <div class="container mt-2">
-                        <div class="w-full col-lg-12 allalbums" data-modal-target="default" data-modal-toggle="popup-modal" type="button">
+                        <div class="w-full col-lg-12 allalbums" data-modal-target="default" data-modal-toggle="popup-modal" type="button" style="
+                            border-radius: {{$properties->de_event_round}}px;
+                            box-shadow: {{$properties->de_event_card_shadow_right}}px {{$properties->de_event_card_shadow_bottom}}px {{$properties->de_event_card_shadow_blur}}px {{$properties->de_event_card_shadow_color}};
+                            @if($properties->de_event_card_shadow_right) margin-right: {{$properties->de_event_card_shadow_right}}px @endif
+                        ">
                             @include('event.types.' . $user->eventSettings->close_card_type, ['event' => $event])
                         </div>
                     </div>
@@ -94,7 +98,7 @@
                                 </div>
                                 <div class="mb-8 text-center">
                                     <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Font size </label>
-                                    <select name="de_city_font_size" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif shadow-sm dark:placeholder-gray-400 ">
+                                    <select name="de_city_font_size" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-600 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif shadow-sm dark:placeholder-gray-400">
                                         <option @if($properties->de_city_font_size == 0.8) selected @endif value="0.8">1</option>
                                         <option @if($properties->de_city_font_size == 0.9) selected @endif value="0.9">2</option>
                                         <option @if($properties->de_city_font_size == 1) selected @endif value="1">3</option>
@@ -103,6 +107,8 @@
                                         <option @if($properties->de_city_font_size == 1.3) selected @endif value="1.3">6</option>
                                         <option @if($properties->de_city_font_size == 1.4) selected @endif value="1.4">7</option>
                                         <option @if($properties->de_city_font_size == 1.5) selected @endif value="1.5">8</option>
+                                        <option @if($properties->de_city_font_size == 1.7) selected @endif value="1.7">9</option>
+                                        <option @if($properties->de_city_font_size == 1.9) selected @endif value="1.9">10</option>
                                     </select>
                                 </div>
                                 <div class="mb-8 text-center">
@@ -148,7 +154,7 @@
                                 </div>
                                 <div class="mb-8 text-center">
                                     <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Font size </label>
-                                    <select name="de_location_font_size" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif shadow-sm dark:placeholder-gray-400 ">
+                                    <select name="de_location_font_size" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-600 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif shadow-sm dark:placeholder-gray-400 ">
                                         <option @if($properties->de_location_font_size == 0.8) selected @endif value="0.8">1</option>
                                         <option @if($properties->de_location_font_size == 0.9) selected @endif value="0.9">2</option>
                                         <option @if($properties->de_location_font_size == 1) selected @endif value="1">3</option>
@@ -157,6 +163,8 @@
                                         <option @if($properties->de_location_font_size == 1.3) selected @endif value="1.3">6</option>
                                         <option @if($properties->de_location_font_size == 1.4) selected @endif value="1.4">7</option>
                                         <option @if($properties->de_location_font_size == 1.5) selected @endif value="1.5">8</option>
+                                        <option @if($properties->de_location_font_size == 1.7) selected @endif value="1.7">9</option>
+                                        <option @if($properties->de_location_font_size == 1.9) selected @endif value="1.9">10</option>
                                     </select>
                                 </div>
                                 <div class="mb-8 text-center">
@@ -202,7 +210,7 @@
                                 </div>
                                 <div class="mb-8 text-center">
                                     <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Font size </label>
-                                    <select name="de_date_font_size" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif shadow-sm dark:placeholder-gray-400 ">
+                                    <select name="de_date_font_size" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-600 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif shadow-sm dark:placeholder-gray-400 ">
                                         <option @if($properties->de_date_font_size == 0.8) selected @endif value="0.8">1</option>
                                         <option @if($properties->de_date_font_size == 0.9) selected @endif value="0.9">2</option>
                                         <option @if($properties->de_date_font_size == 1) selected @endif value="1">3</option>
@@ -211,6 +219,8 @@
                                         <option @if($properties->de_date_font_size == 1.3) selected @endif value="1.3">6</option>
                                         <option @if($properties->de_date_font_size == 1.4) selected @endif value="1.4">7</option>
                                         <option @if($properties->de_date_font_size == 1.5) selected @endif value="1.5">8</option>
+                                        <option @if($properties->de_date_font_size == 1.7) selected @endif value="1.7">9</option>
+                                        <option @if($properties->de_date_font_size == 1.9) selected @endif value="1.9">10</option>
                                     </select>
                                 </div>
                                 <div class="mb-8 text-center">
@@ -235,7 +245,7 @@
                                 </div>
                                 <div class="mb-8 text-center">
                                     <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Date format</label>
-                                    <select name="de_date_format" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
+                                    <select name="de_date_format" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-600 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
                                         <option @if($properties->de_date_format == 1) selected @endif value="1">31.12.2023</option>
                                         <option @if($properties->de_date_format == 2) selected @endif value="2">31.12</option>
                                         <option @if($properties->de_date_format == 3) selected @endif value="3">Dec. 31, 2023</option>
@@ -264,7 +274,7 @@
                                 </div>
                                 <div class="mb-8 text-center">
                                     <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Font size </label>
-                                    <select name="de_time_font_size" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif shadow-sm dark:placeholder-gray-400 ">
+                                    <select name="de_time_font_size" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-600 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif shadow-sm dark:placeholder-gray-400 ">
                                         <option @if($properties->de_time_font_size == 0.8) selected @endif value="0.8">1</option>
                                         <option @if($properties->de_time_font_size == 0.9) selected @endif value="0.9">2</option>
                                         <option @if($properties->de_time_font_size == 1) selected @endif value="1">3</option>
@@ -273,6 +283,8 @@
                                         <option @if($properties->de_time_font_size == 1.3) selected @endif value="1.3">6</option>
                                         <option @if($properties->de_time_font_size == 1.4) selected @endif value="1.4">7</option>
                                         <option @if($properties->de_time_font_size == 1.5) selected @endif value="1.5">8</option>
+                                        <option @if($properties->de_time_font_size == 1.7) selected @endif value="1.7">9</option>
+                                        <option @if($properties->de_time_font_size == 1.9) selected @endif value="1.9">10</option>
                                     </select>
                                 </div>
                                 <div class="mb-8 text-center">
@@ -297,7 +309,7 @@
                                 </div>
                                 <div class="mb-8 text-center">
                                     <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Show\Hide time field</label>
-                                    <select name="de_show_card_time" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
+                                    <select name="de_show_card_time" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-600 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
                                         <option @if($properties->de_show_card_time == 1) selected @endif value="{{true}}">Show</option>
                                         <option @if($properties->de_show_card_time == 0) selected @endif value="{{false}}">Hide</option>
                                     </select>
@@ -331,27 +343,34 @@
                                 </div>
                                 <div class="mb-10 text-center">
                                     <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Card text position</label>
-                                    <select name="de_text_position" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif shadow-sm dark:placeholder-gray-400 ">
+                                    <select name="de_text_position" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-600 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif shadow-sm dark:placeholder-gray-400 ">
                                         <option @if($properties->de_text_position == 'justify-center') selected @endif value="justify-center">Center</option>
                                         <option @if($properties->de_text_position == 'justify-start') selected @endif value="justify-start">Left</option>
                                         <option @if($properties->de_text_position == 'justify-end') selected @endif value="justify-end">Right</option>
                                     </select>
                                 </div>
+
                                 <div class="mb-10 text-center">
-                                    <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Event shadow</label>
-                                    <select name="de_block_shadow" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif shadow-sm dark:placeholder-gray-400 ">
-                                        <option @if($properties->de_block_shadow == 'shadow-none') selected @endif value="shadow-none">None</option>
-                                        <option @if($properties->de_block_shadow == 'shadow-sm') selected @endif value="shadow-sm">1</option>
-                                        <option @if($properties->de_block_shadow == 'shadow-md') selected @endif value="shadow-md">2</option>
-                                        <option @if($properties->de_block_shadow == 'shadow-lg') selected @endif value="shadow-lg">3</option>
-                                        <option @if($properties->de_block_shadow == 'shadow-xl') selected @endif value="shadow-xl">4</option>
-                                        <option @if($properties->de_block_shadow == 'shadow-2xl') selected @endif value="shadow-2xl">5</option>
-                                    </select>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Event shadow color</label>
+                                    <input type="color" value="{{$properties->de_event_card_shadow_color}}" name="de_event_card_shadow_color" id="logotype_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
                                 </div>
+                                <div class="mb-10 text-center">
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Event shadow right</label>
+                                    <input id="steps-range" type="range" name="de_event_card_shadow_right" value="{{$properties->de_event_card_shadow_right}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
+                                </div>
+                                <div class="mb-10 text-center">
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Event shadow bottom</label>
+                                    <input id="steps-range" type="range" name="de_event_card_shadow_bottom" value="{{$properties->de_event_card_shadow_bottom}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
+                                </div>
+                                <div class="mb-10 text-center">
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Event shadow blur</label>
+                                    <input id="steps-range" type="range" name="de_event_card_shadow_blur" value="{{$properties->de_event_card_shadow_blur}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
+                                </div>
+
                                 @if($user->eventSettings->close_card_type == 1 || $user->eventSettings->close_card_type == 2)
                                     <div class="mb-10 text-center">
                                         <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Border</label>
-                                        <select name="de_border" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
+                                        <select name="de_border" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-600 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
                                             @if(isset($properties->de_border))
                                                 <option @if($properties->de_border == 'border-0') selected @endif value="border-0">None</option>
                                                 <option @if($properties->de_border == 'border') selected @endif value="border">Border 1</option>
@@ -378,7 +397,7 @@
                                 @endif
                                 <div class="mb-8 text-center">
                                     <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Show\Hide modal window</label>
-                                    <select name="de_show_modal" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
+                                    <select name="de_show_modal" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-600 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
                                         <option @if($properties->de_show_modal == 1) selected @endif value="{{true}}">Show</option>
                                         <option @if($properties->de_show_modal == 0) selected @endif value="{{false}}">Hide</option>
                                     </select>
@@ -580,7 +599,7 @@
                             <div class="py-2 font-light border-gray-200 dark:border-gray-700">
                                 <div class="mb-10 text-center">
                                     <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Card text position</label>
-                                    <select name="de_oc_title_position" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
+                                    <select name="de_oc_title_position" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-600 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
                                         <option @if($properties->de_oc_title_position == 'justify-center') selected @endif value="justify-center">Center</option>
                                         <option @if($properties->de_oc_title_position == 'justify-start') selected @endif value="justify-start">Left</option>
                                         <option @if($properties->de_oc_title_position == 'justify-end') selected @endif value="justify-end">Right</option>
@@ -633,7 +652,7 @@
                             <div class="py-2 font-light border-gray-200 dark:border-gray-700">
                                 <div class="mb-10 text-center">
                                     <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Card text position</label>
-                                    <select name="de_oc_description_position" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
+                                    <select name="de_oc_description_position" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-600 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
                                         <option @if($properties->de_oc_description_position == 'justify-center') selected @endif value="justify-center">Center</option>
                                         <option @if($properties->de_oc_description_position == 'justify-start') selected @endif value="justify-start">Left</option>
                                         <option @if($properties->de_oc_description_position == 'justify-end') selected @endif value="justify-end">Right</option>
@@ -686,7 +705,7 @@
                             <div class="py-2 font-light border-gray-200 dark:border-gray-700">
                                 <div class="mb-10 text-center">
                                     <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">City, location, date, time text position</label>
-                                    <select name="de_oc_text_position" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
+                                    <select name="de_oc_text_position" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-600 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
                                         <option @if($properties->de_oc_text_position == 'justify-center') selected @endif value="justify-center">Center</option>
                                         <option @if($properties->de_oc_text_position == 'justify-start') selected @endif value="justify-start">Left</option>
                                         <option @if($properties->de_oc_text_position == 'justify-end') selected @endif value="justify-end">Right</option>

@@ -43,16 +43,17 @@ class AddNewProperty extends Command
     {
         $model = $this->namespace . $this->argument('model');
 
-        foreach ($this->argument('property') as $property => $value)
-        {
+        foreach ($this->argument('property') as $property => $value) {
             $this->properties[$value] = null;
         }
 
-        foreach ($model::all() as $model)
-        {
-            $fields = unserialize($model->properties);
+        $fields = [];
+        foreach ($model::all() as $model) {
+            $fields[] = unserialize($model->properties);
+        }
 
-            $withNewFields = array_merge($fields, $this->properties);
+        foreach ($fields as $field) {
+            $withNewFields = array_merge($field, $this->properties);
 
             $model::where('id', '>', 0)->update([
                 'properties' => serialize($withNewFields)

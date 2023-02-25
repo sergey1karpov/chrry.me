@@ -108,7 +108,8 @@ class Link extends Model
                 $uploadService->savePhoto(
                     photo: $request->photo,
                     path: $this->imgPath($user->id),
-                    size: 200
+                    size: 200,
+                    imageType: 'link'
                 ) : null,
             'pinned' => isset($request->pinned) ? 1:0,
             'animation' => $request->animation,
@@ -155,7 +156,8 @@ class Link extends Model
                 photo: $request->photo,
                 path: $this->imgPath($user->id),
                 size: 200,
-                dropImagePath: $link->photo
+                dropImagePath: $link->photo,
+                imageType: 'link'
             )
         ]);
     }
@@ -189,7 +191,7 @@ class Link extends Model
     {
         $uploadService->deletePhotoFromFolder($link->photo);
 
-        Link::where('user_id', $user->id)->update([
+        Link::where('user_id', $user->id)->where('id', $link->id)->update([
             'photo' => '',
         ]);
     }
