@@ -19,9 +19,11 @@
         </div>
 
         <!-- Validation Errors -->
-        <div class="text-center">
-            <x-auth-validation-errors class="mb-4" :errors="$errors" />
-        </div>
+        @if (isset($errors))
+            <div class="text-center">
+                <x-auth-validation-errors class="mb-4" :errors="$errors" />
+            </div>
+        @endif
 
         <div class="">
 
@@ -31,7 +33,7 @@
                 </a>
             </div>
 
-            <form method="POST" action="{{ route('login') }}" class="text-center" id="login-form"> @csrf
+            <form method="POST" action="{{ route('login.store') }}" class="text-center" id="login-form"> @csrf
 
                 <!-- Email Address -->
                 <div class="mt-5">

@@ -50,7 +50,7 @@
 
     <form action="{{ route('settingsEdit', ['user' => $user->id]) }}" method="post" enctype="multipart/form-data"> @csrf @method('PATCH')
         <section class="flex justify-center ">
-            <div class="w-full mx-auto max-w-screen-xl ml-4 mr-4 sm:px-6 lg:px-8 rounded-lg">
+            <div class="w-full mx-auto max-w-screen-xl ml-4 mr-4 sm:px-6 lg:px-8 rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
                 <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white dark:bg-gray-900 text-gray-900 dark:text-white" data-inactive-classes="text-gray-500 dark:text-gray-400">
                     <h2 id="accordion-flush-heading-1">
                         <button type="button" class="p-2 flex rounded-lg items-center justify-between w-full py-5 font-medium text-left text-gray-500 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-1" aria-expanded="true" aria-controls="accordion-flush-body-1">
@@ -226,6 +226,13 @@
                             </div>
                         </section>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="flex justify-center mt-4">
+            <div class="w-full mx-auto max-w-screen-xl ml-4 mr-4 sm:px-6 lg:px-8 rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
+                <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white dark:bg-gray-900 text-gray-900 dark:text-white" data-inactive-classes="text-gray-500 dark:text-gray-400">
                     <h2 id="accordion-flush-heading-2">
                         <button type="button" class="p-2 flex rounded-lg items-center justify-between w-full py-5 font-medium text-left text-gray-500 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-2" aria-expanded="false" aria-controls="accordion-flush-body-2">
                             <span>Open card design</span>
@@ -377,7 +384,6 @@
                                 </div>
                             </div>
                         </section>
-
                     </div>
                 </div>
             </div>

@@ -25,25 +25,16 @@ class TwoFactorMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-//        $user = User::where('email', $request->email)->first();
-//
-//        if(!$user) {
-//            throw ValidationException::withMessages(['user' => 'User not found']);
-//        }
-//
-//        if($user->two_factor_auth == true) {
-//            AuthenticatedSessionController::generateHash($user);
-//
-//            return URL::temporarySignedRoute('twoFactorForm', now()->addMinutes(5), ['user' => $user->id]);
-//        }
         $user = User::where('email', $request->email)->first();
+
         if(!$user) {
             throw ValidationException::withMessages(['user' => 'User not found']);
         }
-        if($user->two_factor_auth == true) {
+
+        if($user->two_factor_auth) {
             AuthenticatedSessionController::generateHash($user);
 
-            $url = URL::temporarySignedRoute('twoFactorForm', now()->addMinutes(1));
+            $url = URL::temporarySignedRoute('twoFactorForm', now()->addMinutes(10));
 
             return redirect()->to($url);
         }
@@ -51,6 +42,3 @@ class TwoFactorMiddleware
         return $next($request);
     }
 }
-
-
-//return URL::temporarySignedRoute(‘twoFactorForm’, now()->addMinutes(30));

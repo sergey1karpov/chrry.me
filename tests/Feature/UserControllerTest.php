@@ -2,185 +2,172 @@
 
 namespace Tests\Feature;
 
+use App\Mail\TwoFactorMail;
 use App\Models\User;
-use App\Services\ColorConvertorService;
-use App\Services\StatsService;
+use App\Models\UserHash;
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Http\UploadedFile;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 
 class UserControllerTest extends TestCase
 {
-    use RefreshDatabase;
+    use DatabaseTransactions, Authenticatable;
 
-    private User $user;
-
-    public function setUp(): void
+    /**
+     * Show registration form
+     * @return void
+     */
+    public function test_see_register_form()
     {
-        parent::setUp();
-        $this->user = User::factory()->create();
+        $response = $this->get(route('register'));
+
+        $response->assertSuccessful();
+
+        $response->assertViewIs('auth.register');
     }
 
     /**
-     * Login app
+     * Registration new user
      * @return void
      */
-    public function test_login_to_application()
+    public function test_success_registration_to_web()
     {
-        $this->post('/login', [
-            'email' => $this->user->email,
-            'password' => $this->user->password,
+        $response = $this->post(route('create.register'), [
+            'name' => 'Sergey Karpov',
+            'slug' => 'karpov',
+            'email' => 'karpov@mail.ru',
+            'password' => 'q1w2e3r4',
+            'password_confirmation' => 'q1w2e3r4'
         ]);
 
-        $this->actingAs($this->user);
+        $this->assertDatabaseHas('users', [
+            'name' => 'Sergey Karpov',
+            'slug' => 'karpov',
+            'email' => 'karpov@mail.ru',
+        ]);
 
-        $this->followingRedirects()->get(route('editProfileForm', ['id' => $this->user->id]))->assertStatus(200);
+        $user = User::where('email', 'karpov@mail.ru')->first();
+
+        $response->assertRedirect(route('editProfileForm', ['user' => $user->id]));
     }
 
     /**
-     * if user active
+     * Failed registration. If user already register in our site(uniq email)
      * @return void
      */
-    public function test_skan_nfc_true(): void
+    public function test_failed_registration_to_web()
     {
-        $this->followingRedirects()->get(route('editNewUserForm', ['utag' => $this->user->utag]))->assertStatus(200);
+        User::factory(['email' => 'karpov@mail.ru'])->create();
+
+        $response = $this->post(route('create.register'), [
+            'name' => 'Sergey Karpov',
+            'slug' => 'karpov',
+            'email' => 'karpov@mail.ru',
+            'password' => 'q1w2e3r4',
+            'password_confirmation' => 'q1w2e3r4'
+        ]);
+
+        $response->assertSessionHasErrors();
+        $this->assertSame(count(User::all()), 1);
+        $this->assertDatabaseHas('users', [
+            'email' => 'karpov@mail.ru',
+        ]);
     }
 
-    /**
-     * if user no active
-     * @return void
-     */
-    public function test_skan_nfc_false(): void
+    public function test_see_login_form()
     {
-        $user = User::factory([
-            'is_active' => false,
-        ])->create();
+        $response = $this->get(route('login'));
 
-        $this->patch(route('editNewUser', ['utag' => $user->utag]), [
-            'name'      => $user->name,
-            'slug'      => $user->slug,
-            'email'     => $user->email,
-            'password'  => $user->password,
-            'is_active' => true,
+        $response->assertSuccessful();
+
+        $response->assertViewIs('auth.login');
+    }
+
+    public function test_success_login_to_web_without_two_factor_auth()
+    {
+        $this->post(route('create.register'), [
+            'name' => 'Sergey Karpov',
+            'slug' => 'karpov',
+            'email' => 'karpov@mail.ru',
+            'password' => 'q1w2e3r4',
+            'password_confirmation' => 'q1w2e3r4'
+        ]);
+
+        $user = User::where('email', 'karpov@mail.ru')->first();
+
+        $response = $this->post(route('login.store'), [
+            'email' => $user->email,
+            'password' => $user->password,
         ]);
 
         $this->actingAs($user);
 
-        $thisUser = User::where('id', $user->id)->first();
-
-        $this->assertEquals($user->id, $thisUser->id);
-        $this->assertEquals($user->slug, $thisUser->slug);
-
-        $this->followingRedirects()->get(route('editProfileForm', ['id' => $user->id]))->assertStatus(200);
+        $response->assertRedirect(route('editProfileForm', ['user' => $user->id]));
     }
 
-    /**
-     * test user home page and see in name
-     * @return void
-     */
-    public function test_user_home_page()
+    public function test_failed_login_to_web()
     {
-        $response = $this->get(route('userHomePage', ['user' => $this->user->slug]));
+        User::factory(['email' => 'karpov@mail.ru', 'password' => 'q1w2e3r4'])->create();
 
-        $response->assertSee($this->user->name);
-    }
-
-    /**
-     * test user profile stats service
-     * @return void
-     */
-    public function test_user_home_page_test_user_stat_service()
-    {
-        $statService = new StatsService();
-
-        $statService->createUserStats($this->user, '95.24.203.217');
-
-        $this->assertDatabaseHas('stats', [
-            'user_id' => $this->user->id,
-            'guest_ip' => '95.24.203.217',
-            'country' => 'Russia',
-        ]);
-    }
-
-    /**
-     * test user admin page and see in name
-     * @return void
-     */
-    public function test_edit_profile_form()
-    {
-        $this->withoutMiddleware();
-
-        $response = $this->get(route('editProfileForm', ['id' => $this->user->id]));
-
-        $response->assertSee($this->user->name);
-    }
-
-    /**
-     * test edit user profile
-     * @return void
-     */
-    public function test_edit_user_profile()
-    {
-        $this->actingAs($this->user)->patch(route('editUserProfile', ['id' => $this->user->id]), [
-            'name'              => 'Sergey Karpov',
-            'description'       => 'Description',
-            'background_color'  => '#ffffff',
-            'name_color'        => '#000000',
-            'description_color' => '#000000',
-            'verify_color'      => '#000000',
-            'slug'              => 'sergey1Karpov',
-            'avatar'            => UploadedFile::fake()->image('avatar.jpg', 500, 500)->size(100),
-            'banner'            => UploadedFile::fake()->image('banner.jpg', 500, 500)->size(100),
-            'locale'            => 'ru',
-            'type'              => 'Links',
-            'show_social'       => true,
-            'social'            => 'TOP',
-            'favicon'           => UploadedFile::fake()->image('avatar.jpg', 500, 500)->size(100),
-            'social_links_bar'  => true,
-            'show_logo'         => true,
-            'links_bar_position' => 'bottom',
-            'background_color_rgb' => ColorConvertorService::convertBackgroundColor('#ffffff'),
-            'logotype_size' => 30,
-            'logotype_shadow_right' => 30,
-            'logotype_shadow_bottom' => 30,
-            'logotype_shadow_round' => 30,
-            'logotype_shadow_color' => '#ffffff',
-            'round_links_width' => 50,
-            'round_links_shadow_right' => 50,
-            'round_links_shadow_bottom' => 50,
-            'round_links_shadow_round' => 50,
-            'round_links_shadow_color' => 50,
-            'logotype' => UploadedFile::fake()->image('logotype.png', 500, 500)->size(100),
+        $response = $this->post(route('login.store'), [
+            'email' => 'karpov@mail.com',
+            'password' => 'q1w2e3r4',
         ]);
 
-        $this->assertEquals('Sergey Karpov', User::first()->name);
-        $this->assertEquals('sergey1Karpov', User::first()->slug);
+        $response->assertSessionHasErrors();
+        $response->assertStatus(302);
     }
 
-    /**
-     * test delete user avatar
-     * @return void
-     */
-    public function test_del_user_avatar()
+    public function test_success_login_to_web_with_two_factor_auth_and_send_mail_with_token()
     {
-        $this->actingAs($this->user)->patch(route('delUserAvatar', ['id' => $this->user->id, 'type' => 'avatar']), [
-            'avatar' => null,
+        User::factory(['email' => 'karpov@mail.ru', 'password' => 'q1w2e3r4', 'two_factor_auth' => true])->create();
+
+        $user = User::where('email', 'karpov@mail.ru')->first();
+
+        $response = $this->post(route('login.store'), [
+            'email' => $user->email,
+            'password' => $user->password,
         ]);
 
-        $this->assertEquals(null, User::first()->avatar);
+        $hash = rand();
+        $mailable = new TwoFactorMail($hash);
+        $mailable->assertSeeInHtml($hash);
+
+        $sendMail = Mail::fake();
+        $sendMail->to($user->email);
+        $sendMail->mailer(TwoFactorMail::class);
+
+        $response->assertRedirectToSignedRoute('twoFactorForm');
     }
 
-    /**
-     * test to change theme user profile
-     * @return void
-     */
-    public function test_change_theme()
+    public function test_success_two_factor_auth()
     {
-        $this->actingAs($this->user)->patch(route('changeTheme', ['id' => $this->user->id]), [
-           'dayVsNight' => 1,
+        User::factory(['email' => 'karpov@mail.ru', 'password' => 'q1w2e3r4', 'two_factor_auth' => true])->create();
+        $user = User::where('email', 'karpov@mail.ru')->first();
+        UserHash::factory(['user_id' => $user->id])->create();
+        $hash = UserHash::where('user_id', $user->id)->first();
+
+        $response = $this->post(route('hashCheck'), [
+            'hash' => $hash->hash,
         ]);
 
-        $this->assertEquals(1, User::first()->dayVsNight);
+        $response->assertRedirect(route('editProfileForm', ['user' => $user->id]));
+    }
+
+    public function test_failed_two_factor_auth()
+    {
+        User::factory(['email' => 'karpov@mail.ru', 'password' => 'q1w2e3r4', 'two_factor_auth' => true])->create();
+        $user = User::where('email', 'karpov@mail.ru')->first();
+        UserHash::factory(['user_id' => $user->id, 'hash' => '123456789'])->create();
+
+        $response = $this->post(route('hashCheck'), [
+            'hash' => 'qwe123d12',
+        ]);
+
+        $response->assertSessionHas('bad_code', 'Your code not valid');
     }
 }
-

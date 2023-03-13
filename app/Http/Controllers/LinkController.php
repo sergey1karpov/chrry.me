@@ -139,10 +139,14 @@ class LinkController extends Controller
 
     /**
      * @param User $user
-     * @return Application|Factory|View
+     * @return Application|Factory|View|RedirectResponse
      */
-    public function editAllLinkForm(User $user): View|Factory|Application
+    public function editAllLinkForm(User $user): View|Factory|RedirectResponse|Application
     {
+        if(count($user->links) == 0) {
+            return redirect()->route('allLinks', ['user' => $user->id])->with('success', "You doesn't have links");
+        }
+
         return view('link.edit-all', [
             'user' => $user,
             'allIconsInsideFolder' => $this->getIcons(),

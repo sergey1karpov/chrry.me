@@ -55,7 +55,7 @@ class CreateProfileViewStatistics implements StatisticInterface
             'created_at'   => today(),
             'city'         => $data['city'] ?? null,
             'country'      => $data['country'] ?? null,
-            'country_code' => $data['country'] ?? null,
+            'country_code' => $data['countryCode'] ?? null,
         ]);
     }
 }

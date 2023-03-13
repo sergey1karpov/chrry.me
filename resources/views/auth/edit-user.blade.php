@@ -13,9 +13,11 @@
         </x-slot>
 
         <!-- Validation Errors -->
-        <div class="text-center">
-            <x-auth-validation-errors class="mb-5" :errors="$errors" />
-        </div>
+        @if (isset($errors))
+            <div class="text-center">
+                <x-auth-validation-errors class="mb-4" :errors="$errors" />
+            </div>
+        @endif
 
         <div class="m-4">
 

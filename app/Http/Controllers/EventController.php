@@ -102,10 +102,14 @@ class EventController extends Controller
 
     /**
      * @param User $user
-     * @return Application|Factory|\Illuminate\Contracts\View\View
+     * @return Application|Factory|\Illuminate\Contracts\View\View|RedirectResponse
      */
-    public function editAllEventsForm(User $user)
+    public function editAllEventsForm(User $user): \Illuminate\Contracts\View\View|Factory|RedirectResponse|Application
     {
+        if(count($user->events) == 0) {
+            return redirect()->route('allEvents', ['user' => $user->id])->with('success', "You doesn't have events");
+        }
+
         return view('event.edit-all', [
             'user' => $user,
             'allIconsInsideFolder' => $this->getIcons(),

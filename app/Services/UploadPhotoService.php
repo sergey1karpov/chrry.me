@@ -11,6 +11,8 @@ use Intervention\Image\ImageManagerStatic as Image;
 class UploadPhotoService
 {
     /**
+     * Save user logotype
+     *
      * @param UploadedFile $photo
      * @param int $size
      * @param string $path
@@ -77,10 +79,7 @@ class UploadPhotoService
     public function savePhoto(UploadedFile $photo, string $path, int $size, string $dropImagePath = null, string $imageType = null): string
     {
         if($photo->getClientOriginalExtension() == 'gif') {
-            if($dropImagePath) {
-                $this->deletePhotoFromFolder($dropImagePath);
-            }
-            return $this->saveGif($photo, $imageType);
+            return $this->saveGif($photo, $imageType, $dropImagePath);
         }
 
         if($dropImagePath != null) {
@@ -101,16 +100,13 @@ class UploadPhotoService
      *
      * @param UploadedFile $photo
      * @param string $imageType
+     * @param string|null $dropImagePath
      * @return string
      */
-    public function saveGif(UploadedFile $photo, string $imageType): string
+    public function saveGif(UploadedFile $photo, string $imageType, string $dropImagePath = null): string
     {
-        if(Auth::user()->settings->avatar && $imageType == 'avatar') {
-            $this->deletePhotoFromFolder(Auth::user()->settings->avatar);
-        }
-
-        if(Auth::user()->settings->banner && $imageType == 'banner') {
-            $this->deletePhotoFromFolder(Auth::user()->settings->banner);
+        if($dropImagePath) {
+            $this->deletePhotoFromFolder($dropImagePath);
         }
 
         if($imageType == 'link') {
@@ -118,7 +114,7 @@ class UploadPhotoService
             return '../storage/app/'.$url;
         }
 
-        $url = Storage::putFile('public/' . Auth::user()->id, $photo);
+        $url = Storage::put('public/' . Auth::user()->id, $photo);
         return '../storage/app/'.$url;
     }
 

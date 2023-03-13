@@ -9,6 +9,10 @@ use App\Models\User;
 use App\Models\UserHash;
 use App\Observers\UserObserver;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -32,7 +36,7 @@ class AuthenticatedSessionController extends Controller
      * Handle an incoming authentication request.
      *
      * @param  \App\Http\Requests\Auth\LoginRequest  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function store(LoginRequest $request)
     {
@@ -47,7 +51,7 @@ class AuthenticatedSessionController extends Controller
      * Destroy an authenticated session.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function destroy(Request $request)
     {
@@ -66,7 +70,7 @@ class AuthenticatedSessionController extends Controller
      * @param User $user
      * @return void
      */
-    public static function generateHash(User $user)
+    public static function generateHash(User $user): void
     {
         $hash = rand();
 
@@ -81,9 +85,10 @@ class AuthenticatedSessionController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @param Request $request
+     * @return Application|Factory|View
      */
-    public function twoFactorForm(Request $request)
+    public function twoFactorForm(Request $request): View|Factory|Application
     {
         if (! $request->hasValidSignature()) {
             abort(401);
@@ -93,7 +98,12 @@ class AuthenticatedSessionController extends Controller
     }
 
 
-    public function hashCheck(Request $request)
+    /**
+     * @param Request $request
+     * @return RedirectResponse
+     * @throws ValidationException
+     */
+    public function hashCheck(Request $request): RedirectResponse
     {
         $userHash = UserHash::where('hash', $request->hash)->first();
 
@@ -107,10 +117,14 @@ class AuthenticatedSessionController extends Controller
             return redirect()->route('editProfileForm', ['user' => $userHash->user->id]);
         }
 
-        throw ValidationException::withMessages(['hash' => 'Your code not valid']);
+        return redirect()->back()->with('bad_code', 'Your code not valid');
     }
 
-    public function dropHash(string $hash)
+    /**
+     * @param string $hash
+     * @return void
+     */
+    public function dropHash(string $hash): void
     {
         UserHash::where('hash', $hash)->update([
             'hash' => null,

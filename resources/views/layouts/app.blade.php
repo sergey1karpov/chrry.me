@@ -40,16 +40,16 @@
         </style>
 
     </head>
-    <body class="body-block font-sans antialiased @if($attributes['user']['dayVsNight'] == 1) bg-black @else bg-gradient-to-r from-rose-100 to-teal-100 @endif">
+    <body class="body-block font-sans antialiased @if($attributes['user']['dayVsNight'] == 1) bg-black @else bg-white @endif">
 
-        <div class="content-block min-h-screen @if($attributes['user']['dayVsNight'] == 1) bg-black @else bg-gradient-to-r from-rose-100 to-teal-100 @endif">
+        <div class="content-block min-h-screen @if($attributes['user']['dayVsNight'] == 1) bg-black @else bg-white @endif">
             <main>
                 {{ $slot }}
             </main>
         </div>
 
-        <footer class="sticky top-[100vh] footer-block p-2 shadow md:px-6 md:py-8 navbar-fixed-bottom" style="background-color: rgba(0, 0, 0, .9);">
-            <div class="flex justify-between items-center ml-2 mr-2 mb-2">
+        <footer class="sticky top-[100vh] footer-block p-2 md:px-6 md:py-8 navbar-fixed-bottom @if($attributes['user']['dayVsNight'] == 1) bg-black @else  @endif" >
+            <div class="flex justify-between items-center ml-2 mr-2 mb-2 mt-2">
                 <div class="flex justify-center items-center">
                     <a href="http://chrry.me/" class="flex items-center">
                         <img src="https://i.ibb.co/HBYTmyj/2.png" class="mr-3 h-6" alt="CHRRY.ME Logo" />
@@ -91,24 +91,24 @@
                         success: function (){
                             if(type) { //Add night mode
                                 console.log('Sleep');
-                                $(".body-block").addClass('bg-black').removeClass('bg-gradient-to-r from-rose-100 to-teal-100');
+                                $(".body-block").addClass('bg-black').removeClass('bg-white');
                                 $(".text-block").addClass('text-white');
                                 $(".text-block2").removeClass('text-black');
-                                $(".header-block").addClass('bg-black').removeClass('bg-gradient-to-r from-rose-100 to-teal-100');
-                                $(".footer-block").addClass('bg-black').removeClass('bg-gradient-to-r from-rose-100 to-teal-100');
-                                $(".content-block").addClass('bg-black').removeClass('bg-gradient-to-r from-rose-100 to-teal-100');
+                                $(".header-block").addClass('bg-black').removeClass('bg-white');
+                                $(".footer-block").addClass('bg-black').removeClass('bg-white');
+                                $(".content-block").addClass('bg-black').removeClass('bg-white');
                                 $(".switch-text").addClass('text-gray-300');
                                 $(".switch-text").html('Light on');
                                 $(".btn-block").addClass('dark:border-white').addClass('dark:text-white');
                                 $(".card-block").addClass('bg-[#0f0f0f] border-4')
                             } else { //Add day mode
                                 console.log('Wake up!');
-                                $(".body-block").removeClass('bg-black').addClass('bg-gradient-to-r from-rose-100 to-teal-100');
+                                $(".body-block").removeClass('bg-black').addClass('bg-white');
                                 $(".text-block").removeClass('text-white');
                                 $(".text-block2").addClass('text-black');
-                                $(".header-block").removeClass('bg-black').addClass('bg-gradient-to-r from-rose-100 to-teal-100');
-                                $(".footer-block").removeClass('bg-black').addClass('bg-gradient-to-r from-rose-100 to-teal-100');
-                                $(".content-block").removeClass('bg-black').addClass('bg-gradient-to-r from-rose-100 to-teal-100');
+                                $(".header-block").removeClass('bg-black').addClass('bg-white');
+                                $(".footer-block").removeClass('bg-black');
+                                $(".content-block").removeClass('bg-black').addClass('bg-white');
                                 $(".switch-text").removeClass('text-gray-300');
                                 $(".switch-text").html('Light off');
                                 $(".btn-block").removeClass('dark:border-white').removeClass('dark:text-white');

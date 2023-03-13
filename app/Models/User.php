@@ -21,6 +21,9 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    /**
+     * @var string[]
+     */
     protected $fillable = [
         'name',
         'email',
@@ -38,90 +41,147 @@ class User extends Authenticatable
         'two_factor_auth',
     ];
 
+    /**
+     * @var string[]
+     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
+    /**
+     * @var string[]
+     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * @return HasOne
+     */
     public function settings(): HasOne
     {
         return $this->hasOne(UserSettings::class);
     }
 
+    /**
+     * @return HasOne
+     */
     public function eventSettings()
     {
         return $this->hasOne(EventSetting::class);
     }
 
+    /**
+     * @return HasOne
+     */
     public function seo()
     {
         return $this->hasOne(SEO::class);
     }
 
+    /**
+     * @return HasOne
+     */
     public function qrCode()
     {
         return $this->hasOne(QRCode::class);
     }
 
+    /**
+     * @return HasMany
+     */
     public function links(): HasMany
     {
         return $this->hasMany(Link::class);
     }
 
+    /**
+     * @return HasMany
+     */
     public function events(): HasMany
     {
         return $this->hasMany(Event::class)->orderBy('date');
     }
 
+    /**
+     * @return HasMany
+     */
     public function products(): HasMany
     {
         return $this->hasMany(Product::class);
     }
 
+    /**
+     * @return HasMany
+     */
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
     }
 
+    /**
+     * @return HasOne
+     */
     public function marketSettings(): HasOne
     {
         return $this->hasOne(ShopSettings::class);
     }
 
+    /**
+     * @return HasMany
+     */
     public function productCategories(): HasMany
     {
         return $this->hasMany(ProductCategory::class)->orderBy('position', 'ASC');
     }
 
+    /**
+     * @return HasOne
+     */
     public function hash(): HasOne
     {
         return $this->hasOne(UserHash::class);
     }
 
+    /**
+     * @param User $user
+     * @return Collection
+     */
     public function userLinksInBar(User $user): Collection
     {
         return $this->links()->where('user_id', $this->id)->orderBy('position')->get();
     }
 
+    /**
+     * @param int $id
+     * @return string
+     */
     public function imgPath(int $id): string
     {
         return '../storage/app/public/' . $id;
     }
 
+    /**
+     * @param bool $pinned
+     * @return Collection
+     */
     public function userLinks(bool $pinned): Collection
     {
         return $this->links()->where('user_id', $this->id)->where('pinned', $pinned)->orderBy('position')->get();
     }
 
+    /**
+     * @return Collection
+     */
     public function userProducts(): Collection
     {
         return Product::where('user_id', $this->id)->where('delete', null)->orderBy('position')->take(20)->get();
     }
 
+    /**
+     * @return Collection
+     */
     public function userLinksWithoutBar(): Collection
     {
         return $this->links()->where('type', 'LINK')->where('user_id', $this->id)->where('icon', null)->where('pinned', false)->orderBy('position')->get();
@@ -280,7 +340,12 @@ class User extends Authenticatable
         );
     }
 
-    public function updateDesignSettings(User $user, Request $request)
+    /**
+     * @param User $user
+     * @param Request $request
+     * @return void
+     */
+    public function updateDesignSettings(User $user, Request $request): void
     {
         UserSettings::updateOrCreate(
             ['user_id' => $user->id],
@@ -299,7 +364,6 @@ class User extends Authenticatable
                 'round_links_shadow_round' => $request->round_links_shadow_round,
                 'round_links_shadow_color' => $request->round_links_shadow_color,
                 'show_logo' => $request->show_logo,
-
                 'name_font' => $request->name_font,
                 'name_font_size' => $request->name_font_size,
                 'name_font_shadow_right' => $request->name_font_shadow_right,
@@ -353,7 +417,11 @@ class User extends Authenticatable
         }
     }
 
-    public function createDefaultEventSettings(User $user)
+    /**
+     * @param User $user
+     * @return void
+     */
+    public function createDefaultEventSettings(User $user): void
     {
         $settings = EventSetting::where('user_id', $user->id)->first();
 
@@ -396,7 +464,12 @@ class User extends Authenticatable
         }
     }
 
-    public function updateTwoFactorAuth(User $user, Request $request)
+    /**
+     * @param User $user
+     * @param Request $request
+     * @return void
+     */
+    public function updateTwoFactorAuth(User $user, Request $request): void
     {
         User::where('id', $user->id)->update([
             'two_factor_auth' => $request->two_factor_auth,
