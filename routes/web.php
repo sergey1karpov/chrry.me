@@ -161,6 +161,8 @@ Route::group(['middleware' => 'guest'], function() {
 
 Route::get('service/contacts', [IndexController::class, 'contacts'])->name('contacts');
 Route::get('service/rules', [IndexController::class, 'rules'])->name('rules');
+Route::get('service/about', [IndexController::class, 'about'])->name('about');
+Route::get('service/blog', [IndexController::class, 'blog'])->name('blog');
 
 
 

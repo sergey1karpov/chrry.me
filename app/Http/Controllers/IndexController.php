@@ -21,9 +21,9 @@ class IndexController extends Controller
 
     }
 
-    public function aboutUs()
+    public function about()
     {
-
+        return view('index.about');
     }
 
     public function rules()

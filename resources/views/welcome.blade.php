@@ -57,7 +57,7 @@
             <div class="flex flex-col items-center justify-center h-screen">
                 @if (Route::has('login'))
                     @auth
-                        <div class="nav-item mb-1">
+                        <div class="nav-item">
                             <a class="text-white text-2xl font-medium" aria-current="page" href="{{ route('userHomePage',  ['user' => Auth::user()->slug]) }}">{{Auth::user()->slug}}</a>
                         </div>
                         <div class="nav-item">
@@ -477,7 +477,7 @@
                 </a>
                 <ul class="flex flex-wrap items-center mb-6 text-sm text-gray-500 sm:mb-0 dark:text-gray-400">
                     <li>
-                        <a href="#" class="mr-4 hover:underline md:mr-6 ">О нас</a>
+                        <a href="{{route('about')}}" class="mr-4 hover:underline md:mr-6 ">О нас</a>
                     </li>
                     <li>
                         <a href="{{route('rules')}}" class="mr-4 hover:underline md:mr-6">Правила</a>
