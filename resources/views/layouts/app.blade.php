@@ -48,7 +48,7 @@
             </main>
         </div>
 
-        <footer class="sticky top-[100vh] footer-block p-2 md:px-6 md:py-8 navbar-fixed-bottom @if($attributes['user']['dayVsNight'] == 1) bg-black @else  @endif" >
+        <footer class="sticky top-[100vh] footer-block p-2 md:px-6 md:py-8 navbar-fixed-bottom @if($attributes['user']['dayVsNight'] == 1)  @else  @endif" >
             <div class="flex justify-between items-center ml-2 mr-2 mb-2 mt-2">
                 <div class="flex justify-center items-center">
                     <a href="http://chrry.me/" class="flex items-center">
@@ -57,9 +57,9 @@
                 </div>
                 <div class="flex justify-center items-center">
                     <ul class="flex flex-wrap items-center text-sm text-gray-500 sm:mb-0 dark:text-gray-400">
-                        <li>
-                            <a href="{{route('contacts')}}" class="mr-4 hover:underline md:mr-6 text-sm font-semibold">Contacts</a>
-                        </li>
+{{--                        <li>--}}
+{{--                            <a href="{{route('contacts')}}" class="mr-4 hover:underline md:mr-6 text-sm font-semibold">Contacts</a>--}}
+{{--                        </li>--}}
                         <li>
                             <form method="POST" action="{{ route('logout') }}"> @csrf
                                 <button type="submit">

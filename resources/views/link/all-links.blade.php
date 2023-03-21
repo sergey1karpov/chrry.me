@@ -59,10 +59,10 @@
             <div class="">
                 <div class="group block">
                     <div class="card-block block rounded-xl @if($user->dayVsNight == 1) bg-[#0f0f0f] border-4 @endif border-[#0f0f0f] p-8 shadow-xl transition hover:border-red-600/50 hover:shadow-red-600/50 group-hover:-translate-x-1 group-hover:-translate-y-1 group-hover:shadow-red-600/50">
-                        <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl lg:text-6xl @if($user->dayVsNight == 1) text-gray-50 @else text-gray-900 @endif">Mass update</h1>
-                        <p class="mb-6 text-lg font-normal text-gray-500 lg:text-xl  dark:text-gray-400">Use this feature if you want to change the design of all links at once</p>
+                        <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl lg:text-6xl @if($user->dayVsNight == 1) text-gray-50 @else text-gray-900 @endif">{{ __('main.link_mass') }}</h1>
+                        <p class="mb-6 text-lg font-normal text-gray-500 lg:text-xl  dark:text-gray-400">{{ __('main.link_mass_description') }}</p>
                         <a href="{{ route('editAllLinkForm', ['user' => $user->id]) }}" type="" class="inline-block rounded border border-indigo-900 bg-indigo-900 px-9 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
-                            UPDATE
+                            {{ __('main.link_mass_upd_btn') }}
                         </a>
                     </div>
                 </div>
@@ -74,7 +74,7 @@
         <section class="content-block text-white @if($user->dayVsNight == 1) bg-black @endif">
             <div class="mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8">
                 <div class="text-center mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
-                    <label class="mt-1 text-sm font-medium leading-relaxed text-indigo-600" for="avatar">Pinned links</label>
+                    <label class="mt-1 text-sm font-medium leading-relaxed text-indigo-600" for="avatar">{{ __('main.link_mass_pin') }}</label>
                     <div class="group block">
                         <table class="table w-full">
                             <tbody>
@@ -133,14 +133,14 @@
                                                 </div>
                                                 <div class="inline-flex rounded-b-lg shadow-sm mt-4" role="group">
                                                     <a href="{{ route('showClickLinkStatistic', ['user' => $user->id, 'link' => $link->id]) }}" class="w-20 px-4 py-1 text-sm font-medium text-gray-900 bg-white rounded-l-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-                                                        Statistic
+                                                        {{ __('main.link_stat') }}
                                                     </a>
                                                     <a href="{{ route('editLinkForm', ['user' => $user->id, 'link' => $link->id]) }}" class="w-20 px-4 py-1 text-sm font-medium text-gray-900 bg-white border-l border-r border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-                                                        Edit
+                                                        {{ __('main.link_edit') }}
                                                     </a>
                                                     <form action="{{ route('delLink', ['user' => Auth::user()->id, 'link' => $link->id]) }}" method="POST"> @csrf @method('DELETE')
                                                         <button type="submit" class="w-20 px-4 py-1 text-sm font-medium text-gray-900 bg-white rounded-r-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-                                                            Delete
+                                                            {{ __('main.link_delete') }}
                                                         </button>
                                                     </form>
                                                 </div>
@@ -160,7 +160,7 @@
         <section class="content-block text-white @if($user->dayVsNight == 1) bg-black @endif">
             <div class="mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8">
                 <div class="text-center mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
-                    <label class="mt-1 text-sm font-medium leading-relaxed text-indigo-600" for="avatar">Not pinned links</label>
+                    <label class="mt-1 text-sm font-medium leading-relaxed text-indigo-600" for="avatar">{{ __('main.link_mass_no_pin') }}</label>
                     <div class="group block">
                         <table class="table w-full">
                             <tbody>
@@ -219,14 +219,14 @@
                                             </div>
                                             <div class="inline-flex rounded-b-lg shadow-sm mt-4" role="group">
                                                 <a href="{{ route('showClickLinkStatistic', ['user' => $user->id, 'link' => $link->id]) }}" class="w-20 px-4 py-1 text-sm font-medium text-gray-900 bg-white rounded-l-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-                                                    Statistic
+                                                    {{ __('main.link_stat') }}
                                                 </a>
                                                 <a href="{{ route('editLinkForm', ['user' => $user->id, 'link' => $link->id]) }}" class="w-20 px-4 py-1 text-sm font-medium text-gray-900 bg-white border-l border-r border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-                                                    Edit
+                                                    {{ __('main.link_edit') }}
                                                 </a>
                                                 <form action="{{ route('delLink', ['user' => Auth::user()->id, 'link' => $link->id]) }}" method="POST"> @csrf @method('DELETE')
                                                     <button type="submit" class="w-20 px-4 py-1 text-sm font-medium text-gray-900 bg-white rounded-r-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-                                                        Delete
+                                                        {{ __('main.link_delete') }}
                                                     </button>
                                                 </form>
                                             </div>

@@ -57,16 +57,16 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
                             </svg>
                         </span>
-                        <h2 class="mt-4 text-3xl font-bold @if($user->dayVsNight == 1) text-white @else text-black @endif text-block2">Link</h2>
+                        <h2 class="mt-4 text-3xl font-bold @if($user->dayVsNight == 1) text-white @else text-black @endif text-block2">{{ __('main.link') }}</h2>
                         <p class="mt-1 text-lg font-medium leading-relaxed text-gray-500">
-                            Create and manage your links
+                            {{ __('main.link_description') }}
                         </p>
                         <div class="inline-flex rounded-md mt-4" role="group">
                             <a href="{{ route('createLinkForm', ['user' => $user->id]) }}" type="submit" class="inline-block rounded border border-indigo-900 bg-indigo-900 px-9 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
-                                CREATE
+                                {{ __('main.link_create_btn') }}
                             </a>
                             <a href="{{ route('allLinks', ['user' => $user->id]) }}" type="submit" class="ml-3 inline-block rounded border border-indigo-900 bg-indigo-900 px-9 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
-                                MANAGE
+                                {{ __('main.link_manage_btn') }}
                             </a>
                         </div>
                     </div>
@@ -80,21 +80,21 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
                                 </svg>
                             </span>
-                            <h2 class="mt-4 text-3xl font-bold @if($user->dayVsNight == 1) text-white @else text-black @endif text-block2">Event</h2>
+                            <h2 class="mt-4 text-3xl font-bold @if($user->dayVsNight == 1) text-white @else text-black @endif text-block2">{{ __('main.event') }}</h2>
                             <p class="mt-1 text-lg font-medium leading-relaxed text-gray-500">
-                                Create and manage your events
+                                {{ __('main.event_description') }}
                             </p>
                             <div class="flex-wrap rounded-md mt-1" role="group">
                                 <a href="{{ route('createEventForm', ['user' => $user->id]) }}" class="mt-3 mr-2 inline-block rounded border border-indigo-900 bg-indigo-900 px-9 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
-                                    CREATE
+                                    {{ __('main.event_create_btn') }}
                                 </a>
                                 @if(count($user->events) > 0)
                                     <a href="{{ route('allEvents', ['user' => $user->id]) }}" class="mt-3 mr-2 inline-block rounded border border-indigo-900 bg-indigo-900 px-9 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
-                                        MANAGE
+                                        {{ __('main.event_manage_btn') }}
                                     </a>
                                 @endif
                                 <a href="{{ route('settings', ['user' => $user->id]) }}" class="mt-3 inline-block rounded border border-indigo-900 bg-indigo-900 px-9 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
-                                    THEMES
+                                    {{ __('main.event_themes_btn') }}
                                 </a>
                             </div>
                         </div>
@@ -156,11 +156,11 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
                             </svg>
                         </span>
-                        <h2 class="mt-4 text-3xl font-bold @if($user->dayVsNight == 1) text-white @else text-black @endif text-block2">Statistic</h2>
+                        <h2 class="mt-4 text-3xl font-bold @if($user->dayVsNight == 1) text-white @else text-black @endif text-block2">{{ __('main.statistic') }}</h2>
                         <p class="mt-1 mb-3 text-lg font-medium leading-relaxed text-gray-500">
-                            View the statistics of visits to your profile
+                            {{ __('main.statistic_description') }}
                         </p>
-                        <span class=" bg-indigo-100 text-indigo-900 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">Today views: {{ count(App\Models\Stats::where('user_id', $user->id)->where('created_at', today())->get()) }}</span>
+                        <span class=" bg-indigo-100 text-indigo-900 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">{{ __('main.statistic_today') }} {{ count(App\Models\Stats::where('user_id', $user->id)->where('created_at', today())->get()) }}</span>
                     </div>
                 </a>
 
@@ -182,16 +182,16 @@
                                 </a>
                             </span>
                         </div>
-                        <h2 class="mt-4 text-3xl font-bold @if($user->dayVsNight == 1) text-white @else text-black @endif text-block2">Settings</h2>
+                        <h2 class="mt-4 text-3xl font-bold @if($user->dayVsNight == 1) text-white @else text-black @endif text-block2">{{ __('main.settings') }}</h2>
                         <p class="mt-1 text-lg font-medium leading-relaxed text-gray-500">
-                            Change page type, design and security settings
+                            {{ __('main.settings_description') }}
                         </p>
                         <div class="flex-wrap rounded-md mt-4" role="group">
                             <a href="{{ route('profileSettingsForm', ['user' => $user->id]) }}" type="submit" class="mr-2 mt-3 inline-block rounded border border-indigo-900 bg-indigo-900 px-9 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
-                                SETTINGS
+                                {{ __('main.settings_btn') }}
                             </a>
                             <a href="{{ route('designSettingsForm', ['user' => $user->id]) }}" type="submit" class="mr-2 mt-3 inline-block rounded border border-indigo-900 bg-indigo-900 px-9 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
-                                DESIGN
+                                {{ __('main.settings_design') }}
                             </a>
                             <a href="{{ route('seo', ['user' => $user->id]) }}" type="submit" class="mr-2 mt-3 inline-block rounded border border-indigo-900 bg-indigo-900 px-9 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
                                 SEO

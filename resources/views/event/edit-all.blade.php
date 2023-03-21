@@ -51,7 +51,7 @@
     <section class="flex justify-center ">
         <div class="w-full mx-auto max-w-screen-xl ml-4 mr-4 sm:px-6 lg:px-8 shadow-lg rounded-lg">
             <div id="design" class="w-full mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
-                <h1 class="mb-8 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl @if($user->dayVsNight == 1) text-white @else text-black @endif">Now your last <span class="text-indigo-600 dark:text-indigo-500">event</span> looks like this</h1>
+                <h1 class="mb-8 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl @if($user->dayVsNight == 1) text-white @else text-black @endif">{{ __('main.event_mass_2') }}</h1>
                 @if($properties->de_show_modal == 0)<a href="{{$event->tickets}}">@endif
                     <div class="container mt-2">
                         <div class="w-full col-lg-12 allalbums" data-modal-target="default" data-modal-toggle="popup-modal" type="button" style="
@@ -83,21 +83,21 @@
                 <div id="design1" class="mb-8 w-full mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
                     <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white dark:bg-gray-900 text-gray-900 dark:text-white" data-inactive-classes="text-gray-500 dark:text-gray-400">
                         <h2 id="accordion-flush-heading-1">
-                            <button type="button" class="rounded-lg flex items-center justify-between w-full px-2 py-5 font-medium text-left text-gray-500  border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-1" aria-expanded="false" aria-controls="accordion-flush-body-1">
-                                <span>Card. Field city</span>
+                            <button type="button" class="rounded-lg flex items-center justify-between w-full px-2 py-1 font-medium text-left text-gray-500  border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-1" aria-expanded="false" aria-controls="accordion-flush-body-1">
+                                <span>{{ __('main.event_card_city') }}</span>
                                 <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                             </button>
                         </h2>
                         <div id="accordion-flush-body-1" class="hidden" aria-labelledby="accordion-flush-heading-1">
                             <div id="design" class="py-4 mt-8 mb-8 w-full mx-auto max-w-screen-xl rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
                                 <div class="mb-8 text-center">
-                                    <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Font style </label>
+                                    <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font') }}</label>
                                     <select name="de_city_font" id="de_city_font" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif shadow-sm dark:placeholder-gray-400 " data-placeholder="Search font..."  autocomplete="off">
                                         <option selected value="{{$properties->de_city_font}}">{{$properties->de_city_font}}</option>
                                     </select>
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Font size </label>
+                                    <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_size') }}</label>
                                     <select name="de_city_font_size" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-600 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif shadow-sm dark:placeholder-gray-400">
                                         <option @if($properties->de_city_font_size == 0.8) selected @endif value="0.8">1</option>
                                         <option @if($properties->de_city_font_size == 0.9) selected @endif value="0.9">2</option>
@@ -112,23 +112,23 @@
                                     </select>
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Font color</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_color') }}</label>
                                     <input type="color" value="{{$properties->de_city_font_color}}" name="de_city_font_color" id="logotype_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif shadow-sm" style="border-radius: 50%">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Shadow color</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_color') }}</label>
                                     <input type="color" value="{{$properties->de_city_text_shadow_color}}" name="de_city_text_shadow_color" id="logotype_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif shadow-sm" style="border-radius: 50%">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Shadow right</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_right') }}</label>
                                     <input id="steps-range" type="range" name="de_city_text_shadow_right" value="{{$properties->de_city_text_shadow_right}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Shadow bottom</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_bottom') }}</label>
                                     <input id="steps-range" type="range" name="de_city_text_shadow_bottom" value="{{$properties->de_city_text_shadow_bottom}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Shadow blur</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_blur') }}</label>
                                     <input id="steps-range" type="range" name="de_city_text_shadow_blur" value="{{$properties->de_city_text_shadow_blur}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif">
                                 </div>
                             </div>
@@ -139,21 +139,21 @@
                 <div id="design1" class="mb-8 w-full mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
                     <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white dark:bg-gray-900 text-gray-900 dark:text-white" data-inactive-classes="text-gray-500 dark:text-gray-400">
                         <h2 id="accordion-flush-heading-2">
-                            <button type="button" class="rounded-lg flex items-center justify-between w-full px-2 py-5 font-medium text-left text-gray-500  border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-2" aria-expanded="false" aria-controls="accordion-flush-body-2">
-                                <span>Card. Field location</span>
+                            <button type="button" class="rounded-lg flex items-center justify-between w-full px-2 py-1 font-medium text-left text-gray-500  border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-2" aria-expanded="false" aria-controls="accordion-flush-body-2">
+                                <span>{{ __('main.event_card_location') }}</span>
                                 <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                             </button>
                         </h2>
                         <div id="accordion-flush-body-2" class="hidden" aria-labelledby="accordion-flush-heading-2">
                             <div id="design" class="py-4 mt-8 mb-8 w-full mx-auto max-w-screen-xl rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
                                 <div class="mb-8 text-center">
-                                    <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Font style </label>
+                                    <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font') }}</label>
                                     <select name="de_location_font" id="de_location_font" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif shadow-sm dark:placeholder-gray-400 " data-placeholder="Search font..."  autocomplete="off">
                                         <option selected value="{{$properties->de_location_font}}">{{$properties->de_location_font}}</option>
                                     </select>
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Font size </label>
+                                    <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_size') }}</label>
                                     <select name="de_location_font_size" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-600 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif shadow-sm dark:placeholder-gray-400 ">
                                         <option @if($properties->de_location_font_size == 0.8) selected @endif value="0.8">1</option>
                                         <option @if($properties->de_location_font_size == 0.9) selected @endif value="0.9">2</option>
@@ -168,23 +168,23 @@
                                     </select>
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Font color</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_color') }}</label>
                                     <input type="color" value="{{$properties->de_location_font_color}}" name="de_location_font_color" id="logotype_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif shadow-sm" style="border-radius: 50%">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Shadow color</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_color') }}</label>
                                     <input type="color" value="{{$properties->de_location_text_shadow_color}}" name="de_location_text_shadow_color" id="logotype_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif shadow-sm" style="border-radius: 50%">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Shadow right</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_right') }}</label>
                                     <input id="steps-range" type="range" name="de_location_text_shadow_right" value="{{$properties->de_location_text_shadow_right}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Shadow bottom</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_bottom') }}</label>
                                     <input id="steps-range" type="range" name="de_location_text_shadow_bottom" value="{{$properties->de_location_text_shadow_bottom}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Shadow blur</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_blur') }}</label>
                                     <input id="steps-range" type="range" name="de_location_text_shadow_blur" value="{{$properties->de_location_text_shadow_blur}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif">
                                 </div>
                             </div>
@@ -195,21 +195,21 @@
                 <div id="design1" class="mb-8 w-full mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
                     <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white dark:bg-gray-900 text-gray-900 dark:text-white" data-inactive-classes="text-gray-500 dark:text-gray-400">
                         <h2 id="accordion-flush-heading-3">
-                            <button type="button" class="rounded-lg flex items-center justify-between w-full px-2 py-5 font-medium text-left text-gray-500  border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-3" aria-expanded="false" aria-controls="accordion-flush-body-3">
-                                <span>Card. Field date</span>
+                            <button type="button" class="rounded-lg flex items-center justify-between w-full px-2 py-1 font-medium text-left text-gray-500  border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-3" aria-expanded="false" aria-controls="accordion-flush-body-3">
+                                <span>{{ __('main.event_card_date') }}</span>
                                 <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                             </button>
                         </h2>
                         <div id="accordion-flush-body-3" class="hidden" aria-labelledby="accordion-flush-heading-3">
                             <div id="design-2" class="pt-4 pb-4 mt-8 mb-8 w-full mx-auto max-w-screen-xl sm:px-6 lg:px-8 rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
                                 <div class="mb-8 text-center">
-                                    <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Font style </label>
+                                    <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font') }}</label>
                                     <select name="de_date_font" id="de_date_font" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif shadow-sm dark:placeholder-gray-400 " data-placeholder="Search font..."  autocomplete="off">
                                         <option selected value="{{$properties->de_date_font}}">{{$properties->de_date_font}}</option>
                                     </select>
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Font size </label>
+                                    <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_size') }}</label>
                                     <select name="de_date_font_size" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-600 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif shadow-sm dark:placeholder-gray-400 ">
                                         <option @if($properties->de_date_font_size == 0.8) selected @endif value="0.8">1</option>
                                         <option @if($properties->de_date_font_size == 0.9) selected @endif value="0.9">2</option>
@@ -224,27 +224,27 @@
                                     </select>
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Font color</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_color') }}</label>
                                     <input type="color" value="{{$properties->de_date_font_color}}" name="de_date_font_color" id="logotype_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif shadow-sm" style="border-radius: 50%">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Shadow color</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_color') }}</label>
                                     <input value="{{$properties->de_date_text_shadow_color}}" type="color" name="de_date_text_shadow_color" id="logotype_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif shadow-sm" style="border-radius: 50%">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Shadow right</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_right') }}</label>
                                     <input id="steps-range" type="range" name="de_date_text_shadow_right" value="{{$properties->de_date_text_shadow_right}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Shadow bottom</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_bottom') }}</label>
                                     <input id="steps-range" type="range" name="de_date_text_shadow_bottom" value="{{$properties->de_date_text_shadow_bottom}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Shadow blur</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_blur') }}</label>
                                     <input id="steps-range" type="range" name="de_date_text_shadow_blur" value="{{$properties->de_date_text_shadow_blur}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Date format</label>
+                                    <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_date_format') }}</label>
                                     <select name="de_date_format" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-600 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
                                         <option @if($properties->de_date_format == 1) selected @endif value="1">31.12.2023</option>
                                         <option @if($properties->de_date_format == 2) selected @endif value="2">31.12</option>
@@ -259,21 +259,21 @@
                 <div id="design1" class="mb-8 w-full mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
                     <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white dark:bg-gray-900 text-gray-900 dark:text-white" data-inactive-classes="text-gray-500 dark:text-gray-400">
                         <h2 id="accordion-flush-heading-4">
-                            <button type="button" class="rounded-lg flex items-center justify-between w-full px-2 py-5 font-medium text-left text-gray-500  border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-4" aria-expanded="false" aria-controls="accordion-flush-body-4">
-                                <span>Card. Field time</span>
+                            <button type="button" class="rounded-lg flex items-center justify-between w-full px-2 py-1 font-medium text-left text-gray-500  border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-4" aria-expanded="false" aria-controls="accordion-flush-body-4">
+                                <span>{{ __('main.event_card_time') }}</span>
                                 <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                             </button>
                         </h2>
                         <div id="accordion-flush-body-4" class="hidden" aria-labelledby="accordion-flush-heading-4">
                             <div id="design-2" class="pt-4 pb-4 mt-8 mb-8 w-full mx-auto max-w-screen-xl sm:px-6 lg:px-8 rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
                                 <div class="mb-8 text-center">
-                                    <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Font style </label>
+                                    <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font') }}</label>
                                     <select name="de_time_font" id="de_time_font" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif shadow-sm dark:placeholder-gray-400 " data-placeholder="Search font..."  autocomplete="off">
                                         <option selected value="{{$properties->de_time_font}}">{{$properties->de_time_font}}</option>
                                     </select>
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Font size </label>
+                                    <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_size') }}</label>
                                     <select name="de_time_font_size" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-600 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif shadow-sm dark:placeholder-gray-400 ">
                                         <option @if($properties->de_time_font_size == 0.8) selected @endif value="0.8">1</option>
                                         <option @if($properties->de_time_font_size == 0.9) selected @endif value="0.9">2</option>
@@ -288,30 +288,30 @@
                                     </select>
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Font color</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_color') }}</label>
                                     <input type="color" value="{{$properties->de_time_font_color}}" name="de_time_font_color" id="logotype_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif shadow-sm" style="border-radius: 50%">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Shadow color</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_color') }}</label>
                                     <input value="{{$properties->de_time_text_shadow_color}}" type="color" name="de_time_text_shadow_color" id="logotype_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif shadow-sm" style="border-radius: 50%">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Shadow right</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_right') }}</label>
                                     <input id="steps-range" type="range" name="de_time_text_shadow_right" value="{{$properties->de_time_text_shadow_right}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Shadow bottom</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_bottom') }}</label>
                                     <input id="steps-range" type="range" name="de_time_text_shadow_bottom" value="{{$properties->de_time_text_shadow_bottom}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Shadow blur</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_blur') }}</label>
                                     <input id="steps-range" type="range" name="de_time_text_shadow_blur" value="{{$properties->de_time_text_shadow_blur}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Show\Hide time field</label>
+                                    <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_show_time') }}</label>
                                     <select name="de_show_card_time" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-600 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
-                                        <option @if($properties->de_show_card_time == 1) selected @endif value="{{true}}">Show</option>
-                                        <option @if($properties->de_show_card_time == 0) selected @endif value="{{false}}">Hide</option>
+                                        <option @if($properties->de_show_card_time == 1) selected @endif value="{{true}}">{{ __('main.event_time_show') }}</option>
+                                        <option @if($properties->de_show_card_time == 0) selected @endif value="{{false}}">{{ __('main.event_time_hide') }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -322,72 +322,72 @@
                 <div id="design1" class="mb-8 w-full mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
                     <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white dark:bg-gray-900 text-gray-900 dark:text-white" data-inactive-classes="text-gray-500 dark:text-gray-400">
                         <h2 id="accordion-flush-heading-5">
-                            <button type="button" class="rounded-lg flex items-center justify-between w-full px-2 py-5 font-medium text-left text-gray-500  border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-5" aria-expanded="false" aria-controls="accordion-flush-body-5">
-                                <span>Card. Other settings</span>
+                            <button type="button" class="rounded-lg flex items-center justify-between w-full px-2 py-1 font-medium text-left text-gray-500  border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-5" aria-expanded="false" aria-controls="accordion-flush-body-5">
+                                <span>{{ __('main.event_card_other') }}</span>
                                 <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                             </button>
                         </h2>
                         <div id="accordion-flush-body-5" class="hidden" aria-labelledby="accordion-flush-heading-5">
                             <div id="design-3" class="pt-4 pb-4 mt-8 mb-8 w-full mx-auto max-w-screen-xl  sm:px-6 lg:px-8 rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Background color</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_other_bg_color') }}</label>
                                     <input value="{{$properties->de_background_color_hex}}" type="color" name="de_background_color_hex" id="logotype_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif shadow-sm" style="border-radius: 50%">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Background transparency</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_other_bg_trans') }}</label>
                                     <input id="steps-range" type="range" name="de_transparency" value="{{$properties->de_transparency}}" min="0" max="1" step="0.1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Border rounded</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_other_border') }}</label>
                                     <input id="steps-range" type="range" name="de_event_round" value="{{$properties->de_event_round}}" min="1" max="50" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif">
                                 </div>
                                 <div class="mb-10 text-center">
-                                    <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Card text position</label>
+                                    <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_other_position') }}</label>
                                     <select name="de_text_position" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-600 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) dark:bg-gray-900 text-gray-500 @endif shadow-sm dark:placeholder-gray-400 ">
-                                        <option @if($properties->de_text_position == 'justify-center') selected @endif value="justify-center">Center</option>
-                                        <option @if($properties->de_text_position == 'justify-start') selected @endif value="justify-start">Left</option>
-                                        <option @if($properties->de_text_position == 'justify-end') selected @endif value="justify-end">Right</option>
+                                        <option @if($properties->de_text_position == 'justify-center') selected @endif value="justify-center">{{ __('main.event_card_other_position_c') }}</option>
+                                        <option @if($properties->de_text_position == 'justify-start') selected @endif value="justify-start">{{ __('main.event_card_other_position_l') }}</option>
+                                        <option @if($properties->de_text_position == 'justify-end') selected @endif value="justify-end">{{ __('main.event_card_other_position_r') }}</option>
                                     </select>
                                 </div>
 
                                 <div class="mb-10 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Event shadow color</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_color') }}</label>
                                     <input type="color" value="{{$properties->de_event_card_shadow_color}}" name="de_event_card_shadow_color" id="logotype_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
                                 </div>
                                 <div class="mb-10 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Event shadow right</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_right') }}</label>
                                     <input id="steps-range" type="range" name="de_event_card_shadow_right" value="{{$properties->de_event_card_shadow_right}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                                 </div>
                                 <div class="mb-10 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Event shadow bottom</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_bottom') }}</label>
                                     <input id="steps-range" type="range" name="de_event_card_shadow_bottom" value="{{$properties->de_event_card_shadow_bottom}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                                 </div>
                                 <div class="mb-10 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Event shadow blur</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_blur') }}</label>
                                     <input id="steps-range" type="range" name="de_event_card_shadow_blur" value="{{$properties->de_event_card_shadow_blur}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                                 </div>
 
                                 @if($user->eventSettings->close_card_type == 1 || $user->eventSettings->close_card_type == 2)
                                     <div class="mb-10 text-center">
-                                        <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Border</label>
+                                        <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_other_border_on_off') }}</label>
                                         <select name="de_border" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-600 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
                                             @if(isset($properties->de_border))
-                                                <option @if($properties->de_border == 'border-0') selected @endif value="border-0">None</option>
-                                                <option @if($properties->de_border == 'border') selected @endif value="border">Border 1</option>
-                                                <option @if($properties->de_border == 'border-2') selected @endif value="border-2">Border 2</option>
-                                                <option @if($properties->de_border == 'border-4') selected @endif value="border-4">Border 4</option>
-                                                <option @if($properties->de_border == 'border-8') selected @endif value="border-8">Border 8</option>
+                                                <option @if($properties->de_border == 'border-0') selected @endif value="border-0">0</option>
+                                                <option @if($properties->de_border == 'border') selected @endif value="border">1</option>
+                                                <option @if($properties->de_border == 'border-2') selected @endif value="border-2">2</option>
+                                                <option @if($properties->de_border == 'border-4') selected @endif value="border-4">4</option>
+                                                <option @if($properties->de_border == 'border-8') selected @endif value="border-8">8</option>
                                             @else
-                                                <option value="border-0">None</option>
-                                                <option selected value="border">Border 1</option>
-                                                <option value="border-2">Border 2</option>
-                                                <option value="border-4">Border 4</option>
-                                                <option value="border-8">Border 8</option>
+                                                <option value="border-0">0</option>
+                                                <option selected value="border">1</option>
+                                                <option value="border-2">2</option>
+                                                <option value="border-4">4</option>
+                                                <option value="border-8">8</option>
                                             @endif
                                         </select>
                                     </div>
                                     <div class="mb-10 text-center">
-                                        <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Border color</label>
+                                        <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_other_border_color') }}</label>
                                         @if(isset($properties->de_border_color))
                                             <input type="color" value="{{$properties->de_border_color}}" name="de_border_color" id="logotype_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
                                         @else
@@ -396,10 +396,10 @@
                                     </div>
                                 @endif
                                 <div class="mb-8 text-center">
-                                    <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Show\Hide modal window</label>
+                                    <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_other_modal') }}</label>
                                     <select name="de_show_modal" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-600 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
-                                        <option @if($properties->de_show_modal == 1) selected @endif value="{{true}}">Show</option>
-                                        <option @if($properties->de_show_modal == 0) selected @endif value="{{false}}">Hide</option>
+                                        <option @if($properties->de_show_modal == 1) selected @endif value="{{true}}">{{ __('main.event_time_show') }}</option>
+                                        <option @if($properties->de_show_modal == 0) selected @endif value="{{false}}">{{ __('main.event_time_hide') }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -410,41 +410,41 @@
                 <div id="design1" class="mb-8 w-full mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
                     <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white dark:bg-gray-900 text-gray-900 dark:text-white" data-inactive-classes="text-gray-500 dark:text-gray-400">
                         <h2 id="accordion-flush-heading-6">
-                            <button type="button" class="rounded-lg flex items-center justify-between w-full px-2 py-5 font-medium text-left text-gray-500  border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-6" aria-expanded="false" aria-controls="accordion-flush-body-6">
-                                <span>Open Card. Field city</span>
+                            <button type="button" class="rounded-lg flex items-center justify-between w-full px-2 py-1 font-medium text-left text-gray-500  border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-6" aria-expanded="false" aria-controls="accordion-flush-body-6">
+                                <span>{{ __('main.event_modal_city') }}</span>
                                 <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                             </button>
                         </h2>
                         <div id="accordion-flush-body-6" class="hidden" aria-labelledby="accordion-flush-heading-6">
                             <div class="py-2 font-light border-gray-200 dark:border-gray-700">
                                 <div class="mb-8 text-center">
-                                    <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Font style </label>
+                                    <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font') }}</label>
                                     <select name="de_oc_city_font" id="de_oc_city_font" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 " data-placeholder="Search font..."  autocomplete="off">
                                         <option selected value="{{$properties->de_oc_city_font}}">{{$properties->de_oc_city_font}}</option>
                                     </select>
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Font size </label>
+                                    <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_size') }}</label>
                                     <input id="steps-range" type="range" name="de_oc_city_font_size" value="{{$properties->de_oc_city_font_size}}" min="0.8" max="3.2" step="0.1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Font color</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_color') }}</label>
                                     <input type="color" value="{{$properties->de_oc_city_font_color}}" name="de_oc_city_font_color" id="logotype_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Shadow color</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_color') }}</label>
                                     <input type="color" name="de_oc_city_font_shadow_color" value="{{$properties->de_oc_city_font_shadow_color}}" id="oc_city_font_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Shadow right</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_right') }}</label>
                                     <input id="steps-range" type="range" name="de_oc_city_font_shadow_right" value="{{$properties->de_oc_city_font_shadow_right}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Shadow bottom</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_bottom') }}</label>
                                     <input id="steps-range" type="range" name="de_oc_city_font_shadow_bottom" value="{{$properties->de_oc_city_font_shadow_bottom}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Shadow blur</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_blur') }}</label>
                                     <input id="steps-range" type="range" name="de_oc_city_font_shadow_blur" value="{{$properties->de_oc_city_font_shadow_blur}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                                 </div>
                             </div>
@@ -455,41 +455,41 @@
                 <div id="design1" class="mb-8 w-full mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
                     <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white dark:bg-gray-900 text-gray-900 dark:text-white" data-inactive-classes="text-gray-500 dark:text-gray-400">
                         <h2 id="accordion-flush-heading-7">
-                            <button type="button" class="rounded-lg flex items-center justify-between w-full px-2 py-5 font-medium text-left text-gray-500  border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-7" aria-expanded="false" aria-controls="accordion-flush-body-7">
-                                <span>Open Card. Field location</span>
+                            <button type="button" class="rounded-lg flex items-center justify-between w-full px-2 py-1 font-medium text-left text-gray-500  border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-7" aria-expanded="false" aria-controls="accordion-flush-body-7">
+                                <span>{{ __('main.event_modal_location') }}</span>
                                 <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                             </button>
                         </h2>
                         <div id="accordion-flush-body-7" class="hidden" aria-labelledby="accordion-flush-heading-7">
                             <div class="py-2 font-light border-gray-200 dark:border-gray-700">
                                 <div class="mb-8 text-center">
-                                    <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Font style </label>
+                                    <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font') }}</label>
                                     <select name="de_oc_location_font" id="de_oc_location_font" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 " data-placeholder="Search font..."  autocomplete="off">
                                         <option selected value="{{$properties->de_oc_location_font}}">{{$properties->de_oc_location_font}}</option>
                                     </select>
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Font size </label>
+                                    <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_size') }}</label>
                                     <input id="steps-range" type="range" name="de_oc_location_font_size" value="{{$properties->de_oc_location_font_size}}" min="0.8" max="3.2" step="0.1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Font color</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_color') }}</label>
                                     <input type="color" value="{{$properties->de_oc_location_font_color}}" name="de_oc_location_font_color" id="logotype_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Shadow color</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_color') }}</label>
                                     <input type="color" name="de_oc_location_font_shadow_color" value="{{$properties->de_oc_location_font_shadow_color}}" id="oc_city_font_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Shadow right</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_right') }}</label>
                                     <input id="steps-range" type="range" name="de_oc_location_font_shadow_right" value="{{$properties->de_oc_location_font_shadow_right}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Shadow bottom</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_bottom') }}</label>
                                     <input id="steps-range" type="range" name="de_oc_location_font_shadow_bottom" value="{{$properties->de_oc_location_font_shadow_bottom}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Shadow blur</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_blur') }}</label>
                                     <input id="steps-range" type="range" name="de_oc_location_font_shadow_blur" value="{{$properties->de_oc_location_font_shadow_blur}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                                 </div>
                             </div>
@@ -500,41 +500,41 @@
                 <div id="design1" class="mb-8 w-full mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
                     <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white dark:bg-gray-900 text-gray-900 dark:text-white" data-inactive-classes="text-gray-500 dark:text-gray-400">
                         <h2 id="accordion-flush-heading-8">
-                            <button type="button" class="rounded-lg flex items-center justify-between w-full px-2 py-5 font-medium text-left text-gray-500  border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-8" aria-expanded="false" aria-controls="accordion-flush-body-8">
-                                <span>Open Card. Field date</span>
+                            <button type="button" class="rounded-lg flex items-center justify-between w-full px-2 py-1 font-medium text-left text-gray-500  border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-8" aria-expanded="false" aria-controls="accordion-flush-body-8">
+                                <span>{{ __('main.event_modal_date') }}</span>
                                 <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                             </button>
                         </h2>
                         <div id="accordion-flush-body-8" class="hidden" aria-labelledby="accordion-flush-heading-8">
                             <div class="py-2 font-light border-gray-200 dark:border-gray-700">
                                 <div class="mb-8 text-center">
-                                    <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Font style </label>
+                                    <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font') }}</label>
                                     <select name="de_oc_date_font" id="de_oc_date_font" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 " data-placeholder="Search font..."  autocomplete="off">
                                         <option selected value="{{$properties->de_oc_date_font}}">{{$properties->de_oc_date_font}}</option>
                                     </select>
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Font size </label>
+                                    <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_size') }}</label>
                                     <input id="steps-range" type="range" name="de_oc_date_font_size" value="{{$properties->de_oc_date_font_size}}" min="0.8" max="3.2" step="0.1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Font color</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_color') }}</label>
                                     <input type="color" value="{{$properties->de_oc_date_font_color}}" name="de_oc_date_font_color" id="logotype_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Shadow color</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_color') }}</label>
                                     <input type="color" name="de_oc_date_font_shadow_color" value="{{$properties->de_oc_date_font_shadow_color}}" id="oc_city_font_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Shadow right</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_right') }}</label>
                                     <input id="steps-range" type="range" name="de_oc_date_font_shadow_right" value="{{$properties->de_oc_date_font_shadow_right}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Shadow bottom</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_bottom') }}</label>
                                     <input id="steps-range" type="range" name="de_oc_date_font_shadow_bottom" value="{{$properties->de_oc_date_font_shadow_bottom}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Shadow blur</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_blur') }}</label>
                                     <input id="steps-range" type="range" name="de_oc_date_font_shadow_blur" value="{{$properties->de_oc_date_font_shadow_blur}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                                 </div>
                             </div>
@@ -545,41 +545,41 @@
                 <div id="design1" class="mb-8 w-full mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
                     <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white dark:bg-gray-900 text-gray-900 dark:text-white" data-inactive-classes="text-gray-500 dark:text-gray-400">
                         <h2 id="accordion-flush-heading-9">
-                            <button type="button" class="rounded-lg flex items-center justify-between w-full px-2 py-5 font-medium text-left text-gray-500  border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-9" aria-expanded="false" aria-controls="accordion-flush-body-9">
-                                <span>Open Card. Field time</span>
+                            <button type="button" class="rounded-lg flex items-center justify-between w-full px-2 py-1 font-medium text-left text-gray-500  border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-9" aria-expanded="false" aria-controls="accordion-flush-body-9">
+                                <span>{{ __('main.event_modal_time') }}</span>
                                 <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                             </button>
                         </h2>
                         <div id="accordion-flush-body-9" class="hidden" aria-labelledby="accordion-flush-heading-9">
                             <div class="py-2 font-light border-gray-200 dark:border-gray-700">
                                 <div class="mb-8 text-center">
-                                    <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Font style </label>
+                                    <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font') }}</label>
                                     <select name="de_oc_time_font" id="de_oc_time_font" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 " data-placeholder="Search font..."  autocomplete="off">
                                         <option selected value="{{$properties->de_oc_time_font}}">{{$properties->de_oc_time_font}}</option>
                                     </select>
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Font size </label>
+                                    <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_size') }}</label>
                                     <input id="steps-range" type="range" name="de_oc_time_font_size" value="{{$properties->de_oc_time_font_size}}" min="0.8" max="3.2" step="0.1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Font color</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_color') }}</label>
                                     <input type="color" value="{{$properties->de_oc_time_font_color}}" name="de_oc_time_font_color" id="logotype_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Shadow color</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_color') }}</label>
                                     <input type="color" name="de_oc_time_font_shadow_color" value="{{$properties->de_oc_time_font_shadow_color}}" id="oc_city_font_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Shadow right</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_right') }}</label>
                                     <input id="steps-range" type="range" name="de_oc_time_font_shadow_right" value="{{$properties->de_oc_time_font_shadow_right}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Shadow bottom</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_bottom') }}</label>
                                     <input id="steps-range" type="range" name="de_oc_time_font_shadow_bottom" value="{{$properties->de_oc_time_font_shadow_bottom}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Shadow blur</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_blur') }}</label>
                                     <input id="steps-range" type="range" name="de_oc_time_font_shadow_blur" value="{{$properties->de_oc_time_font_shadow_blur}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                                 </div>
                             </div>
@@ -590,49 +590,49 @@
                 <div id="design1" class="mb-8 w-full mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
                     <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white dark:bg-gray-900 text-gray-900 dark:text-white" data-inactive-classes="text-gray-500 dark:text-gray-400">
                         <h2 id="accordion-flush-heading-10">
-                            <button type="button" class="rounded-lg flex items-center justify-between w-full px-2 py-5 font-medium text-left text-gray-500  border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-10" aria-expanded="false" aria-controls="accordion-flush-body-10">
-                                <span>Open Card. Field title</span>
+                            <button type="button" class="rounded-lg flex items-center justify-between w-full px-2 py-1 font-medium text-left text-gray-500  border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-10" aria-expanded="false" aria-controls="accordion-flush-body-10">
+                                <span>{{ __('main.event_modal_title') }}</span>
                                 <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                             </button>
                         </h2>
                         <div id="accordion-flush-body-10" class="hidden" aria-labelledby="accordion-flush-heading-10">
                             <div class="py-2 font-light border-gray-200 dark:border-gray-700">
                                 <div class="mb-10 text-center">
-                                    <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Card text position</label>
+                                    <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_other_position') }}</label>
                                     <select name="de_oc_title_position" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-600 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
-                                        <option @if($properties->de_oc_title_position == 'justify-center') selected @endif value="justify-center">Center</option>
-                                        <option @if($properties->de_oc_title_position == 'justify-start') selected @endif value="justify-start">Left</option>
-                                        <option @if($properties->de_oc_title_position == 'justify-end') selected @endif value="justify-end">Right</option>
+                                        <option @if($properties->de_oc_title_position == 'justify-center') selected @endif value="justify-center">{{ __('main.event_card_other_position_c') }}</option>
+                                        <option @if($properties->de_oc_title_position == 'justify-start') selected @endif value="justify-start">{{ __('main.event_card_other_position_l') }}</option>
+                                        <option @if($properties->de_oc_title_position == 'justify-end') selected @endif value="justify-end">{{ __('main.event_card_other_position_r') }}</option>
                                     </select>
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Font style </label>
+                                    <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font') }}</label>
                                     <select name="de_oc_title_font" id="de_oc_title_font" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 " data-placeholder="Search font..."  autocomplete="off">
                                         <option selected value="{{$properties->de_oc_title_font}}">{{$properties->de_oc_title_font}}</option>
                                     </select>
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Font size </label>
+                                    <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_size') }}</label>
                                     <input id="steps-range" type="range" name="de_oc_title_font_size" value="{{$properties->de_oc_title_font_size}}" min="0.8" max="3.2" step="0.1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Font color</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_color') }}</label>
                                     <input type="color" value="{{$properties->de_oc_title_font_color}}" name="de_oc_title_font_color" id="logotype_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Shadow color</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_color') }}</label>
                                     <input type="color" name="de_oc_title_font_shadow_color" value="{{$properties->de_oc_title_font_shadow_color}}" id="oc_city_font_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Shadow right</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_right') }}</label>
                                     <input id="steps-range" type="range" name="de_oc_title_font_shadow_right" value="{{$properties->de_oc_title_font_shadow_right}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Shadow bottom</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_bottom') }}</label>
                                     <input id="steps-range" type="range" name="de_oc_title_font_shadow_bottom" value="{{$properties->de_oc_title_font_shadow_bottom}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Shadow blur</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_blur') }}</label>
                                     <input id="steps-range" type="range" name="de_oc_title_font_shadow_blur" value="{{$properties->de_oc_title_font_shadow_blur}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                                 </div>
                             </div>
@@ -643,49 +643,49 @@
                 <div id="design1" class="mb-8 w-full mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
                     <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white dark:bg-gray-900 text-gray-900 dark:text-white" data-inactive-classes="text-gray-500 dark:text-gray-400">
                         <h2 id="accordion-flush-heading-11">
-                            <button type="button" class="rounded-lg flex items-center justify-between w-full px-2 py-5 font-medium text-left text-gray-500  border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-11" aria-expanded="false" aria-controls="accordion-flush-body-11">
-                                <span>Open Card. Field description</span>
+                            <button type="button" class="rounded-lg flex items-center justify-between w-full px-2 py-1 font-medium text-left text-gray-500  border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-11" aria-expanded="false" aria-controls="accordion-flush-body-11">
+                                <span>{{ __('main.event_modal_descr') }}</span>
                                 <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                             </button>
                         </h2>
                         <div id="accordion-flush-body-11" class="hidden" aria-labelledby="accordion-flush-heading-11">
                             <div class="py-2 font-light border-gray-200 dark:border-gray-700">
                                 <div class="mb-10 text-center">
-                                    <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Card text position</label>
+                                    <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_other_position') }}</label>
                                     <select name="de_oc_description_position" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-600 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
-                                        <option @if($properties->de_oc_description_position == 'justify-center') selected @endif value="justify-center">Center</option>
-                                        <option @if($properties->de_oc_description_position == 'justify-start') selected @endif value="justify-start">Left</option>
-                                        <option @if($properties->de_oc_description_position == 'justify-end') selected @endif value="justify-end">Right</option>
+                                        <option @if($properties->de_oc_description_position == 'justify-center') selected @endif value="justify-center">{{ __('main.event_card_other_position_c') }}</option>
+                                        <option @if($properties->de_oc_description_position == 'justify-start') selected @endif value="justify-start">{{ __('main.event_card_other_position_l') }}</option>
+                                        <option @if($properties->de_oc_description_position == 'justify-end') selected @endif value="justify-end">{{ __('main.event_card_other_position_r') }}</option>
                                     </select>
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Font style </label>
+                                    <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font') }} </label>
                                     <select name="de_oc_description_font" id="de_oc_description_font" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 " data-placeholder="Search font..."  autocomplete="off">
                                         <option selected value="{{$properties->de_oc_description_font}}">{{$properties->de_oc_description_font}}</option>
                                     </select>
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Font size </label>
+                                    <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_size') }}</label>
                                     <input id="steps-range" type="range" name="de_oc_description_font_size" value="{{$properties->de_oc_description_font_size}}" min="0.8" max="3.2" step="0.1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Font color</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_color') }}</label>
                                     <input type="color" value="{{$properties->de_oc_description_font_color}}" name="de_oc_description_font_color" id="logotype_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Shadow color</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_color') }}</label>
                                     <input type="color" name="de_oc_description_font_shadow_color" value="{{$properties->de_oc_description_font_shadow_color}}" id="oc_city_font_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Shadow right</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_right') }}</label>
                                     <input id="steps-range" type="range" name="de_oc_description_font_shadow_right" value="{{$properties->de_oc_description_font_shadow_right}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Shadow bottom</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_bottom') }}</label>
                                     <input id="steps-range" type="range" name="de_oc_description_font_shadow_bottom" value="{{$properties->de_oc_description_font_shadow_bottom}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Shadow blur</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_blur') }}</label>
                                     <input id="steps-range" type="range" name="de_oc_description_font_shadow_blur" value="{{$properties->de_oc_description_font_shadow_blur}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                                 </div>
                             </div>
@@ -696,57 +696,57 @@
                 <div id="design1" class="mb-8 w-full mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
                     <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white dark:bg-gray-900 text-gray-900 dark:text-white" data-inactive-classes="text-gray-500 dark:text-gray-400">
                         <h2 id="accordion-flush-heading-12">
-                            <button type="button" class="rounded-lg flex items-center justify-between w-full px-2 py-5 font-medium text-left text-gray-500  border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-12" aria-expanded="false" aria-controls="accordion-flush-body-12">
-                                <span>Open card. Other settings and ticket button</span>
+                            <button type="button" class="rounded-lg flex items-center justify-between w-full px-2 py-1 font-medium text-left text-gray-500  border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-12" aria-expanded="false" aria-controls="accordion-flush-body-12">
+                                <span>{{ __('main.event_modal_other') }}</span>
                                 <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                             </button>
                         </h2>
                         <div id="accordion-flush-body-12" class="hidden" aria-labelledby="accordion-flush-heading-12">
                             <div class="py-2 font-light border-gray-200 dark:border-gray-700">
                                 <div class="mb-10 text-center">
-                                    <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">City, location, date, time text position</label>
+                                    <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_modal_other_position') }}</label>
                                     <select name="de_oc_text_position" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-600 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
-                                        <option @if($properties->de_oc_text_position == 'justify-center') selected @endif value="justify-center">Center</option>
-                                        <option @if($properties->de_oc_text_position == 'justify-start') selected @endif value="justify-start">Left</option>
-                                        <option @if($properties->de_oc_text_position == 'justify-end') selected @endif value="justify-end">Right</option>
+                                        <option @if($properties->de_oc_text_position == 'justify-center') selected @endif value="justify-center">{{ __('main.event_card_other_position_c') }}</option>
+                                        <option @if($properties->de_oc_text_position == 'justify-start') selected @endif value="justify-start">{{ __('main.event_card_other_position_l') }}</option>
+                                        <option @if($properties->de_oc_text_position == 'justify-end') selected @endif value="justify-end">{{ __('main.event_card_other_position_r') }}</option>
                                     </select>
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Open card background color</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_other_bg_color') }}</label>
                                     <input type="color" value="{{$properties->de_oc_bg_color}}" name="de_oc_bg_color" id="logotype_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Ticket button font</label>
+                                    <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_modal_other_ticket_font') }}</label>
                                     <select name="de_oc_btn_text_font" id="de_oc_btn_text_font" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 " data-placeholder="Search font..."  autocomplete="off">
                                         <option selected value="{{$properties->de_oc_btn_text_font}}">{{$properties->de_oc_btn_text_font}}</option>
                                     </select>
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Ticket button font size</label>
+                                    <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_size') }}</label>
                                     <input id="steps-range" type="range" name="de_oc_btn_text_font_size" value="{{$properties->de_oc_btn_text_font_size}}" min="0.8" max="3.2" step="0.1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Ticket button color</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_modal_other_ticket_btn_color') }}</label>
                                     <input type="color" value="{{$properties->de_oc_btn_color}}" name="de_oc_btn_color" id="logotype_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Ticket button text color</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_modal_other_ticket_btn_text_color') }}</label>
                                     <input type="color" value="{{$properties->de_oc_btn_text_color}}" name="de_oc_btn_text_color" id="logotype_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Ticket button text shadow color</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_modal_other_ticket_btn_text_shadow_color') }}</label>
                                     <input type="color" value="{{$properties->de_oc_btn_text_font_shadow_color}}" name="de_oc_btn_text_font_shadow_color" id="oc_city_font_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Ticket button text shadow right</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_right') }}</label>
                                     <input id="steps-range" type="range" name="de_oc_btn_text_font_shadow_right" value="{{$properties->de_oc_btn_text_font_shadow_right}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Ticket button text shadow bottom</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_bottom') }}</label>
                                     <input id="steps-range" type="range" name="de_oc_btn_text_font_shadow_bottom" value="{{$properties->de_oc_btn_text_font_shadow_bottom}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                                 </div>
                                 <div class="mb-8 text-center">
-                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Ticket button text shadow blur</label>
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.event_card_font_shadow_blur') }}</label>
                                     <input id="steps-range" type="range" name="de_oc_btn_text_font_shadow_blur" value="{{$properties->de_oc_btn_text_font_shadow_blur}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                                 </div>
                             </div>
@@ -756,7 +756,7 @@
 
                 <div class="mt-5">
                     <button type="submit" class="mt-5 border border-indigo-600 w-full inline-block rounded-lg bg-indigo-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
-                        Update all
+                        {{ __('main.event_mass_upd') }}
                     </button>
                 </div>
             </form>

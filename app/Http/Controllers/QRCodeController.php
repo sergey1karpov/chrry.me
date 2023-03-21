@@ -145,14 +145,18 @@ class QRCodeController extends Controller
      */
     public function uploadLogotype(User $user, Request $request): RedirectResponse
     {
-        QrModel::where('user_id', $user->id)->update([
-            'logotype' => $this->uploadService->saveUserLogotype(
-                photo: $request->logo,
-                size: 500,
-                path: '../storage/app/public/' . Auth::user()->id . '/',
-                dropImagePath: $user->qrCode->logotype,
-            )
-        ]);
+        QrModel::updateOrCreate(
+            ['user_id' => $user->id],
+            [
+                'user_id' => $user->id,
+                'logotype' => $this->uploadService->saveUserLogotype(
+                    photo: $request->logo,
+                    size: 500,
+                    path: '../storage/app/public/' . Auth::user()->id . '/',
+                    dropImagePath: $user->qrCode->logotype ?? null,
+                )
+            ]
+        );
 
         return redirect()->back();
     }

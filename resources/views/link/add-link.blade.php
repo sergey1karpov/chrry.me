@@ -57,20 +57,20 @@
 
                     <div class="w-full mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
                         <div class="mb-6 text-center">
-                            <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600"><mark class="px-2 text-white bg-indigo-900 rounded dark:bg-indigo-900">Text link</mark></label>
+                            <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600"><mark class="px-2 text-white bg-indigo-900 rounded dark:bg-indigo-900">{{ __('main.link_text') }}</mark></label>
                             <input name="title" placeholder="My link" maxlength="100" id="title" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
                         </div>
                         <div class="mb-6 text-center">
-                            <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600"><mark class="px-2 text-white bg-indigo-900 rounded dark:bg-indigo-900">Link</mark></label>
+                            <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600"><mark class="px-2 text-white bg-indigo-900 rounded dark:bg-indigo-900">{{ __('main.link_url') }}</mark></label>
                             <input name="link" placeholder="https://my-site.com/" maxlength="100" id="title" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
                         </div>
                         <div class="mb-6 text-center">
-                            <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Image</label>
+                            <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.link_img') }}</label>
                             <input name="photo" accept=".jpg, .jpeg, .png, .gif" class="mt-3 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400" aria-describedby="avatar" id="avatar" type="file">
-                            <p class="mt-1 text-sm @if($user->dayVsNight == 1) text-gray-500 @else text-gray-500 @endif" id="avatar">PNG, JPG, JPEG or GIF (MAX Size. 10mb).</p>
+                            <p class="mt-1 text-sm @if($user->dayVsNight == 1) text-gray-500 @else text-gray-500 @endif" id="avatar">{{ __('main.link_img_size') }}</p>
                         </div>
                         <div class="mb-6 text-center">
-                            <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Or Icon</label>
+                            <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.link_icon') }}</label>
                             <select id="select-beast-empty" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 " data-placeholder="Начните вводить название..."  autocomplete="off" name="icon"></select>
                         </div>
                     </div>
@@ -79,18 +79,18 @@
                         <label class="relative inline-flex items-center cursor-pointer">
                             <input name="check_last_link" id="check_last_link" type="checkbox" class="sr-only peer">
                             <div class="w-14 h-7 bg-gray-200 dark:peer-focus:ring-indigo-900 rounded-full peer @if($user->dayVsNight == 1) dark:bg-gray-700 @endif peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:border-gray-600 peer-checked:bg-indigo-900"></div>
-                            <span class="ml-3 mt-1 text-sm font-medium leading-relaxed text-indigo-600"><mark class="px-2 text-white bg-indigo-900 rounded dark:bg-indigo-900">Copy design</mark></span>
+                            <span class="ml-3 mt-1 text-sm font-medium leading-relaxed text-indigo-600"><mark class="px-2 text-white bg-indigo-900 rounded dark:bg-indigo-900">{{ __('main.link_copy') }}</mark></span>
                         </label>
-                        <p class="mt-2 mb-6 text-sm font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">If you use this switch, you won't need to customize the link design. All parameters will be copied from your last created or modified link.</p>
+                        <p class="mt-2 mb-6 text-sm font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">{{ __('main.link_copy_description') }}</p>
                     </div>
 
                     <div id="design" class="w-full mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
                         <div class="mb-10 text-center">
-                            <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Font style</label>
+                            <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.link_font') }}</label>
                             <select name="dl_font" id="select-beast-empty-font" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 " data-placeholder="Начните вводить название..."  autocomplete="off"></select>
                         </div>
                         <div class="mb-10 text-center">
-                            <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Font size</label>
+                            <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.link_size') }}</label>
                             <select name="dl_font_size" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
                                 <option value="0.8">1</option>
                                 <option value="0.9">2</option>
@@ -103,69 +103,69 @@
                             </select>
                         </div>
                         <div class="mb-10 text-center">
-                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Text color</label>
+                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.link_color') }}</label>
                             <input type="color" name="dl_title_color" id="name_color" value="" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
                         </div>
                         <div class="mb-10 text-center">
-                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Text shadow color</label>
+                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.link_color_shadow') }}</label>
                             <input type="color" name="dl_text_shadow_color" id="logotype_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
                         </div>
                         <div class="mb-10 text-center">
-                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Text shadow right</label>
+                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.link_shadow_right') }}</label>
                             <input id="steps-range" type="range" name="dl_text_shadow_right" value="0" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                         </div>
                         <div class="mb-10 text-center">
-                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Text shadow bottom</label>
+                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.link_shadow_bottom') }}</label>
                             <input id="steps-range" type="range" name="dl_text_shadow_bottom" value="0" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                         </div>
                         <div class="mb-10 text-center">
-                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Text shadow blur</label>
+                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.link_shadow_blur') }}</label>
                             <input id="steps-range" type="range" name="dl_text_shadow_blur" value="0" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                         </div>
                         <div class="mb-10 text-center">
-                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Background color</label>
+                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.link_bg_color') }}</label>
                             <input type="color" name="dl_background_color" value="#ffffff" id="name_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
                         </div>
                         <div class="mb-10 text-center">
-                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Background transparency</label>
+                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.link_bg_trans') }}</label>
                             <input id="steps-range" type="range" name="dl_transparency" min="0.0" max="1.0" step="0.1" value="0.9" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                         </div>
                         <div class="mb-10 text-center">
-                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Link shadow color</label>
+                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.link_shadow_color') }}</label>
                             <input type="color" name="dl_link_block_shadow_color" id="logotype_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
                         </div>
                         <div class="mb-10 text-center">
-                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Link shadow right</label>
+                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.link_shadow_color_r') }}</label>
                             <input id="steps-range" type="range" name="dl_link_block_shadow_right" value="0" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                         </div>
                         <div class="mb-10 text-center">
-                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Link shadow bottom</label>
+                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.link_shadow_color_b') }}</label>
                             <input id="steps-range" type="range" name="dl_link_block_shadow_bottom" value="0" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                         </div>
                         <div class="mb-10 text-center">
-                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Link shadow blur</label>
+                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.link_shadow_color_blur') }}</label>
                             <input id="steps-range" type="range" name="dl_link_block_shadow_blur" value="0" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                         </div>
                         <div class="mb-10 text-center">
-                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Rounded borders</label>
+                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.link_border') }}</label>
                             <input id="steps-range" type="range" name="dl_rounded" min="1" max="50" step="1" value="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                         </div>
                         <div class="mb-10 text-center">
-                            <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Border</label>
+                            <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.link_border_size') }}</label>
                             <select name="dl_border" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
-                                <option selected value="border-0">None</option>
-                                <option value="border">Border 1</option>
-                                <option value="border-2">Border 2</option>
-                                <option value="border-4">Border 4</option>
-                                <option value="border-8">Border 8</option>
+                                <option selected value="border-0">0</option>
+                                <option value="border">1</option>
+                                <option value="border-2">2</option>
+                                <option value="border-4">4</option>
+                                <option value="border-8">8</option>
                             </select>
                         </div>
                         <div class="mb-10 text-center">
-                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Border color</label>
+                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.link_border_color') }}</label>
                             <input type="color" name="dl_border_color" id="logotype_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
                         </div>
                         <div class="mb-10 text-center">
-                            <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Link animation</label>
+                            <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.link_animation') }}</label>
                             <select name="animation" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
                                 <option selected>None</option>
                                 <option value="animate__animated animate__pulse animate__infinite infinite" style="border: 0">Pulse</option>
@@ -178,7 +178,7 @@
                             </select>
                         </div>
                         <div class="mb-10 text-center">
-                            <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Speed animation</label>
+                            <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.link_animation_speed') }}</label>
                             <select name="animation_speed" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
                                 <option selected>None</option>
                                 <option value="1" style="border: 0">1 sec.</option>
@@ -192,14 +192,14 @@
                             <label class="relative inline-flex items-center cursor-pointer">
                                 <input name="pinned" type="checkbox" value="{{true}}" class="sr-only peer">
                                 <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer @if($user->dayVsNight == 1) dark:bg-gray-700 @endif peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-                                <span class="ml-3 mt-1 text-sm font-medium leading-relaxed text-indigo-600">Pinned link</span>
+                                <span class="ml-3 mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.link_pin') }}</span>
                             </label>
                         </div>
                     </div>
 
                     <div class="mt-5">
                         <button type="submit" class="mt-5 border border-indigo-600 w-full inline-block rounded-lg bg-indigo-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
-                            Create link
+                            {{ __('main.link_create') }}
                         </button>
                     </div>
                 </form>

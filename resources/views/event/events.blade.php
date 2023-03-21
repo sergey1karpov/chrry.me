@@ -50,10 +50,10 @@
                 <div class="">
                     <div class="group block">
                         <div class="card-block block rounded-xl @if($user->dayVsNight == 1) bg-[#0f0f0f] border-4 @endif border-[#0f0f0f] p-8 shadow-xl transition hover:border-red-600/50 hover:shadow-red-600/50 group-hover:-translate-x-1 group-hover:-translate-y-1 group-hover:shadow-red-600/50">
-                            <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl lg:text-6xl @if($user->dayVsNight == 1) text-gray-50 @else text-black @endif">Mass update</h1>
-                            <p class="mb-6 text-lg font-normal text-gray-500 lg:text-xl  dark:text-gray-400">Use this feature if you want to change the design of all events at once</p>
+                            <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl lg:text-6xl @if($user->dayVsNight == 1) text-gray-50 @else text-black @endif">{{ __('main.event_mass') }}</h1>
+                            <p class="mb-6 text-lg font-normal text-gray-500 lg:text-xl  dark:text-gray-400">{{ __('main.event_mass_descr') }}</p>
                             <a href="{{ route('editAllEventsForm', ['user' => $user->id]) }}" type="" class="inline-block rounded border border-indigo-900 bg-indigo-900 px-9 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
-                                UPDATE
+                                {{ __('main.event_mass_btn') }}
                             </a>
                         </div>
                     </div>
@@ -81,11 +81,11 @@
                         </div>
                     <div class="mb-5 mt-5 inline-flex rounded-lg shadow-sm" role="group">
                         <a href="{{ route('editEventForm', ['user' => $user->id, 'event' => $event->id]) }}" class="border-r w-20 px-5 py-1 text-sm font-medium text-gray-900 bg-white rounded-l-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-                            Edit
+                            {{ __('main.event_edit') }}
                         </a>
                         <form action="{{ route('deleteEvent', ['user' => Auth::user()->id, 'event' => $event->id]) }}" method="POST"> @csrf @method('DELETE')
                             <button type="submit" class="w-20 px-5 py-1 text-sm font-medium text-gray-900 bg-white rounded-r-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-                                Delete
+                                {{ __('main.event_del') }}
                             </button>
                         </form>
                     </div>

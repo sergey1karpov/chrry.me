@@ -66,7 +66,7 @@
                 <img src="https://i.ibb.co/HBYTmyj/2.png" class="img ml-5" width="100">
             </p>
             <h1 class="mt-3 ml-5 mr-5 text-[48px] font-bold leading-[4rem] tracking-tight text-white" style="line-height: 1.05; letter-spacing: -0.02em; font-family: 'Open Sans', sans-serif;">Правила пользования нашим сервисом</h1>
-            <h2 class="mt-6 ml-5 mr-5 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl dark:text-white" style="line-height: 1.05; letter-spacing: -0.04em;">На самом деле как таковых правил нет. Нам все равно как вы будите использовать наш сервис и на что будут вести ваши ссылки.</h2>
+            <h2 class="mt-6 ml-5 mr-5 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl dark:text-white" style="line-height: 1.05; letter-spacing: -0.04em;">На самом деле как таковых правил нет. Нам все равно как вы будете использовать наш сервис и куда будут вести ваши ссылки.</h2>
             {{--            <p class="mt-6 ml-5 mr-5 text-lg font-medium leading-relaxed text-gray-100 opacity-85" style="line-height: 1.05; letter-spacing: -0.04em;">Попробуйте написать нам на почту <span class="text-blue-600 dark:text-blue-500">support@chrry.me</span></p>--}}
         </div>
     </div>

@@ -51,27 +51,27 @@
             <div class="mx-auto max-w-screen-xl sm:px-6 lg:px-8">
                 <form action="{{ route('setSeo', ['user' => Auth::user()->id]) }}" method="post" enctype="multipart/form-data"> @csrf
                     <div class="mb-6 text-center">
-                        <label for="name" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Title</label>
+                        <label for="name" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.seo_title') }}</label>
                         <input value="{{$seo->title ?? null}}" maxlength="50" type="text" name="title" id="name" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
-                        <p class="mt-1 text-sm @if($user->dayVsNight == 1) text-gray-500 @else text-gray-500 @endif" id="favicon">max length 50 symbols</p>
+                        <p class="mt-1 text-sm @if($user->dayVsNight == 1) text-gray-500 @else text-gray-500 @endif" id="favicon">{{ __('main.seo_title_descr') }}</p>
                     </div>
                     <div class="mb-6 text-center">
-                        <label for="slug" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Description</label>
+                        <label for="slug" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.seo_descr') }}</label>
                         <textarea name="description" maxlength="100" id="message" rows="4" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 " placeholder="Some description">{{$seo->description ?? null}}</textarea>
-                        <p class="mt-1 text-sm @if($user->dayVsNight == 1) text-gray-500 @else text-gray-500 @endif" id="favicon">max length 100 symbols</p>
+                        <p class="mt-1 text-sm @if($user->dayVsNight == 1) text-gray-500 @else text-gray-500 @endif" id="favicon">{{ __('main.seo_descr_descr') }}</p>
                     </div>
                     <div class="mb-6 text-center">
-                        <label for="description" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Keywords</label>
+                        <label for="description" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.seo_keywords') }}</label>
                         @if(isset($user->seo->keywords))
                             <textarea name="keywords" id="message" rows="4" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 " placeholder="One,Two,Three...">{{ implode(',', unserialize($seo->keywords)) }}</textarea>
                         @else
                             <textarea name="keywords" id="message" rows="4" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 " placeholder="One,Two,Three..."></textarea>
                         @endif
-                        <p class="mt-1 text-sm @if($user->dayVsNight == 1) text-gray-500 @else text-gray-500 @endif" id="favicon">max 10 keywords separated by commas without spaces</p>
+                        <p class="mt-1 text-sm @if($user->dayVsNight == 1) text-gray-500 @else text-gray-500 @endif" id="favicon">{{ __('main.seo_keywords_descr') }}</p>
                     </div>
                     <div class="mt-6">
                         <button type="submit" class="mt-2 border border-indigo-600 w-full inline-block rounded-lg bg-indigo-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
-                            Update SEO settings
+                            {{ __('main.seo_btn') }}
                         </button>
                     </div>
                 </form>

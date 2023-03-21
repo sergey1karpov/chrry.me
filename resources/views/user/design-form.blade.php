@@ -62,14 +62,14 @@
                 <form action="{{ route('updateAvatar', ['user' => Auth::user()->id]) }}" method="post" enctype="multipart/form-data"> @csrf @method('PATCH')
                     <div class="mb-3 text-center">
                         @if(!$user->settings->avatar)
-                            <label class="mt-1 text-sm font-medium leading-relaxed text-indigo-600" for="avatar">Upload avatar</label>
+                            <label class="mt-1 text-sm font-medium leading-relaxed text-indigo-600" for="avatar">{{ __('main.user_ava') }}</label>
                         @endif
                         <input name="avatar" class="mt-3 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400" aria-describedby="avatar" id="avatar" type="file">
-                        <p class="mt-1 text-sm @if($user->dayVsNight == 1) text-gray-500 @else text-gray-500 @endif" id="avatar">PNG, JPG, JPEG or GIF (MAX Size. 10mb).</p>
+                        <p class="mt-1 text-sm @if($user->dayVsNight == 1) text-gray-500 @else text-gray-500 @endif" id="avatar">{{ __('main.user_ava_descr') }}</p>
                     </div>
                     <div class="mt-3">
                         <button type="submit" class="mt-2 border border-indigo-600 w-full inline-block rounded-lg bg-indigo-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
-                            Update avatar
+                            {{ __('main.user_ava_btn') }}
                         </button>
                     </div>
                 </form>
@@ -78,7 +78,7 @@
                         <form action="{{ route('delUserAvatar', ['user' => $user->id, 'type' => 'avatar']) }}" method="POST"> @csrf @method('PATCH')
                             <input id="type-avatar" type="hidden" name="type" value="avatar">
                             <button type="submit" class="border border-red-600 w-full inline-block rounded-lg bg-red-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-red-600 focus:outline-none focus:ring active:text-red-500">
-                                Delete
+                                {{ __('main.link_delete') }}
                             </button>
                         </form>
                     </div>
@@ -94,38 +94,38 @@
                 <form action="{{ route('updateLogotype', ['user' => Auth::user()->id]) }}" method="post" enctype="multipart/form-data"> @csrf @method('PATCH')
                     <div class="mb-3 text-center">
                         @if(!$user->settings->logotype)
-                            <label class="mt-1 text-sm font-medium leading-relaxed text-indigo-600" for="logotype">Upload logotype</label>
+                            <label class="mt-1 text-sm font-medium leading-relaxed text-indigo-600" for="logotype">{{ __('main.user_logo') }}</label>
                         @endif
                         <input name="logotype" class="mt-3 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400" aria-describedby="avatar" id="logotype-upload" type="file">
-                        <p class="mt-1 text-sm @if($user->dayVsNight == 1) text-gray-500 @else text-gray-500 @endif" id="avatar">Only PNG (MAX Size. 10mb).</p>
+                        <p class="mt-1 text-sm @if($user->dayVsNight == 1) text-gray-500 @else text-gray-500 @endif" id="avatar">{{ __('main.user_logo_descr') }}</p>
                     </div>
 
                         <div id="logo_properties" style="display: none;">
                             <div class="mb-3 text-center">
-                                <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Logotype size</label>
+                                <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_logo_size') }}</label>
                                 <input id="steps-range" type="range" name="logotype_size" min="200" max="350" value="{{$user->settings->logotype_size}}" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
                             </div>
                             <div class="mb-3 text-center">
-                                <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Logotype shadow right</label>
+                                <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_logo_shadow_color') }}</label>
+                                <input value="{{$user->settings->logotype_shadow_color}}" type="color" name="logotype_shadow_color" id="logotype_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-[#0f0f0f] dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
+                            </div>
+                            <div class="mb-3 text-center">
+                                <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_logo_right') }}</label>
                                 <input id="steps-range" type="range" name="logotype_shadow_right" min="0" max="40" value="{{$user->settings->logotype_shadow_right}}" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
                             </div>
                             <div class="mb-3 text-center">
-                                <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Logotype shadow bottom</label>
+                                <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_logo_bottom') }}</label>
                                 <input id="steps-range" type="range" name="logotype_shadow_bottom" min="0" max="40" value="{{$user->settings->logotype_shadow_bottom}}" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
                             </div>
                             <div class="mb-3 text-center">
-                                <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Logotype shadow blur</label>
+                                <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_logo_blur') }}</label>
                                 <input id="steps-range" type="range" name="logotype_shadow_round" min="0" max="40" value="{{$user->settings->logotype_shadow_round}}" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
-                            </div>
-                            <div class="mb-3 text-center">
-                                <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Logotype shadow color</label>
-                                <input value="{{$user->settings->logotype_shadow_color}}" type="color" name="logotype_shadow_color" id="logotype_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-[#0f0f0f] dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
                             </div>
                         </div>
 
                     <div class="mt-3">
                         <button type="submit" class="mt-2 border border-indigo-600 w-full inline-block rounded-lg bg-indigo-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
-                            Update logotype
+                            {{ __('main.user_logo_btn') }}
                         </button>
                     </div>
                 </form>
@@ -134,7 +134,7 @@
                         <form action="{{ route('delUserAvatar', ['user' => $user->id, 'type' => 'logotype']) }}" method="POST"> @csrf @method('PATCH')
                             <input id="type-logotype" type="hidden" name="type" value="logotype">
                             <button type="submit" class="border border-red-600 w-full inline-block rounded-lg bg-red-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-red-600 focus:outline-none focus:ring active:text-red-500">
-                                Delete
+                                {{ __('main.link_delete') }}
                             </button>
                         </form>
                     </div>
@@ -144,35 +144,35 @@
             <div class="mt-7 mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
                 <form action="{{ route('updateAvatarVsLogotype', ['user' => Auth::user()->id]) }}" method="post" enctype="multipart/form-data"> @csrf @method('PATCH')
                     <div class="mb-3 text-center">
-                        <label class="mt-1 text-sm font-medium leading-relaxed text-indigo-600" for="avatar">Avatar or Logo on profile card</label>
+                        <label class="mt-1 text-sm font-medium leading-relaxed text-indigo-600" for="avatar">{{ __('main.user_ava_vs_logo') }}</label>
                         <div class="flex justify-evenly items-end mt-2">
                             <div class="items-center mr-4">
                                 <figure class="max-w-lg">
                                     @if($user->settings->avatar)
                                         <img class="w-32 rounded-full mb-3" src="{{ '/'. $user->settings->avatar }}" alt="image description">
                                     @else
-                                        <label class="mt-1 text-sm font-medium leading-relaxed text-indigo-600" for="avatar">no avatar</label>
+                                        <label class="mt-1 text-sm font-medium leading-relaxed text-indigo-600" for="avatar">{{ __('main.user_no_ava') }}</label>
                                     @endif
                                 </figure>
                                 <input @if($user->settings->avatar_vs_logotype == 'Avatar') checked @endif id="inline-radio" type="radio" value="Avatar" name="avatar_vs_logotype" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="inline-radio" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Avatar</label>
+                                <label for="inline-radio" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ __('main.user_avatar') }}</label>
                             </div>
                             <div class="items-center mr-4">
                                 <figure class="max-w-lg">
                                     @if($user->settings->logotype)
                                         <img id="logo" class="w-32 mb-3 h-auto max-w-full" src="{{ '/'. $user->settings->logotype }}" width="{{$user->settings->logotype_size}}" alt="image description">
                                     @else
-                                        <label class="mt-1 text-sm font-medium leading-relaxed text-indigo-600" for="avatar">no logotype</label>
+                                        <label class="mt-1 text-sm font-medium leading-relaxed text-indigo-600" for="avatar">{{ __('main.user_no_logo') }}</label>
                                     @endif
                                 </figure>
                                 <input @if($user->settings->avatar_vs_logotype == 'Logotype') checked @endif id="inline-2-radio" type="radio" value="Logotype" name="avatar_vs_logotype" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="inline-2-radio" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Logotype</label>
+                                <label for="inline-2-radio" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ __('main.user_logotype') }}</label>
                             </div>
                         </div>
                     </div>
                     <div class="mt-3">
                         <button type="submit" class="mt-2 border border-indigo-600 w-full inline-block rounded-lg bg-indigo-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
-                            Change
+                            {{ __('main.user_ava_vs_logo_btn') }}
                         </button>
                     </div>
                 </form>
@@ -189,14 +189,14 @@
                 <form action="{{ route('updateBackgroundImage', ['user' => Auth::user()->id]) }}" method="post" enctype="multipart/form-data"> @csrf @method('PATCH')
                     <div class="mb-3 text-center">
                         @if(!$user->settings->banner)
-                            <label class="mt-1 text-sm font-medium leading-relaxed text-indigo-600" for="avatar">Upload background image</label>
+                            <label class="mt-1 text-sm font-medium leading-relaxed text-indigo-600" for="avatar">{{ __('main.user_bg') }}</label>
                         @endif
                         <input name="banner" class="mt-3 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400" aria-describedby="banner" id="banner" type="file">
-                        <p class="mt-1 text-sm @if($user->dayVsNight == 1) text-gray-500 @else text-gray-500 @endif" id="banner">PNG, JPG, JPEG or GIF (MAX Size. 10mb).</p>
+                        <p class="mt-1 text-sm @if($user->dayVsNight == 1) text-gray-500 @else text-gray-500 @endif" id="banner">{{ __('main.user_bg_descr') }}</p>
                     </div>
                     <div class="mt-3">
                         <button type="submit" class="mt-2 border border-indigo-600 w-full inline-block rounded-lg bg-indigo-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
-                            Update background image
+                            {{ __('main.user_bg_btn') }}
                         </button>
                     </div>
                 </form>
@@ -205,7 +205,7 @@
                         <form action="{{ route('delUserAvatar', ['user' => $user->id, 'type' => 'banner']) }}" method="POST"> @csrf @method('PATCH')
                             <input id="type-avatar" type="hidden" name="type" value="avatar">
                             <button type="submit" class="border border-red-600 w-full inline-block rounded-lg bg-red-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-red-600 focus:outline-none focus:ring active:text-red-500">
-                                Delete
+                                {{ __('main.link_delete') }}
                             </button>
                         </form>
                     </div>
@@ -223,14 +223,14 @@
                 <form action="{{ route('updateFavicon', ['user' => Auth::user()->id]) }}" method="post" enctype="multipart/form-data"> @csrf @method('PATCH')
                     <div class="mb-3 text-center">
                         @if(!$user->settings->favicon)
-                            <label class="mt-1 text-sm font-medium leading-relaxed text-indigo-600" for="avatar">Upload favicon</label>
+                            <label class="mt-1 text-sm font-medium leading-relaxed text-indigo-600" for="avatar">{{ __('main.user_fav') }}</label>
                         @endif
                         <input name="favicon" class="mt-3 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400" aria-describedby="favicon" id="favicon" type="file">
-                        <p class="mt-1 text-sm @if($user->dayVsNight == 1) text-gray-500 @else text-gray-500 @endif" id="favicon">PNG, JPG or GIF (MAX Size. 5mb).</p>
+                        <p class="mt-1 text-sm @if($user->dayVsNight == 1) text-gray-500 @else text-gray-500 @endif" id="favicon">{{ __('main.user_fav_descr') }}</p>
                     </div>
                     <div class="mt-3">
                         <button type="submit" class="mt-2 border border-indigo-600 w-full inline-block rounded-lg bg-indigo-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
-                            Update favicon
+                            {{ __('main.user_fav_btn') }}
                         </button>
                     </div>
                 </form>
@@ -239,7 +239,7 @@
                         <form action="{{ route('delUserAvatar', ['user' => $user->id, 'type' => 'favicon']) }}" method="POST"> @csrf @method('PATCH')
                             <input id="type-avatar" type="hidden" name="type" value="avatar">
                             <button type="submit" class="border border-red-600 w-full inline-block rounded-lg bg-red-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-red-600 focus:outline-none focus:ring active:text-red-500">
-                                Delete
+                                {{ __('main.link_delete') }}
                             </button>
                         </form>
                     </div>
@@ -250,17 +250,17 @@
                 <div class="mt-7 mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
                     <div class="mb-3 text-center">
                         <div class="mb-3 text-center">
-                            <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Name font</label>
+                            <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_name_font') }}</label>
                             <select id="select-font-name" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 " data-placeholder="Search..."  autocomplete="off" name="name_font">
                                 <option value="{{$user->settings->name_font}}" selected>{{$user->settings->name_font}}</option>
                             </select>
                         </div>
                         <div class="mb-3 text-center">
-                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Name color</label>
+                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_name_color') }}</label>
                             <input value="{{$user->settings->name_color}}" type="color" name="name_color" id="name_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-[#0f0f0f] dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
                         </div>
                         <div class="mb-3 text-center">
-                            <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Name font size</label>
+                            <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_name_font_size') }}</label>
                             <select name="name_font_size" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
                                 <option @if($user->settings->name_font_size == 0.8) selected @endif value="0.8">1</option>
                                 <option @if($user->settings->name_font_size == 0.9) selected @endif value="0.9">2</option>
@@ -275,19 +275,19 @@
                             </select>
                         </div>
                         <div class="mb-3 text-center">
-                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Name shadow color</label>
+                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_name_shadow_color') }}</label>
                             <input value="{{$user->settings->name_font_shadow_color}}" type="color" name="name_font_shadow_color" id="" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-[#0f0f0f] dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
                         </div>
                         <div class="mb-3 text-center">
-                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Name shadow right</label>
+                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_name_shadow_right') }}</label>
                             <input id="steps-range" type="range" name="name_font_shadow_right" value="{{$user->settings->name_font_shadow_right}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-700 @endif">
                         </div>
                         <div class="mb-3 text-center">
-                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Name shadow bottom</label>
+                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_name_shadow_bottom') }}</label>
                             <input id="steps-range" type="range" name="name_font_shadow_bottom" value="{{$user->settings->name_font_shadow_bottom}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-700 @endif">
                         </div>
                         <div class="mb-3 text-center">
-                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Name shadow blur</label>
+                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_name_shadow_blur') }}</label>
                             <input id="steps-range" type="range" name="name_font_shadow_blur" value="{{$user->settings->name_font_shadow_blur}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-700 @endif">
                         </div>
                     </div>
@@ -295,17 +295,17 @@
                 <div class="mt-7 mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
                     <div class="mb-3 text-center">
                         <div class="mb-3 text-center">
-                            <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Description font</label>
+                            <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_descr_font') }}</label>
                             <select id="select-font-description" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 " data-placeholder="Search..."  autocomplete="off" name="description_font">
                                 <option value="{{$user->settings->description_font}}" selected>{{$user->settings->description_font}}</option>
                             </select>
                         </div>
                         <div class="mb-3 text-center">
-                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Description color</label>
+                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_descr_color') }}</label>
                             <input value="{{$user->settings->description_color}}" type="color" name="description_color" id="name_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-[#0f0f0f] dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
                         </div>
                         <div class="mb-3 text-center">
-                            <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Description font size</label>
+                            <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_descr_font_size') }}</label>
                             <select name="description_font_size" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
                                 <option @if($user->settings->description_font_size == 0.8) selected @endif value="0.8">1</option>
                                 <option @if($user->settings->description_font_size == 0.9) selected @endif value="0.9">2</option>
@@ -320,19 +320,19 @@
                             </select>
                         </div>
                         <div class="mb-3 text-center">
-                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Description shadow color</label>
+                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_descr_shadow_color') }}</label>
                             <input value="{{$user->settings->description_font_shadow_color}}" type="color" name="description_font_shadow_color" id="" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-[#0f0f0f] dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
                         </div>
                         <div class="mb-3 text-center">
-                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Description shadow right</label>
+                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_descr_shadow_right') }}</label>
                             <input id="steps-range" type="range" name="description_font_shadow_right" value="{{$user->settings->description_font_shadow_right}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-700 @endif">
                         </div>
                         <div class="mb-3 text-center">
-                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Description shadow bottom</label>
+                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_descr_shadow_bottom') }}</label>
                             <input id="steps-range" type="range" name="description_font_shadow_bottom" value="{{$user->settings->description_font_shadow_bottom}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-700 @endif">
                         </div>
                         <div class="mb-3 text-center">
-                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Description shadow blur</label>
+                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_descr_shadow_blur') }}</label>
                             <input id="steps-range" type="range" name="description_font_shadow_blur" value="{{$user->settings->description_font_shadow_blur}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-700 @endif">
                         </div>
                     </div>
@@ -340,15 +340,15 @@
                 <div class="mt-7 mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
                     <div class="mb-3 text-center">
                         <div class="mb-3 text-center">
-                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Background color</label>
+                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_bg_color') }}</label>
                             <input value="{{$user->settings->background_color}}" type="color" name="background_color" id="background_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-[#0f0f0f] dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
                         </div>
                         <div class="mb-3 text-center">
-                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Verify color</label>
+                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_verify_color') }}</label>
                             <input value="{{$user->settings->verify_color}}" type="color" name="verify_color" id="verify_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-[#0f0f0f] dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
                         </div>
                         <div class="mb-3 text-center">
-                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Naviation color</label>
+                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_nav_color') }}</label>
                             <input value="{{$user->settings->navigation_color}}" type="color" name="navigation_color" id="verify_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-[#0f0f0f] dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
                         </div>
                     </div>
@@ -356,42 +356,40 @@
                 <div class="mt-7 mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
                     <div class="mb-3 text-center">
                         <div class="mb-3 text-center">
-                            <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Show social</label>
+                            <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_show_social') }}</label>
                             <select name="social_links_bar" id="social_links_bar" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
-                                <option @if($user->settings->social_links_bar == '1') selected @endif value="{{1}}">On</option>
-                                <option @if($user->settings->social_links_bar == '0') selected @endif value="{{0}}">Off</option>
+                                <option @if($user->settings->social_links_bar == '1') selected @endif value="{{1}}">{{ __('main.user_two_factor_on') }}</option>
+                                <option @if($user->settings->social_links_bar == '0') selected @endif value="{{0}}">{{ __('main.user_two_factor_off') }}</option>
                             </select>
                         </div>
                         <div class="mb-3 text-center">
-                            <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Position</label>
+                            <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_bar_position') }}</label>
                             <select name="links_bar_position" id="links_bar_position" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
-                                <option @if($user->settings->links_bar_position == 'top') selected @endif value="top">Top</option>
-                                <option @if($user->settings->links_bar_position == 'bottom') selected @endif value="bottom">Bottom</option>
+                                <option @if($user->settings->links_bar_position == 'top') selected @endif value="top">{{ __('main.user_bar_top') }}</option>
+                                <option @if($user->settings->links_bar_position == 'bottom') selected @endif value="bottom">{{ __('main.user_bar_bottom') }}</option>
                             </select>
                         </div>
                     </div>
-                </div>
-                <div class="mt-7 mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
                     <div class="mb-3 text-center">
                         <div class="mb-3 text-center">
-                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Icons size</label>
+                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_bar_icon_size') }}</label>
                             <input id="steps-range" type="range" name="round_links_width" min="30" max="80" value="{{$user->settings->round_links_width}}" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
                         </div>
                         <div class="mb-3 text-center">
-                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Icons shadow right</label>
+                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_bar_icon_color') }}</label>
+                            <input value="{{$user->settings->round_links_shadow_color}}" type="color" name="round_links_shadow_color" id="round_links_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-[#0f0f0f] dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
+                        </div>
+                        <div class="mb-3 text-center">
+                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_bar_icon_right') }}</label>
                             <input id="steps-range" type="range" name="round_links_shadow_right" min="0" max="40" value="{{$user->settings->round_links_shadow_right}}" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
                         </div>
                         <div class="mb-3 text-center">
-                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Icons shadow bottom</label>
+                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_bar_icon_bottom') }}</label>
                             <input id="steps-range" type="range" name="round_links_shadow_bottom" min="0" max="40" value="{{$user->settings->round_links_shadow_bottom}}" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
                         </div>
                         <div class="mb-3 text-center">
-                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Icons shadow blur</label>
+                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_bar_icon_blur') }}</label>
                             <input id="steps-range" type="range" name="round_links_shadow_round" min="0" max="40" value="{{$user->settings->round_links_shadow_round}}" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
-                        </div>
-                        <div class="mb-3 text-center">
-                            <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Icons shadow color</label>
-                            <input value="{{$user->settings->round_links_shadow_color}}" type="color" name="round_links_shadow_color" id="round_links_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-[#0f0f0f] dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
                         </div>
                     </div>
                 </div>
@@ -407,10 +405,10 @@
 {{--                    </div>--}}
                     <div class="mb-3 text-center">
                         <div class="mb-3 text-center">
-                            <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Show logo CHRRY.ME</label>
+                            <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_show_logo') }}</label>
                             <select name="show_logo" id="show_logo" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
-                                <option @if($user->settings->show_logo == '1') selected @endif value="{{1}}">Показать</option>
-                                <option @if($user->settings->show_logo == '0') selected @endif value="{{0}}">Отключить</option>
+                                <option @if($user->settings->show_logo == '1') selected @endif value="{{1}}">{{ __('main.user_show_logo_on') }}</option>
+                                <option @if($user->settings->show_logo == '0') selected @endif value="{{0}}">{{ __('main.user_show_logo_off') }}</option>
                             </select>
                         </div>
                     </div>
@@ -418,7 +416,7 @@
                 <div class="ml-3 mr-3 mx-auto max-w-screen-xl py-4 sm:px-6 lg:px-8 rounded-lg">
                     <div class="mb-10">
                         <button type="submit" class="mt-2 border border-indigo-600 w-full inline-block rounded-lg bg-indigo-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
-                            Update
+                            {{ __('main.user_upd_btn_profile') }}
                         </button>
                     </div>
                 </div>
