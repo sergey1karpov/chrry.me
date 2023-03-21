@@ -61,11 +61,11 @@
                         <p class="mt-1 text-lg font-medium leading-relaxed text-gray-500">
                             {{ __('main.link_description') }}
                         </p>
-                        <div class="inline-flex rounded-md mt-4" role="group">
-                            <a href="{{ route('createLinkForm', ['user' => $user->id]) }}" type="submit" class="inline-block rounded border border-indigo-900 bg-indigo-900 px-9 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
+                        <div class="flex-wrap rounded-md mt-4" role="group">
+                            <a href="{{ route('createLinkForm', ['user' => $user->id]) }}" type="submit" class="mt-3 mr-2 inline-block rounded border border-indigo-900 bg-indigo-900 px-9 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
                                 {{ __('main.link_create_btn') }}
                             </a>
-                            <a href="{{ route('allLinks', ['user' => $user->id]) }}" type="submit" class="ml-3 inline-block rounded border border-indigo-900 bg-indigo-900 px-9 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
+                            <a href="{{ route('allLinks', ['user' => $user->id]) }}" type="submit" class="mt-3 inline-block rounded border border-indigo-900 bg-indigo-900 px-9 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
                                 {{ __('main.link_manage_btn') }}
                             </a>
                         </div>

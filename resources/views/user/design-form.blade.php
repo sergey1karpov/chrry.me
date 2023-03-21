@@ -49,7 +49,7 @@
     @endif
 
     <section class="flex justify-center ">
-        <div class="sm:mt-3 w-full">
+        <div class="sm:mt-3 w-full px-4">
 
             <div class="mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
                 @if($user->settings->avatar)
@@ -394,15 +394,6 @@
                     </div>
                 </div>
                 <div class="mt-7 mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
-{{--                    <div class="mb-3 text-center">--}}
-{{--                        <div class="mb-3 text-center">--}}
-{{--                            <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Verify icon type</label>--}}
-{{--                            <select name="verify_icon_type" id="show_logo" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">--}}
-{{--                                <option @if($user->settings->show_logo == '1') selected @endif value="{{1}}">&#10013;</option>--}}
-{{--                                <option @if($user->settings->show_logo == '0') selected @endif value="{{0}}">Отключить</option>--}}
-{{--                            </select>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
                     <div class="mb-3 text-center">
                         <div class="mb-3 text-center">
                             <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_show_logo') }}</label>
@@ -413,13 +404,22 @@
                         </div>
                     </div>
                 </div>
-                <div class="ml-3 mr-3 mx-auto max-w-screen-xl py-4 sm:px-6 lg:px-8 rounded-lg">
-                    <div class="mb-10">
-                        <button type="submit" class="mt-2 border border-indigo-600 w-full inline-block rounded-lg bg-indigo-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
-                            {{ __('main.user_upd_btn_profile') }}
-                        </button>
+                <div class="mt-7 mx-auto max-w-screen-xl py-4  ">
+                    <div class="mb-3 text-center">
+                        <div class="mb-3 text-center">
+                            <button type="submit" class="mt-2 border border-indigo-600 w-full inline-block rounded-lg bg-indigo-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
+                                {{ __('main.user_upd_btn_profile') }}
+                            </button>
+                        </div>
                     </div>
                 </div>
+{{--                <div class="ml-3 mr-3 mx-auto max-w-screen-xl py-4 sm:px-6 lg:px-8 rounded-lg">--}}
+{{--                    <div class="mb-10">--}}
+{{--                        <button type="submit" class="mt-2 border border-indigo-600 w-full inline-block rounded-lg bg-indigo-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">--}}
+{{--                            {{ __('main.user_upd_btn_profile') }}--}}
+{{--                        </button>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
             </form>
         </div>
     <section>

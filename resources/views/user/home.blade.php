@@ -113,7 +113,7 @@
                 ">
                     {{ $user->name }}
                     @if($user->verify == 1)
-                        <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="ml-4 mt-1 bi bi-patch-check-fill mb-1" viewBox="0 0 16 16" style="color: {{$user->settings->verify_color}}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="ml-4 mt-1 bi bi-patch-check-fill mb-1" viewBox="0 0 16 16" style="color: {{$user->settings->verify_color}}">
                             <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
                         </svg>
                     @endif
@@ -496,27 +496,27 @@
     </bottom-links-bar>
 
     @if($user->settings->show_logo == true)
-        <footer class="sticky top-[100vh] footer-block mt-20 p-2 shadow md:px-6 md:py-8 navbar-fixed-bottom" style="background-color: rgba(0, 0, 0, .9);">
-            <div class="flex justify-between items-center">
+        <footer class="sticky top-[100vh] footer-block mt-20 p-2  md:px-6 md:py-8 navbar-fixed-bottom" >
+            <div class="flex justify-center items-center">
                 <div class="flex justify-center items-center">
                     <a href="http://chrry.me/" class="flex items-center">
-                        <img src="https://i.ibb.co/HBYTmyj/2.png" class="mr-3 h-6" alt="CHRRY.ME Logo" />
+                        <img src="https://i.ibb.co/HBYTmyj/2.png" class="mr-3 h-9" alt="CHRRY.ME Logo" style="filter: drop-shadow(2px 2px 0px #FFFFFF);"/>
                     </a>
                 </div>
-                <div class="flex justify-center items-center">
-                    <ul class="flex flex-wrap items-center text-sm text-gray-500 sm:mb-0 dark:text-gray-400">
-                        <li>
-                            <a href="{{route('contacts')}}" class="mr-4 hover:underline md:mr-6 text-sm font-semibold">Contacts</a>
-                        </li>
-                        <li>
-                            <form method="POST" action="{{ route('logout') }}"> @csrf
-                                <button type="submit">
-                                    <span href="#" class="hover:underline text-sm font-semibold">Logout</span>
-                                </button>
-                            </form>
-                        </li>
-                    </ul>
-                </div>
+{{--                <div class="flex justify-center items-center">--}}
+{{--                    <ul class="flex flex-wrap items-center text-sm text-gray-500 sm:mb-0 dark:text-gray-400">--}}
+{{--                        <li>--}}
+{{--                            <a href="{{route('contacts')}}" class="mr-4 hover:underline md:mr-6 text-sm font-semibold">Contacts</a>--}}
+{{--                        </li>--}}
+{{--                        <li>--}}
+{{--                            <form method="POST" action="{{ route('logout') }}"> @csrf--}}
+{{--                                <button type="submit">--}}
+{{--                                    <span href="#" class="hover:underline text-sm font-semibold">Logout</span>--}}
+{{--                                </button>--}}
+{{--                            </form>--}}
+{{--                        </li>--}}
+{{--                    </ul>--}}
+{{--                </div>--}}
             </div>
         </footer>
     @endif
