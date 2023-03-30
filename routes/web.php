@@ -19,14 +19,14 @@ use App\Http\Controllers\LinkController;
 use App\Http\Controllers\StatisticController;
 use App\Http\Controllers\EventController;
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
-Route::get('/', [MainController::class, 'welcome'])->name('welcome');
+Route::get('/', [MainController::class, 'welcome'])->name('welcome')->middleware('index.locale');
 
 Route::get('cc/{utag}', [NfcController::class, 'editNewUserForm'])->name('editNewUserForm');
 Route::patch('cc/{utag}/registered', [NfcController::class, 'editNewUser'])->name('editNewUser');
 
-Route::prefix('{user:slug}')->group(function() {
+Route::prefix('{user:slug}')->group(function () {
     Route::get('/', [UserController::class, 'userHomePage'])->name('userHomePage');
     Route::get('/item-{product}', [ProductController::class, 'showProductOrderForm'])->name('showProductOrderForm');
     Route::get('/@{categorySlug}', [ProductController::class, 'showProductsInCategory'])->name('showProductsInCategory');
@@ -76,7 +76,7 @@ Route::middleware(['web', 'root', 'locale'])->group(function () {
         Route::get('/market-settings', [ShopController::class, 'marketSettingsForm'])->name('marketSettingsForm');
         Route::patch('/market-settings/patch', [ShopController::class, 'marketSettingsPatch'])->name('marketSettingsPatch');
 
-        Route::group(['prefix' => 'links'], function() {
+        Route::group(['prefix' => 'links'], function () {
             Route::get('/', [LinkController::class, 'allLinks'])->name('allLinks');
             Route::get('/create', [LinkController::class, 'createLinkForm'])->name('createLinkForm');
             Route::post('/create', [LinkController::class, 'addLink'])->name('addLink')->middleware('links.count');
@@ -95,7 +95,7 @@ Route::middleware(['web', 'root', 'locale'])->group(function () {
             Route::get('/{link}/filter-stat', [LinkController::class, 'filterStatistic'])->name('filterStatistic');
         });
 
-        Route::group(['prefix' => 'events'], function() {
+        Route::group(['prefix' => 'events'], function () {
             Route::get('/', [EventController::class, 'allEvents'])->name('allEvents')->middleware('count.events');
             Route::get('/edit-all', [EventController::class, 'editAllEventsForm'])->name('editAllEventsForm');
             Route::get('/create', [EventController::class, 'createEventForm'])->name('createEventForm');
@@ -110,7 +110,7 @@ Route::middleware(['web', 'root', 'locale'])->group(function () {
             Route::delete('/{event}/delete', [EventController::class, 'deleteEvent'])->name('deleteEvent');
         });
 
-        Route::group(['prefix' => 'products'], function() {
+        Route::group(['prefix' => 'products'], function () {
             Route::get('/', [ProductController::class, 'allProducts'])->name('allProducts');
             Route::get('/create', [ProductController::class, 'createProductForm'])->name('createProductForm');
             Route::post('/create', [ProductController::class, 'addProduct'])->name('addProduct');
@@ -125,7 +125,7 @@ Route::middleware(['web', 'root', 'locale'])->group(function () {
             Route::get('/{product}/statistic', [ProductController::class, 'statsProducts'])->name('statsProducts');
         });
 
-        Route::group(['prefix' => 'categories'], function() {
+        Route::group(['prefix' => 'categories'], function () {
             Route::get('/', [ProductCategoryController::class, 'allCategories'])->name('allCategories');
             Route::post('/create', [ProductCategoryController::class, 'createCategory'])->name('createCategory')->middleware('check.slug');
             Route::post('/sort', [ProductCategoryController::class, 'sortCategory'])->name('sortCategory');
@@ -133,7 +133,7 @@ Route::middleware(['web', 'root', 'locale'])->group(function () {
             Route::delete('/{category}/delete', [ProductCategoryController::class, 'deleteCategory'])->name('deleteCategory');
         });
 
-        Route::group(['prefix' => 'orders'], function() {
+        Route::group(['prefix' => 'orders'], function () {
             Route::get('/', [OrderController::class, 'orders'])->name('orders');
             Route::get('/in-work', [OrderController::class, 'ordersInWork'])->name('ordersInWork');
             Route::get('/in-processed', [OrderController::class, 'ordersProcessed'])->name('ordersProcessed');
@@ -151,7 +151,7 @@ Route::middleware(['web', 'root', 'locale'])->group(function () {
     });
 });
 
-Route::group(['middleware' => 'guest'], function() {
+Route::group(['middleware' => 'guest'], function () {
 
     Route::get('/{social}/auth', [AuthController::class, 'index'])->name('auth');
     Route::get('/{social}/auth/callback', [AuthController::class, 'callback'])->name('callback');
@@ -159,17 +159,7 @@ Route::group(['middleware' => 'guest'], function() {
     Route::patch('{id}/confirm-registration', [AuthController::class, 'changeUserEmail'])->name('changeUserEmail');
 });
 
-Route::get('service/contacts', [IndexController::class, 'contacts'])->name('contacts');
-Route::get('service/rules', [IndexController::class, 'rules'])->name('rules');
-Route::get('service/about', [IndexController::class, 'about'])->name('about');
-Route::get('service/blog', [IndexController::class, 'blog'])->name('blog');
-
-
-
-
-
-
-
-
-
-
+Route::get('service/contacts', [IndexController::class, 'contacts'])->name('contacts')->middleware('index.locale');
+Route::get('service/rules', [IndexController::class, 'rules'])->name('rules')->middleware('index.locale');
+Route::get('service/about', [IndexController::class, 'about'])->name('about')->middleware('index.locale');
+Route::get('service/blog', [IndexController::class, 'blog'])->name('blog')->middleware('index.locale');

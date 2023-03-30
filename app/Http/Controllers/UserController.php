@@ -35,7 +35,8 @@ class UserController extends Controller
         private StatsService                $statsService,
         private CreateProfileViewStatistics $statistics,
         private User                        $user,
-    ) {}
+    ) {
+    }
 
     /**
      * Show user profile and count view stats
@@ -253,7 +254,7 @@ class UserController extends Controller
      */
     public function updatePassword(User $user, ChangePasswordRequest $request)
     {
-        if(Hash::check($request->old_password, $request->user()->password)) {
+        if (Hash::check($request->old_password, $request->user()->password)) {
 
             User::where('id', $user->id)->update([
                 'password' => Hash::make($request->password)
@@ -299,7 +300,7 @@ class UserController extends Controller
     {
         $verifyRequest = Verification::where('user_id', $user->id)->first();
 
-        if($verifyRequest) {
+        if ($verifyRequest) {
             return redirect()->back()->with('success', 'You have already applied for verification. Wait for it to be reviewed.');
         }
 
@@ -318,4 +319,3 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'Profile verification request sent');
     }
 }
-

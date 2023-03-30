@@ -72,5 +72,6 @@ class Kernel extends HttpKernel
         'count.events' => \App\Http\Middleware\CheckCountUserEventsMiddleware::class,
         'check.slug' => \App\Http\Middleware\CheckCategorySlugMiddleware::class,
         'update.category' => \App\Http\Middleware\UpdateProductCategoryMiddleware::class,
+        'index.locale' => \App\Http\Middleware\IndexLocaleMiddleware::class,
     ];
 }
