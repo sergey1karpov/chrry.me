@@ -39,6 +39,7 @@ class User extends Authenticatable
         'links_bar_position',
         'avatar_vs_logotype',
         'two_factor_auth',
+        'remember_token',
     ];
 
     /**

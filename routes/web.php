@@ -23,7 +23,7 @@ require __DIR__ . '/auth.php';
 
 Route::get('/', [MainController::class, 'welcome'])->name('welcome')->middleware('index.locale');
 
-Route::get('cc/{utag}', [NfcController::class, 'editNewUserForm'])->name('editNewUserForm');
+Route::get('cc/{utag}', [NfcController::class, 'editNewUserForm'])->name('editNewUserForm')->middleware('index.locale');
 Route::patch('cc/{utag}/registered', [NfcController::class, 'editNewUser'])->name('editNewUser');
 
 Route::prefix('{user:slug}')->group(function () {
@@ -41,7 +41,7 @@ Route::post('/{user:id}/order-product/{product:id}', [OrderController::class, 's
 Route::post('/{user}/link', [StatisticController::class, 'clickLinkStatistic'])->name('clickLinkStatistic');
 Route::post('/{user}/product-stats', [StatisticController::class, 'productStats'])->name('productStats');
 
-Route::get('check/two-factor', [AuthenticatedSessionController::class, 'twoFactorForm'])->name('twoFactorForm');
+Route::get('check/two-factor', [AuthenticatedSessionController::class, 'twoFactorForm'])->name('twoFactorForm')->middleware('index.locale');
 Route::post('check/hash', [AuthenticatedSessionController::class, 'hashCheck'])->name('hashCheck');
 
 Route::middleware(['web', 'root', 'locale'])->group(function () {
@@ -163,3 +163,6 @@ Route::get('service/contacts', [IndexController::class, 'contacts'])->name('cont
 Route::get('service/rules', [IndexController::class, 'rules'])->name('rules')->middleware('index.locale');
 Route::get('service/about', [IndexController::class, 'about'])->name('about')->middleware('index.locale');
 Route::get('service/blog', [IndexController::class, 'blog'])->name('blog')->middleware('index.locale');
+
+Route::get('google/register', [UserController::class, 'googleOAuth'])->name('googleOAuth');
+Route::get('google/callback', [UserController::class, 'googleOAuthCallback'])->name('googleOAuthCallback');

@@ -11,6 +11,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use App\Models\QRCode as QrModel;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -83,6 +84,10 @@ class QRCodeController extends Controller
 
     public function generateColorQrWithFile(User $user, Request $request, string $qrPath): void
     {
+        if (!File::exists('../storage/app/public/' . Auth::user()->id)) {
+            File::makeDirectory('../storage/app/public/' . Auth::user()->id, 0777,true);
+        }
+
         if(isset($user->qrCode->logotype)) {
             QrCode::format('png')
                 ->merge(base_path($this->getLogoToQr($user)), $request->logo_size, true)
@@ -115,6 +120,10 @@ class QRCodeController extends Controller
 
     public function generateGradientWithFile(User $user, Request $request, string $qrPath): void
     {
+        if (!File::exists('../storage/app/public/' . Auth::user()->id)) {
+            File::makeDirectory('../storage/app/public/' . Auth::user()->id, 0777,true);
+        }
+
         if(isset($user->qrCode->logotype)) {
             QrCode::format('png')
                 ->merge(base_path($this->getLogoToQr($user)), $request->logo_size, true)

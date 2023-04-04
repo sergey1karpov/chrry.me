@@ -24,9 +24,9 @@
 
         <div class="mt-4">
 
-            <div class="flex justify-center mb-10">
+            <div class="flex justify-center mb-10 ">
                 <a href="http://chrry.me/" class="flex items-center mb-4">
-                    <img src="https://i.ibb.co/3dJD25v/new-logo.png" class="mr-3 h-15" alt="CHRRY.ME" />
+                    <img src="https://i.ibb.co/bPydGXN/3.png" class="mr-3 h-15" alt="CHRRY.ME" />
                 </a>
             </div>
 
@@ -48,7 +48,7 @@
                     <input type="email"
                            name="email"
                            id="email"
-                           class="bg-gray-900 text-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-500 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           class="bg-gray-50 text-gray-300 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-500 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500"
                            value="{{$request->email}}"
                            required>
                 </div>
@@ -59,8 +59,8 @@
                     <input type="password"
                            name="password"
                            id="password"
-                           class="bg-gray-900 text-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-500 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                           placeholder="New password"
+                           class="bg-gray-50 text-gray-300 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-500 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           placeholder="{{ __('main.new_pass') }}"
                            required>
                 </div>
 
@@ -70,18 +70,18 @@
                     <input type="password"
                            name="password_confirmation"
                            id="password_confirmation"
-                           class="bg-gray-900 text-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-500 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                           placeholder="Repeat new password"
+                           class="bg-gray-50 text-gray-300 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-500 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           placeholder="{{ __('main.reg_re_pass') }}"
                            required>
                 </div>
 
                 <div class="mt-4">
                     <button type="submit"
-                            class="g-recaptcha w-full text-white bg-gradient-to-r from-red-500 to-red-800 hover:bg-gradient-to-bl focus:ring-2 font-medium rounded-lg text px-5 py-2.5 text-center mr-2"
+                            class="g-recaptcha inline-block text-xl rounded-full bg-red-500 w-full py-2 text-sm font-bold text-white transition hover:scale-110 hover:shadow-xl focus:outline-none focus:ring active:bg-red-500"
                             data-sitekey="6LdjE5siAAAAAFns6LrPthCLLu4niq3WG_coMFJA"
                             data-callback='onSubmit'
                             data-action='submit'>
-                        {{ __('Reset password') }}
+                        {{ __('main.reset_pass') }}
                     </button>
                 </div>
             </form>

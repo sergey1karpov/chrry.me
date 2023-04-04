@@ -35,7 +35,7 @@
                     {{--                    <label for="name" class="block mb-2 text-sm font-medium text-gray-900 text-dark">Profile name</label> --}}
                     <input type="text" name="name" id="name"
                         class="bg-gray-50 text-gray-300 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-500 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Profile name" required>
+                        placeholder="{{ __('main.reg_name') }}" required>
                 </div>
 
                 <!-- Slug -->
@@ -48,7 +48,7 @@
                         </span>
                         <input type="text" name="slug" id="website-admin"
                             class="bg-gray-50 text-gray-300 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-500 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500 text-sm rounded-r-full w-full "
-                            placeholder="slug">
+                            placeholder="{{ __('main.reg_slug') }}">
                     </div>
                 </div>
 
@@ -65,7 +65,7 @@
                     {{--                    <label for="password" class="block mb-2 text-sm font-medium text-gray-900 text-dark">Password</label> --}}
                     <input type="password" name="password" id="password"
                         class="bg-gray-50 text-gray-300 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-500 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Password" required>
+                        placeholder="{{ __('main.reg_pass') }}" required>
                 </div>
 
                 <!-- Confirm Password -->
@@ -73,7 +73,7 @@
                     {{--                    <label for="password_confirmation" class="block mb-2 text-sm font-medium text-gray-900 text-dark">Confirm Password</label> --}}
                     <input type="password" name="password_confirmation" id="password_confirmation"
                         class="bg-gray-50 text-gray-300 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-500 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Repeat password" required>
+                        placeholder="{{ __('main.reg_re_pass') }}" required>
                 </div>
 
                 <div class="mt-4">
@@ -81,23 +81,23 @@
                         class="g-recaptcha inline-block text-xl rounded-full bg-red-500 w-full py-2 text-sm font-bold text-white transition hover:scale-110 hover:shadow-xl focus:outline-none focus:ring active:bg-red-500 "
                         data-sitekey="6LdjE5siAAAAAFns6LrPthCLLu4niq3WG_coMFJA" data-callback='onSubmit'
                         data-action='submit'>
-                        {{ __('Create account') }}
+                        {{ __('main.reg_create') }}
                     </button>
                 </div>
 
-                {{--                <div class="mt-4"> --}}
-                {{--                    <button type="button" class="w-full text-white bg-[#4285F4] hover:bg-[#4285F4]/90 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text px-5 py-2.5 text-center inline-flex items-center justify-center dark:focus:ring-[#4285F4]/55 mr-2 mb-2"> --}}
-                {{--                        <svg class="mr-2 -ml-1 w-4 h-4" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512"><path fill="currentColor" d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"></path></svg> --}}
-                {{--                        Sign in with Google --}}
-                {{--                    </button> --}}
-                {{--                </div> --}}
+                <div class="mt-4">
+                    <a type="submit" href="{{ route('googleOAuth') }}"
+                        class="g-recaptcha inline-block text-xl rounded-full bg-blue-500 w-full py-2 text-sm font-bold text-white transition hover:scale-110 hover:shadow-xl focus:outline-none focus:ring active:bg-blue-500 ">
+                        {{ __('main.reg_create_google') }}
+                    </a>
+                </div>
 
                 <div class="mt-4 flex justify-center">
                     <h1 class="font-sans text-sm text-gray-600 hover:text-gray-900">
-                        {{ __('Do you already have an account? ') }}</h1><a
+                        {{ __('main.reg_already') }}</h1><a
                         class="ml-1 font-sans underline text-sm text-red-500 hover:text-gray-900"
                         href="{{ route('login') }}">
-                        {{ __('Log in') }}
+                        {{ __('main.reg_log') }}
                     </a>
                 </div>
             </form>

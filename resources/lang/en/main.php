@@ -298,4 +298,21 @@ return [
     'rules_2' => "In fact, there are no rules as such. We don't care how you use our service and where your links will lead.",
     'contacts_1' => 'If you are on this page, then you want to contact us',
     'contacts_2' => "Try emailing us, maybe we'll get back to you",
+
+    'reg_name' => 'Profile name',
+    'reg_slug' => 'Slug',
+    'reg_pass' => 'Password',
+    'reg_re_pass' => 'Repeat password',
+    'reg_create' => 'Create profile',
+    'reg_create_google' => 'Login with Google',
+    'reg_already' => 'Already registered with us?',
+    'reg_log' => 'Login',
+    'log_remember' => 'Remember me',
+    'forgot_pass' => 'Forgot your password?',
+    'not_reg' => 'Not registered with us yet?',
+    'recover' => 'Restore password',
+    'new_pass' => 'New Password',
+    'reset_pass' => 'Change password',
+    'auth_error' => 'You entered the wrong authentication code',
+    'auth_code' => 'The code has been sent to your email. Enter it here.'
 ];

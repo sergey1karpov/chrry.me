@@ -27,9 +27,9 @@
 
         <div class="">
 
-            <div class="flex justify-center mb-10">
+            <div class="flex justify-center mb-10 ">
                 <a href="http://chrry.me/" class="flex items-center mb-4">
-                    <img src="https://i.ibb.co/3dJD25v/new-logo.png" class="mr-3 h-15" alt="CHRRY.ME" />
+                    <img src="https://i.ibb.co/bPydGXN/3.png" class="mr-3 h-15" alt="CHRRY.ME" />
                 </a>
             </div>
 
@@ -41,8 +41,8 @@
                     <input type="email"
                            name="email"
                            id="email"
-                           class="bg-gray-900 text-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-500 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                           placeholder="Email adress"
+                           class="bg-gray-50 text-gray-300 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-500 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           placeholder="Email"
                            required>
                 </div>
 
@@ -52,27 +52,34 @@
                     <input type="password"
                            name="password"
                            id="password"
-                           class="bg-gray-900 text-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-500 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                           placeholder="Password"
+                           class="bg-gray-50 text-gray-300 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-500 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           placeholder="{{ __('main.reg_pass') }}"
                            required>
                 </div>
 
                 <!-- Remember Me -->
                 <div class="block mt-5">
                     <label for="remember_me" class="inline-flex items-center">
-                        <input id="remember_me" value="{{true}}" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="remember">
-                        <span class="ml-2 block text-sm font-medium text-gray-300" >{{ __('Remember me') }}</span>
+                        <input id="remember_me" value="{{true}}" type="checkbox" class="rounded-full border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="remember">
+                        <span class="ml-2 block text-sm font-medium text-gray-50" >{{ __('main.log_remember') }}</span>
                     </label>
                 </div>
 
                 <div class="mt-4">
                     <button type="submit"
-                            class="g-recaptcha w-full text-white bg-gradient-to-r from-red-500 to-red-800 hover:bg-gradient-to-bl focus:ring-2 font-medium rounded-lg text px-5 py-2.5 text-center mr-2 mb-2"
+                            class="g-recaptcha inline-block text-xl rounded-full bg-red-500 w-full py-2 text-sm font-bold text-white transition hover:scale-110 hover:shadow-xl focus:outline-none focus:ring active:bg-red-500"
                             data-sitekey="6LdjE5siAAAAAFns6LrPthCLLu4niq3WG_coMFJA"
                             data-callback='onSubmit'
                             data-action='submit'>
-                        {{ __('Log in') }}
+                        {{ __('main.reg_log') }}
                     </button>
+                </div>
+
+                <div class="mt-4">
+                    <a type="submit" href="{{ route('googleOAuth') }}"
+                       class="g-recaptcha inline-block text-xl rounded-full bg-blue-500 w-full py-2 text-sm font-bold text-white transition hover:scale-110 hover:shadow-xl focus:outline-none focus:ring active:bg-blue-500 ">
+                        {{ __('main.reg_create_google') }}
+                    </a>
                 </div>
 
 {{--                <div class="mt-">--}}
@@ -85,14 +92,14 @@
                 @if (Route::has('password.request'))
                     <div class="mt-4">
                         <a class="font-sans underline text-sm text-red-500 hover:text-gray-900" href="{{ route('password.request') }}">
-                            {{ __('Forgot password?') }}
+                            {{ __('main.forgot_pass') }}
                         </a>
                     </div>
                 @endif
 
                 <div class="mt-4 flex justify-center">
-                    <h1 class="font-sans text-sm text-gray-600 hover:text-gray-900">{{ __("Don't have a Chrry.me account? ") }}</h1><a class="ml-1 font-sans underline text-sm text-red-500 hover:text-gray-900" href="{{ route('register') }}">
-                        {{ __("Create one") }}
+                    <h1 class="font-sans text-sm text-gray-600 hover:text-gray-900">{{ __('main.not_reg') }}</h1><a class="ml-1 font-sans underline text-sm text-red-500 hover:text-gray-900" href="{{ route('register') }}">
+                        {{ __('main.reg_create') }}
                     </a>
                 </div>
             </form>

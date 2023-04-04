@@ -10,6 +10,7 @@ use App\Http\Requests\LogotypeRequest;
 use App\Http\Requests\VerifyRequest;
 use App\Jobs\ProfileViewJob;
 use App\Models\User;
+use App\Models\UserSettings;
 use App\Models\Verification;
 use App\Services\PropertiesService;
 use App\Services\UploadPhotoService;
@@ -17,11 +18,18 @@ use App\Http\Requests\UpdateRegisteruserRequest;
 use App\Services\StatsService;
 use App\Services\CreateProfileViewStatistics;
 use App\Traits\IconsAndFonts;
+use Google\Client;
+use Google\Service\Drive;
+use Google_Client;
+use Google_Service_Oauth2;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -46,7 +54,9 @@ class UserController extends Controller
      */
     public function userHomePage(User $user): View
     {
-        ProfileViewJob::dispatch($user, $_SERVER['REMOTE_ADDR'], $this->statistics);
+//        ProfileViewJob::dispatch($user, $_SERVER['REMOTE_ADDR'], $this->statistics);
+
+        $this->statistics->createStatistics($user, $_SERVER['REMOTE_ADDR']);
 
         return view('user.home', compact('user'));
     }
@@ -318,4 +328,52 @@ class UserController extends Controller
 
         return redirect()->back()->with('success', 'Profile verification request sent');
     }
+
+    public function googleOAuth()
+    {
+        $client = new Google_Client();
+        $client->setAuthConfig('../client_secret_40088812296-lmuin8lmkfv6cvc47tka7vio22m6hpbb.apps.googleusercontent.com.json');
+        $client->addScope('email');
+        $client->addScope('profile');
+
+        return redirect()->to($client->createAuthUrl());
+    }
+
+    public function googleOAuthCallback()
+    {
+        $client = new Google_Client();
+        $client->setAuthConfig('../client_secret_40088812296-lmuin8lmkfv6cvc47tka7vio22m6hpbb.apps.googleusercontent.com.json');
+
+        if (isset($_GET['code'])) {
+            $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
+            $client->setAccessToken($token['access_token']);
+
+            $google_oauth = new Google_Service_Oauth2($client);
+            $google_account_info = $google_oauth->userinfo->get();
+
+            $createdUser = User::where('email', $google_account_info->email)->first();
+
+            if(!$createdUser) {
+                $user = User::create([
+                    'name' => stristr($google_account_info->email, '@', true),
+                    'slug' => stristr($google_account_info->email, '@', true),
+                    'email' => $google_account_info->email,
+                    'password' => substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil(10/strlen($x)) )),1,10),
+                    'remember_token' => Str::random(60),
+                ]);
+
+                UserSettings::create(['user_id' => $user->id]);
+
+                event(new Registered($user));
+
+                Auth::login($user);
+
+            } else {
+                Auth::login($createdUser);
+            }
+
+            return redirect()->route('editProfileForm', ['user' => Auth::user()->id]);
+        }
+    }
 }
+

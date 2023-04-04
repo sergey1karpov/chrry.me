@@ -8,6 +8,7 @@
         "php": "^8.0.2",
         "bensampo/laravel-embed": "^1.4",
         "encore/laravel-admin": "1.*",
+        "google/apiclient": "2.12.1",
         "guzzlehttp/guzzle": "^7.2",
         "intervention/image": "^2.7",
         "laravel/framework": "^9.11",
