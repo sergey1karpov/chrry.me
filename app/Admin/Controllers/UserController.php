@@ -32,7 +32,7 @@ class UserController extends AdminController
         $grid->column('slug', __('Slug'));
         $grid->column('verify', __('Verify'));
         $grid->column('is_active', __('is_active'));
-        $grid->column('full_url', __('Вшивать это'));
+        $grid->column('full_url', __('Кирилл, в nfc метку вшивать нахуй это!!!'));
 
         return $grid;
     }
@@ -56,13 +56,7 @@ class UserController extends AdminController
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
         $show->field('slug', __('Slug'));
-        $show->field('banner', __('Banner'));
-        $show->field('avatar', __('Avatar'));
-        $show->field('name_color', __('Name color'));
         $show->field('description', __('Description'));
-        $show->field('description_color', __('Description color'));
-        $show->field('verify_color', __('Verify color'));
-        $show->field('background_color', __('Background color'));
         $show->field('verify', __('Verify'));
 
         return $show;
@@ -83,15 +77,16 @@ class UserController extends AdminController
         $form->password('password', __('Password'));
         $form->text('remember_token', __('Remember token'));
         $form->text('slug', __('Slug'));
-        $form->textarea('banner', __('Banner'));
-        $form->textarea('avatar', __('Avatar'));
-        $form->textarea('name_color', __('Name color'));
         $form->text('description', __('Description'));
-        $form->textarea('description_color', __('Description color'));
-        $form->textarea('verify_color', __('Verify color'));
-        $form->textarea('background_color', __('Background color'));
         $form->text('utag', __('Utag'));
         $form->text('is_active', __('is_active'));
+        $form->radio('verify')->options([1 => 'Верифицирован', 0 => 'Нет'])->default(0);
+
+        $form->saving(function (Form $form) {
+
+            $form->password = substr(str_shuffle('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'),1,15);
+
+        });
 
         return $form;
     }

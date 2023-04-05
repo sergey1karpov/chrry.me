@@ -59,7 +59,7 @@
                     <input type="text"
                            name="hash"
                            id="hash"
-                           class="bg-gray-50 text-gray-300 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-500 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           class="bg-gray-50 text-gray-900 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-500 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500"
                            placeholder="*************"
                            required>
                 </div>

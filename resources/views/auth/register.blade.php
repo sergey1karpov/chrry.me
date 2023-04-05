@@ -34,7 +34,7 @@
                 <div class="mt-5">
                     {{--                    <label for="name" class="block mb-2 text-sm font-medium text-gray-900 text-dark">Profile name</label> --}}
                     <input type="text" name="name" id="name"
-                        class="bg-gray-50 text-gray-300 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-500 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        class="bg-gray-50 text-gray-900 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-500 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="{{ __('main.reg_name') }}" required>
                 </div>
 
@@ -47,7 +47,7 @@
                             chrry.me/
                         </span>
                         <input type="text" name="slug" id="website-admin"
-                            class="bg-gray-50 text-gray-300 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-500 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500 text-sm rounded-r-full w-full "
+                            class="bg-gray-50 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-500 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500 text-sm rounded-r-full w-full "
                             placeholder="{{ __('main.reg_slug') }}">
                     </div>
                 </div>
@@ -56,7 +56,7 @@
                 <div class="mt-4">
                     {{--                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 text-dark">Email address</label> --}}
                     <input type="email" name="email" id="email"
-                        class="bg-gray-50 text-gray-300 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-500 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        class="bg-gray-50 text-gray-900 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-500 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="Email" required>
                 </div>
 
@@ -64,7 +64,7 @@
                 <div class="mt-4">
                     {{--                    <label for="password" class="block mb-2 text-sm font-medium text-gray-900 text-dark">Password</label> --}}
                     <input type="password" name="password" id="password"
-                        class="bg-gray-50 text-gray-300 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-500 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        class="bg-gray-50 text-gray-900 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-500 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="{{ __('main.reg_pass') }}" required>
                 </div>
 
@@ -72,7 +72,7 @@
                 <div class="mt-4">
                     {{--                    <label for="password_confirmation" class="block mb-2 text-sm font-medium text-gray-900 text-dark">Confirm Password</label> --}}
                     <input type="password" name="password_confirmation" id="password_confirmation"
-                        class="bg-gray-50 text-gray-300 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-500 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        class="bg-gray-50 text-gray-900 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:placeholder-gray-500 text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="{{ __('main.reg_re_pass') }}" required>
                 </div>
 

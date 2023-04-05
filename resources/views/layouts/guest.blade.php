@@ -7,6 +7,7 @@
     <title>chrry.me</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://www.google.com/recaptcha/api.js"></script>
+    <link rel="icon" type="image/x-icon" href="https://i.ibb.co/2s30L2z/fav.png">
 </head>
 
 <body>

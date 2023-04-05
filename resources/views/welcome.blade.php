@@ -34,6 +34,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
+    <link rel="icon" type="image/x-icon" href="https://i.ibb.co/2s30L2z/fav.png">
+
     <style>
         select {
             -webkit-appearance: none;
