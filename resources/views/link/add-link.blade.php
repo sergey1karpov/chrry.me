@@ -75,6 +75,7 @@
                         </div>
                     </div>
 
+                    @if(count($user->links) > 0)
                     <div class="mb-20 mt-20 text-center rounded-lg p-5 ">
                         <label class="relative inline-flex items-center cursor-pointer">
                             <input name="check_last_link" id="check_last_link" type="checkbox" class="sr-only peer">
@@ -83,8 +84,9 @@
                         </label>
                         <p class="mt-2 mb-6 text-sm font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">{{ __('main.link_copy_description') }}</p>
                     </div>
+                    @endif
 
-                    <div id="design" class="w-full mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
+                    <div id="design" class="@if(count($user->links) == 0) mt-4 @endif w-full mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
                         <div class="mb-10 text-center">
                             <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.link_font') }}</label>
                             <select name="dl_font" id="select-beast-empty-font" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 " data-placeholder="Начните вводить название..."  autocomplete="off"></select>

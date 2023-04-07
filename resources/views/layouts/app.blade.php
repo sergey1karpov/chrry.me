@@ -52,7 +52,7 @@
             <div class="flex justify-between items-center ml-2 mr-2 mb-2 mt-2">
                 <div class="flex justify-center items-center">
                     <a href="http://chrry.me/" class="flex items-center">
-                        <img src="https://i.ibb.co/HBYTmyj/2.png" class="mr-3 h-6" alt="CHRRY.ME Logo" />
+                        <img src="https://i.ibb.co/bPydGXN/3.png" class="mr-3 h-4" alt="CHRRY.ME Logo" />
                     </a>
                 </div>
                 <div class="flex justify-center items-center">
