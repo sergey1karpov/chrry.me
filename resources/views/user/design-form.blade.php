@@ -404,6 +404,19 @@
                         </div>
                     </div>
                 </div>
+                @if($user->type == 'Events')
+                    <div class="mt-7 mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
+                        <div class="mb-3 text-center">
+                            <div class="mb-3 text-center">
+                                <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Сбор подписчиков для мероприятий</label>
+                                <select name="event_followers" id="show_logo" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
+                                    <option @if($user->settings->event_followers == '1') selected @endif value="{{1}}">{{ __('main.user_show_logo_on') }}</option>
+                                    <option @if($user->settings->event_followers == '0') selected @endif value="{{0}}">{{ __('main.user_show_logo_off') }}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                @endif
                 <div class="mt-7 mx-auto max-w-screen-xl py-4  ">
                     <div class="mb-3 text-center">
                         <div class="mb-3 text-center">

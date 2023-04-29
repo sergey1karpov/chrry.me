@@ -18,9 +18,9 @@
             @if (is_array($element))
                 @foreach ($element as $page => $url)
                     @if ($page == $paginator->currentPage())
-                        <a class="item active" href="{{ $url }}" aria-current="page">{{ $page }}</a>
+                        <a class="rounded-lg px-3 py-2 leading-tight @if(Auth::user()->dayVsNight == 1) text-white bg-gray-800 @else text-black bg-gray-300 @endif" href="{{ $url }}" aria-current="page">{{ $page }}</a>
                     @else
-                        <a class="item" href="{{ $url }}">{{ $page }}</a>
+                        <a class="rounded-lg px-3 py-2 leading-tight @if(Auth::user()->dayVsNight == 1) text-white bg-black @else text-black bg-white @endif" href="{{ $url }}">{{ $page }}</a>
                     @endif
                 @endforeach
             @endif

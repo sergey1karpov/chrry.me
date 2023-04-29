@@ -274,18 +274,14 @@
                                 <span class="ml-3 mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.link_pin') }}</span>
                             </label>
                         </div>
-                        <div class="mt-5">
-                            <button type="submit" class="mt-5 border border-indigo-600 w-full inline-block rounded-lg bg-indigo-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
-                                {{ __('main.link_create') }}
-                            </button>
-                        </div>
+
                     </div>
 
-{{--                    <div class="mt-5">--}}
-{{--                        <button type="submit" class="mt-5 border border-indigo-600 w-full inline-block rounded-lg bg-indigo-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">--}}
-{{--                            {{ __('main.link_create') }}--}}
-{{--                        </button>--}}
-{{--                    </div>--}}
+                    <div class="mt-5">
+                        <button type="submit" class="mt-5 border border-indigo-600 w-full inline-block rounded-lg bg-indigo-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
+                            {{ __('main.link_create') }}
+                        </button>
+                    </div>
                 </form>
             </div>
 

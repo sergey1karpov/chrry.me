@@ -146,6 +146,14 @@ class User extends Authenticatable
     }
 
     /**
+     * @return HasMany
+     */
+    public function followers(): HasMany
+    {
+        return $this->hasMany(EventsFollow::class);
+    }
+
+    /**
      * @param User $user
      * @return Collection
      */
@@ -378,6 +386,7 @@ class User extends Authenticatable
                 'description_font_shadow_blur' => $request->description_font_shadow_blur,
                 'description_font_shadow_color' => $request->description_font_shadow_color,
                 'verify_icon_type' => $request->verify_icon_type,
+                'event_followers' => $request->event_followers,
             ]
         );
     }

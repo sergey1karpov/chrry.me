@@ -2,8 +2,11 @@
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CityController;
+use App\Http\Controllers\EventFollowController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\FilterAndSearchProductController;
+use App\Http\Controllers\FollowController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\NfcController;
@@ -108,6 +111,11 @@ Route::middleware(['web', 'root', 'locale'])->group(function () {
             Route::patch('/{event}/edit', [EventController::class, 'editEvent'])->name('editEvent');
             Route::patch('/{event}/edit-banner', [EventController::class, 'editEventBanner'])->name('editEventBanner');
             Route::delete('/{event}/delete', [EventController::class, 'deleteEvent'])->name('deleteEvent');
+
+            Route::get('/followers/all', [FollowController::class, 'getAllEventFollowers'])->name('getAllEventFollowers');
+            Route::get('/followers/all/{country}', [FollowController::class, 'getAllEventCities'])->name('getAllEventCities');
+            Route::get('/followers/all/{country}/{city}', [FollowController::class, 'getAllCityFollowers'])->name('getAllCityFollowers');
+            Route::get('/followers/all/{country}/{city}/sort', [FollowController::class, 'sortFollowers'])->name('sortFollowers');
         });
 
         Route::group(['prefix' => 'products'], function () {
@@ -141,13 +149,14 @@ Route::middleware(['web', 'root', 'locale'])->group(function () {
             Route::patch('/{order}/in-processed', [OrderController::class, 'changeStatusToInProcessed'])->name('changeStatusToInProcessed');
             Route::delete('/{order}/delete', [OrderController::class, 'ordersReject'])->name('ordersReject');
             Route::get('/search', [OrderController::class, 'ordersSearch'])->name('ordersSearch');
-            Route::get('/export', [ExportController::class, 'export'])->name('export');
         });
 
         Route::group(['prefix' => 'seo'], function () {
             Route::get('/', [SEOController::class, 'seo'])->name('seo');
             Route::post('/set-seo', [SEOController::class, 'setSeo'])->name('setSeo');
         });
+
+        Route::get('services/export/{type}/export-file', [ExportController::class, 'exportType'])->name('exportType');
     });
 });
 
@@ -166,3 +175,7 @@ Route::get('service/blog', [IndexController::class, 'blog'])->name('blog')->midd
 
 Route::get('google/register', [UserController::class, 'googleOAuth'])->name('googleOAuth');
 Route::get('google/callback', [UserController::class, 'googleOAuthCallback'])->name('googleOAuthCallback');
+
+Route::post('follow/create', [FollowController::class, 'createFollow'])->name('createFollow');
+
+

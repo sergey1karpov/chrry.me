@@ -4,6 +4,7 @@ namespace App\Exports;
 
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\FromCollection;
 
 class OrdersExport implements FromCollection
@@ -16,9 +17,9 @@ class OrdersExport implements FromCollection
     }
 
     /**
-    * @return \Illuminate\Support\Collection
+    * @return Collection
     */
-    public function collection()
+    public function collection(): Collection
     {
         $orderQuery = Order::query();
 
@@ -50,9 +51,8 @@ class OrdersExport implements FromCollection
 
         $orderQuery->orderBy('created_at');
 
-//        return $orderQuery->get();
         $finalQuery = $orderQuery->get();
+
         return collect($finalQuery->unique('client_name'));
-//        dd(collect($finalQuery->unique('client_name')));
     }
 }

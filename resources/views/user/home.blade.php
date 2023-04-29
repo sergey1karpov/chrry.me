@@ -20,6 +20,7 @@
 
     <!-- Flowbite -->
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.5/dist/flowbite.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
 
     <!-- Flowbite DatePicker-->
     <script src="https://unpkg.com/flowbite@1.5.5/dist/datepicker.js"></script>
@@ -37,6 +38,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js" integrity="sha256-6XMVI0zB8cRzfZjqKcD01PBsAy3FlDASrlC8SxCpInY=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 
     @include('fonts.fonts')
 
@@ -71,6 +74,11 @@
                         @endif
                     @endauth
                 </div>
+                @if($user->settings->event_followers == '1')
+                    <div class="flex flex-1 items-center justify-end gap-8">
+                        <span class="material-symbols-outlined" data-drawer-backdrop="false" data-drawer-target="drawer-swipe" data-drawer-show="drawer-swipe" data-drawer-placement="bottom" data-drawer-edge="true" data-drawer-edge-offset="bottom-[60px]" aria-controls="drawer-swipe">ios_share</span>
+                    </div>
+                @endif
             </div>
         </div>
     </header>
@@ -495,31 +503,152 @@
         </div>
     </bottom-links-bar>
 
+    @if($user->type == 'Events')
+        @if($user->settings->event_followers == '1')
+            <div id="drawer-swipe" class="fixed z-40 w-full overflow-y-auto bg-white border-t border-gray-200 rounded-t-xl dark:border-gray-700 dark:bg-gray-800 transition-transform bottom-0 left-0 right-0 translate-y-full bottom-[60px]" tabindex="-1" aria-labelledby="drawer-swipe-label">
+                <div id="closeFollow" class="p-5 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-900" data-drawer-toggle="drawer-swipe">
+                    <div class="flex justify-center">
+                        <span class="absolute w-8 h-1 -translate-x-1/2 bg-gray-300 rounded-lg top-3 left-1/2 dark:bg-gray-600"></span>
+                    </div>
+                    <div class="flex justify-center">
+                        <h5 id="drawer-swipe-label" class="font-medium text-xl inline-flex items-center text-gray-500 dark:text-gray-400">Подписка</h5>
+                    </div>
+                </div>
+                <div class="gap-4 p-4 ">
+                    <p class="text-left text-xs font-medium text-gray-500 dark:text-gray-400 mb-3"><span class="bg-green-100 text-green-800 font-medium  px-1 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Заполните обязательные поля</span>
+                        и как только в вашем городе появится какое нибудь событие с участием {{$user->name}} мы вас сразу же об этом оповестим одним из указанных вами способом
+                    </p>
+                    <div class="mb-3 mt-3" id="followAlert">
+                        <div class="alert alert-danger mb-4 text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" style="display:none" role="alert"></div>
+                    </div>
+                    <form action="{{ route('createFollow') }}" method="POST"> @csrf
+                        <input type="hidden" name="user_id" id="user_id" value="{{$user->id}}">
+                        <input type="hidden" name="page_type" id="page_type" value="{{$user->type}}">
+                        <div class="mb-3" id="city">
+                            <span style="border: none" class="bg-green-100 text-white text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-white">Город</span>
+                            <select style="border: none" name="city_id" id="select-city" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 " data-placeholder="Начните вводить название..."  autocomplete="off"></select>
+                        </div>
+                        <div class="mb-3">
+                            <span style="border: none" class="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-white">Имя</span>
+                            <input style="border: none" name="name" type="text" id="nameFollow" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded focus:ring-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500" placeholder="John" required>
+                        </div>
+                        <div class="mb-3">
+                            <span style="border: none" class="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-white">Email</span>
+                            <input style="border: none" name="email" type="email" id="emailFollow" class="mt-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="john.doe@company.com" required>
+                        </div>
+                        <div class="mb-3">
+                            <label style="border: none" for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Номер телефона</label>
+                            <input style="border: none" name="telephone" type="text" id="telephoneFollow" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="88005553535" >
+                        </div>
+                        <div class="mb-3">
+                            <label style="border: none" for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Telegram</label>
+                            <input style="border: none" name="telegram" type="text" id="telegramFollow" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="https://t.me/sergey1karpov" >
+                        </div>
+                        <button style="border: none" id="eventFollowBtn" type="submit" class="w-full mt-3 px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Подписаться</button>
+                    </form>
+                </div>
+            </div>
+
+
+        <button id="followModalBtn" style="display: none" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button" data-modal-toggle="authentication-modal">
+            Toggle login modal
+        </button>
+
+        <div id="authentication-modal" aria-hidden="true" class="hidden overflow-x-hidden overflow-y-auto fixed h-modal md:h-full top-4 left-0 right-0 md:inset-0 z-50 justify-center items-center">
+            <div class="relative w-full max-w-md px-4 h-full md:h-auto items-center flex">
+                <!-- Modal content -->
+                <div class="bg-white rounded-lg shadow relative dark:bg-gray-700 w-full">
+                    <div class="flex justify-end p-2">
+                        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="authentication-modal">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                        </button>
+                    </div>
+                    <div class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8" action="#">
+                        <div>
+                            <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+                                Подписка на
+                                @if($user->type == 'Events')
+                                    мероприятия
+                                @endif
+                                <span class="text-blue-600 dark:text-blue-500">{{$user->name}}</span>
+                                успешно оформлена!
+                            </h1>
+                        </div>
+                    </div>
+                    <div class="flex space-x-2 items-center p-6 border-t border-gray-200 rounded-b dark:border-gray-600">
+                        <button data-modal-toggle="authentication-modal" type="button" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">ЯсноПонятно!</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
+    @endif
+
     @if($user->settings->show_logo == true)
         <footer class="sticky top-[100vh] footer-block mt-20 p-2  md:px-6 md:py-8 navbar-fixed-bottom" >
             <div class="flex justify-center items-center">
                 <div class="flex justify-center items-center">
-                    <a href="http://chrry.me/" class="flex items-center">
+                    <a href="https://chrry.me/" class="flex items-center">
                         <img src="https://i.ibb.co/HBYTmyj/2.png" class="mr-3 h-9" alt="CHRRY.ME Logo" style="filter: drop-shadow(2px 2px 0px #FFFFFF);"/>
                     </a>
                 </div>
-{{--                <div class="flex justify-center items-center">--}}
-{{--                    <ul class="flex flex-wrap items-center text-sm text-gray-500 sm:mb-0 dark:text-gray-400">--}}
-{{--                        <li>--}}
-{{--                            <a href="{{route('contacts')}}" class="mr-4 hover:underline md:mr-6 text-sm font-semibold">Contacts</a>--}}
-{{--                        </li>--}}
-{{--                        <li>--}}
-{{--                            <form method="POST" action="{{ route('logout') }}"> @csrf--}}
-{{--                                <button type="submit">--}}
-{{--                                    <span href="#" class="hover:underline text-sm font-semibold">Logout</span>--}}
-{{--                                </button>--}}
-{{--                            </form>--}}
-{{--                        </li>--}}
-{{--                    </ul>--}}
-{{--                </div>--}}
             </div>
         </footer>
     @endif
+
+    <script type="text/javascript">
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $(document).ready(function(){
+            $('#eventFollowBtn').click(function(e){
+                e.preventDefault();
+
+                let user = $('#user_id').val();
+                let name = $('#nameFollow').val();
+                let email = $('#emailFollow').val();
+                let city = $('#select-city').val();
+                let telephone = $('#telephoneFollow').val();
+                let telegram = $('#telegramFollow').val();
+                let page_type = $('#page_type').val();
+                let token = $("meta[name='csrf-token']").attr("content");
+
+                $.ajax({
+                    url: "{{ route('createFollow') }}",
+                    method: 'post',
+                    data: {user_id:user, city_id:city, name:name, email:email, telephone:telephone, telegram:telegram, _token:token, page_type:page_type},
+                    success: function(data) {
+                        if(data.errors != null) {
+                            $.each(data.errors, function(key, value){
+                                $('.alert-danger').show();
+                                $('.alert-danger').html(
+                                    '<p>'+value+'</p>'
+                                );
+                            });
+                        } else {
+                            $("#closeFollow").click();
+                            $('.alert-danger').hide();
+                            $('.alert-danger').remove();
+                            $("#followModalBtn").click();
+                        }
+                    },
+                    error: function(reject) {
+                        console.log('bad');
+                    },
+                    complete: function() {
+                        $('#user_id').val('');
+                        $('#nameFollow').val('');
+                        $('#emailFollow').val('');
+                        $('#select-city').val('');
+                        $('#telephoneFollow').val('');
+                        $('#telegramFollow').val('');
+                    }
+                });
+            });
+        });
+    </script>
 
     @foreach($user->userLinks(true) as $link)
         <script type="text/javascript">
@@ -615,6 +744,27 @@
             }
         </script>
     @endforeach
+
+    <script>
+        new TomSelect('#select-city',{
+            valueField: 'id',
+            searchField: 'name',
+            maxOptions: 1,
+            options: [
+                @foreach($cities as $city)
+                    {id: {{$city->id}}, name: '{{$city->name}}'},
+                @endforeach
+            ],
+            render: {
+                option: function(data, escape) {
+                    return  '<h4 class="font-medium" style="font-size: 1.5rem;">' + escape(data.name) + '</h4>';
+                },
+                item: function(data, escape) {
+                    return  '<h4 class="font-medium" style="font-size: 1.5rem;">' + escape(data.name) + '</h4>';
+                }
+            }
+        });
+    </script>
 
     <script src="https://unpkg.com/flowbite@1.5.5/dist/flowbite.js"></script>
 </body>

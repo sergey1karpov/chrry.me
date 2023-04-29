@@ -56,7 +56,8 @@ class UserSettings extends Model
 
         'verify_icon_type',
 
-        'avatar_vs_logotype'
+        'avatar_vs_logotype',
+        'event_followers'
     ];
 
     protected $attributes = [
@@ -103,6 +104,7 @@ class UserSettings extends Model
 
         'verify_icon_type' => null,
 
-        'avatar_vs_logotype' => null
+        'avatar_vs_logotype' => null,
+        'event_followers' => false
     ];
 }

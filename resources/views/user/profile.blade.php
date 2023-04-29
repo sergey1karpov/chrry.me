@@ -93,9 +93,14 @@
                                         {{ __('main.event_manage_btn') }}
                                     </a>
                                 @endif
-                                <a href="{{ route('settings', ['user' => $user->id]) }}" class="mt-3 inline-block rounded border border-indigo-900 bg-indigo-900 px-9 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
+                                <a href="{{ route('settings', ['user' => $user->id]) }}" class="mt-3 mr-2 inline-block rounded border border-indigo-900 bg-indigo-900 px-9 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
                                     {{ __('main.event_themes_btn') }}
                                 </a>
+                                @if($user->settings->event_followers == '1')
+                                    <a href="{{ route('getAllEventFollowers', ['user' => $user->id]) }}" class="mt-3 inline-block rounded border border-indigo-900 bg-indigo-900 px-9 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
+                                        ОБРАТНАЯ СВЯЗЬ
+                                    </a>
+                                @endif
                             </div>
                         </div>
                     </div>

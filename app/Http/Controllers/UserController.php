@@ -9,6 +9,8 @@ use App\Http\Requests\FaviconRequest;
 use App\Http\Requests\LogotypeRequest;
 use App\Http\Requests\VerifyRequest;
 use App\Jobs\ProfileViewJob;
+use App\Models\Cities;
+use App\Models\Countries;
 use App\Models\User;
 use App\Models\UserSettings;
 use App\Models\Verification;
@@ -58,7 +60,9 @@ class UserController extends Controller
 
         $this->statistics->createStatistics($user, $_SERVER['REMOTE_ADDR']);
 
-        return view('user.home', compact('user'));
+        $cities = \DB::select('SELECT * FROM city');
+
+        return view('user.home', compact('user','cities'));
     }
 
     /**
