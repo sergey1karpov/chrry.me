@@ -30,14 +30,25 @@ class UpdateEventRequest extends FormRequest
         ]);
 
         return [
-            'city' => 'required',
+            'city_id' => 'required',
             'location' => 'required|max:255',
-            'time' => 'required|max:50',
-            'date' => 'nullable',
-            'description' => 'nullable|max:2500',
+            'time' => 'required|max:50|date_format:H:i',
+            'date' => 'required',
+            'banner' => 'mimes:jpeg,png,jpg,gif|max:10000',
+            'description' => 'required|max:2500',
+            'title' => 'required|max:255',
             'video' => 'nullable|url',
-            'tickets' => 'nullable|url',
-            'btn_text' => 'nullable|max:50'
+            'tickets' => 'required|url',
+            'btn_text' => 'required|max:50',
+//            'city' => 'required',
+//            'location' => 'required|max:255',
+//            'time' => 'required|max:50',
+//            'date' => 'nullable',
+//            'description' => 'nullable|max:2500',
+//            'video' => 'nullable|url',
+//            'tickets' => 'nullable|url',
+//            'btn_text' => 'nullable|max:50'
+//            'banner' => 'required|mimes:jpeg,png,jpg,gif|max:10000',
         ];
     }
 }

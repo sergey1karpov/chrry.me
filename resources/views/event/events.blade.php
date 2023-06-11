@@ -71,14 +71,9 @@
                         $properties = (object) unserialize($event->properties)
                     @endphp
                     <div class="container mb-4">
-                        <div class="{{$event->event_animation}}" style="
-                            animation-duration: {{$event->animation_speed}}s;
-                            border-radius: {{$properties->de_event_round}}px;
-                            box-shadow: {{$properties->de_event_card_shadow_right}}px {{$properties->de_event_card_shadow_bottom}}px {{$properties->de_event_card_shadow_blur}}px {{$properties->de_event_card_shadow_color}};
-                            @if($properties->de_event_card_shadow_right) margin-right: {{$properties->de_event_card_shadow_right}}px @endif
-                        ">
+
                             @include('event.types.' . $user->eventSettings->close_card_type, ['event' => $event, 'properties' => (object) unserialize($event->properties)])
-                        </div>
+
                     <div class="mb-5 mt-5 inline-flex rounded-lg shadow-sm" role="group">
                         <a href="{{ route('editEventForm', ['user' => $user->id, 'event' => $event->id]) }}" class="border-r w-20 px-5 py-1 text-sm font-medium text-gray-900 bg-white rounded-l-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
                             {{ __('main.event_edit') }}

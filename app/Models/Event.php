@@ -7,6 +7,7 @@ use App\Http\Requests\EventRequest;
 use App\Http\Requests\MassUpdateEventRequest;
 use App\Http\Requests\UpdateEventBannerRequest;
 use App\Http\Requests\UpdateEventRequest;
+use App\Jobs\GetFollowersEmail;
 use App\Services\ColorConvertorService;
 use App\Services\PropertiesService;
 use App\Services\UploadPhotoService;
@@ -37,7 +38,7 @@ class Event extends Model
         'user_id',
         'link_id',
         'city',
-
+        'city_id',
         'event_animation',
         'animation_speed',
         'btn_text',
@@ -100,17 +101,18 @@ class Event extends Model
      * @param EventRequest $request
      * @param UploadPhotoService $uploadService
      * @param PropertiesService $propertiesService
-     * @return void
+     * @return Event
      */
-    public function createEvent(User $user, EventRequest $request, UploadPhotoService $uploadService, PropertiesService $propertiesService): void
+    public function createEvent(User $user, EventRequest $request, UploadPhotoService $uploadService, PropertiesService $propertiesService): Event
     {
         $this->setDesignEventProperties($request, $propertiesService);
 
         $lastEvent = Event::where('user_id', $user->id)->orderBy('created_at', 'desc')->first();
 
-        Event::create([
+        return Event::create([
             'title'       => $request->title,
-            'city'        => $request->city,
+            'city_id'     => $request->city_id,
+            'city'        => $this->getCityName($request->city_id),
             'description' => $request->description,
             'location'    => $request->location,
             'time'        => $request->time,
@@ -132,6 +134,18 @@ class Event extends Model
             'btn_text' => isset($request->check_last_event) ? $lastEvent->btn_text : $request->btn_text,
             'properties' => isset($request->check_last_event) ? $this->getLastEventDesignFields($user) : serialize($propertiesService->getProperties()),
         ]);
+    }
+
+    /**
+     * Get city name(denormalize database)
+     *
+     * @param int $cityId
+     * @return string
+     */
+    public function getCityName(int $cityId): string
+    {
+        $city = Cities::find($cityId);
+        return $city->name;
     }
 
     public function editEventBanner(User $user, Event $event, UpdateEventBannerRequest $request, UploadPhotoService $uploadService)
@@ -157,7 +171,7 @@ class Event extends Model
      * @param PropertiesService $propertiesService
      * @return void
      */
-    public function editEvent(User $user, Event $event, UpdateEventRequest $request, PropertiesService $propertiesService)
+    public function editEvent(User $user, Event $event, UpdateEventRequest $request, PropertiesService $propertiesService, UploadPhotoService $uploadService)
     {
         $this->setDesignEventProperties($request, $propertiesService);
 
@@ -176,6 +190,15 @@ class Event extends Model
             'animation_speed' => $request->animation_speed,
             'btn_text' => $request->btn_text,
             'properties' => serialize($propertiesService->getProperties()),
+
+            'banner'      => isset($request->banner) ?
+                $uploadService->savePhoto(
+                    photo: $request->banner,
+                    path: $this->imgPath($user->id),
+                    size: 500,
+                    dropImagePath: $event->banner
+                ) :
+                $event->banner,
         ]);
     }
 
@@ -208,5 +231,10 @@ class Event extends Model
         $uploadService->deletePhotoFromFolder($event->banner);
 
         $event->delete();
+    }
+
+    public function getFollowersEmail(User $user, int $city_id)
+    {
+        GetFollowersEmail::dispatch($user, $city_id);
     }
 }

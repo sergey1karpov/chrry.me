@@ -116,6 +116,9 @@ Route::middleware(['web', 'root', 'locale'])->group(function () {
             Route::get('/followers/all/{country}', [FollowController::class, 'getAllEventCities'])->name('getAllEventCities');
             Route::get('/followers/all/{country}/{city}', [FollowController::class, 'getAllCityFollowers'])->name('getAllCityFollowers');
             Route::get('/followers/all/{country}/{city}/sort', [FollowController::class, 'sortFollowers'])->name('sortFollowers');
+
+            Route::get('/followers/create-mail', [EventController::class, 'createMailForm'])->name('createMailForm');
+            Route::post('/followers/create-mail-post', [EventController::class, 'createMail'])->name('createMail');
         });
 
         Route::group(['prefix' => 'products'], function () {

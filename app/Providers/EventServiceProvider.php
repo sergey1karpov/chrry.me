@@ -28,6 +28,9 @@ class EventServiceProvider extends ServiceProvider
 //        SocialiteWasCalled::class => [
 //            YandexExtendSocialite::class.'@handle',
 //        ],
+        EmailEventSending::class => [
+            EmailEventSendingNotify::class,
+        ],
     ];
 
     /**

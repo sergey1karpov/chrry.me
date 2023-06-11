@@ -5,7 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests\MassUpdateEventRequest;
 use App\Http\Requests\UpdateEventBannerRequest;
 use App\Http\Requests\UpdateEventRequest;
+use App\Jobs\EventEmailNotification;
+use App\Jobs\GetFollowersEmail;
+use App\Mail\EventNotification;
 use App\Models\EventSetting;
+use App\Models\Properties\EventProperties;
+use App\Providers\EmailEventSending;
 use App\Services\PropertiesService;
 use App\Services\UploadPhotoService;
 use App\Traits\IconsAndFonts;
@@ -16,6 +21,8 @@ use Illuminate\Http\Request;
 use App\Models\Event;
 use App\Models\User;
 use App\Http\Requests\EventRequest;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
 class EventController extends Controller
@@ -24,8 +31,9 @@ class EventController extends Controller
 
     public function __construct (
         private  UploadPhotoService $uploadService,
-        public PropertiesService            $propertiesService,
-        private Event              $event,
+        public   PropertiesService  $propertiesService,
+        private  Event              $event,
+        private  EventProperties    $properties,
     ) {}
 
     /**
@@ -67,7 +75,10 @@ class EventController extends Controller
     {
         return view('event.add-event', [
             'user' => $user,
-            'allFontsInFolder' => $this->getFonts()
+            'allFontsInFolder' => $this->getFonts(),
+            'cities' => \DB::select('SELECT * FROM city'),
+            'properties' => $this->properties->properties,
+            'event' => $this->properties->event,
         ]);
     }
 
@@ -81,7 +92,11 @@ class EventController extends Controller
      */
     public function addEvent(User $user, Event $event, EventRequest $request): RedirectResponse
     {
-        $event->createEvent($user, $request, $this->uploadService, $this->propertiesService);
+        $event = $event->createEvent($user, $request, $this->uploadService, $this->propertiesService);
+
+        if($request->send_email) {
+            EmailEventSending::dispatch($user, $request->city_id, $event);
+        }
 
         return redirect()->back()->with('success', 'Event added successfully! You can add more...');
     }
@@ -114,8 +129,8 @@ class EventController extends Controller
             'user' => $user,
             'allIconsInsideFolder' => $this->getIcons(),
             'allFontsInFolder' => $this->getFonts(),
-            'event' => Event::where('user_id', $user->id)->orderBy('id', 'desc')->first(),
-            'properties' => (object) unserialize($this->event->getLastEventDesignFields($user)),
+            'properties' => $this->properties->properties,
+            'event' => $this->properties->event,
         ]);
     }
 
@@ -132,6 +147,7 @@ class EventController extends Controller
             'allIconsInsideFolder' => $this->getIcons(),
             'allFontsInFolder' => $this->getFonts(),
             'properties' => (object) unserialize($event->properties),
+            'cities' => \DB::select('SELECT * FROM city'),
         ]);
     }
 
@@ -145,7 +161,7 @@ class EventController extends Controller
      */
     public function editEvent(User $user, Event $event, UpdateEventRequest $request)
     {
-        $event->editEvent($user, $event, $request, $this->propertiesService);
+        $event->editEvent($user, $event, $request, $this->propertiesService, $this->uploadService);
 
         return redirect()->back()->with('success', 'Event updated successfully');
     }
@@ -212,5 +228,14 @@ class EventController extends Controller
             'events' => $events,
             'allFontsInFolder' => $this->getFonts(),
         ]);
+    }
+
+    public function createMailForm(User $user)
+    {
+        return view('event.write-mail', compact('user'));
+    }
+
+    public function createMail(User $user, Request $request) {
+        dd($request);
     }
 }

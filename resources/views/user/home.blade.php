@@ -451,27 +451,28 @@
         <events>
             <div class="mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8">
                 @foreach($user->events as $event)
+
                     @php
                         $properties = (object) unserialize($event->properties)
                     @endphp
+
                     @if($properties->de_show_modal == 0)<a href="{{$event->tickets}}">@endif
-                        <div class="container mb-5" @if($properties->de_show_modal == 1) data-modal-target="default" data-modal-toggle="popup-modal{{$event->id}}" type="button" @endif>
-                            <div class="{{$event->event_animation}}" style="
-                                animation-duration: {{$event->animation_speed}}s;
-                                border-radius: {{$properties->de_event_round}}px;
-                                box-shadow: {{$properties->de_event_card_shadow_right}}px {{$properties->de_event_card_shadow_bottom}}px {{$properties->de_event_card_shadow_blur}}px {{$properties->de_event_card_shadow_color}};
+                        <div class="container pl-1 pr-1 mb-5" @if($properties->de_show_modal == 1) data-modal-target="popup-modal{{$event->id}}" data-modal-toggle="popup-modal{{$event->id}}" type="button" @endif>
+                            <div style="
                                 @if($properties->de_event_card_shadow_right) margin-right: {{$properties->de_event_card_shadow_right}}px @endif
                             ">
                                 @include('event.types.' . $user->eventSettings->close_card_type, ['event' => $event, 'properties' => (object) unserialize($event->properties)])
                             </div>
                         </div>
                     @if($properties->de_show_modal == 0)</a>@endif
+
                     <div id="popup-modal{{$event->id}}" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full justify-center items-center" aria-hidden="true">
                         <div class="relative p-2 w-full max-w-md h-full md:h-auto">
                             <!-- modal card element -->
                             @include('event.open-cart.' . $user->eventSettings->open_card_type, ['event' => $event])
                         </div>
                     </div>
+
                 @endforeach
             </div>
         </events>
@@ -511,12 +512,12 @@
                         <span class="absolute w-8 h-1 -translate-x-1/2 bg-gray-300 rounded-lg top-3 left-1/2 dark:bg-gray-600"></span>
                     </div>
                     <div class="flex justify-center">
-                        <h5 id="drawer-swipe-label" class="font-medium text-xl inline-flex items-center text-gray-500 dark:text-gray-400">Подписка</h5>
+                        <h5 id="drawer-swipe-label" class="mt-1 font-medium text-sm inline-flex items-center text-gray-500 dark:text-gray-400">Подписка на мероприятия</h5>
                     </div>
                 </div>
                 <div class="gap-4 p-4 ">
                     <p class="text-left text-xs font-medium text-gray-500 dark:text-gray-400 mb-3"><span class="bg-green-100 text-green-800 font-medium  px-1 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Заполните обязательные поля</span>
-                        и как только в вашем городе появится какое нибудь событие с участием {{$user->name}} мы вас сразу же об этом оповестим одним из указанных вами способом
+                        и как только в вашем городе появится какое нибудь событие с участием {{$user->name}} мы вас сразу же об этом по почте, или {{$user->name}} отправит вам уведомление в Telegram или SMS
                     </p>
                     <div class="mb-3 mt-3" id="followAlert">
                         <div class="alert alert-danger mb-4 text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" style="display:none" role="alert"></div>
