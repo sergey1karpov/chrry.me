@@ -94,10 +94,12 @@
                         @endif
                     @endauth
                 </div>
-                @if($user->settings->event_followers == '1')
-                    <div class="flex flex-1 items-center justify-end gap-8">
-                        <span class="material-symbols-outlined" data-drawer-backdrop="false" data-drawer-target="drawer-swipe" data-drawer-show="drawer-swipe" data-drawer-placement="bottom" data-drawer-edge="true" data-drawer-edge-offset="bottom-[60px]" aria-controls="drawer-swipe">ios_share</span>
-                    </div>
+                @if($user->type == 'Events')
+                    @if($user->settings->event_followers == '1')
+                        <div class="flex flex-1 items-center justify-end gap-8">
+                            <span class="material-symbols-outlined" data-drawer-backdrop="false" data-drawer-target="drawer-swipe" data-drawer-show="drawer-swipe" data-drawer-placement="bottom" data-drawer-edge="true" data-drawer-edge-offset="bottom-[60px]" aria-controls="drawer-swipe">ios_share</span>
+                        </div>
+                    @endif
                 @endif
             </div>
         </div>
