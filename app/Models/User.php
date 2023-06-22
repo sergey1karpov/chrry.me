@@ -40,6 +40,7 @@ class User extends Authenticatable
         'avatar_vs_logotype',
         'two_factor_auth',
         'remember_token',
+        'yandex_metrika'
     ];
 
     /**

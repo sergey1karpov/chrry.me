@@ -41,6 +41,26 @@
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 
+    @if($user->yandex_metrika != 0 || $user->yandex_metrika != null)
+        <!-- Yandex.Metrika counter -->
+        <script type="text/javascript" >
+            (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+                m[i].l=1*new Date();
+                for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+                k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+            (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+            ym({{$user->yandex_metrika}}, "init", {
+                clickmap:true,
+                trackLinks:true,
+                accurateTrackBounce:true,
+                webvisor:true
+            });
+        </script>
+        <noscript><div><img src="https://mc.yandex.ru/watch/93937293" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+        <!-- /Yandex.Metrika counter -->
+    @endif
+
     @include('fonts.fonts')
 
     <x-embed-styles />
@@ -200,7 +220,7 @@
                                                                 @elseif($link->icon == false && $link->photo == true)
                                                                     <img class="mt-1 mb-1" src="{{$link->photo}}" style="width:50px; border-radius: {{$properties['dl_rounded']}}px;">
                                                                 @else
-                                                                    <img class="mt-1 mb-1" src="https://digiltable.com/wp-content/uploads/edd/2021/09/Sexy-lady-logo-Pornhub-logo.png" style="width:50px; border-radius: {{$properties['dl_rounded']}}px; opacity: 0;">
+                                                                    <img class="mt-1 mb-1" src="https://www.sexio.cz/images/brand/logo/69/thumb_eb416ca9-0e19-491b-8bda-92cbf5640626.jpg" style="width:50px; border-radius: {{$properties['dl_rounded']}}px; opacity: 0;">
                                                                 @endif
                                                             </div>
                                                             <button type="submit" style="border: 0; padding: 0; background-color: rgba(0, 125, 215, 0);">
@@ -213,8 +233,15 @@
                                                                             font-size: {{$properties['dl_font_size']}}rem;
                                                                             margin: 0;
                                                                             color: {{$properties['dl_title_color']}};
-                                                                            @if($link->photo == '' && $link->icon == '') margin-top: 14px; margin-bottom: 14px; @endif
-                                                                            @if($properties['dl_text_shadow_bottom']) margin-bottom: {{$properties['dl_text_shadow_bottom']}}px; @endif
+{{--                                                                        @if($link->photo == '' && $link->icon == '') margin-top: 14px; margin-bottom: 14px; @endif--}}
+                                                                            @if($link->photo == '' && $link->icon == '')
+                                                                                @if($properties['dl_text_shadow_bottom'])
+                                                                                    margin-top: 14px; margin-bottom: 14px;
+                                                                                @else
+                                                                                    margin-top: 14px; margin-bottom: {{14 + $properties['dl_text_shadow_bottom']}}px;
+                                                                                @endif
+                                                                            @endif
+{{--                                                                        @if($properties['dl_text_shadow_bottom']) margin-bottom: {{$properties['dl_text_shadow_bottom']}}px; @endif--}}
                                                                             @if($properties['dl_text_shadow_right']) margin-right: {{$properties['dl_text_shadow_right']}}px; @endif
                                                                             @if($properties['dl_link_block_shadow_right']) margin-left: {{$properties['dl_link_block_shadow_right']}}px @endif
                                                                         ">{{$link->title}}</h4>
@@ -305,8 +332,15 @@
                                                                             font-size: {{$properties['dl_font_size']}}rem;
                                                                             margin: 0;
                                                                             color: {{$properties['dl_title_color']}};
-                                                                            @if($link->photo == '' && $link->icon == '') margin-top: 14px; margin-bottom: 14px; @endif
-                                                                            @if($properties['dl_text_shadow_bottom']) margin-bottom: {{$properties['dl_text_shadow_bottom']}}px; @endif
+{{--                                                                            @if($link->photo == '' && $link->icon == '') margin-top: 14px; margin-bottom: 14px; @endif--}}
+                                                                            @if($link->photo == '' && $link->icon == '')
+                                                                                @if($properties['dl_text_shadow_bottom'])
+                                                                                    margin-top: 14px; margin-bottom: 14px;
+                                                                                @else
+                                                                                    margin-top: 14px; margin-bottom: {{14 + $properties['dl_text_shadow_bottom']}}px;
+                                                                                @endif
+                                                                            @endif
+{{--                                                                            @if($properties['dl_text_shadow_bottom']) margin-bottom: {{$properties['dl_text_shadow_bottom']}}px; @endif--}}
                                                                             @if($properties['dl_text_shadow_right']) margin-right: {{$properties['dl_text_shadow_right']}}px; @endif
                                                                             @if($properties['dl_link_block_shadow_right']) margin-left: {{$properties['dl_link_block_shadow_right']}}px @endif
                                                                         ">{{$link->title}}</h4>
@@ -397,8 +431,15 @@
                                                                         font-size: {{$properties['dl_font_size']}}rem;
                                                                         margin: 0;
                                                                         color: {{$properties['dl_title_color']}};
-                                                                        @if($link->photo == '' && $link->icon == '') margin-top: 14px; margin-bottom: 14px; @endif
-                                                                        @if($properties['dl_text_shadow_bottom']) margin-bottom: {{$properties['dl_text_shadow_bottom']}}px; @endif
+{{--                                                                    @if($link->photo == '' && $link->icon == '') margin-top: 14px; margin-bottom: 14px; @endif--}}
+                                                                        @if($link->photo == '' && $link->icon == '')
+                                                                            @if($properties['dl_text_shadow_bottom'])
+                                                                                margin-top: 14px; margin-bottom: 14px;
+                                                                            @else
+                                                                                margin-top: 14px; margin-bottom: {{14 + $properties['dl_text_shadow_bottom']}}px;
+                                                                            @endif
+                                                                        @endif
+{{--                                                                    @if($properties['dl_text_shadow_bottom']) margin-bottom: {{$properties['dl_text_shadow_bottom']}}px; @endif--}}
                                                                         @if($properties['dl_text_shadow_right']) margin-right: {{$properties['dl_text_shadow_right']}}px; @endif
                                                                         @if($properties['dl_link_block_shadow_right']) margin-left: {{$properties['dl_link_block_shadow_right']}}px @endif
                                                                     ">{{$link->title}}</h4>
@@ -746,26 +787,30 @@
         </script>
     @endforeach
 
-    <script>
-        new TomSelect('#select-city',{
-            valueField: 'id',
-            searchField: 'name',
-            maxOptions: 1,
-            options: [
-                @foreach($cities as $city)
-                    {id: {{$city->id}}, name: '{{$city->name}}'},
-                @endforeach
-            ],
-            render: {
-                option: function(data, escape) {
-                    return  '<h4 class="font-medium" style="font-size: 1.5rem;">' + escape(data.name) + '</h4>';
-                },
-                item: function(data, escape) {
-                    return  '<h4 class="font-medium" style="font-size: 1.5rem;">' + escape(data.name) + '</h4>';
-                }
-            }
-        });
-    </script>
+    @if($user->type == 'Events')
+        @if($user->settings->event_followers)
+            <script>
+                new TomSelect('#select-city',{
+                    valueField: 'id',
+                    searchField: 'name',
+                    maxOptions: 1,
+                    options: [
+                        @foreach($cities as $city)
+                            {id: {{$city->id}}, name: '{{$city->name}}'},
+                        @endforeach
+                    ],
+                    render: {
+                        option: function(data, escape) {
+                            return  '<h4 class="font-medium" style="font-size: 1.5rem;">' + escape(data.name) + '</h4>';
+                        },
+                        item: function(data, escape) {
+                            return  '<h4 class="font-medium" style="font-size: 1.5rem;">' + escape(data.name) + '</h4>';
+                        }
+                    }
+                });
+            </script>
+        @endif
+    @endif
 
     <script src="https://unpkg.com/flowbite@1.5.5/dist/flowbite.js"></script>
 </body>

@@ -333,6 +333,23 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'Profile verification request sent');
     }
 
+    public function metrikaForm(User $user)
+    {
+        return view('statistic.metrika-form', compact('user'));
+    }
+
+    public function setMetrikaId(User $user, Request $request)
+    {
+        $request->validate(['yandex_metrika' => 'nullable|integer']);
+
+        User::updateOrCreate(
+            ['id' => $user->id],
+            ['yandex_metrika' => $request->yandex_metrika]
+        );
+
+        return redirect()->back()->with('success', 'Yandex Metrika id updated');
+    }
+
     public function googleOAuth()
     {
         $client = new Google_Client();
@@ -362,7 +379,7 @@ class UserController extends Controller
                     'name' => stristr($google_account_info->email, '@', true),
                     'slug' => stristr($google_account_info->email, '@', true),
                     'email' => $google_account_info->email,
-                    'password' => substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil(10/strlen($x)) )),1,10),
+                    'password' => Hash::make(substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil(10/strlen($x)) )),1,10)),
                     'remember_token' => Str::random(60),
                 ]);
 

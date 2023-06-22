@@ -74,6 +74,8 @@ Route::middleware(['web', 'root', 'locale'])->group(function () {
             Route::patch('/qrcode-drop-logo', [QRCodeController::class, 'dropQrLogotype'])->name('dropQrLogotype');
             Route::get('/verify', [UserController::class, 'verify'])->name('verify');
             Route::post('/verify-profile', [UserController::class, 'verifyProfile'])->name('verifyProfile');
+            Route::get('/yandex-metrika', [UserController::class, 'metrikaForm'])->name('metrikaForm');
+            Route::post('/set-yandex-metrika', [UserController::class, 'setMetrikaId'])->name('setMetrikaId');
         });
 
         Route::get('/market-settings', [ShopController::class, 'marketSettingsForm'])->name('marketSettingsForm');
