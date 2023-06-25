@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title>{{$user->seo->title ?? $user->name}}</title>
     @if(isset($user->seo->description))
         <meta name="description" content="{{ $user->seo->description }}" />
@@ -40,9 +41,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-
-    <!-- Yandex social -->
-    <script src="https://yastatic.net/share2/share.js"></script>
 
     @if($user->yandex_metrika != 0 || $user->yandex_metrika != null)
         <!-- Yandex.Metrika counter -->
@@ -84,7 +82,7 @@
             height: 38px;
         }
         .ts-control {
-            padding: 1rem;
+            padding: 0.5rem;
             border-radius: 0.5rem;
             --tw-border-opacity: 1;
             border-color: rgb(229 231 235 / var(--tw-border-opacity));
@@ -108,7 +106,7 @@
                 <div class="flex flex-1 items-center justify-between gap-8 ">
                     @auth
                         @if(Auth::user()->id == $user->id)
-                            <a href="{{ route('editProfileForm', ['user' => $user->id]) }}" type="button" class="text-indigo-900 border border-indigo-900 hover:bg-indigo-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-indigo-900 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-indigo-900 dark:text-indigo-900 dark:hover:text-white dark:focus:ring-indigo-900">
+                            <a href="{{ route('editProfileForm', ['user' => $user->id]) }}" type="button" class="text-dark bg-white border border-white hover:bg-gray-100 hover:text-black focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-white dark:text-black dark:hover:text-dark dark:focus:ring-gray-100">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
                                 </svg>
@@ -123,31 +121,61 @@
 {{--                        </div>--}}
                     @endif
                 @endif
+                <button type="button" data-drawer-backdrop="false" data-drawer-target="drawer-bottom-shared" data-drawer-show="drawer-bottom-shared" data-drawer-placement="bottom" aria-controls="drawer-bottom-shared" class="text-indigo-100 bg-white border border-white hover:bg-gray-100 hover:text-white focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-white dark:text-gray-100 dark:hover:text-white dark:focus:ring-gray-100">
+                    <svg class="w-4 h-4 text-gray-800 dark:text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 3">
+                        <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"/>
+                    </svg>
+                </button>
 {{--                <button type="button" data-modal-toggle="popup-modal-shared" class="text-indigo-100 bg-white border border-white hover:bg-gray-100 hover:text-white focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-white dark:text-gray-100 dark:hover:text-white dark:focus:ring-gray-100">--}}
 {{--                    <svg class="w-4 h-4 text-gray-800 dark:text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 3">--}}
 {{--                        <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"/>--}}
 {{--                    </svg>--}}
 {{--                </button>--}}
-                <div class="ya-share2" data-image="{{$user->settings->logotype}}" data-curtain data-limit="0" data-more-button-type="short" data-services="vkontakte,telegram,twitter,viber,whatsapp,skype,tumblr,linkedin,digg,reddit"></div>
+{{--                <div class="ya-share2" data-image="{{$user->settings->logotype}}" data-curtain data-limit="0" data-more-button-type="short" data-services="vkontakte,telegram,twitter,viber,whatsapp,skype,tumblr,linkedin,digg,reddit"></div>--}}
             </div>
         </div>
     </header>
 
-    <div id="popup-modal-shared" aria-hidden="true" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full">
-        <div class="relative p-4 w-full max-w-md h-full md:h-auto flex items-center">
-            <div class="relative w-full bg-white rounded-lg shadow dark:bg-gray-700">
-                <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="popup-modal-shared">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                </button>
-                <div class="p-6 text-center mt-5">
-                    <div class="flex items-center justify-between py-2">
-                        <textarea id="text_for_copy" rows="1" readonly class="block mr-2 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{url()->full()}}</textarea>
-                        <button type="button" id="copy_btn" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Копировать</button>
+    <div id="drawer-bottom-shared" class="rounded-t-lg fixed bottom-0 left-0 right-0 z-40 w-full p-4 bg-white dark:bg-white overflow-y-auto transition-transform translate-y-full" tabindex="-1" aria-labelledby="drawer-bottom-label">
+        <div class="flex justify-center">
+            <h5 id="drawer-bottom-label" class="inline-flex items-center mb-4 text-base font-semibold text-gray-500 dark:text-black">Поделитесь страницей</h5>
+        </div>
+        <button id="closeFollow" type="button" data-drawer-hide="drawer-bottom-shared" aria-controls="drawer-bottom-shared" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 right-2.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" >
+            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+            <span class="sr-only">Close menu</span>
+        </button>
+        <div class="text-center">
+            <div class="gap-4">
+                <div class="mx-auto max-w-screen-xl sm:px-6 lg:px-8">
+                    <div class=" py-2">
+                        <textarea type="button" id="text_for_copy" rows="1" readonly class="w-full rounded-lg border-gray-200 p-2 pe-12 text-sm shadow-sm">{{url()->full()}}</textarea>
+{{--                        <a href="http://vkontakte.ru/share.php?url={{url()->full()}}&title={{$user->name}}&description={{'Chrry.me: Засунь все свои ссылки в одно место...'}}&image={{ url()->full() . $user->settings->avatar }}" target="_blank" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">--}}
+{{--                            <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg>--}}
+{{--                            <span>VK Share</span>--}}
+{{--                        </a>--}}
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+{{--    <a id="vk" title="<?=$mytitle;?> Vk" href="http://vk.com/share.php?url=<?=$ssil;?>&title=<?=$titles;?>&description=&image=" target="_blank"></a>--}}
+
+{{--    <div id="popup-modal-shared" aria-hidden="true" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full">--}}
+{{--        <div class="relative p-4 w-full max-w-md h-full md:h-auto flex items-center">--}}
+{{--            <div class="relative w-full bg-white rounded-lg shadow dark:bg-gray-700">--}}
+{{--                <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="popup-modal-shared">--}}
+{{--                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>--}}
+{{--                </button>--}}
+{{--                <div class="p-6 text-center mt-5">--}}
+{{--                    <div class="flex items-center justify-between py-2">--}}
+{{--                        <textarea id="text_for_copy" rows="1" readonly class="block mr-2 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{url()->full()}}</textarea>--}}
+{{--                        <button type="button" id="copy_btn" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Копировать</button>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
 
     <navigation>
         <div class="mx-auto max-w-screen-xl px-4 pb-4 sm:px-6 lg:px-8 text-center">
@@ -179,8 +207,8 @@
                 @endif
             @else
                 @if($user->settings->avatar)
-                    <div class="flex justify-center mt-10">
-                        <img src="{{$user->settings->avatar}}" class="rounded-full" style="width: 100px; height: 100px">
+                    <div class="flex justify-center">
+                        <img src="{{$user->settings->avatar}}" class="rounded-full" style="width: 96px; height: 96px">
                     </div>
                 @endif
                 <h2 class="mt-4 flex justify-center items-center" style="
@@ -201,7 +229,7 @@
                     @endif
                 </h2>
                 @if($user->description)
-                    <p class="mt-1" style="
+                    <p class="mt-1 mr-5 ml-5" style="
                         line-height: 1.4;
                         font-family: {{ $user->settings->description_font ?? 'Rubik' }}, sans-serif;
                         text-shadow:{{$user->settings->description_font_shadow_right ?? 0}}px {{$user->settings->description_font_shadow_bottom ?? 0}}px {{$user->settings->description_font_shadow_blur ?? 0}}px {{$user->settings->description_font_shadow_color ?? '#464646'}} ;
@@ -648,8 +676,8 @@
                     " class="{{$user->settings->follow_block_text_size}}">{{$user->settings->follow_block_text}}</h1>
         </footer>
 
-        <div id="drawer-bottom-example" class="{{$user->settings->follow_block_border_radius}} fixed bottom-0 left-0 right-0 z-40 w-full p-4 bg-white dark:bg-white overflow-y-auto transition-transform translate-y-full" tabindex="-1" aria-labelledby="drawer-bottom-label">
-            <h5 id="drawer-bottom-label" class="inline-flex items-center mb-4 text-base font-semibold text-gray-500 dark:text-gray-400"><svg class="w-5 h-5 mr-2" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>{{$user->settings->follow_block_text}}</h5>
+        <div id="drawer-bottom-example" class="{{$user->settings->follow_block_border_radius}} text-center fixed bottom-0 left-0 right-0 z-40 w-full p-4 bg-white dark:bg-white overflow-y-auto transition-transform translate-y-full" tabindex="-1" aria-labelledby="drawer-bottom-label">
+            <h5 id="drawer-bottom-label" class="inline-flex items-center mb-4 text-base font-semibold text-gray-500 dark:text-black">Follow to</h5>
             <button id="closeFollow" type="button" data-drawer-hide="drawer-bottom-example" aria-controls="drawer-bottom-example" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 right-2.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" >
                 <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                 <span class="sr-only">Close menu</span>
@@ -683,7 +711,7 @@
                             </div>
                             <div>
                                 <div class="relative">
-                                    <input type="text" name="name" id="nameFollow" class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm" placeholder="Ваше имя" />
+                                    <input type="text" name="name" id="nameFollow" class="w-full rounded-lg border-gray-200 p-2 pe-12 text-sm shadow-sm" placeholder="Ваше имя" />
                                     <span class="absolute inset-y-0 end-0 grid place-content-center px-4">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-4 w-4 text-gray-400">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
@@ -693,7 +721,7 @@
                             </div>
                             <div>
                                 <div class="relative">
-                                    <input name="email" id="emailFollow" type="email" class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm" placeholder="Введите email" />
+                                    <input name="email" id="emailFollow" type="email" class="w-full rounded-lg border-gray-200 p-2 pe-12 text-sm shadow-sm" placeholder="Введите email" />
                                     <span class="absolute inset-y-0 end-0 grid place-content-center px-4">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-4 w-4 text-gray-400">
                                             <path stroke-linecap="round" d="M16.5 12a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zm0 0c0 1.657 1.007 3 2.25 3S21 13.657 21 12a9 9 0 10-2.636 6.364M16.5 12V8.25" />
@@ -703,7 +731,7 @@
                             </div>
                             <div>
                                 <div class="relative">
-                                    <input name="telephone" id="telephoneFollow" type="text" class="w-full bg-gray-100 rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm" placeholder="Номер телефона"/>
+                                    <input name="telephone" id="telephoneFollow" type="text" class="w-full bg-gray-100 rounded-lg border-gray-200 p-2 pe-12 text-sm shadow-sm" placeholder="Номер телефона"/>
                                     <span class="absolute inset-y-0 end-0 grid place-content-center px-4">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-4 w-4 text-gray-400">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
@@ -713,7 +741,7 @@
                             </div>
                             <div>
                                 <div class="relative">
-                                    <input name="telegram" id="telegramFollow" type="text" class="w-full bg-gray-100 rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm" placeholder="Телеграм"/>
+                                    <input name="telegram" id="telegramFollow" type="text" class="w-full bg-gray-100 rounded-lg border-gray-200 p-2 pe-12 text-sm shadow-sm" placeholder="Телеграм"/>
                                     <span class="absolute inset-y-0 end-0 grid place-content-center px-4">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-4 w-4 text-gray-400">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
@@ -732,86 +760,9 @@
                             </div>
                         </form>
                     </div>
-{{--                    <div class="mb-3 " id="followAlert">--}}
-{{--                        <div class="alert alert-danger mb-4 text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" style="display:none" role="alert"></div>--}}
-{{--                    </div>--}}
-{{--                    <p class="text-left text-xs font-medium text-gray-500 dark:text-gray-400 mb-3"><span class="bg-green-100 text-green-800 font-medium  px-1 py-0.5 rounded dark:bg-green-900 dark:text-white">Заполните обязательные поля</span>--}}
-{{--                        и как только в вашем городе появится какое нибудь событие с участием {{$user->name}} мы вас сразу же оповестим вас об этом отправив письмо на почту, или {{$user->name}} отправит вам уведомление в Telegram или SMS--}}
-{{--                    </p>--}}
-{{--                    <form action="{{ route('createFollow') }}" method="POST"> @csrf--}}
-{{--                        <input type="hidden" name="user_id" id="user_id" value="{{$user->id}}">--}}
-{{--                        <input type="hidden" name="page_type" id="page_type" value="{{$user->type}}">--}}
-{{--                        <div class="mb-3" id="city">--}}
-{{--                            <span style="border: none" class="bg-green-100 text-white text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-white">Город</span>--}}
-{{--                            <select style="border: none" name="city_id" id="select-city" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 " data-placeholder="Начните вводить название..."  autocomplete="off"></select>--}}
-{{--                        </div>--}}
-{{--                        <div class="mb-3">--}}
-{{--                            <span style="border: none" class="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-white">Имя</span>--}}
-{{--                            <input style="border: none" name="name" type="text" id="nameFollow" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded focus:ring-blue-500 block w-full p-2.5 dark:bg-white dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500" placeholder="John" required>--}}
-{{--                        </div>--}}
-{{--                        <div class="mb-3">--}}
-{{--                            <span style="border: none" class="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-white">Email</span>--}}
-{{--                            <input style="border: none" name="email" type="email" id="emailFollow" class="mt-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="john.doe@company.com" required>--}}
-{{--                        </div>--}}
-{{--                        <div class="mb-3">--}}
-{{--                            <label style="border: none" for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Номер телефона</label>--}}
-{{--                            <input style="border: none" name="telephone" type="text" id="telephoneFollow" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="88005553535" >--}}
-{{--                        </div>--}}
-{{--                        <div class="mb-3">--}}
-{{--                            <label style="border: none" for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Telegram</label>--}}
-{{--                            <input style="border: none" name="telegram" type="text" id="telegramFollow" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="https://t.me/sergey1karpov" >--}}
-{{--                        </div>--}}
-{{--                        <button style="border: none" id="eventFollowBtn" type="submit" class="w-full mt-5 px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Подписаться</button>--}}
-{{--                    </form>--}}
                 </div>
             </div>
-
         </div>
-
-{{--        <div id="popup-modal" aria-hidden="true" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full">--}}
-{{--            <div class="relative p-4 w-full max-w-md h-full md:h-auto flex items-center">--}}
-{{--                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">--}}
-{{--                    <button id="closeFollow" type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="popup-modal">--}}
-{{--                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>--}}
-{{--                    </button>--}}
-{{--                    <div class="text-center">--}}
-{{--                        <div class="gap-4 p-4">--}}
-{{--                            <div class="mb-3 mt-8" id="followAlert">--}}
-{{--                                <div class="alert alert-danger mb-4 text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" style="display:none" role="alert"></div>--}}
-{{--                            </div>--}}
-{{--                            <p class="mt-8 text-left text-xs font-medium text-gray-500 dark:text-gray-400 mb-3"><span class="bg-green-100 text-green-800 font-medium  px-1 py-0.5 rounded dark:bg-green-900 dark:text-white">Заполните обязательные поля</span>--}}
-{{--                                и как только в вашем городе появится какое нибудь событие с участием {{$user->name}} мы вас сразу же оповестим вас об этом отправив письмо на почту, или {{$user->name}} отправит вам уведомление в Telegram или SMS--}}
-{{--                            </p>--}}
-{{--                            <form action="{{ route('createFollow') }}" method="POST"> @csrf--}}
-{{--                                <input type="hidden" name="user_id" id="user_id" value="{{$user->id}}">--}}
-{{--                                <input type="hidden" name="page_type" id="page_type" value="{{$user->type}}">--}}
-{{--                                <div class="mb-3" id="city">--}}
-{{--                                    <span style="border: none" class="bg-green-100 text-white text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-white">Город</span>--}}
-{{--                                    <select style="border: none" name="city_id" id="select-city" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 " data-placeholder="Начните вводить название..."  autocomplete="off"></select>--}}
-{{--                                </div>--}}
-{{--                                <div class="mb-3">--}}
-{{--                                    <span style="border: none" class="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-white">Имя</span>--}}
-{{--                                    <input style="border: none" name="name" type="text" id="nameFollow" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded focus:ring-blue-500 block w-full p-2.5 dark:bg-white dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500" placeholder="John" required>--}}
-{{--                                </div>--}}
-{{--                                <div class="mb-3">--}}
-{{--                                    <span style="border: none" class="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-white">Email</span>--}}
-{{--                                    <input style="border: none" name="email" type="email" id="emailFollow" class="mt-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="john.doe@company.com" required>--}}
-{{--                                </div>--}}
-{{--                                <div class="mb-3">--}}
-{{--                                    <label style="border: none" for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Номер телефона</label>--}}
-{{--                                    <input style="border: none" name="telephone" type="text" id="telephoneFollow" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="88005553535" >--}}
-{{--                                </div>--}}
-{{--                                <div class="mb-3">--}}
-{{--                                    <label style="border: none" for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Telegram</label>--}}
-{{--                                    <input style="border: none" name="telegram" type="text" id="telegramFollow" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="https://t.me/sergey1karpov" >--}}
-{{--                                </div>--}}
-{{--                                <button style="border: none" id="eventFollowBtn" type="submit" class="w-full mt-5 px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Подписаться</button>--}}
-{{--                            </form>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
 
         <button data-modal-backdrop="false" id="followModalBtn" style="display: none" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button" data-modal-toggle="authentication-modal">
             Toggle login modal
@@ -860,7 +811,7 @@
             <div class="flex justify-center items-center">
                 <div class="flex justify-center items-center">
                     <a href="https://chrry.me/" class="flex items-center">
-                        <img src="https://i.ibb.co/bPydGXN/3.png" class="mr-3 h-4" alt="CHRRY.ME Logo"/>
+                        <img src="https://i.ibb.co/bPydGXN/3.png" class="h-4" alt="CHRRY.ME Logo"/>
                     </a>
                 </div>
             </div>
@@ -869,7 +820,7 @@
 
     <script type="text/javascript">
 
-        var copyTextareaBtn = document.querySelector('#copy_btn');
+        var copyTextareaBtn = document.querySelector('#text_for_copy');
         copyTextareaBtn.addEventListener('click', function(event) {
             var copyTextarea = document.querySelector('#text_for_copy');
             copyTextarea.focus();
