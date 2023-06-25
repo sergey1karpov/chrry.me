@@ -57,7 +57,28 @@ class UserSettings extends Model
         'verify_icon_type',
 
         'avatar_vs_logotype',
-        'event_followers'
+        'event_followers',
+
+        'name_bold',
+        'description_bold',
+
+        'follow_block_border_radius',
+        'follow_block_bg_color',
+        'follow_block_text',
+        'follow_block_text_size',
+        'follow_block_font',
+        'follow_block_font_color',
+        'follow_block_font_shadow_color',
+        'follow_block_font_shadow_right',
+        'follow_block_font_shadow_bottom',
+        'follow_block_font_shadow_blur',
+        'follow_btn_top_shadow_color',
+        'follow_btn_top_shadow_top',
+        'follow_btn_top_shadow_blur',
+
+        'congratulation_gif',
+        'congratulation_text',
+        'congratulation_on_off',
     ];
 
     protected $attributes = [
@@ -105,6 +126,27 @@ class UserSettings extends Model
         'verify_icon_type' => null,
 
         'avatar_vs_logotype' => null,
-        'event_followers' => false
+        'event_followers' => false,
+
+        'name_bold' => false,
+        'description_bold' => false,
+
+        'follow_block_border_radius' => false,
+        'follow_block_bg_color' => false,
+        'follow_block_text' => false,
+        'follow_block_text_size' => false,
+        'follow_block_font' => false,
+        'follow_block_font_color' => false,
+        'follow_block_font_shadow_color' => false,
+        'follow_block_font_shadow_right' => false,
+        'follow_block_font_shadow_bottom' => false,
+        'follow_block_font_shadow_blur' => false,
+        'follow_btn_top_shadow_color' => false,
+        'follow_btn_top_shadow_top' => false,
+        'follow_btn_top_shadow_blur' => false,
+
+        'congratulation_gif' => false,
+        'congratulation_text' => false,
+        'congratulation_on_off' => false,
     ];
 }

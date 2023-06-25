@@ -41,6 +41,9 @@
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 
+    <!-- Yandex social -->
+    <script src="https://yastatic.net/share2/share.js"></script>
+
     @if($user->yandex_metrika != 0 || $user->yandex_metrika != null)
         <!-- Yandex.Metrika counter -->
         <script type="text/javascript" >
@@ -76,6 +79,25 @@
             background-color: {{$user->settings->background_color}};
         }
         @endif
+        .ya-share2 {
+            width: 38px;
+            height: 38px;
+        }
+        .ts-control {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            --tw-border-opacity: 1;
+            border-color: rgb(229 231 235 / var(--tw-border-opacity));
+            font-size: .875rem;
+            line-height: 1.25rem;
+        }
+        .ts-dropdown, .ts-control, .ts-control input {
+            color: #303030;
+            font-family: inherit;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+            font-smoothing: inherit;
+        }
     </style>
 </head>
 <body class="relative flex flex-col min-h-screen">
@@ -96,14 +118,36 @@
                 </div>
                 @if($user->type == 'Events')
                     @if($user->settings->event_followers == '1')
-                        <div class="flex flex-1 items-center justify-end gap-8">
-                            <span class="material-symbols-outlined" data-drawer-backdrop="false" data-drawer-target="drawer-swipe" data-drawer-show="drawer-swipe" data-drawer-placement="bottom" data-drawer-edge="true" data-drawer-edge-offset="bottom-[60px]" aria-controls="drawer-swipe">ios_share</span>
-                        </div>
+{{--                        <div class="flex flex-1 items-center justify-end gap-8" style="display: none">--}}
+{{--                            <span class="material-symbols-outlined" data-drawer-backdrop="false" data-drawer-target="drawer-swipe" data-drawer-show="drawer-swipe" data-drawer-placement="bottom" data-drawer-edge="true" data-drawer-edge-offset="bottom-[60px]" aria-controls="drawer-swipe">ios_share</span>--}}
+{{--                        </div>--}}
                     @endif
                 @endif
+{{--                <button type="button" data-modal-toggle="popup-modal-shared" class="text-indigo-100 bg-white border border-white hover:bg-gray-100 hover:text-white focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-white dark:text-gray-100 dark:hover:text-white dark:focus:ring-gray-100">--}}
+{{--                    <svg class="w-4 h-4 text-gray-800 dark:text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 3">--}}
+{{--                        <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"/>--}}
+{{--                    </svg>--}}
+{{--                </button>--}}
+                <div class="ya-share2" data-image="{{$user->settings->logotype}}" data-curtain data-limit="0" data-more-button-type="short" data-services="vkontakte,telegram,twitter,viber,whatsapp,skype,tumblr,linkedin,digg,reddit"></div>
             </div>
         </div>
     </header>
+
+    <div id="popup-modal-shared" aria-hidden="true" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full">
+        <div class="relative p-4 w-full max-w-md h-full md:h-auto flex items-center">
+            <div class="relative w-full bg-white rounded-lg shadow dark:bg-gray-700">
+                <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="popup-modal-shared">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                </button>
+                <div class="p-6 text-center mt-5">
+                    <div class="flex items-center justify-between py-2">
+                        <textarea id="text_for_copy" rows="1" readonly class="block mr-2 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{url()->full()}}</textarea>
+                        <button type="button" id="copy_btn" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Копировать</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <navigation>
         <div class="mx-auto max-w-screen-xl px-4 pb-4 sm:px-6 lg:px-8 text-center">
@@ -121,8 +165,12 @@
                         font-size: {{ $user->settings->name_font_size ?? 1}}rem;
                         color: {{ $user->settings->name_color ?? '#464646'}};
                     ">
-                        {{ $user->name }}
-                        @if($user->verify == 1)
+                        @if($user->settings->name_bold == true)
+                            <b>{{ $user->name }}</b>
+                        @else
+                            {{ $user->name }}
+                        @endif
+                    @if($user->verify == 1)
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="ml-3 mt-1 bi bi-patch-check-fill mb-1" viewBox="0 0 16 16" style="color: {{$user->settings->verify_color}}">
                                 <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
                             </svg>
@@ -131,8 +179,8 @@
                 @endif
             @else
                 @if($user->settings->avatar)
-                    <div class="flex justify-center">
-                        <img src="{{$user->settings->avatar}}" class="w-32 rounded-full">
+                    <div class="flex justify-center mt-10">
+                        <img src="{{$user->settings->avatar}}" class="rounded-full" style="width: 100px; height: 100px">
                     </div>
                 @endif
                 <h2 class="mt-4 flex justify-center items-center" style="
@@ -141,7 +189,11 @@
                     font-size: {{ $user->settings->name_font_size ?? 1}}rem;
                     color: {{ $user->settings->name_color ?? '#464646'}};
                 ">
-                    {{ $user->name }}
+                    @if($user->settings->name_bold == true)
+                        <b>{{ $user->name }}</b>
+                    @else
+                        {{ $user->name }}
+                    @endif
                     @if($user->verify == 1)
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="ml-4 mt-1 bi bi-patch-check-fill mb-1" viewBox="0 0 16 16" style="color: {{$user->settings->verify_color}}">
                             <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
@@ -149,13 +201,20 @@
                     @endif
                 </h2>
                 @if($user->description)
-                    <p class="mt-2" style="
+                    <p class="mt-1" style="
+                        line-height: 1.4;
                         font-family: {{ $user->settings->description_font ?? 'Rubik' }}, sans-serif;
                         text-shadow:{{$user->settings->description_font_shadow_right ?? 0}}px {{$user->settings->description_font_shadow_bottom ?? 0}}px {{$user->settings->description_font_shadow_blur ?? 0}}px {{$user->settings->description_font_shadow_color ?? '#464646'}} ;
                         font-size: {{ $user->settings->description_font_size ?? 0.9}}rem;
                         color: {{ $user->settings->description_color ?? '#464646'}};
 {{--                        @if($user->settings->description_font_shadow_right) margin-right: {{$user->settings->description_font_shadow_right}}px @endif--}}
-                    ">{{ $user->description }}</p>
+                    ">
+                        @if($user->settings->description_bold == true)
+                            <b>{{ $user->description }}</b>
+                        @else
+                            {{ $user->description }}
+                        @endif
+                    </p>
                 @endif
             @endif
         </div>
@@ -222,7 +281,7 @@
                                                                 @elseif($link->icon == false && $link->photo == true)
                                                                     <img class="mt-1 mb-1" src="{{$link->photo}}" style="width:50px; border-radius: {{$properties['dl_rounded']}}px;">
                                                                 @else
-                                                                    <img class="mt-1 mb-1" src="https://www.sexio.cz/images/brand/logo/69/thumb_eb416ca9-0e19-491b-8bda-92cbf5640626.jpg" style="width:50px; border-radius: {{$properties['dl_rounded']}}px; opacity: 0;">
+                                                                    <img class="mt-1 mb-1" src="https://emoji.discadia.com/emojis/914c0e06-428c-4c1d-bf2c-3393dc14987f.PNG" style="width:50px; border-radius: {{$properties['dl_rounded']}}px; opacity: 0;">
                                                                 @endif
                                                             </div>
                                                             <button type="submit" style="border: 0; padding: 0; background-color: rgba(0, 125, 215, 0);">
@@ -238,9 +297,9 @@
 {{--                                                                        @if($link->photo == '' && $link->icon == '') margin-top: 14px; margin-bottom: 14px; @endif--}}
                                                                             @if($link->photo == '' && $link->icon == '')
                                                                                 @if($properties['dl_text_shadow_bottom'])
-                                                                                    margin-top: 14px; margin-bottom: 14px;
+                                                                                    margin-top: 13px; margin-bottom: 13px;
                                                                                 @else
-                                                                                    margin-top: 14px; margin-bottom: {{14 + $properties['dl_text_shadow_bottom']}}px;
+                                                                                    margin-top: 13px; margin-bottom: {{13 + $properties['dl_text_shadow_bottom']}}px;
                                                                                 @endif
                                                                             @endif
 {{--                                                                        @if($properties['dl_text_shadow_bottom']) margin-bottom: {{$properties['dl_text_shadow_bottom']}}px; @endif--}}
@@ -321,7 +380,7 @@
                                                                 @elseif($link->icon == false && $link->photo == true)
                                                                     <img class="mt-1 mb-1" src="{{$link->photo}}" style="width:50px; border-radius: {{$properties['dl_rounded']}}px;">
                                                                 @else
-                                                                    <img class="mt-1 mb-1" src="https://digiltable.com/wp-content/uploads/edd/2021/09/Sexy-lady-logo-Pornhub-logo.png" style="width:50px; border-radius: {{$properties['dl_rounded']}}px; opacity: 0;">
+                                                                    <img class="mt-1 mb-1" src="https://emoji.discadia.com/emojis/914c0e06-428c-4c1d-bf2c-3393dc14987f.PNG" style="width:50px; border-radius: {{$properties['dl_rounded']}}px; opacity: 0;">
                                                                 @endif
                                                             </div>
                                                             <button type="submit" style="border: 0; padding: 0; background-color: rgba(0, 125, 215, 0);">
@@ -337,9 +396,9 @@
 {{--                                                                            @if($link->photo == '' && $link->icon == '') margin-top: 14px; margin-bottom: 14px; @endif--}}
                                                                             @if($link->photo == '' && $link->icon == '')
                                                                                 @if($properties['dl_text_shadow_bottom'])
-                                                                                    margin-top: 14px; margin-bottom: 14px;
+                                                                                    margin-top: 13px; margin-bottom: 13px;
                                                                                 @else
-                                                                                    margin-top: 14px; margin-bottom: {{14 + $properties['dl_text_shadow_bottom']}}px;
+                                                                                    margin-top: 13px; margin-bottom: {{13 + $properties['dl_text_shadow_bottom']}}px;
                                                                                 @endif
                                                                             @endif
 {{--                                                                            @if($properties['dl_text_shadow_bottom']) margin-bottom: {{$properties['dl_text_shadow_bottom']}}px; @endif--}}
@@ -420,7 +479,7 @@
                                                             @elseif($link->icon == false && $link->photo == true)
                                                                 <img class="mt-1 mb-1" src="{{$link->photo}}" style="width:50px; border-radius: {{$properties['dl_rounded']}}px;">
                                                             @elseif($link->icon == false && $link->photo == false)
-                                                               <img class="mt-1 mb-1" src="https://digiltable.com/wp-content/uploads/edd/2021/09/Sexy-lady-logo-Pornhub-logo.png" style="width:50px; border-radius: {{$properties['dl_rounded']}}px; opacity: 0;">
+                                                               <img class="mt-1 mb-1" src="https://emoji.discadia.com/emojis/914c0e06-428c-4c1d-bf2c-3393dc14987f.PNG" style="width:50px; border-radius: {{$properties['dl_rounded']}}px; opacity: 0;">
                                                             @endif
                                                         </div>
                                                         <button type="submit" style="border: 0; padding: 0; background-color: rgba(0, 125, 215, 0);">
@@ -436,9 +495,9 @@
 {{--                                                                    @if($link->photo == '' && $link->icon == '') margin-top: 14px; margin-bottom: 14px; @endif--}}
                                                                         @if($link->photo == '' && $link->icon == '')
                                                                             @if($properties['dl_text_shadow_bottom'])
-                                                                                margin-top: 14px; margin-bottom: 14px;
+                                                                                margin-top: 13px; margin-bottom: 13px;
                                                                             @else
-                                                                                margin-top: 14px; margin-bottom: {{14 + $properties['dl_text_shadow_bottom']}}px;
+                                                                                margin-top: 13px; margin-bottom: {{13 + $properties['dl_text_shadow_bottom']}}px;
                                                                             @endif
                                                                         @endif
 {{--                                                                    @if($properties['dl_text_shadow_bottom']) margin-bottom: {{$properties['dl_text_shadow_bottom']}}px; @endif--}}
@@ -547,54 +606,214 @@
         </div>
     </bottom-links-bar>
 
+    <!-- Modal toggle -->
+{{--    <button class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button" data-modal-toggle="popup-modal">--}}
+{{--        Toggle modal--}}
+{{--    </button>--}}
+
+{{--    <div id="popup-modal" aria-hidden="true" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full">--}}
+{{--        <div class="relative p-4 w-full max-w-md h-full md:h-auto">--}}
+{{--            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">--}}
+{{--                <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="popup-modal">--}}
+{{--                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>--}}
+{{--                </button>--}}
+{{--                <div class="p-6 text-center">--}}
+{{--                    <svg class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>--}}
+{{--                    <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to delete this product?</h3>--}}
+{{--                    <button data-modal-toggle="popup-modal" type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">--}}
+{{--                        Yes, I'm sure--}}
+{{--                    </button>--}}
+{{--                    <button data-modal-toggle="popup-modal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">No, cancel</button>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+
     @if($user->type == 'Events')
         @if($user->settings->event_followers == '1')
-            <div id="drawer-swipe" class="fixed z-40 w-full overflow-y-auto bg-white border-t border-gray-200 rounded-t-xl dark:border-gray-700 dark:bg-gray-800 transition-transform bottom-0 left-0 right-0 translate-y-full bottom-[60px]" tabindex="-1" aria-labelledby="drawer-swipe-label">
-                <div id="closeFollow" class="p-5 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-900" data-drawer-toggle="drawer-swipe">
-                    <div class="flex justify-center">
-                        <span class="absolute w-8 h-1 -translate-x-1/2 bg-gray-300 rounded-lg top-3 left-1/2 dark:bg-gray-600"></span>
+
+{{--        <footer type="button" data-modal-toggle="popup-modal" class="{{$user->settings->follow_block_border_radius}} flex justify-center fixed bottom-0 left-0 z-20 w-full p-4 bg-white border-gray-200 shadow dark:border-gray-600" style="background-color: {{$user->settings->follow_block_bg_color}}; box-shadow: 0px -{{$user->settings->follow_btn_top_shadow_top}}px {{$user->settings->follow_btn_top_shadow_blur}}px 0px {{$user->settings->follow_btn_top_shadow_color}}">--}}
+{{--            <h1 style="--}}
+{{--                font-family: {{$user->settings->follow_block_font}};--}}
+{{--                color: {{$user->settings->follow_block_font_color}};--}}
+{{--                text-shadow:{{$user->settings->follow_block_font_shadow_right}}px {{$user->settings->follow_block_font_shadow_bottom}}px {{$user->settings->follow_block_font_shadow_blur}}px {{$user->settings->follow_block_font_shadow_color}};--}}
+{{--            " class="{{$user->settings->follow_block_text_size}}">{{$user->settings->follow_block_text}}</h1>--}}
+{{--        </footer>--}}
+
+        <footer type="button" data-drawer-backdrop="false" data-drawer-target="drawer-bottom-example" data-drawer-show="drawer-bottom-example" data-drawer-placement="bottom" aria-controls="drawer-bottom-example" class="{{$user->settings->follow_block_border_radius}} flex justify-center fixed bottom-0 left-0 z-20 w-full p-4 bg-white border-gray-200 shadow dark:border-gray-600" style="background-color: {{$user->settings->follow_block_bg_color}}; box-shadow: 0px -{{$user->settings->follow_btn_top_shadow_top}}px {{$user->settings->follow_btn_top_shadow_blur}}px 0px {{$user->settings->follow_btn_top_shadow_color}}">
+            <h1 style="
+                        font-family: {{$user->settings->follow_block_font}};
+                        color: {{$user->settings->follow_block_font_color}};
+                        text-shadow:{{$user->settings->follow_block_font_shadow_right}}px {{$user->settings->follow_block_font_shadow_bottom}}px {{$user->settings->follow_block_font_shadow_blur}}px {{$user->settings->follow_block_font_shadow_color}};
+                    " class="{{$user->settings->follow_block_text_size}}">{{$user->settings->follow_block_text}}</h1>
+        </footer>
+
+        <div id="drawer-bottom-example" class="{{$user->settings->follow_block_border_radius}} fixed bottom-0 left-0 right-0 z-40 w-full p-4 bg-white dark:bg-white overflow-y-auto transition-transform translate-y-full" tabindex="-1" aria-labelledby="drawer-bottom-label">
+            <h5 id="drawer-bottom-label" class="inline-flex items-center mb-4 text-base font-semibold text-gray-500 dark:text-gray-400"><svg class="w-5 h-5 mr-2" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>{{$user->settings->follow_block_text}}</h5>
+            <button id="closeFollow" type="button" data-drawer-hide="drawer-bottom-example" aria-controls="drawer-bottom-example" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 right-2.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" >
+                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                <span class="sr-only">Close menu</span>
+            </button>
+            <div class="text-center">
+                <div class="gap-4">
+                    <div class="mx-auto max-w-screen-xl  sm:px-6 lg:px-8">
+                        <div class="mx-auto max-w-lg text-center">
+                            <h1 class="text-2xl font-bold sm:text-3xl">{{$user->name}}</h1>
+                            <p class="mt-4 text-gray-500 text-sm">
+                                Как только в вашем городе появится мероприятие с участием {{$user->name}}
+                                мы сразу же оповестим вас об этом отправив письмо на почту
+                            </p>
+                        </div>
+                        <div class="" id="followAlert">
+                            <div class="alert-danger px-6 py-4 bg-yellow-50 rounded-lg text-red-600" style="display: none">
+                            </div>
+                        </div>
+                        <form action="{{ route('createFollow') }}" method="POST" class="mx-auto mb-0 mt-8 max-w-md space-y-4"> @csrf
+                            <input type="hidden" name="user_id" id="user_id" value="{{$user->id}}">
+                            <input type="hidden" name="page_type" id="page_type" value="{{$user->type}}">
+                            <div>
+                                <div class="relative">
+                                    <select style="border: none" name="city_id" id="select-city" class="mt-1 bg-gray-50 text-gray-900 text-2xl shadow-sm rounded block w-full shadow-sm dark:placeholder-gray-400 " autocomplete="off"></select>
+                                    <span class="absolute inset-y-0 end-0 grid place-content-center px-4">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"/>
+                                        </svg>
+                                    </span>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="relative">
+                                    <input type="text" name="name" id="nameFollow" class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm" placeholder="Ваше имя" />
+                                    <span class="absolute inset-y-0 end-0 grid place-content-center px-4">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-4 w-4 text-gray-400">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                                        </svg>
+                                    </span>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="relative">
+                                    <input name="email" id="emailFollow" type="email" class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm" placeholder="Введите email" />
+                                    <span class="absolute inset-y-0 end-0 grid place-content-center px-4">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-4 w-4 text-gray-400">
+                                            <path stroke-linecap="round" d="M16.5 12a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zm0 0c0 1.657 1.007 3 2.25 3S21 13.657 21 12a9 9 0 10-2.636 6.364M16.5 12V8.25" />
+                                        </svg>
+                                    </span>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="relative">
+                                    <input name="telephone" id="telephoneFollow" type="text" class="w-full bg-gray-100 rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm" placeholder="Номер телефона"/>
+                                    <span class="absolute inset-y-0 end-0 grid place-content-center px-4">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-4 w-4 text-gray-400">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+                                        </svg>
+                                    </span>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="relative">
+                                    <input name="telegram" id="telegramFollow" type="text" class="w-full bg-gray-100 rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm" placeholder="Телеграм"/>
+                                    <span class="absolute inset-y-0 end-0 grid place-content-center px-4">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-4 w-4 text-gray-400">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
+                                        </svg>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+{{--                                <p class="text-sm text-gray-500">--}}
+{{--                                    No account?--}}
+{{--                                    <a class="underline" href="">Sign up</a>--}}
+{{--                                </p>--}}
+                                <button id="eventFollowBtn" type="submit" class="w-full inline-block rounded-lg bg-blue-500 px-5 py-3 text-sm font-medium text-white">
+                                    Подписаться
+                                </button>
+                            </div>
+                        </form>
                     </div>
-                    <div class="flex justify-center">
-                        <h5 id="drawer-swipe-label" class="mt-1 font-medium text-sm inline-flex items-center text-gray-500 dark:text-gray-400">Подписка на мероприятия</h5>
-                    </div>
-                </div>
-                <div class="gap-4 p-4 ">
-                    <p class="text-left text-xs font-medium text-gray-500 dark:text-gray-400 mb-3"><span class="bg-green-100 text-green-800 font-medium  px-1 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Заполните обязательные поля</span>
-                        и как только в вашем городе появится какое нибудь событие с участием {{$user->name}} мы вас сразу же об этом по почте, или {{$user->name}} отправит вам уведомление в Telegram или SMS
-                    </p>
-                    <div class="mb-3 mt-3" id="followAlert">
-                        <div class="alert alert-danger mb-4 text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" style="display:none" role="alert"></div>
-                    </div>
-                    <form action="{{ route('createFollow') }}" method="POST"> @csrf
-                        <input type="hidden" name="user_id" id="user_id" value="{{$user->id}}">
-                        <input type="hidden" name="page_type" id="page_type" value="{{$user->type}}">
-                        <div class="mb-3" id="city">
-                            <span style="border: none" class="bg-green-100 text-white text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-white">Город</span>
-                            <select style="border: none" name="city_id" id="select-city" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 " data-placeholder="Начните вводить название..."  autocomplete="off"></select>
-                        </div>
-                        <div class="mb-3">
-                            <span style="border: none" class="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-white">Имя</span>
-                            <input style="border: none" name="name" type="text" id="nameFollow" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded focus:ring-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500" placeholder="John" required>
-                        </div>
-                        <div class="mb-3">
-                            <span style="border: none" class="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-white">Email</span>
-                            <input style="border: none" name="email" type="email" id="emailFollow" class="mt-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="john.doe@company.com" required>
-                        </div>
-                        <div class="mb-3">
-                            <label style="border: none" for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Номер телефона</label>
-                            <input style="border: none" name="telephone" type="text" id="telephoneFollow" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="88005553535" >
-                        </div>
-                        <div class="mb-3">
-                            <label style="border: none" for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Telegram</label>
-                            <input style="border: none" name="telegram" type="text" id="telegramFollow" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="https://t.me/sergey1karpov" >
-                        </div>
-                        <button style="border: none" id="eventFollowBtn" type="submit" class="w-full mt-3 px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Подписаться</button>
-                    </form>
+{{--                    <div class="mb-3 " id="followAlert">--}}
+{{--                        <div class="alert alert-danger mb-4 text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" style="display:none" role="alert"></div>--}}
+{{--                    </div>--}}
+{{--                    <p class="text-left text-xs font-medium text-gray-500 dark:text-gray-400 mb-3"><span class="bg-green-100 text-green-800 font-medium  px-1 py-0.5 rounded dark:bg-green-900 dark:text-white">Заполните обязательные поля</span>--}}
+{{--                        и как только в вашем городе появится какое нибудь событие с участием {{$user->name}} мы вас сразу же оповестим вас об этом отправив письмо на почту, или {{$user->name}} отправит вам уведомление в Telegram или SMS--}}
+{{--                    </p>--}}
+{{--                    <form action="{{ route('createFollow') }}" method="POST"> @csrf--}}
+{{--                        <input type="hidden" name="user_id" id="user_id" value="{{$user->id}}">--}}
+{{--                        <input type="hidden" name="page_type" id="page_type" value="{{$user->type}}">--}}
+{{--                        <div class="mb-3" id="city">--}}
+{{--                            <span style="border: none" class="bg-green-100 text-white text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-white">Город</span>--}}
+{{--                            <select style="border: none" name="city_id" id="select-city" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 " data-placeholder="Начните вводить название..."  autocomplete="off"></select>--}}
+{{--                        </div>--}}
+{{--                        <div class="mb-3">--}}
+{{--                            <span style="border: none" class="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-white">Имя</span>--}}
+{{--                            <input style="border: none" name="name" type="text" id="nameFollow" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded focus:ring-blue-500 block w-full p-2.5 dark:bg-white dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500" placeholder="John" required>--}}
+{{--                        </div>--}}
+{{--                        <div class="mb-3">--}}
+{{--                            <span style="border: none" class="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-white">Email</span>--}}
+{{--                            <input style="border: none" name="email" type="email" id="emailFollow" class="mt-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="john.doe@company.com" required>--}}
+{{--                        </div>--}}
+{{--                        <div class="mb-3">--}}
+{{--                            <label style="border: none" for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Номер телефона</label>--}}
+{{--                            <input style="border: none" name="telephone" type="text" id="telephoneFollow" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="88005553535" >--}}
+{{--                        </div>--}}
+{{--                        <div class="mb-3">--}}
+{{--                            <label style="border: none" for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Telegram</label>--}}
+{{--                            <input style="border: none" name="telegram" type="text" id="telegramFollow" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="https://t.me/sergey1karpov" >--}}
+{{--                        </div>--}}
+{{--                        <button style="border: none" id="eventFollowBtn" type="submit" class="w-full mt-5 px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Подписаться</button>--}}
+{{--                    </form>--}}
                 </div>
             </div>
 
+        </div>
 
-        <button id="followModalBtn" style="display: none" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button" data-modal-toggle="authentication-modal">
+{{--        <div id="popup-modal" aria-hidden="true" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full">--}}
+{{--            <div class="relative p-4 w-full max-w-md h-full md:h-auto flex items-center">--}}
+{{--                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">--}}
+{{--                    <button id="closeFollow" type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="popup-modal">--}}
+{{--                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>--}}
+{{--                    </button>--}}
+{{--                    <div class="text-center">--}}
+{{--                        <div class="gap-4 p-4">--}}
+{{--                            <div class="mb-3 mt-8" id="followAlert">--}}
+{{--                                <div class="alert alert-danger mb-4 text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" style="display:none" role="alert"></div>--}}
+{{--                            </div>--}}
+{{--                            <p class="mt-8 text-left text-xs font-medium text-gray-500 dark:text-gray-400 mb-3"><span class="bg-green-100 text-green-800 font-medium  px-1 py-0.5 rounded dark:bg-green-900 dark:text-white">Заполните обязательные поля</span>--}}
+{{--                                и как только в вашем городе появится какое нибудь событие с участием {{$user->name}} мы вас сразу же оповестим вас об этом отправив письмо на почту, или {{$user->name}} отправит вам уведомление в Telegram или SMS--}}
+{{--                            </p>--}}
+{{--                            <form action="{{ route('createFollow') }}" method="POST"> @csrf--}}
+{{--                                <input type="hidden" name="user_id" id="user_id" value="{{$user->id}}">--}}
+{{--                                <input type="hidden" name="page_type" id="page_type" value="{{$user->type}}">--}}
+{{--                                <div class="mb-3" id="city">--}}
+{{--                                    <span style="border: none" class="bg-green-100 text-white text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-white">Город</span>--}}
+{{--                                    <select style="border: none" name="city_id" id="select-city" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 " data-placeholder="Начните вводить название..."  autocomplete="off"></select>--}}
+{{--                                </div>--}}
+{{--                                <div class="mb-3">--}}
+{{--                                    <span style="border: none" class="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-white">Имя</span>--}}
+{{--                                    <input style="border: none" name="name" type="text" id="nameFollow" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded focus:ring-blue-500 block w-full p-2.5 dark:bg-white dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500" placeholder="John" required>--}}
+{{--                                </div>--}}
+{{--                                <div class="mb-3">--}}
+{{--                                    <span style="border: none" class="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-white">Email</span>--}}
+{{--                                    <input style="border: none" name="email" type="email" id="emailFollow" class="mt-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="john.doe@company.com" required>--}}
+{{--                                </div>--}}
+{{--                                <div class="mb-3">--}}
+{{--                                    <label style="border: none" for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Номер телефона</label>--}}
+{{--                                    <input style="border: none" name="telephone" type="text" id="telephoneFollow" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="88005553535" >--}}
+{{--                                </div>--}}
+{{--                                <div class="mb-3">--}}
+{{--                                    <label style="border: none" for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Telegram</label>--}}
+{{--                                    <input style="border: none" name="telegram" type="text" id="telegramFollow" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="https://t.me/sergey1karpov" >--}}
+{{--                                </div>--}}
+{{--                                <button style="border: none" id="eventFollowBtn" type="submit" class="w-full mt-5 px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Подписаться</button>--}}
+{{--                            </form>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+
+        <button data-modal-backdrop="false" id="followModalBtn" style="display: none" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button" data-modal-toggle="authentication-modal">
             Toggle login modal
         </button>
 
@@ -608,20 +827,28 @@
                         </button>
                     </div>
                     <div class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8" action="#">
-                        <div>
-                            <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
-                                Подписка на
-                                @if($user->type == 'Events')
-                                    мероприятия
+                        <div class="text-center">
+                            @if($user->settings->congratulation_on_off)
+                                <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+                                    {{$user->settings->congratulation_text}}
+                                </h1>
+                                @if($user->settings->congratulation_gif)
+                                    <div class="flex justify-center">
+                                        <img class="w-full rounded mb-3" src="{{$user->settings->congratulation_gif }}" alt="image description">
+                                    </div>
                                 @endif
-                                <span class="text-blue-600 dark:text-blue-500">{{$user->name}}</span>
-                                успешно оформлена!
-                            </h1>
+                            @else
+                                <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+                                    Подписка на @if($user->type == 'Events') мероприятия @endif
+                                    <span class="text-blue-600 dark:text-blue-500">{{$user->name}}</span>
+                                    успешно оформлена!
+                                </h1>
+                            @endif
                         </div>
                     </div>
-                    <div class="flex space-x-2 items-center p-6 border-t border-gray-200 rounded-b dark:border-gray-600">
-                        <button data-modal-toggle="authentication-modal" type="button" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">ЯсноПонятно!</button>
-                    </div>
+{{--                    <div class="flex space-x-2 items-center p-6 border-t border-gray-200 rounded-b dark:border-gray-600">--}}
+{{--                        <button data-modal-toggle="authentication-modal" type="button" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">ЯсноПонятно!</button>--}}
+{{--                    </div>--}}
                 </div>
             </div>
         </div>
@@ -629,11 +856,11 @@
     @endif
 
     @if($user->settings->show_logo == true)
-        <footer class="sticky top-[100vh] footer-block mt-20 p-2  md:px-6 md:py-8 navbar-fixed-bottom" >
+        <footer class="sticky top-[100vh] footer-block mt-20 p-2  md:px-6 md:py-8 navbar-fixed-bottom @if($user->settings->event_followers == '1') mb-20 @else mb-4 @endif" >
             <div class="flex justify-center items-center">
                 <div class="flex justify-center items-center">
                     <a href="https://chrry.me/" class="flex items-center">
-                        <img src="https://i.ibb.co/HBYTmyj/2.png" class="mr-3 h-9" alt="CHRRY.ME Logo" style="filter: drop-shadow(2px 2px 0px #FFFFFF);"/>
+                        <img src="https://i.ibb.co/bPydGXN/3.png" class="mr-3 h-4" alt="CHRRY.ME Logo"/>
                     </a>
                 </div>
             </div>
@@ -641,6 +868,22 @@
     @endif
 
     <script type="text/javascript">
+
+        var copyTextareaBtn = document.querySelector('#copy_btn');
+        copyTextareaBtn.addEventListener('click', function(event) {
+            var copyTextarea = document.querySelector('#text_for_copy');
+            copyTextarea.focus();
+            copyTextarea.select();
+
+            try {
+                var successful = document.execCommand('copy');
+                var msg = successful ? 'successful' : 'unsuccessful';
+                console.log('Copying text command was ' + msg);
+            } catch (err) {
+                console.log('Oops, unable to copy');
+            }
+        });
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -665,12 +908,15 @@
                     data: {user_id:user, city_id:city, name:name, email:email, telephone:telephone, telegram:telegram, _token:token, page_type:page_type},
                     success: function(data) {
                         if(data.errors != null) {
+
+                            let newHTML = '';
+
                             $.each(data.errors, function(key, value){
-                                $('.alert-danger').show();
-                                $('.alert-danger').html(
-                                    '<p>'+value+'</p>'
-                                );
+                                newHTML += `<p class="mt-1 text-base font-bold">${value}</p>`
                             });
+
+                            $('.alert-danger').show();
+                            $('.alert-danger').html(newHTML);
                         } else {
                             $("#closeFollow").click();
                             $('.alert-danger').hide();
@@ -792,10 +1038,10 @@
     @if($user->type == 'Events')
         @if($user->settings->event_followers)
             <script>
-                new TomSelect('#select-city',{
+                const tom = new TomSelect('#select-city',{
                     valueField: 'id',
                     searchField: 'name',
-                    maxOptions: 1,
+                    maxOptions: 5,
                     options: [
                         @foreach($cities as $city)
                             {id: {{$city->id}}, name: '{{$city->name}}'},
@@ -810,6 +1056,9 @@
                         }
                     }
                 });
+
+                tom.settings.placeholder = 'Выберите город';
+                tom.inputState();
             </script>
         @endif
     @endif

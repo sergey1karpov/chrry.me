@@ -115,8 +115,15 @@
                                                                     font-size: {{$properties['dl_font_size']}}rem;
                                                                     margin: 0;
                                                                     color: {{$properties['dl_title_color']}};
-                                                                    @if($link->photo == '' && $link->icon == '') margin-top: 14px; margin-bottom: 14px; @endif
-                                                                    @if($properties['dl_text_shadow_bottom']) margin-bottom: {{$properties['dl_text_shadow_bottom']}}px; @endif
+{{--                                                                    @if($link->photo == '' && $link->icon == '') margin-top: 14px; margin-bottom: 14px; @endif--}}
+                                                                    @if($link->photo == '' && $link->icon == '')
+                                                                        @if($properties['dl_text_shadow_bottom'])
+                                                                            margin-top: 13px; margin-bottom: 13px;
+                                                                        @else
+                                                                            margin-top: 13px; margin-bottom: {{13 + $properties['dl_text_shadow_bottom']}}px;
+                                                                        @endif
+                                                                   @endif
+{{--                                                                    @if($properties['dl_text_shadow_bottom']) margin-bottom: {{$properties['dl_text_shadow_bottom']}}px; @endif--}}
                                                                     @if($properties['dl_text_shadow_right']) margin-right: {{$properties['dl_text_shadow_right']}}px; @endif
                                                                     @if($properties['dl_link_block_shadow_right']) margin-left: {{$properties['dl_link_block_shadow_right']}}px @endif
                                                                 ">{{$link->title}}</h4>
@@ -189,7 +196,7 @@
                                                         @elseif($link->icon == false && $link->photo == true)
                                                             <img class="mt-1 mb-1" src="{{$link->photo}}" style="width:50px; border-radius: {{$properties['dl_rounded']}}px;">
                                                         @else
-                                                            <img src="https://digiltable.com/wp-content/uploads/edd/2021/09/Sexy-lady-logo-Pornhub-logo.png" style="width:50px; border-radius: {{$properties['dl_rounded']}}px; opacity: 0;">
+                                                            <img class="mt-1 mb-1" src="https://emoji.discadia.com/emojis/914c0e06-428c-4c1d-bf2c-3393dc14987f.PNG" style="width:50px; height: 50px; border-radius: {{$properties['dl_rounded']}}px; opacity: 0;">
                                                         @endif
                                                     </div>
                                                     <div class="col-span-10 text-center flex items-center">
@@ -201,8 +208,15 @@
                                                                 font-size: {{$properties['dl_font_size']}}rem;
                                                                 margin: 0;
                                                                 color: {{$properties['dl_title_color']}};
-                                                                @if($link->photo == '' && $link->icon == '') margin-top: 14px; margin-bottom: 14px; @endif
-                                                                @if($properties['dl_text_shadow_bottom']) margin-bottom: {{$properties['dl_text_shadow_bottom']}}px; @endif
+{{--                                                                @if($link->photo == '' && $link->icon == '') margin-top: 14px; margin-bottom: 14px; @endif--}}
+                                                                @if($link->photo == '' && $link->icon == '')
+                                                                    @if($properties['dl_text_shadow_bottom'])
+                                                                        margin-top: 13px; margin-bottom: 13px;
+                                                                    @else
+                                                                        margin-top: 13px; margin-bottom: {{13 + $properties['dl_text_shadow_bottom']}}px;
+                                                                    @endif
+                                                                @endif
+{{--                                                                @if($properties['dl_text_shadow_bottom']) margin-bottom: {{$properties['dl_text_shadow_bottom']}}px; @endif--}}
                                                                 @if($properties['dl_text_shadow_right']) margin-right: {{$properties['dl_text_shadow_right']}}px; @endif
                                                                 @if($properties['dl_link_block_shadow_right']) margin-left: {{$properties['dl_link_block_shadow_right']}}px @endif
                                                             ">{{$link->title}}</h4>

@@ -7,6 +7,7 @@ use App\Http\Requests\BackgroundRequest;
 use App\Http\Requests\FaviconRequest;
 use App\Http\Requests\LogotypeRequest;
 use App\Http\Requests\UpdateRegisteruserRequest;
+use App\Http\Requests\UserSettingsRequest;
 use App\Services\UploadPhotoService;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -352,10 +353,11 @@ class User extends Authenticatable
 
     /**
      * @param User $user
-     * @param Request $request
+     * @param UserSettingsRequest $request
+     * @param UploadPhotoService $uploadService
      * @return void
      */
-    public function updateDesignSettings(User $user, Request $request): void
+    public function updateDesignSettings(User $user, UserSettingsRequest $request, UploadPhotoService $uploadService): void
     {
         UserSettings::updateOrCreate(
             ['user_id' => $user->id],
@@ -388,6 +390,32 @@ class User extends Authenticatable
                 'description_font_shadow_color' => $request->description_font_shadow_color,
                 'verify_icon_type' => $request->verify_icon_type,
                 'event_followers' => $request->event_followers,
+                'name_bold' => $request->name_bold,
+                'description_bold' => $request->description_bold,
+                'follow_block_border_radius' => $request->follow_block_border_radius,
+                'follow_block_bg_color' => $request->follow_block_bg_color,
+                'follow_block_text' => $request->follow_block_text,
+                'follow_block_text_size' => $request->follow_block_text_size,
+                'follow_block_font' => $request->follow_block_font,
+                'follow_block_font_color' => $request->follow_block_font_color,
+                'follow_block_font_shadow_color' => $request->follow_block_font_shadow_color,
+                'follow_block_font_shadow_right' => $request->follow_block_font_shadow_right,
+                'follow_block_font_shadow_bottom' => $request->follow_block_font_shadow_bottom,
+                'follow_block_font_shadow_blur' => $request->follow_block_font_shadow_blur,
+                'follow_btn_top_shadow_color' => $request->follow_btn_top_shadow_color,
+                'follow_btn_top_shadow_top' => $request->follow_btn_top_shadow_top,
+                'follow_btn_top_shadow_blur' => $request->follow_btn_top_shadow_blur,
+                'congratulation_text' => $request->congratulation_text,
+                'congratulation_on_off' => $request->congratulation_on_off,
+                'congratulation_gif' => isset($request->congratulation_gif) ?
+                    $uploadService->savePhoto(
+                        photo: $request->congratulation_gif,
+                        path: $this->imgPath($user->id),
+                        size: 200,
+                        dropImagePath: $user->settings->congratulation_gif,
+                        imageType: 'thanks'
+                    ) :
+                    $user->settings->congratulation_gif,
             ]
         );
     }

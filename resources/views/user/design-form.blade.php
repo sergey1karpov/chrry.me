@@ -111,11 +111,11 @@
                             </div>
                             <div class="mb-3 text-center">
                                 <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_logo_right') }}</label>
-                                <input id="steps-range" type="range" name="logotype_shadow_right" min="0" max="40" value="{{$user->settings->logotype_shadow_right}}" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+                                <input id="steps-range" type="range" name="logotype_shadow_right" min="-40" max="40" value="{{$user->settings->logotype_shadow_right}}" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
                             </div>
                             <div class="mb-3 text-center">
                                 <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_logo_bottom') }}</label>
-                                <input id="steps-range" type="range" name="logotype_shadow_bottom" min="0" max="40" value="{{$user->settings->logotype_shadow_bottom}}" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+                                <input id="steps-range" type="range" name="logotype_shadow_bottom" min="-40" max="40" value="{{$user->settings->logotype_shadow_bottom}}" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
                             </div>
                             <div class="mb-3 text-center">
                                 <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_logo_blur') }}</label>
@@ -274,17 +274,26 @@
                                 <option @if($user->settings->name_font_size == 1.7) selected @endif value="1.7">10</option>
                             </select>
                         </div>
+
+                        <div class="mb-3 text-center">
+                            <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Толщина шрифта</label>
+                            <select name="name_bold" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
+                                <option @if($user->settings->name_bold == false) selected @endif value="{{false}}">Стандартный размер</option>
+                                <option @if($user->settings->name_bold == true) selected @endif value="{{true}}">Толстенький шрифт</option>
+                            </select>
+                        </div>
+
                         <div class="mb-3 text-center">
                             <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_name_shadow_color') }}</label>
                             <input value="{{$user->settings->name_font_shadow_color}}" type="color" name="name_font_shadow_color" id="" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-[#0f0f0f] dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
                         </div>
                         <div class="mb-3 text-center">
                             <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_name_shadow_right') }}</label>
-                            <input id="steps-range" type="range" name="name_font_shadow_right" value="{{$user->settings->name_font_shadow_right}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-700 @endif">
+                            <input id="steps-range" type="range" name="name_font_shadow_right" value="{{$user->settings->name_font_shadow_right}}" min="-10" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-700 @endif">
                         </div>
                         <div class="mb-3 text-center">
                             <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_name_shadow_bottom') }}</label>
-                            <input id="steps-range" type="range" name="name_font_shadow_bottom" value="{{$user->settings->name_font_shadow_bottom}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-700 @endif">
+                            <input id="steps-range" type="range" name="name_font_shadow_bottom" value="{{$user->settings->name_font_shadow_bottom}}" min="-10" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-700 @endif">
                         </div>
                         <div class="mb-3 text-center">
                             <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_name_shadow_blur') }}</label>
@@ -319,17 +328,26 @@
                                 <option @if($user->settings->description_font_size == 1.7) selected @endif value="1.7">10</option>
                             </select>
                         </div>
+
+                        <div class="mb-3 text-center">
+                            <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Толщина шрифта</label>
+                            <select name="description_bold" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
+                                <option @if($user->settings->description_bold == false) selected @endif value="{{false}}">Стандартный размер</option>
+                                <option @if($user->settings->description_bold == true) selected @endif value="{{true}}">Толстенький шрифт</option>
+                            </select>
+                        </div>
+
                         <div class="mb-3 text-center">
                             <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_descr_shadow_color') }}</label>
                             <input value="{{$user->settings->description_font_shadow_color}}" type="color" name="description_font_shadow_color" id="" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-[#0f0f0f] dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
                         </div>
                         <div class="mb-3 text-center">
                             <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_descr_shadow_right') }}</label>
-                            <input id="steps-range" type="range" name="description_font_shadow_right" value="{{$user->settings->description_font_shadow_right}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-700 @endif">
+                            <input id="steps-range" type="range" name="description_font_shadow_right" value="{{$user->settings->description_font_shadow_right}}" min="-10" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-700 @endif">
                         </div>
                         <div class="mb-3 text-center">
                             <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_descr_shadow_bottom') }}</label>
-                            <input id="steps-range" type="range" name="description_font_shadow_bottom" value="{{$user->settings->description_font_shadow_bottom}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-700 @endif">
+                            <input id="steps-range" type="range" name="description_font_shadow_bottom" value="{{$user->settings->description_font_shadow_bottom}}" min="-10" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-700 @endif">
                         </div>
                         <div class="mb-3 text-center">
                             <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_descr_shadow_blur') }}</label>
@@ -381,11 +399,11 @@
                         </div>
                         <div class="mb-3 text-center">
                             <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_bar_icon_right') }}</label>
-                            <input id="steps-range" type="range" name="round_links_shadow_right" min="0" max="40" value="{{$user->settings->round_links_shadow_right}}" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+                            <input id="steps-range" type="range" name="round_links_shadow_right" min="-40" max="40" value="{{$user->settings->round_links_shadow_right}}" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
                         </div>
                         <div class="mb-3 text-center">
                             <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_bar_icon_bottom') }}</label>
-                            <input id="steps-range" type="range" name="round_links_shadow_bottom" min="0" max="40" value="{{$user->settings->round_links_shadow_bottom}}" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+                            <input id="steps-range" type="range" name="round_links_shadow_bottom" min="-40" max="40" value="{{$user->settings->round_links_shadow_bottom}}" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
                         </div>
                         <div class="mb-3 text-center">
                             <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_bar_icon_blur') }}</label>
@@ -409,12 +427,108 @@
                         <div class="mb-3 text-center">
                             <div class="mb-3 text-center">
                                 <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Сбор подписчиков для мероприятий</label>
-                                <select name="event_followers" id="show_logo" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
-                                    <option @if($user->settings->event_followers == '1') selected @endif value="{{1}}">{{ __('main.user_show_logo_on') }}</option>
-                                    <option @if($user->settings->event_followers == '0') selected @endif value="{{0}}">{{ __('main.user_show_logo_off') }}</option>
+                                <select onchange="eventFollowers()" name="event_followers" id="event_followers" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
+                                    <option @if($user->settings->event_followers == '1') selected @endif value="{{1}}">Сбор подписчиков включен</option>
+                                    <option @if($user->settings->event_followers == '0' || $user->settings->event_followers == null) selected @endif value="{{0}}">Сбор подписчиков выключен</option>
                                 </select>
                             </div>
                         </div>
+
+                            <div id="follower-settings">
+                                <div class="mb-3 text-center">
+                                    <div class="mb-3 text-center">
+                                        <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Округлить углы кнопки</label>
+                                        <select name="follow_block_border_radius" id="show_logo" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
+                                            <option @if($user->settings->follow_block_border_radius == 'null') selected @endif value="{{null}}">Округление отключено</option>
+                                            <option @if($user->settings->follow_block_border_radius == 'rounded-t') selected @endif value="rounded-t">1</option>
+                                            <option @if($user->settings->follow_block_border_radius == 'rounded-t-md') selected @endif value="rounded-t-md">2</option>
+                                            <option @if($user->settings->follow_block_border_radius == 'rounded-t-lg') selected @endif value="rounded-t-lg">3</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="mb-3 text-center">
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Цвет кнопки</label>
+                                    <input value="{{$user->settings->follow_block_bg_color}}" type="color" name="follow_block_bg_color" id="round_links_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-[#0f0f0f] dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
+                                </div>
+                                <div class="mb-3 text-center">
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Цвет тени кнопки</label>
+                                    <input value="{{$user->settings->follow_btn_top_shadow_color}}" type="color" name="follow_btn_top_shadow_color" id="round_links_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-[#0f0f0f] dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
+                                </div>
+                                <div class="mb-3 text-center">
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Смещение в верх</label>
+                                    <input id="steps-range" type="range" name="follow_btn_top_shadow_top" value="{{$user->settings->follow_btn_top_shadow_top}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-700 @endif">
+                                </div>
+                                <div class="mb-3 text-center">
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Размытие тени</label>
+                                    <input id="steps-range" type="range" name="follow_btn_top_shadow_blur" value="{{$user->settings->follow_btn_top_shadow_blur}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-700 @endif">
+                                </div>
+                                <div class="mb-3 text-center">
+                                    <label for="name" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Текст кнопки</label>
+                                    <input value="{{$user->settings->follow_block_text}}" type="text" name="follow_block_text" id="name" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
+                                </div>
+                                <div class="mb-3 text-center">
+                                    <div class="mb-3 text-center">
+                                        <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Размер текста</label>
+                                        <select name="follow_block_text_size" id="show_logo" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
+                                            <option @if($user->settings->follow_block_text_size == 'text-xs') selected @endif value="text-xs">xs</option>
+                                            <option @if($user->settings->follow_block_text_size == 'text-sm') selected @endif value="text-sm">sm</option>
+                                            <option @if($user->settings->follow_block_text_size == 'text-base') selected @endif value="text-base">base</option>
+                                            <option @if($user->settings->follow_block_text_size == 'text-lg') selected @endif value="text-lg">lg</option>
+                                            <option @if($user->settings->follow_block_text_size == 'text-xl') selected @endif value="text-xl">xl</option>
+                                            <option @if($user->settings->follow_block_text_size == 'text-2xl') selected @endif value="text-2xl">2xl</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="mb-3 text-center">
+                                    <label for="title" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Выберите шрифт</label>
+                                    <select id="follow-block-font" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 " data-placeholder="Search..."  autocomplete="off" name="follow_block_font">
+                                        <option value="{{$user->settings->follow_block_font}}" selected>{{$user->settings->follow_block_font}}</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3 text-center">
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Цвет текста</label>
+                                    <input value="{{$user->settings->follow_block_font_color}}" type="color" name="follow_block_font_color" id="round_links_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-[#0f0f0f] dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
+                                </div>
+                                <div class="mb-3 text-center">
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Цвет тени текста</label>
+                                    <input value="{{$user->settings->follow_block_font_shadow_color}}" type="color" name="follow_block_font_shadow_color" id="round_links_shadow_color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-[#0f0f0f] dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
+                                </div>
+                                <div class="mb-3 text-center">
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Смещение в лево\право</label>
+                                    <input id="steps-range" type="range" name="follow_block_font_shadow_right" value="{{$user->settings->follow_block_font_shadow_right}}" min="-10" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-700 @endif">
+                                </div>
+                                <div class="mb-3 text-center">
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Смещение в верх\вниз</label>
+                                    <input id="steps-range" type="range" name="follow_block_font_shadow_bottom" value="{{$user->settings->follow_block_font_shadow_bottom}}" min="-10" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-700 @endif">
+                                </div>
+                                <div class="mb-3 text-center">
+                                    <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Размытие</label>
+                                    <input id="steps-range" type="range" name="follow_block_font_shadow_blur" value="{{$user->settings->follow_block_font_shadow_blur}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-700 @endif">
+                                </div>
+                                <div class="mb-3 text-center">
+                                    <div class="mb-3 text-center">
+                                        <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Вкл\Выкл благодарность за подписку</label>
+                                        <select name="congratulation_on_off" id="show_logo" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
+                                            <option @if($user->settings->congratulation_on_off == 0) selected @endif value="{{false}}">Выключено</option>
+                                            <option @if($user->settings->congratulation_on_off == 1) selected @endif value="{{true}}">Включено</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="mb-3 text-center">
+                                    <label for="name" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Текст благодарности после подписки</label>
+                                    <textarea maxlength="150" style="border: none" id="message" name="congratulation_text" rows="2" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">{{$user->settings->congratulation_text}}</textarea>
+                                </div>
+                                <div class="mb-3 text-center">
+                                    <div class="flex justify-center">
+                                        @if($user->settings->congratulation_gif)
+                                            <img class="w-40 rounded mb-3" src="{{ '/'. $user->settings->congratulation_gif }}" alt="image description">
+                                        @endif
+                                    </div>
+                                    <label for="name" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Gif после подписки</label>
+                                    <input name="congratulation_gif" class="mt-3 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400" aria-describedby="congratulation_gif" id="congratulation_gif" type="file">
+                                </div>
+                            </div>
+
                     </div>
                 @endif
                 <div class="mt-7 mx-auto max-w-screen-xl py-4  ">
@@ -426,16 +540,31 @@
                         </div>
                     </div>
                 </div>
-{{--                <div class="ml-3 mr-3 mx-auto max-w-screen-xl py-4 sm:px-6 lg:px-8 rounded-lg">--}}
-{{--                    <div class="mb-10">--}}
-{{--                        <button type="submit" class="mt-2 border border-indigo-600 w-full inline-block rounded-lg bg-indigo-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">--}}
-{{--                            {{ __('main.user_upd_btn_profile') }}--}}
-{{--                        </button>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
             </form>
         </div>
     <section>
+
+    <script>
+
+
+        function eventFollowers() {
+            var val = $("#event_followers").val();
+            if(val == 1) {
+                $("#follower-settings").show();
+                console.log('on')
+            } else {
+                $("#follower-settings").hide();
+                console.log('off')
+            }
+        }
+
+        var val = $("#event_followers").val();
+        if(val == 1) {
+            $("#follower-settings").show();
+        } else {
+            $("#follower-settings").hide();
+        }
+    </script>
 
     <script>
         var vidFileLength = $("#logotype-upload")[0].files.length; //если загрузчик пуст
@@ -476,6 +605,31 @@
             }
         });
     </script>
+
+
+    <script>
+        new TomSelect('#follow-block-font',{
+            valueField: 'font',
+            searchField: 'title',
+            maxOptions: 150,
+            options: [
+                    @foreach($allFontsInFolder as $font)
+                {id: {{$font->getInode()}}, title: '{{ stristr($font->getFilename(), '.', true)}}', font: '{{ stristr($font->getFilename(), '.', true) }}'},
+                @endforeach
+            ],
+            render: {
+                option: function(data, escape) {
+                    return  '<div>' +
+                        '<span style="font-size: 2.5rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</span>' +
+                        '</div>';
+                },
+                item: function(data, escape) {
+                    return  '<h4 style="font-size: 2.5rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</h4>';
+                }
+            }
+        });
+    </script>
+
 
     <script>
         new TomSelect('#select-font-description',{

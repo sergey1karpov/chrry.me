@@ -114,6 +114,11 @@ class UploadPhotoService
             return '../storage/app/'.$url;
         }
 
+        if($imageType == 'thanks') {
+            $url = Storage::putFile('public/' . Auth::user()->id, $photo);
+            return '../storage/app/'.$url;
+        }
+
         $url = Storage::put('public/' . Auth::user()->id, $photo);
         return '../storage/app/'.$url;
     }

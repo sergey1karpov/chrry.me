@@ -7,6 +7,7 @@ use App\Http\Requests\BackgroundRequest;
 use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\FaviconRequest;
 use App\Http\Requests\LogotypeRequest;
+use App\Http\Requests\UserSettingsRequest;
 use App\Http\Requests\VerifyRequest;
 use App\Jobs\ProfileViewJob;
 use App\Models\Cities;
@@ -248,12 +249,12 @@ class UserController extends Controller
      * Update user design settings
      *
      * @param User $user
-     * @param Request $request
+     * @param UserSettingsRequest $request
      * @return RedirectResponse
      */
-    public function updateDesignSettings(User $user, Request $request): RedirectResponse
+    public function updateDesignSettings(User $user, UserSettingsRequest $request): RedirectResponse
     {
-        $user->updateDesignSettings($user, $request);
+        $user->updateDesignSettings($user, $request, $this->uploadService);
 
         return redirect()->back()->with('success', 'Settings updated successfully');
     }

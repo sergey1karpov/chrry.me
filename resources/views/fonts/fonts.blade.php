@@ -497,4 +497,6 @@
         src: url({{asset('public/fonts/Inter.ttf')}}); /* Путь к файлу со шрифтом */
     }
 
+
+
 </style>
