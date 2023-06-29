@@ -72,7 +72,7 @@
                                     @elseif($link->icon == false && $link->photo == true)
                                         <img id="avatar-user" class="mt-1 mb-1" src="{{'../../'.$link->photo}}" style="width:50px; border-radius: {{$properties->dl_rounded}}px;">
                                     @else
-                                        <img id="avatar-user" src="https://digiltable.com/wp-content/uploads/edd/2021/09/Sexy-lady-logo-Pornhub-logo.png" style="width:50px; border-radius: {{$properties->dl_rounded}}px; opacity: 0;">
+                                        <img id="avatar-user" class="mt-1 mb-1" src="https://emoji.discadia.com/emojis/914c0e06-428c-4c1d-bf2c-3393dc14987f.PNG" style="width:50px; border-radius: {{$properties->dl_rounded}}px; opacity: 0;">
                                     @endif
                                 </div>
                             </div>
@@ -82,6 +82,7 @@
                                     text-shadow:{{$properties->dl_text_shadow_right}}px {{$properties->dl_text_shadow_bottom}}px {{$properties->dl_text_shadow_blur}}px {{$properties->dl_text_shadow_color}};
                                     font-family: '{{$properties->dl_font}}', sans-serif;
                                     line-height: 1.5;
+                                    font-weight: {{$properties->dl_font_bold}};
                                     font-size: {{$properties->dl_font_size}}rem;
                                     margin: 0;
                                     color: {{$properties->dl_title_color}};
@@ -100,7 +101,7 @@
                                 </div>
                             </div>
                             <div id="up" class="col-span-1 flex items-center flex-none">
-                                <img src="https://digiltable.com/wp-content/uploads/edd/2021/09/Sexy-lady-logo-Pornhub-logo.png" style="width:50px; border-radius: {{$properties->dl_rounded}}px; opacity: 0;">
+                                <img src="https://emoji.discadia.com/emojis/914c0e06-428c-4c1d-bf2c-3393dc14987f.PNG" style="width:50px; border-radius: {{$properties->dl_rounded}}px; opacity: 0;">
                             </div>
                         </div>
                     </div>
@@ -241,6 +242,15 @@
                             <option @if($properties->dl_font_size == 1.5) selected @endif value="1.5">8</option>
                         </select>
                     </div>
+
+                    <div class="mb-6 text-center">
+                        <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Толщина шрифта</label>
+                        <select onchange="fontBold()" name="dl_font_bold" id="dl-font-bold" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
+                            <option @if($properties->dl_font_bold == 'normal') selected @endif value="normal">Стандартный размер</option>
+                            <option @if($properties->dl_font_bold == 'bold') selected @endif value="bold">Полненький шрифт</option>
+                        </select>
+                    </div>
+
                     <div class="mb-6 text-center">
                         <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.link_bg_color') }}</label>
                         <input onchange="backgroundColor()" type="color" name="dl_background_color" id="bg-color" value="{{$properties->dl_background_color_hex}}" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
@@ -411,6 +421,7 @@
             if (this.files && this.files[0]) {
                 var reader = new FileReader();
                 reader.onload = function (e) {
+                    document.getElementById('avatar-user').style.opacity = 1;
                     document.getElementById('avatar-user').setAttribute('src', e.target.result);
                 };
                 reader.readAsDataURL(this.files[0]);
@@ -420,6 +431,7 @@
         //icon
         function fun1() {
             var icon = document.getElementById('select-beast-empty').value;
+            document.getElementById('avatar-user').style.opacity = 1;
             document.getElementById('avatar-user').setAttribute('src', icon);
         }
 
@@ -515,6 +527,15 @@
         function animationSpeed() {
             var animationSpeed = document.getElementById('animation_speed').value;
             document.getElementById('block').style.animationDuration = animationSpeed + 's';
+        }
+
+        function fontBold() {
+            var bold = document.getElementById('dl-font-bold').value;
+            if(bold == 'bold') {
+                document.getElementById('title-text').style.fontWeight = 'bold';
+            } else {
+                document.getElementById('title-text').style.fontWeight = 'normal';
+            }
         }
     </script>
 

@@ -81,6 +81,7 @@
                                     text-shadow:{{$properties->dl_text_shadow_right}}px {{$properties->dl_text_shadow_bottom}}px {{$properties->dl_text_shadow_blur}}px {{$properties->dl_text_shadow_color}};
                                     font-family: '{{$properties->dl_font}}', sans-serif;
                                     line-height: 1.5;
+                                    font-weight: {{$properties->dl_font_bold}};
                                     font-size: {{$properties->dl_font_size}}rem;
                                     margin: 0;
                                     color: {{$properties->dl_title_color}};
@@ -146,6 +147,15 @@
                             <option @if($properties->dl_font_size == 1.5) selected @endif value="1.5">8</option>
                         </select>
                     </div>
+
+                    <div class="mb-6 text-center">
+                        <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Толщина шрифта</label>
+                        <select onchange="fontBold()" name="dl_font_bold" id="dl-font-bold" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
+                            <option @if($properties->dl_font_bold == 'normal') selected @endif value="normal">Стандартный размер</option>
+                            <option @if($properties->dl_font_bold == 'bold') selected @endif value="bold">Полненький шрифт</option>
+                        </select>
+                    </div>
+
                     <div class="mb-6 text-center">
                         <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.link_color_shadow') }}</label>
                         <input onchange="textShadow()" type="color" name="dl_text_shadow_color" value="{{$properties->dl_text_shadow_color}}" id="text-shadow-color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-[#0f0f0f] dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
@@ -329,6 +339,15 @@
                 }
             })
         });
+
+        function fontBold() {
+            var bold = document.getElementById('dl-font-bold').value;
+            if(bold == 'bold') {
+                document.getElementById('title-text').style.fontWeight = 'bold';
+            } else {
+                document.getElementById('title-text').style.fontWeight = 'normal';
+            }
+        }
     </script>
 
 </x-app-layout>

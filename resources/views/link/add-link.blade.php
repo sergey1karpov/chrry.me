@@ -181,6 +181,15 @@
                                 <option value="1.5">8</option>
                             </select>
                         </div>
+
+                        <div class="mb-6 text-center">
+                            <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Толщина шрифта</label>
+                            <select onchange="fontBold()" name="dl_font_bold" id="dl-font-bold" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
+                                <option selected value="normal">Стандартный размер</option>
+                                <option value="bold">Полненький шрифт</option>
+                            </select>
+                        </div>
+
                         <div class="mb-6 text-center">
                             <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.link_color') }}</label>
                             <input onchange="textColor()" type="color" name="dl_title_color" id="name_color" value="" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
@@ -472,6 +481,15 @@
                 }
             })
         });
+
+        function fontBold() {
+            var bold = document.getElementById('dl-font-bold').value;
+            if(bold == 'bold') {
+                document.getElementById('title-text').style.fontWeight = 'bold';
+            } else {
+                document.getElementById('title-text').style.fontWeight = 'normal';
+            }
+        }
 
     </script>
 

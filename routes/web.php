@@ -10,6 +10,7 @@ use App\Http\Controllers\FollowController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\NfcController;
+use App\Http\Controllers\OAuthController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
@@ -55,11 +56,8 @@ Route::middleware(['web', 'root', 'locale'])->group(function () {
             Route::get('/profile-settings', [UserController::class, 'profileSettingsForm'])->name('profileSettingsForm');
             Route::get('/design-settings', [UserController::class, 'designSettingsForm'])->name('designSettingsForm');
             Route::patch('/updateProfile', [UserController::class, 'editUserProfile'])->name('editUserProfile');
-            Route::patch('/updateAvatar', [UserController::class, 'updateAvatar'])->name('updateAvatar');
             Route::patch('/updateLogotype', [UserController::class, 'updateLogotype'])->name('updateLogotype');
             Route::patch('/updateAvatarVsLogotype', [UserController::class, 'updateAvatarVsLogotype'])->name('updateAvatarVsLogotype');
-            Route::patch('/updateBackgroundImage', [UserController::class, 'updateBackgroundImage'])->name('updateBackgroundImage');
-            Route::patch('/updateFavicon', [UserController::class, 'updateFavicon'])->name('updateFavicon');
             Route::patch('/updateDesignSettings', [UserController::class, 'updateDesignSettings'])->name('updateDesignSettings');
             Route::patch('/updatePassword', [UserController::class, 'updatePassword'])->name('updatePassword');
             Route::patch('/updateTwoFactorAuth', [UserController::class, 'updateTwoFactorAuth'])->name('updateTwoFactorAuth');
@@ -76,6 +74,9 @@ Route::middleware(['web', 'root', 'locale'])->group(function () {
             Route::post('/verify-profile', [UserController::class, 'verifyProfile'])->name('verifyProfile');
             Route::get('/yandex-metrika', [UserController::class, 'metrikaForm'])->name('metrikaForm');
             Route::post('/set-yandex-metrika', [UserController::class, 'setMetrikaId'])->name('setMetrikaId');
+
+            Route::post('/upload-image', [UserController::class, 'uploadImage'])->name('uploadImage');
+            Route::patch('/delete-image', [UserController::class, 'deleteImage'])->name('deleteImage');
         });
 
         Route::get('/market-settings', [ShopController::class, 'marketSettingsForm'])->name('marketSettingsForm');
@@ -178,9 +179,10 @@ Route::get('service/rules', [IndexController::class, 'rules'])->name('rules')->m
 Route::get('service/about', [IndexController::class, 'about'])->name('about')->middleware('index.locale');
 Route::get('service/blog', [IndexController::class, 'blog'])->name('blog')->middleware('index.locale');
 
-Route::get('google/register', [UserController::class, 'googleOAuth'])->name('googleOAuth');
-Route::get('google/callback', [UserController::class, 'googleOAuthCallback'])->name('googleOAuthCallback');
+//Route::get('google/register', [UserController::class, 'googleOAuth'])->name('googleOAuth');
+//Route::get('google/callback', [UserController::class, 'googleOAuthCallback'])->name('googleOAuthCallback');
+Route::get('{social}/register', [OAuthController::class, 'OAuth'])->name('OAuth');
+Route::get('{social}/callback', [OAuthController::class, 'callBack'])->name('callBack');
 
 Route::post('follow/create', [FollowController::class, 'createFollow'])->name('createFollow');
-
 

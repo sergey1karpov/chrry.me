@@ -51,6 +51,7 @@
     <section class="flex justify-center ">
         <div class="sm:mt-3 w-full px-4">
 
+            <!-- UPD Avatar -->
             <div class="mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
                 @if($user->settings->avatar)
                     <div class="flex justify-center">
@@ -59,11 +60,13 @@
                         </figure>
                     </div>
                 @endif
-                <form action="{{ route('updateAvatar', ['user' => Auth::user()->id]) }}" method="post" enctype="multipart/form-data"> @csrf @method('PATCH')
+                <form action="{{ route('uploadImage', ['user' => Auth::user()->id]) }}" method="post" enctype="multipart/form-data"> @csrf @method('POST')
                     <div class="mb-3 text-center">
                         @if(!$user->settings->avatar)
                             <label class="mt-1 text-sm font-medium leading-relaxed text-indigo-600" for="avatar">{{ __('main.user_ava') }}</label>
                         @endif
+                        <input type="hidden" name="image_type" value="avatar">
+                        <input type="hidden" name="image_size" value="500">
                         <input name="avatar" class="mt-3 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400" aria-describedby="avatar" id="avatar" type="file">
                         <p class="mt-1 text-sm @if($user->dayVsNight == 1) text-gray-500 @else text-gray-500 @endif" id="avatar">{{ __('main.user_ava_descr') }}</p>
                     </div>
@@ -75,8 +78,8 @@
                 </form>
                 @if($user->settings->avatar)
                     <div class="mt-3">
-                        <form action="{{ route('delUserAvatar', ['user' => $user->id, 'type' => 'avatar']) }}" method="POST"> @csrf @method('PATCH')
-                            <input id="type-avatar" type="hidden" name="type" value="avatar">
+                        <form action="{{ route('deleteImage', ['user' => $user->id]) }}" method="POST"> @csrf @method('PATCH')
+                            <input type="hidden" name="image_type" value="avatar">
                             <button type="submit" class="border border-red-600 w-full inline-block rounded-lg bg-red-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-red-600 focus:outline-none focus:ring active:text-red-500">
                                 {{ __('main.link_delete') }}
                             </button>
@@ -84,7 +87,9 @@
                     </div>
                 @endif
             </div>
+            <!-- UPD Avatar end -->
 
+            <!-- UPD Logotype -->
             <div class="mt-7 mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
                 @if($user->settings->logotype)
                     <div class="flex justify-center">
@@ -140,6 +145,7 @@
                     </div>
                 @endif
             </div>
+            <!-- UPD Logotype end -->
 
             <div class="mt-7 mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
                 <form action="{{ route('updateAvatarVsLogotype', ['user' => Auth::user()->id]) }}" method="post" enctype="multipart/form-data"> @csrf @method('PATCH')
@@ -178,6 +184,7 @@
                 </form>
             </div>
 
+            <!-- UPD Background image -->
             <div class="mt-7 mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
                 @if($user->settings->banner)
                     <div class="flex justify-center">
@@ -186,11 +193,13 @@
                         </figure>
                     </div>
                 @endif
-                <form action="{{ route('updateBackgroundImage', ['user' => Auth::user()->id]) }}" method="post" enctype="multipart/form-data"> @csrf @method('PATCH')
+                <form action="{{ route('uploadImage', ['user' => Auth::user()->id]) }}" method="post" enctype="multipart/form-data"> @csrf @method('POST')
                     <div class="mb-3 text-center">
                         @if(!$user->settings->banner)
                             <label class="mt-1 text-sm font-medium leading-relaxed text-indigo-600" for="avatar">{{ __('main.user_bg') }}</label>
                         @endif
+                        <input type="hidden" name="image_type" value="banner">
+                        <input type="hidden" name="image_size" value="2000">
                         <input name="banner" class="mt-3 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400" aria-describedby="banner" id="banner" type="file">
                         <p class="mt-1 text-sm @if($user->dayVsNight == 1) text-gray-500 @else text-gray-500 @endif" id="banner">{{ __('main.user_bg_descr') }}</p>
                     </div>
@@ -202,8 +211,8 @@
                 </form>
                 @if($user->settings->banner)
                     <div class="mt-3">
-                        <form action="{{ route('delUserAvatar', ['user' => $user->id, 'type' => 'banner']) }}" method="POST"> @csrf @method('PATCH')
-                            <input id="type-avatar" type="hidden" name="type" value="avatar">
+                        <form action="{{ route('deleteImage', ['user' => $user->id]) }}" method="POST"> @csrf @method('PATCH')
+                            <input type="hidden" name="image_type" value="banner">
                             <button type="submit" class="border border-red-600 w-full inline-block rounded-lg bg-red-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-red-600 focus:outline-none focus:ring active:text-red-500">
                                 {{ __('main.link_delete') }}
                             </button>
@@ -211,7 +220,9 @@
                     </div>
                 @endif
             </div>
+            <!-- UPD Background image end -->
 
+            <!-- UPD Favicon -->
             <div class="mt-7 mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
                 @if($user->settings->favicon)
                     <div class="flex justify-center">
@@ -220,13 +231,15 @@
                         </figure>
                     </div>
                 @endif
-                <form action="{{ route('updateFavicon', ['user' => Auth::user()->id]) }}" method="post" enctype="multipart/form-data"> @csrf @method('PATCH')
+                <form action="{{ route('uploadImage', ['user' => Auth::user()->id]) }}" method="post" enctype="multipart/form-data"> @csrf @method('POST')
                     <div class="mb-3 text-center">
                         @if(!$user->settings->favicon)
                             <label class="mt-1 text-sm font-medium leading-relaxed text-indigo-600" for="avatar">{{ __('main.user_fav') }}</label>
                         @endif
+                        <input type="hidden" name="image_type" value="favicon">
+                        <input type="hidden" name="image_size" value="40">
                         <input name="favicon" class="mt-3 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400" aria-describedby="favicon" id="favicon" type="file">
-                        <p class="mt-1 text-sm @if($user->dayVsNight == 1) text-gray-500 @else text-gray-500 @endif" id="favicon">{{ __('main.user_fav_descr') }}</p>
+                        <p class="mt-1 text-sm @if($user->dayVsNight == 1) text-gray-500 @else text-gray-500 @endif" id="favicon">PNG, JPG (Макс. размер 10мб)</p>
                     </div>
                     <div class="mt-3">
                         <button type="submit" class="mt-2 border border-indigo-600 w-full inline-block rounded-lg bg-indigo-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
@@ -236,8 +249,8 @@
                 </form>
                 @if($user->settings->favicon)
                     <div class="mt-3">
-                        <form action="{{ route('delUserAvatar', ['user' => $user->id, 'type' => 'favicon']) }}" method="POST"> @csrf @method('PATCH')
-                            <input id="type-avatar" type="hidden" name="type" value="avatar">
+                        <form action="{{ route('deleteImage', ['user' => $user->id]) }}" method="POST"> @csrf @method('PATCH')
+                            <input type="hidden" name="image_type" value="favicon">
                             <button type="submit" class="border border-red-600 w-full inline-block rounded-lg bg-red-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-red-600 focus:outline-none focus:ring active:text-red-500">
                                 {{ __('main.link_delete') }}
                             </button>
@@ -245,6 +258,41 @@
                     </div>
                 @endif
             </div>
+            <!-- UPD Favicon end -->
+
+            <!-- UPD Verify icon -->
+            <div class="mt-7 mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
+                <form action="{{ route('uploadImage', ['user' => Auth::user()->id]) }}" method="post" enctype="multipart/form-data"> @csrf @method('POST')
+                    <div class="mb-3 text-center">
+                        <div class="flex justify-center">
+                            @if($user->settings->verify_icon)
+                                <img class="w-40 rounded mb-3" src="{{ '/'. $user->settings->verify_icon }}" alt="image description">
+                            @endif
+                        </div>
+                        <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Лого значка верификации</label>
+                        <input type="hidden" name="image_type" value="verify_icon">
+                        <input type="hidden" name="image_size" value="50">
+                        <input name="verify_icon" class="mt-3 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400" aria-describedby="banner" id="banner" type="file">
+                        <p class="mt-1 text-sm @if($user->dayVsNight == 1) text-gray-500 @else text-gray-500 @endif" id="banner">PNG, JPG, GIF (Макс. размер 10мб)</p>
+                    </div>
+                    <div class="mt-3">
+                        <button type="submit" class="mt-2 border border-indigo-600 w-full inline-block rounded-lg bg-indigo-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
+                            Загрузить значек
+                        </button>
+                    </div>
+                </form>
+                @if($user->settings->verify_icon)
+                    <div class="mt-3">
+                        <form action="{{ route('deleteImage', ['user' => $user->id]) }}" method="POST"> @csrf @method('PATCH')
+                            <input type="hidden" name="image_type" value="verify_icon">
+                            <button type="submit" class="border border-red-600 w-full inline-block rounded-lg bg-red-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-red-600 focus:outline-none focus:ring active:text-red-500">
+                                Удалить значек
+                            </button>
+                        </form>
+                    </div>
+                @endif
+            </div>
+            <!-- UPD Verify icon end -->
 
             <form action="{{ route('updateDesignSettings', ['user' => Auth::user()->id]) }}" method="post" enctype="multipart/form-data"> @csrf @method('PATCH')
                 <div class="mt-7 mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">

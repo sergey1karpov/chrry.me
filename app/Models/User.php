@@ -7,6 +7,7 @@ use App\Http\Requests\BackgroundRequest;
 use App\Http\Requests\FaviconRequest;
 use App\Http\Requests\LogotypeRequest;
 use App\Http\Requests\UpdateRegisteruserRequest;
+use App\Http\Requests\UploadPhotoRequest;
 use App\Http\Requests\UserSettingsRequest;
 use App\Services\UploadPhotoService;
 use Illuminate\Database\Eloquent\Collection;
@@ -226,33 +227,6 @@ class User extends Authenticatable
     }
 
     /**
-     * Update user avatar
-     *
-     * @param User $user
-     * @param AvatarRequest $request
-     * @param UploadPhotoService $uploadService
-     * @return void
-     */
-    public function updateAvatar(User $user, AvatarRequest $request, UploadPhotoService $uploadService): void
-    {
-        UserSettings::updateOrCreate(
-            ['user_id' => $user->id],
-            [
-                'user_id' => $user->id,
-                'avatar' => isset($request->avatar) ?
-                    $uploadService->savePhoto(
-                        photo: $request->avatar,
-                        path: $this->imgPath($user->id),
-                        size: 500,
-                        dropImagePath: $user->settings->avatar,
-                        imageType: 'avatar',
-                    ) :
-                    $user->settings->avatar,
-            ]
-        );
-    }
-
-    /**
      * Update user logotype
      *
      * @param User $user
@@ -296,57 +270,6 @@ class User extends Authenticatable
             ['user_id' => $user->id],
             [
                 'avatar_vs_logotype' => $request->avatar_vs_logotype,
-            ]
-        );
-    }
-
-    /**
-     * Update background image
-     *
-     * @param User $user
-     * @param BackgroundRequest $request
-     * @param UploadPhotoService $uploadService
-     * @return void
-     */
-    public function updateBackgroundImage(User $user, BackgroundRequest $request, UploadPhotoService $uploadService)
-    {
-        UserSettings::updateOrCreate(
-            ['user_id' => $user->id],
-            [
-                'user_id' => $user->id,
-                'banner' => isset($request->banner) ?
-                    $uploadService->savePhoto(
-                        photo: $request->banner,
-                        path: $this->imgPath($user->id),
-                        size: 2000,
-                        dropImagePath: $user->settings->banner,
-                        imageType: 'banner',
-                    ) :
-                    $user->settings->banner,
-            ]
-        );
-    }
-
-    /**
-     * @param User $user
-     * @param FaviconRequest $request
-     * @param UploadPhotoService $uploadService
-     * @return void
-     */
-    public function updateFavicon(User $user, FaviconRequest $request, UploadPhotoService $uploadService): void
-    {
-        UserSettings::updateOrCreate(
-            ['user_id' => $user->id],
-            [
-                'user_id' => $user->id,
-                'favicon' => isset($request->favicon) ?
-                    $uploadService->savePhoto(
-                        photo: $request->favicon,
-                        path: $this->imgPath($user->id),
-                        size: 40,
-                        dropImagePath: $user->settings->favicon
-                    ) :
-                    $user->settings->favicon,
             ]
         );
     }
@@ -413,9 +336,30 @@ class User extends Authenticatable
                         path: $this->imgPath($user->id),
                         size: 200,
                         dropImagePath: $user->settings->congratulation_gif,
-                        imageType: 'thanks'
+                        imageType: UploadPhotoService::IMAGE_FOR_PROFILE,
                     ) :
                     $user->settings->congratulation_gif,
+            ]
+        );
+    }
+
+    public function uploadImage(User $user, UploadPhotoRequest $request, UploadPhotoService $uploadService)
+    {
+        $imgType = $request->image_type;
+
+        UserSettings::updateOrCreate(
+            ['user_id' => $user->id],
+            [
+                'user_id' => $user->id,
+                $imgType => isset($request->$imgType) ?
+                    $uploadService->savePhoto(
+                        photo: $request->$imgType,
+                        path: $this->imgPath($user->id),
+                        size: $request->image_size,
+                        dropImagePath: $user->settings->$imgType,
+                        imageType: UploadPhotoService::IMAGE_FOR_PROFILE,
+                    ) :
+                    $user->settings->$imgType,
             ]
         );
     }

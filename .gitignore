@@ -12,6 +12,6 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
-client_secret_40088812296-lmuin8lmkfv6cvc47tka7vio22m6hpbb.apps.googleusercontent.com.json
+googleConfig.json
 /public/images
 

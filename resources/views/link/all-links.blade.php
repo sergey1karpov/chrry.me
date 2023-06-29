@@ -112,6 +112,7 @@
                                                                     text-shadow:{{$properties['dl_text_shadow_right']}}px {{$properties['dl_text_shadow_bottom']}}px {{$properties['dl_text_shadow_blur']}}px {{$properties['dl_text_shadow_color']}};
                                                                     font-family: '{{$properties['dl_font']}}', sans-serif;
                                                                     line-height: 1.5;
+                                                                    font-weight: {{$properties['dl_font_bold']}};
                                                                     font-size: {{$properties['dl_font_size']}}rem;
                                                                     margin: 0;
                                                                     color: {{$properties['dl_title_color']}};
@@ -205,6 +206,7 @@
                                                                 text-shadow:{{$properties['dl_text_shadow_right']}}px {{$properties['dl_text_shadow_bottom']}}px {{$properties['dl_text_shadow_blur']}}px {{$properties['dl_text_shadow_color']}};
                                                                 font-family: '{{$properties['dl_font']}}', sans-serif;
                                                                 line-height: 1.5;
+                                                                font-weight: {{$properties['dl_font_bold']}};
                                                                 font-size: {{$properties['dl_font_size']}}rem;
                                                                 margin: 0;
                                                                 color: {{$properties['dl_title_color']}};

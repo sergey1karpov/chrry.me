@@ -198,10 +198,14 @@
                         @else
                             {{ $user->name }}
                         @endif
-                    @if($user->verify == 1)
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="ml-3 mt-1 bi bi-patch-check-fill mb-1" viewBox="0 0 16 16" style="color: {{$user->settings->verify_color}}">
-                                <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
-                            </svg>
+                        @if($user->verify == 1)
+                            @if($user->settings->verify_icon)
+                                <img src="{{$user->settings->verify_icon}}" class="rounded-full ml-2 mt-1" style="width: 20px; height: 20px">
+                            @else
+                                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="ml-2 mt-1 bi bi-patch-check-fill " viewBox="0 0 16 16" style="color: {{$user->settings->verify_color}}">
+                                    <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
+                                </svg>
+                            @endif
                         @endif
                     </h2>
                 @endif
@@ -223,9 +227,17 @@
                         {{ $user->name }}
                     @endif
                     @if($user->verify == 1)
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="ml-4 mt-1 bi bi-patch-check-fill mb-1" viewBox="0 0 16 16" style="color: {{$user->settings->verify_color}}">
-                            <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
-                        </svg>
+                        @if($user->settings->verify_icon)
+                            <img src="{{$user->settings->verify_icon}}" class="rounded-full ml-2 mt-1" style="width: 20px; height: 20px">
+                        @else
+                            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="ml-2 mt-1 bi bi-patch-check-fill " viewBox="0 0 16 16" style="color: {{$user->settings->verify_color}}">
+                                <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
+                            </svg>
+                        @endif
+{{--                            <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMHY0OG5iamZ0cnZ4a3NhbzkzZWJ6ZWVqamNkaWZ1NTkwZmxvMDlqNyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLquoFs0jCrSr83ehd/giphy.gif" class="rounded-full" style="width: 20px; height: 20px">--}}
+{{--                        <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="ml-2 mt-1 bi bi-patch-check-fill " viewBox="0 0 16 16" style="color: {{$user->settings->verify_color}}">--}}
+{{--                            <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>--}}
+{{--                        </svg>--}}
                     @endif
                 </h2>
                 @if($user->description)
@@ -319,6 +331,7 @@
                                                                             text-shadow:{{$properties['dl_text_shadow_right']}}px {{$properties['dl_text_shadow_bottom']}}px {{$properties['dl_text_shadow_blur']}}px {{$properties['dl_text_shadow_color']}};
                                                                             font-family: '{{$properties['dl_font']}}', sans-serif;
                                                                             line-height: 1.5;
+                                                                            font-weight: {{$properties['dl_font_bold']}};
                                                                             font-size: {{$properties['dl_font_size']}}rem;
                                                                             margin: 0;
                                                                             color: {{$properties['dl_title_color']}};
@@ -418,6 +431,7 @@
                                                                             text-shadow:{{$properties['dl_text_shadow_right']}}px {{$properties['dl_text_shadow_bottom']}}px {{$properties['dl_text_shadow_blur']}}px {{$properties['dl_text_shadow_color']}};
                                                                             font-family: '{{$properties['dl_font']}}', sans-serif;
                                                                             line-height: 1.5;
+                                                                            font-weight: {{$properties['dl_font_bold']}};
                                                                             font-size: {{$properties['dl_font_size']}}rem;
                                                                             margin: 0;
                                                                             color: {{$properties['dl_title_color']}};
@@ -517,6 +531,7 @@
                                                                         text-shadow:{{$properties['dl_text_shadow_right']}}px {{$properties['dl_text_shadow_bottom']}}px {{$properties['dl_text_shadow_blur']}}px {{$properties['dl_text_shadow_color']}};
                                                                         font-family: '{{$properties['dl_font']}}', sans-serif;
                                                                         line-height: 1.5;
+                                                                        font-weight: {{$properties['dl_font_bold']}};
                                                                         font-size: {{$properties['dl_font_size']}}rem;
                                                                         margin: 0;
                                                                         color: {{$properties['dl_title_color']}};

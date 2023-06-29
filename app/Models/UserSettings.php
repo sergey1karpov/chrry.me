@@ -79,6 +79,7 @@ class UserSettings extends Model
         'congratulation_gif',
         'congratulation_text',
         'congratulation_on_off',
+        'verify_icon'
     ];
 
     protected $attributes = [
@@ -148,5 +149,6 @@ class UserSettings extends Model
         'congratulation_gif' => false,
         'congratulation_text' => false,
         'congratulation_on_off' => false,
+        'verify_icon' => false
     ];
 }

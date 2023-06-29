@@ -24,6 +24,7 @@ class LinkProperties
      * @dl_rounded - Card border radius
      * @dl_border - Card border
      * @dl_border_color - Card border color
+     * @dl_font_bold - Bold Font
      */
 }
 

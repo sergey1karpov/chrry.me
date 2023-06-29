@@ -10,6 +10,9 @@ use Intervention\Image\ImageManagerStatic as Image;
 
 class UploadPhotoService
 {
+    const IMAGE_FOR_PROFILE = 'profileImg';
+    const IMAGE_FOR_LINK = 'link';
+
     /**
      * Save user logotype
      *
@@ -109,12 +112,12 @@ class UploadPhotoService
             $this->deletePhotoFromFolder($dropImagePath);
         }
 
-        if($imageType == 'link') {
+        if($imageType == self::IMAGE_FOR_LINK) {
             $url = Storage::putFile('public/' . Auth::user()->id .'/links', $photo);
             return '../storage/app/'.$url;
         }
 
-        if($imageType == 'thanks') {
+        if($imageType == self::IMAGE_FOR_PROFILE) {
             $url = Storage::putFile('public/' . Auth::user()->id, $photo);
             return '../storage/app/'.$url;
         }
