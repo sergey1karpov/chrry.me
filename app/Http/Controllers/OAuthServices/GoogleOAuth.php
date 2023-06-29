@@ -36,7 +36,11 @@ class GoogleOAuth implements OAuthInterface
         return $client->createAuthUrl();
     }
 
-    public function OAuthCallback()
+    /**
+     * @return void
+     * @throws Exception
+     */
+    public function OAuthCallback(): void
     {
         $client = new Google_Client();
 
@@ -73,8 +77,6 @@ class GoogleOAuth implements OAuthInterface
             }
 
             request()->session()->regenerate();
-
-            return redirect()->route('editProfileForm', ['user' => Auth::user()->id]);
         }
     }
 }

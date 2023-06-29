@@ -179,8 +179,6 @@ Route::get('service/rules', [IndexController::class, 'rules'])->name('rules')->m
 Route::get('service/about', [IndexController::class, 'about'])->name('about')->middleware('index.locale');
 Route::get('service/blog', [IndexController::class, 'blog'])->name('blog')->middleware('index.locale');
 
-//Route::get('google/register', [UserController::class, 'googleOAuth'])->name('googleOAuth');
-//Route::get('google/callback', [UserController::class, 'googleOAuthCallback'])->name('googleOAuthCallback');
 Route::get('{social}/register', [OAuthController::class, 'OAuth'])->name('OAuth');
 Route::get('{social}/callback', [OAuthController::class, 'callBack'])->name('callBack');
 

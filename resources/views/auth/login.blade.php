@@ -76,8 +76,7 @@
                 </div>
 
                 <div class="mt-4">
-{{--                    <a type="submit" href="{{ route('googleOAuth') }}"--}}
-                    <a type="submit" href="{{ route('OAuth', ['social' => 'Google']) }}"
+                    <a type="submit" href="{{ route('OAuth', ['social' => 'google']) }}"
                        class="g-recaptcha inline-block text-xl rounded-full bg-blue-500 w-full py-2 text-sm font-bold text-white transition hover:scale-110 hover:shadow-xl focus:outline-none focus:ring active:bg-blue-500 ">
                         {{ __('main.reg_create_google') }}
                     </a>
