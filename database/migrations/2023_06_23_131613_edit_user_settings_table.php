@@ -15,6 +15,10 @@ return new class extends Migration
     {
         Schema::table('user_settings', function (Blueprint $table) {
             $table->renameColumn('follow_block_border_raduis', 'follow_block_border_radius');
+        });
+
+        Schema::table('user_settings', function (Blueprint $table) {
+//            $table->renameColumn('follow_block_border_raduis', 'follow_block_border_radius');
 
             $table->string('follow_block_font_shadow_color', 10)->nullable();
 

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\OAuthServices\GoogleOAuth;
+use App\Http\Controllers\OAuthServices\VkOAuth;
+use App\Http\Controllers\OAuthServices\YandexOAuth;
 use Google\Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -15,6 +17,8 @@ class OAuthController extends Controller
 
     public function __construct(
         private GoogleOAuth $googleOAuth,
+        private VkOAuth     $vkOAuth,
+        private YandexOAuth $yandexOAuth
     ) {}
 
     /**
@@ -28,11 +32,9 @@ class OAuthController extends Controller
             case self::GOOGLE:
                 return redirect()->to($this->googleOAuth->OAuth());
             case self::VK:
-                echo "i равно 1";
-                break;
+                return redirect()->to($this->vkOAuth->OAuth());
             case self::YANDEX:
-                echo "i равно 2";
-                break;
+                return redirect()->to($this->yandexOAuth->OAuth());
         }
     }
 
@@ -48,10 +50,10 @@ class OAuthController extends Controller
                 $this->googleOAuth->OAuthCallback();
                 break;
             case self::VK:
-                echo "i равно 1";
+                $this->vkOAuth->OAuthCallback();
                 break;
             case self::YANDEX:
-                echo "i равно 2";
+                $this->yandexOAuth->OAuthCallback();
                 break;
         }
 

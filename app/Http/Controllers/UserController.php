@@ -2,37 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AvatarRequest;
-use App\Http\Requests\BackgroundRequest;
 use App\Http\Requests\ChangePasswordRequest;
-use App\Http\Requests\FaviconRequest;
 use App\Http\Requests\LogotypeRequest;
 use App\Http\Requests\UploadPhotoRequest;
 use App\Http\Requests\VerifyRequest;
-use App\Jobs\ProfileViewJob;
-use App\Models\Cities;
-use App\Models\Countries;
 use App\Models\User;
 use App\Models\UserSettings;
 use App\Models\Verification;
-use App\Services\PropertiesService;
 use App\Services\UploadPhotoService;
 use App\Http\Requests\UpdateRegisteruserRequest;
 use App\Services\StatsService;
 use App\Services\CreateProfileViewStatistics;
 use App\Traits\IconsAndFonts;
-use Google\Client;
-use Google\Service\Drive;
-use Google_Client;
-use Google_Service_Oauth2;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -59,14 +46,12 @@ class UserController extends Controller
     {
         $this->statistics->createStatistics($user, $_SERVER['REMOTE_ADDR']);
 
-        $cities = \DB::select('SELECT * FROM city');
+        $cities = DB::select('SELECT * FROM city');
 
         return view('user.home', compact('user','cities'));
     }
 
     /**
-     * Show user admin profile
-     *
      * @param User $user
      * @return View
      */
@@ -75,6 +60,36 @@ class UserController extends Controller
         return view('user.profile', [
             'user' => $user,
         ]);
+    }
+
+    /**
+     * @param User $user
+     * @return Factory|\Illuminate\Contracts\View\View|Application
+     */
+    public function setEmailForm(User $user): Factory|\Illuminate\Contracts\View\View|Application
+    {
+        return view('auth.changeGenerateEmail', [
+            'user' => $user,
+        ]);
+    }
+
+    /**
+     * @param User $user
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function setEmail(User $user, Request $request): RedirectResponse
+    {
+
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+
+        User::where('id', $user->id)->update([
+            'email' => $request->email
+        ]);
+
+        return redirect()->route('editProfileForm', ['user' => $user->id]);
     }
 
     /**

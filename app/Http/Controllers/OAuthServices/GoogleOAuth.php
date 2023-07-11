@@ -7,7 +7,6 @@ use App\Models\User;
 use App\Models\UserSettings;
 use Google\Exception;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;

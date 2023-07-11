@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-//        Schema::table('city', function (Blueprint $table) {
-//            $table->index(['name']);
-//        });
+        Schema::table('users', function (Blueprint $table) {
+            $table->integer('vk_id')->nullable();
+        });
     }
 
     /**
@@ -25,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('city_index');
+        Schema::table('user', function (Blueprint $table) {
+            //
+        });
     }
 };

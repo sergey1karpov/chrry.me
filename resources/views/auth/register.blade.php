@@ -92,6 +92,20 @@
                     </a>
                 </div>
 
+                <div class="mt-4">
+                    <a type="submit" href="{{ route('OAuth', ['social' => 'vk']) }}"
+                       class="g-recaptcha inline-block text-xl rounded-full bg-blue-400 w-full py-2 text-sm font-bold text-white transition hover:scale-110 hover:shadow-xl focus:outline-none focus:ring active:bg-blue-500 ">
+                        Войти через VK
+                    </a>
+                </div>
+
+                <div class="mt-4">
+                    <a type="submit" href="{{ route('OAuth', ['social' => 'yandex']) }}"
+                       class="g-recaptcha inline-block text-xl rounded-full bg-red-500 w-full py-2 text-sm font-bold text-white transition hover:scale-110 hover:shadow-xl focus:outline-none focus:ring active:bg-blue-500 ">
+                        Войти через Yandex
+                    </a>
+                </div>
+
                 <div class="mt-4 flex justify-center">
                     <h1 class="font-sans text-sm text-gray-600 hover:text-gray-900">
                         {{ __('main.reg_already') }}</h1><a

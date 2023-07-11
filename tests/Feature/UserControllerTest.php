@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Mail\TwoFactorMail;
 use App\Models\User;
 use App\Models\UserHash;
+use App\Models\UserSettings;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -169,5 +170,20 @@ class UserControllerTest extends TestCase
         ]);
 
         $response->assertSessionHas('bad_code', 'Your code not valid');
+    }
+
+    public function test_editProfileForm()
+    {
+        $user = User::factory([
+            'email' => 'karpov@mail.ru',
+            'name' => 'Sergey Karpov',
+            'slug' => 'karpov',
+        ])->create();
+
+        UserSettings::factory(['user_id' => $user->id])->create();
+
+        $response = $this->actingAs($user)->get(route('editProfileForm', ['user' => $user->id]));
+
+        $response->assertStatus(200);
     }
 }

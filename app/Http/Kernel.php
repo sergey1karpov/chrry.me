@@ -73,5 +73,6 @@ class Kernel extends HttpKernel
         'check.slug' => \App\Http\Middleware\CheckCategorySlugMiddleware::class,
         'update.category' => \App\Http\Middleware\UpdateProductCategoryMiddleware::class,
         'index.locale' => \App\Http\Middleware\IndexLocaleMiddleware::class,
+        'check.email' => \App\Http\Middleware\IfEmailNullMiddleware::class,
     ];
 }

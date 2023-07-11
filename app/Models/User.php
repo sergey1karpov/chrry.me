@@ -42,7 +42,8 @@ class User extends Authenticatable
         'avatar_vs_logotype',
         'two_factor_auth',
         'remember_token',
-        'yandex_metrika'
+        'yandex_metrika',
+        'vk_id'
     ];
 
     /**

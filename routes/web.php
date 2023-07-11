@@ -50,6 +50,15 @@ Route::post('check/hash', [AuthenticatedSessionController::class, 'hashCheck'])-
 
 Route::middleware(['web', 'root', 'locale'])->group(function () {
     Route::group(['prefix' => 'id{user}'], function () {
+        Route::group(['prefix' => 'profile'], function () {
+            Route::get('/set-email-form', [UserController::class, 'setEmailForm'])->name('setEmailForm');
+            Route::patch('/set-email', [UserController::class, 'setEmail'])->name('setEmail');
+        });
+    });
+});
+
+Route::middleware(['web', 'root', 'locale', 'check.email'])->group(function () {
+    Route::group(['prefix' => 'id{user}'], function () {
 
         Route::group(['prefix' => 'profile'], function () {
             Route::get('/', [UserController::class, 'editProfileForm'])->name('editProfileForm');
@@ -74,7 +83,6 @@ Route::middleware(['web', 'root', 'locale'])->group(function () {
             Route::post('/verify-profile', [UserController::class, 'verifyProfile'])->name('verifyProfile');
             Route::get('/yandex-metrika', [UserController::class, 'metrikaForm'])->name('metrikaForm');
             Route::post('/set-yandex-metrika', [UserController::class, 'setMetrikaId'])->name('setMetrikaId');
-
             Route::post('/upload-image', [UserController::class, 'uploadImage'])->name('uploadImage');
             Route::patch('/delete-image', [UserController::class, 'deleteImage'])->name('deleteImage');
         });
@@ -114,12 +122,10 @@ Route::middleware(['web', 'root', 'locale'])->group(function () {
             Route::patch('/{event}/edit', [EventController::class, 'editEvent'])->name('editEvent');
             Route::patch('/{event}/edit-banner', [EventController::class, 'editEventBanner'])->name('editEventBanner');
             Route::delete('/{event}/delete', [EventController::class, 'deleteEvent'])->name('deleteEvent');
-
             Route::get('/followers/all', [FollowController::class, 'getAllEventFollowers'])->name('getAllEventFollowers');
             Route::get('/followers/all/{country}', [FollowController::class, 'getAllEventCities'])->name('getAllEventCities');
             Route::get('/followers/all/{country}/{city}', [FollowController::class, 'getAllCityFollowers'])->name('getAllCityFollowers');
             Route::get('/followers/all/{country}/{city}/sort', [FollowController::class, 'sortFollowers'])->name('sortFollowers');
-
             Route::get('/followers/create-mail', [EventController::class, 'createMailForm'])->name('createMailForm');
             Route::post('/followers/create-mail-post', [EventController::class, 'createMail'])->name('createMail');
         });
@@ -167,10 +173,8 @@ Route::middleware(['web', 'root', 'locale'])->group(function () {
 });
 
 Route::group(['middleware' => 'guest'], function () {
-
     Route::get('/{social}/auth', [AuthController::class, 'index'])->name('auth');
     Route::get('/{social}/auth/callback', [AuthController::class, 'callback'])->name('callback');
-
     Route::patch('{id}/confirm-registration', [AuthController::class, 'changeUserEmail'])->name('changeUserEmail');
 });
 
