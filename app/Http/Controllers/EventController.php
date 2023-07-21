@@ -14,15 +14,12 @@ use App\Providers\EmailEventSending;
 use App\Services\PropertiesService;
 use App\Services\UploadPhotoService;
 use App\Traits\IconsAndFonts;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\Event;
 use App\Models\User;
 use App\Http\Requests\EventRequest;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class EventController extends Controller
@@ -38,9 +35,9 @@ class EventController extends Controller
 
     /**
      * @param User $user
-     * @return Application|Factory|\Illuminate\Contracts\View\View
+     * @return View
      */
-    public function settings(User $user): \Illuminate\Contracts\View\View|Factory|Application
+    public function settings(User $user): View
     {
         return view('event.settings', compact('user'));
     }
@@ -58,7 +55,7 @@ class EventController extends Controller
             ['user_id' => $user->id],
             [
                 'close_card_type' => $request->type_close_card,
-                'open_card_type' => $request->open_card_type,
+                'open_card_type'  => $request->open_card_type,
             ]
         );
 
@@ -74,11 +71,11 @@ class EventController extends Controller
     public function createEventForm(User $user): View
     {
         return view('event.add-event', [
-            'user' => $user,
+            'user'             => $user,
             'allFontsInFolder' => $this->getFonts(),
-            'cities' => \DB::select('SELECT * FROM city'),
-            'properties' => $this->properties->properties,
-            'event' => $this->properties->event,
+            'cities'           => DB::select('SELECT * FROM city'),
+            'properties'       => $this->properties->properties,
+            'event'            => $this->properties->event,
         ]);
     }
 
@@ -110,44 +107,44 @@ class EventController extends Controller
     public function allEvents(User $user): View
     {
         return view('event.events', [
-            'user' => $user,
+            'user'             => $user,
             'allFontsInFolder' => $this->getFonts(),
         ]);
     }
 
     /**
      * @param User $user
-     * @return Application|Factory|\Illuminate\Contracts\View\View|RedirectResponse
+     * @return View|RedirectResponse
      */
-    public function editAllEventsForm(User $user): \Illuminate\Contracts\View\View|Factory|RedirectResponse|Application
+    public function editAllEventsForm(User $user): View|RedirectResponse
     {
         if(count($user->events) == 0) {
             return redirect()->route('allEvents', ['user' => $user->id])->with('success', "You doesn't have events");
         }
 
         return view('event.edit-all', [
-            'user' => $user,
+            'user'                 => $user,
             'allIconsInsideFolder' => $this->getIcons(),
-            'allFontsInFolder' => $this->getFonts(),
-            'properties' => $this->properties->properties,
-            'event' => $this->properties->event,
+            'allFontsInFolder'     => $this->getFonts(),
+            'properties'           => $this->properties->properties,
+            'event'                => $this->properties->event,
         ]);
     }
 
     /**
      * @param User $user
      * @param Event $event
-     * @return Application|Factory|\Illuminate\Contracts\View\View
+     * @return View
      */
-    public function editEventForm(User $user, Event $event)
+    public function editEventForm(User $user, Event $event): View
     {
         return view('event.edit-event', [
-            'user' => $user,
-            'event' => $event,
+            'user'                 => $user,
+            'event'                => $event,
             'allIconsInsideFolder' => $this->getIcons(),
-            'allFontsInFolder' => $this->getFonts(),
-            'properties' => (object) unserialize($event->properties),
-            'cities' => \DB::select('SELECT * FROM city'),
+            'allFontsInFolder'     => $this->getFonts(),
+            'properties'           => (object) unserialize($event->properties),
+            'cities'               => DB::select('SELECT * FROM city'),
         ]);
     }
 
@@ -159,7 +156,7 @@ class EventController extends Controller
      * @param UpdateEventRequest $request
      * @return RedirectResponse
      */
-    public function editEvent(User $user, Event $event, UpdateEventRequest $request)
+    public function editEvent(User $user, Event $event, UpdateEventRequest $request): RedirectResponse
     {
         $event->editEvent($user, $event, $request, $this->propertiesService, $this->uploadService);
 
@@ -224,18 +221,9 @@ class EventController extends Controller
         $events = Event::search($request->search)->where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
 
         return view('event.search', [
-            'user' => $user,
-            'events' => $events,
+            'user'             => $user,
+            'events'           => $events,
             'allFontsInFolder' => $this->getFonts(),
         ]);
-    }
-
-    public function createMailForm(User $user)
-    {
-        return view('event.write-mail', compact('user'));
-    }
-
-    public function createMail(User $user, Request $request) {
-        dd($request);
     }
 }

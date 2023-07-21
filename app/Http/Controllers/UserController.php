@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\LogotypeRequest;
 use App\Http\Requests\UploadPhotoRequest;
+use App\Http\Requests\UserSettingsRequest;
 use App\Http\Requests\VerifyRequest;
 use App\Models\User;
 use App\Models\UserSettings;
@@ -64,9 +65,9 @@ class UserController extends Controller
 
     /**
      * @param User $user
-     * @return Factory|\Illuminate\Contracts\View\View|Application
+     * @return View
      */
-    public function setEmailForm(User $user): Factory|\Illuminate\Contracts\View\View|Application
+    public function setEmailForm(User $user): View
     {
         return view('auth.changeGenerateEmail', [
             'user' => $user,
@@ -153,7 +154,7 @@ class UserController extends Controller
     public function designSettingsForm(User $user): View
     {
         return view('user.design-form', [
-            'user' => $user,
+            'user'             => $user,
             'allFontsInFolder' => $this->getFonts(),
         ]);
     }
@@ -162,9 +163,9 @@ class UserController extends Controller
      * Profile view stats
      *
      * @param User $user
-     * @return Application|Factory|\Illuminate\Contracts\View\View
+     * @return View
      */
-    public function getStats(User $user): \Illuminate\Contracts\View\View|Factory|Application
+    public function getStats(User $user): View
     {
         return view('statistic.user_profile', compact('user'));
     }
@@ -174,13 +175,13 @@ class UserController extends Controller
      *
      * @param User $user
      * @param Request $request
-     * @return Application|Factory|\Illuminate\Contracts\View\View
+     * @return View
      */
-    public function profileFilterStatistic(User $user, Request $request): \Illuminate\Contracts\View\View|Factory|Application
+    public function profileFilterStatistic(User $user, Request $request): View
     {
         $request->validate([
             'from' => 'required',
-            'to' => 'required',
+            'to'   => 'required',
         ]);
 
         $stats = $this->statsService->getProfileStatistic($user, $request);
@@ -268,7 +269,7 @@ class UserController extends Controller
 
     /**
      * @param User $user
-     * @return Application|Factory|\Illuminate\Contracts\View\View
+     * @return View
      */
     public function verify(User $user)
     {
@@ -305,11 +306,20 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'Profile verification request sent');
     }
 
+    /**
+     * @param User $user
+     * @return Application|Factory|\Illuminate\Contracts\View\View
+     */
     public function metrikaForm(User $user)
     {
         return view('statistic.metrika-form', compact('user'));
     }
 
+    /**
+     * @param User $user
+     * @param Request $request
+     * @return RedirectResponse
+     */
     public function setMetrikaId(User $user, Request $request)
     {
         $request->validate(['yandex_metrika' => 'nullable|integer']);

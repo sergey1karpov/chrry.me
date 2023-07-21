@@ -37,14 +37,14 @@ class LinkController extends Controller
      * Page with all user links
      *
      * @param User $user
-     * @return View|Factory|Application
+     * @return View
      */
-    public function allLinks(User $user): View|Factory|Application
+    public function allLinks(User $user): View
     {
         return view('link.all-links', [
-            'user' => $user,
+            'user'                 => $user,
             'allIconsInsideFolder' => $this->getIcons(),
-            'allFontsInFolder' => $this->getFonts(),
+            'allFontsInFolder'     => $this->getFonts(),
         ]);
     }
 
@@ -57,9 +57,9 @@ class LinkController extends Controller
     public function createLinkForm(User $user): View
     {
         return view('link.add-link', [
-            'user' => $user,
+            'user'                 => $user,
             'allIconsInsideFolder' => $this->getIcons(),
-            'allFontsInFolder' => $this->getFonts(),
+            'allFontsInFolder'     => $this->getFonts(),
         ]);
     }
 
@@ -88,11 +88,11 @@ class LinkController extends Controller
     public function editLinkForm(User $user, Link $link): View|Factory|Application
     {
         return view('link.edit-link', [
-            'user' => $user,
-            'link' => $link,
-            'properties' => (object) unserialize($link->properties),
+            'user'                 => $user,
+            'link'                 => $link,
+            'properties'           => (object) unserialize($link->properties),
             'allIconsInsideFolder' => $this->getIcons(),
-            'allFontsInFolder' => $this->getFonts(),
+            'allFontsInFolder'     => $this->getFonts(),
         ]);
     }
 
@@ -139,9 +139,9 @@ class LinkController extends Controller
 
     /**
      * @param User $user
-     * @return Application|Factory|View|RedirectResponse
+     * @return View|RedirectResponse
      */
-    public function editAllLinkForm(User $user): View|Factory|RedirectResponse|Application
+    public function editAllLinkForm(User $user): View|RedirectResponse
     {
         if(count($user->links) == 0) {
             return redirect()->route('allLinks', ['user' => $user->id])->with('success', "You doesn't have links");
@@ -161,7 +161,7 @@ class LinkController extends Controller
      *
      * @param User $user
      * @param Link $link
-     * @param Request $request
+     * @param UpdateLinkRequest $request
      * @return RedirectResponse
      */
     public function editAllLink(User $user, Link $link, UpdateLinkRequest $request): RedirectResponse
@@ -223,11 +223,17 @@ class LinkController extends Controller
         return view('link.stat', compact('user', 'link'));
     }
 
-    public function filterStatistic(User $user, Link $link, Request $request)
+    /**
+     * @param User $user
+     * @param Link $link
+     * @param Request $request
+     * @return View
+     */
+    public function filterStatistic(User $user, Link $link, Request $request): View
     {
         $request->validate([
             'from' => 'required',
-            'to' => 'required',
+            'to'   => 'required',
         ]);
 
         $stats = $this->statsService->getClickLinkStatistic($user, $link, $request);
@@ -254,6 +260,10 @@ class LinkController extends Controller
         ]);
     }
 
+    /**
+     * @param User $user
+     * @return void
+     */
     public function sortLink(User $user)
     {
         if(isset($_POST['update'])) {

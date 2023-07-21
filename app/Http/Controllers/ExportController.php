@@ -11,6 +11,12 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class ExportController extends Controller
 {
+    /**
+     * @param User $user
+     * @param string $type
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse|void
+     */
     public function exportType(User $user, string $type, Request $request)
     {
         if(Auth::user()->id == $user->id) {

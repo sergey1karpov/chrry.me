@@ -11,6 +11,7 @@
 
         <!-- Flowbite -->
         <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.5/dist/flowbite.min.css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.7.0/flowbite.min.js"></script>
 
         <!-- Flowbite DatePicker-->
         <script src="https://unpkg.com/flowbite@1.5.5/dist/datepicker.js"></script>

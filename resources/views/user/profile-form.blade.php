@@ -46,87 +46,152 @@
         </div>
     @endif
 
-    <section class="flex justify-center m-5">
+    <section class="flex justify-center">
         <div class="sm:mt-12 w-full">
-            <div class="mx-auto max-w-screen-xl sm:px-6 lg:px-8">
-                <form action="{{ route('editUserProfile', ['user' => Auth::user()->id]) }}" method="post" enctype="multipart/form-data"> @csrf @method('PATCH')
-                    <div class="mb-6 text-center">
-                        <label for="name" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_name') }}</label>
-                        <input value="{{$user->name}}" type="text" name="name" id="name" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
+
+            <div class="w-full mx-auto max-w-screen-xl lg:px-8 sm:px-8 z-50" style="position: sticky; top: 0;">
+                <div  class="rounded-b-lg mx-auto max-w-screen-xl ">
+                    <div class="group block">
+                        <div class="w-full mx-auto max-w-screen-xl z-50" style="position: sticky; top: 0;">
+                            <div  class="rounded-b-lg mt-1 mx-auto max-w-screen-xl ">
+                                <div class="group block bg-gray-800">
+                                    <div class="border-b border-gray-200 dark:border-gray-700">
+                                        <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
+                                            <li class="mr-2" role="presentation">
+                                                <button class="inline-block p-4 border-b-2 rounded-t-lg" id="profile-tab" data-tabs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Основные</button>
+                                            </li>
+                                            <li class="mr-2" role="presentation">
+                                                <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="dashboard-tab" data-tabs-target="#dashboard" type="button" role="tab" aria-controls="dashboard" aria-selected="false">Пароль</button>
+                                            </li>
+                                            <li class="mr-2" role="presentation">
+                                                <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="settings-tab" data-tabs-target="#settings" type="button" role="tab" aria-controls="settings" aria-selected="false">Безопасность</button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="myTabContent">
+                            <div class="hidden p-4" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                <div class="mx-auto max-w-screen-xl sm:px-6 lg:px-8">
+                                    <form action="{{ route('editUserProfile', ['user' => Auth::user()->id]) }}" method="post" enctype="multipart/form-data"> @csrf @method('PATCH')
+                                        <div class="mb-6 text-center">
+                                            <label for="name" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_name') }}</label>
+                                            <input value="{{$user->name}}" type="text" name="name" id="name" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
+                                        </div>
+                                        <div class="mb-6 text-center">
+                                            <label for="slug" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_slug') }}</label>
+                                            <input value="{{$user->slug}}" type="text" name="slug" id="slug" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
+                                        </div>
+                                        <div class="mb-6 text-center">
+                                            <label for="description" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_descr') }}</label>
+                                            <textarea rows="4" name="description" id="description" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">{{$user->description}}</textarea>
+                                        </div>
+                                        <div class="mb-6 text-center">
+                                            <label for="locale" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_locale') }}</label>
+                                            <select name="locale" id="locale" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
+                                                <option @if($user->locale == 'ru') selected @endif value="ru">Русский</option>
+                                                <option @if($user->locale == 'en') selected @endif value="en">English</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-6 text-center">
+                                            <label for="email" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Email</label>
+                                            <input value="{{$user->email}}" type="email" name="email" id="email" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
+                                        </div>
+                                        <div class="mb-6 text-center">
+                                            <label for="type" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_page_type') }}</label>
+                                            <select name="type" id="type" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
+                                                <option @if($user->type == 'Links') selected @endif value="Links">{{ __('main.user_page_links') }}</option>
+                                                <option @if($user->type == 'Events') selected @endif value="Events">{{ __('main.user_page_events') }}</option>
+                                                {{--                            <option @if($user->type == 'Market') selected @endif value="Market">Market</option>--}}
+                                            </select>
+                                        </div>
+                                        <div class="mt-3">
+                                            <button type="submit" class="mt-2  w-full inline-block rounded-lg bg-indigo-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
+                                                {{ __('main.user_upd_btn') }}
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="hidden p-4" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
+                                <div class="mx-auto max-w-screen-xl sm:px-6 lg:px-8">
+                                    <form action="{{ route('updatePassword', ['user' => $user->id]) }}" method="post"> @csrf @method('PATCH')
+                                        <div class="mb-6 text-center">
+                                            <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_old_pass') }}</label>
+                                            <input placeholder="********" type="password" name="old_password" id="name" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
+                                        </div>
+                                        <div class="mb-6 text-center">
+                                            <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_new_pass') }}</label>
+                                            <input placeholder="********" type="password" name="password" id="slug" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
+                                        </div>
+                                        <div class="mb-6 text-center">
+                                            <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_re_new_pass') }}</label>
+                                            <input placeholder="********" type="password" name="password_confirmation" id="slug" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
+                                        </div>
+                                        <div class="mt-3">
+                                            <button type="submit" class="mt-2  w-full inline-block rounded-lg bg-indigo-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
+                                                {{ __('main.user_upd_pass_btn') }}
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="hidden p-4" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+                                <div class="mx-auto max-w-screen-xl sm:px-6 lg:px-8 ">
+                                    <form action="{{ route('updateTwoFactorAuth', ['user' => $user->id]) }}" method="post"> @csrf @method('PATCH')
+                                        <div class="mb-6 text-center">
+                                            <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_two_factor') }}</label>
+                                            <select name="two_factor_auth" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
+                                                <option @if($user->two_factor_auth == 1) selected @endif value="1">{{ __('main.user_two_factor_on') }}</option>
+                                                <option @if($user->two_factor_auth == 0) selected @endif value="0">{{ __('main.user_two_factor_off') }}</option>
+                                            </select>
+                                        </div>
+                                        <div class="mt-3">
+                                            <button type="submit" class="mt-2  w-full inline-block rounded-lg bg-indigo-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
+                                                {{ __('main.user_two_factor_btn') }}
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="mb-6 text-center">
-                        <label for="slug" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_slug') }}</label>
-                        <input value="{{$user->slug}}" type="text" name="slug" id="slug" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
-                    </div>
-                    <div class="mb-6 text-center">
-                        <label for="description" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_descr') }}</label>
-                        <textarea rows="4" name="description" id="description" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">{{$user->description}}</textarea>
-                    </div>
-                    <div class="mb-6 text-center">
-                        <label for="locale" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_locale') }}</label>
-                        <select name="locale" id="locale" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
-                            <option @if($user->locale == 'ru') selected @endif value="ru">Русский</option>
-                            <option @if($user->locale == 'en') selected @endif value="en">English</option>
-                        </select>
-                    </div>
-                    <div class="mb-6 text-center">
-                        <label for="email" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Email</label>
-                        <input value="{{$user->email}}" type="email" name="email" id="email" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
-                    </div>
-                    <div class="mb-6 text-center">
-                        <label for="type" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_page_type') }}</label>
-                        <select name="type" id="type" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
-                            <option @if($user->type == 'Links') selected @endif value="Links">{{ __('main.user_page_links') }}</option>
-                            <option @if($user->type == 'Events') selected @endif value="Events">{{ __('main.user_page_events') }}</option>
-{{--                            <option @if($user->type == 'Market') selected @endif value="Market">Market</option>--}}
-                        </select>
-                    </div>
-                    <div class="mt-3">
-                        <button type="submit" class="mt-2  w-full inline-block rounded-lg bg-indigo-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
-                            {{ __('main.user_upd_btn') }}
-                        </button>
-                    </div>
-                </form>
+                </div>
             </div>
 
-            <div class="mx-auto max-w-screen-xl sm:px-6 lg:px-8 mt-20">
-                <form action="{{ route('updatePassword', ['user' => $user->id]) }}" method="post"> @csrf @method('PATCH')
-                    <div class="mb-6 text-center">
-                        <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_old_pass') }}</label>
-                        <input placeholder="********" type="password" name="old_password" id="name" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
-                    </div>
-                    <div class="mb-6 text-center">
-                        <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_new_pass') }}</label>
-                        <input placeholder="********" type="password" name="password" id="slug" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
-                    </div>
-                    <div class="mb-6 text-center">
-                        <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_re_new_pass') }}</label>
-                        <input placeholder="********" type="password" name="password_confirmation" id="slug" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
-                    </div>
-                    <div class="mt-3">
-                        <button type="submit" class="mt-2  w-full inline-block rounded-lg bg-indigo-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
-                            {{ __('main.user_upd_pass_btn') }}
-                        </button>
-                    </div>
-                </form>
-            </div>
 
-            <div class="mx-auto max-w-screen-xl sm:px-6 lg:px-8 mt-20 mb-20">
-                <form action="{{ route('updateTwoFactorAuth', ['user' => $user->id]) }}" method="post"> @csrf @method('PATCH')
-                    <div class="mb-6 text-center">
-                        <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.user_two_factor') }}</label>
-                        <select name="two_factor_auth" id="two_factor_auth" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
-                            <option @if($user->two_factor_auth == 1) selected @endif value="1">{{ __('main.user_two_factor_on') }}</option>
-                            <option @if($user->two_factor_auth == 0) selected @endif value="0">{{ __('main.user_two_factor_off') }}</option>
-                        </select>
-                    </div>
-                    <div class="mt-3">
-                        <button type="submit" class="mt-2  w-full inline-block rounded-lg bg-indigo-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
-                            {{ __('main.user_two_factor_btn') }}
-                        </button>
-                    </div>
-                </form>
-            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         </div>
     <section>

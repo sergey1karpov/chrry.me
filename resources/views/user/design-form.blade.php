@@ -11,7 +11,12 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
                         </svg>
                     </a>
-
+                    <!-- drawer init and toggle -->
+                    <div class="text-center">
+                        <button class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button" data-modal-toggle="popup-modal">
+                            Toggle modal
+                        </button>
+                    </div>
                     <a type="button" class="group flex shrink-0 items-center rounded-lg transition" href="{{ route('userHomePage', ['user' => $user->slug]) }}">
                         <span class="sr-only">Menu</span>
                         @if($user->settings->avatar)
@@ -48,8 +53,35 @@
         </div>
     @endif
 
+{{--    @if($user->settings->banner)--}}
+{{--        style="background: url({{ $user->settings->banner }}) no-repeat center center fixed; background-size: cover;"--}}
+{{--    @elseif($user->settings->banner == null & $user->settings->background_color != null)--}}
+{{--        style="background-color: {{$user->settings->background_color}};"--}}
+{{--    @endif--}}
+
     <section class="flex justify-center ">
         <div class="sm:mt-3 w-full px-4">
+
+            <div id="popup-modal" aria-hidden="true" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-full">
+                <div class="relative w-full max-w-md h-full md:h-auto">
+                    <div id="banner-block" class="relative w-full h-full shadow"
+{{--                         style="background: url({{ '../'.$user->settings->banner }}) no-repeat center center fixed; background-size: cover;"--}}
+                        style=""
+                    >
+                        <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="popup-modal">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                        </button>
+                        <div class="p-6 text-center">
+                            <svg class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to delete this product?</h3>
+                            <button data-modal-toggle="popup-modal" type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
+                                Yes, I'm sure
+                            </button>
+                            <button data-modal-toggle="popup-modal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">No, cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <!-- UPD Avatar -->
             <div class="mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
@@ -201,7 +233,7 @@
                         <input type="hidden" name="image_type" value="banner">
                         <input type="hidden" name="image_size" value="2000">
                         <input name="banner" class="mt-3 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400" aria-describedby="banner" id="banner" type="file">
-                        <p class="mt-1 text-sm @if($user->dayVsNight == 1) text-gray-500 @else text-gray-500 @endif" id="banner">{{ __('main.user_bg_descr') }}</p>
+                        <p class="mt-1 text-sm @if($user->dayVsNight == 1) text-gray-500 @else text-gray-500 @endif">{{ __('main.user_bg_descr') }}</p>
                     </div>
                     <div class="mt-3">
                         <button type="submit" class="mt-2 border border-indigo-600 w-full inline-block rounded-lg bg-indigo-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
@@ -273,7 +305,7 @@
                         <input type="hidden" name="image_type" value="verify_icon">
                         <input type="hidden" name="image_size" value="50">
                         <input name="verify_icon" class="mt-3 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400" aria-describedby="banner" id="banner" type="file">
-                        <p class="mt-1 text-sm @if($user->dayVsNight == 1) text-gray-500 @else text-gray-500 @endif" id="banner">PNG, JPG, GIF (Макс. размер 10мб)</p>
+                        <p class="mt-1 text-sm @if($user->dayVsNight == 1) text-gray-500 @else text-gray-500 @endif">PNG, JPG, GIF (Макс. размер 10мб)</p>
                     </div>
                     <div class="mt-3">
                         <button type="submit" class="mt-2 border border-indigo-600 w-full inline-block rounded-lg bg-indigo-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
@@ -654,7 +686,7 @@
         });
     </script>
 
-
+        @if($user->type == 'Events')
     <script>
         new TomSelect('#follow-block-font',{
             valueField: 'font',
@@ -677,6 +709,7 @@
             }
         });
     </script>
+        @endif
 
 
     <script>
@@ -702,4 +735,21 @@
         });
     </script>
 
+    <script>
+        //banner
+        document.getElementById('banner').addEventListener('change', function() {
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById('banner-block').style.background = "url(" + e.target.result + ") no-repeat center center fixed";
+                    document.getElementById('banner-block').style.backgroundSize = "cover";
+                };
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+    </script>
+
 </x-app-layout>
+
+{{--background: url({{ '../'.$user->settings->banner }}) no-repeat center center fixed; background-size: cover;--}}
+{{--e.target.result--}}

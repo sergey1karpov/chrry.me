@@ -24,6 +24,11 @@ class StatisticController extends Controller
         private CreateProductsViewStatistics $productStatistics,
     ) {}
 
+    /**
+     * @param User $user
+     * @param Request $request
+     * @return RedirectResponse
+     */
     public function clickLinkStatistic(User $user, Request $request): RedirectResponse
     {
         $this->linkStatistics->createStatistics($user, $request->server->get('REMOTE_ADDR'), $request);
@@ -31,6 +36,11 @@ class StatisticController extends Controller
         return redirect()->to($request->link_url);
     }
 
+    /**
+     * @param User $user
+     * @param Request $request
+     * @return RedirectResponse
+     */
     public function productStats(User $user, Request $request): RedirectResponse
     {
         ProductViewJob::dispatch($user, $request->server->get('REMOTE_ADDR'), $request->all(), $this->productStatistics);

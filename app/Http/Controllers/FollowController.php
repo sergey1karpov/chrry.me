@@ -7,8 +7,6 @@ use App\Models\Countries;
 use App\Models\EventsFollow;
 use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
@@ -29,11 +27,11 @@ class FollowController extends Controller
         $model = 'App\Models\\' . $request->page_type . 'Follow';
 
         $validator = Validator::make($request->all(), [
-            'email' => 'required|email|max:255',
-            'name' => 'required|max:150|string',
-            'city_id' => 'required',
-            'telegram' => 'nullable|url',
-            'telephone' => 'nullable|numeric|digits_between:1,20',
+            'email'      => 'required|email|max:255',
+            'name'       => 'required|max:150|string',
+            'city_id'    => 'required',
+            'telegram'   => 'nullable|url',
+            'telephone'  => 'nullable|numeric|digits_between:1,20',
         ]);
 
         if ($validator->fails()) {
@@ -49,12 +47,12 @@ class FollowController extends Controller
         }
 
         $model::create([
-            'user_id' => $request->user_id,
-            'city_id' => $request->city_id,
-            'name' => $request->name,
-            'email' => $request->email,
-            'telegram' => $request->telegram,
-            'telephone' => $request->telephone,
+            'user_id'    => $request->user_id,
+            'city_id'    => $request->city_id,
+            'name'       => $request->name,
+            'email'      => $request->email,
+            'telegram'   => $request->telegram,
+            'telephone'  => $request->telephone,
             'country_id' => $this->searchCountryId($request->city_id),
             'created_at' => today(),
         ]);
@@ -70,7 +68,7 @@ class FollowController extends Controller
     {
         $city = Cities::find($cityId);
 
-        $country = \DB::table('country')
+        $country = DB::table('country')
             ->select('country.*')
             ->join('region', 'region.country_id', 'country.id')
             ->where('region.id', $city->region_id)

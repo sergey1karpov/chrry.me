@@ -20,7 +20,7 @@ class SEOController extends Controller
     {
         return view('seo.seo', [
             'user' => $user,
-            'seo' => $user->seo,
+            'seo'  => $user->seo,
         ]);
     }
 
@@ -34,10 +34,10 @@ class SEOController extends Controller
         SEO::updateOrCreate(
             ['user_id' => $user->id],
             [
-                'user_id' => $user->id,
-                'title' => $request->title,
+                'user_id'     => $user->id,
+                'title'       => $request->title,
                 'description' => $request->description,
-                'keywords' => $this->seoKeywords($request->keywords),
+                'keywords'    => $this->seoKeywords($request->keywords),
             ]
         );
 
