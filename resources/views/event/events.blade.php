@@ -46,10 +46,10 @@
 
     @if(count($user->events) > 0)
         <section class="content-block text-white @if($user->dayVsNight == 1) bg-black @endif">
-            <div class="mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8">
+            <div class="mx-auto max-w-screen-xl sm:px-6 lg:px-8">
                 <div class="">
                     <div class="group block">
-                        <div class="card-block block rounded-xl @if($user->dayVsNight == 1) bg-[#0f0f0f] border-4 @endif border-[#0f0f0f] p-8 shadow-xl transition hover:border-red-600/50 hover:shadow-red-600/50 group-hover:-translate-x-1 group-hover:-translate-y-1 group-hover:shadow-red-600/50">
+                        <div class="card-block block rounded-xl @if($user->dayVsNight == 1) bg-[#0f0f0f] border-4 @endif border-[#0f0f0f] p-8 shadow-xl transition ">
                             <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl lg:text-6xl @if($user->dayVsNight == 1) text-gray-50 @else text-black @endif">{{ __('main.event_mass') }}</h1>
                             <p class="mb-6 text-lg font-normal text-gray-500 lg:text-xl  dark:text-gray-400">{{ __('main.event_mass_descr') }}</p>
                             <a href="{{ route('editAllEventsForm', ['user' => $user->id]) }}" type="" class="inline-block rounded border border-indigo-900 bg-indigo-900 px-9 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
@@ -63,7 +63,7 @@
     @endif
 
     <section class="content-block text-white @if($user->dayVsNight == 1) bg-black @endif">
-        <div class="mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-screen-xl py-4 sm:px-6 lg:px-8">
             <div class="text-center mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
 
                 @foreach($user->events as $event)
@@ -71,15 +71,13 @@
                         $properties = (object) unserialize($event->properties)
                     @endphp
                     <div class="container mb-4">
-
-                            @include('event.types.' . $user->eventSettings->close_card_type, ['event' => $event, 'properties' => (object) unserialize($event->properties)])
-
+                        @include('event.types.' . $user->eventSettings->close_card_type, ['event' => $event, 'properties' => (object) unserialize($event->properties)])
                     <div class="mb-5 mt-5 inline-flex rounded-lg shadow-sm" role="group">
                         <a href="{{ route('editEventForm', ['user' => $user->id, 'event' => $event->id]) }}" class="border-r w-20 px-5 py-1 text-sm font-medium text-gray-900 bg-white rounded-l-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
                             {{ __('main.event_edit') }}
                         </a>
                         <form action="{{ route('deleteEvent', ['user' => Auth::user()->id, 'event' => $event->id]) }}" method="POST"> @csrf @method('DELETE')
-                            <button type="submit" class="w-20 px-5 py-1 text-sm font-medium text-gray-900 bg-white rounded-r-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                            <button type="submit" class="flex justify-center w-20 px-5 py-1 text-sm font-medium text-gray-900 bg-white rounded-r-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
                                 {{ __('main.event_del') }}
                             </button>
                         </form>

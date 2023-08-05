@@ -51,7 +51,6 @@
     <section class="flex justify-center z-50" style="position: sticky; top: 0;">
         <div class="w-full mx-auto max-w-screen-xl lg:px-8 sm:px-8">
             <div id="matureBlock" class="px-4 py-4 w-full mx-auto max-w-screen-xl shadow-lg rounded-b-lg bg-white">
-{{--                <h1 id="matureBlockText" class="mb-8 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl text-black">{{ __('main.link_upd') }}</h1>--}}
                 <div id="block" class="{{$link->animation}} " style="animation-duration: {{$link->animation_speed}}s;">
                     <div class="{{$properties->dl_border}} row card ms-1 me-1" id="background" style="
                     {{--animation-duration: {{$link->animation_speed}}s;--}}
@@ -242,7 +241,6 @@
                             <option @if($properties->dl_font_size == 1.5) selected @endif value="1.5">8</option>
                         </select>
                     </div>
-
                     <div class="mb-6 text-center">
                         <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Толщина шрифта</label>
                         <select onchange="fontBold()" name="dl_font_bold" id="dl-font-bold" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
@@ -250,7 +248,6 @@
                             <option @if($properties->dl_font_bold == 'bold') selected @endif value="bold">Полненький шрифт</option>
                         </select>
                     </div>
-
                     <div class="mb-6 text-center">
                         <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.link_bg_color') }}</label>
                         <input onchange="backgroundColor()" type="color" name="dl_background_color" id="bg-color" value="{{$properties->dl_background_color_hex}}" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
@@ -275,9 +272,6 @@
                         <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.link_shadow_blur') }}</label>
                         <input onchange="textShadow()" id="text-shadow-color-blur" type="range" name="dl_text_shadow_blur" value="{{$properties->dl_text_shadow_blur}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                     </div>
-
-
-
                     <div class="mb-6 text-center">
                         <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.link_shadow_color') }}</label>
                         <input onchange="linkShadow()" type="color" value="{{$properties->dl_link_block_shadow_color}}" name="dl_link_block_shadow_color" id="link-shadow-color" class="h-11 mt-1 block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm" style="border-radius: 50%">
@@ -294,9 +288,6 @@
                         <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.link_shadow_color_blur') }}</label>
                         <input onchange="linkShadow()" id="link-shadow-color-blur" type="range" name="dl_link_block_shadow_blur" value="{{$properties->dl_link_block_shadow_blur}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
                     </div>
-
-
-
                     <div class="mb-6 text-center">
                         <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">{{ __('main.link_border') }}</label>
                         <input onchange="borderRound()" id="border-round" type="range" name="dl_rounded" min="1" max="50" step="1" value="{{$properties->dl_rounded}}" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-900 @endif">
@@ -356,187 +347,6 @@
         </section>
     </form>
 
-    <script>
-        new TomSelect('#select-beast-empty',{
-            valueField: 'img',
-            searchField: 'title',
-            options: [
-                    @foreach($allIconsInsideFolder as $icon)
-                {id: {{$icon->getInode()}}, title: '{{substr($icon->getFilename(), 0, strrpos($icon->getFilename(),'.'))}}', img: '{{env('APP_URL') . '/public/images/social/'.$icon->getFilename()}}'},
-                @endforeach
-            ],
-            render: {
-                option: function(data, escape) {
-                    return  `
-                        <div style="display: inline-block;">
-                            <div><img style="background-color: #DCDCDC" width="90" src="${data.img}"></div>
-                        </div>
-                    `;
-                },
-                item: function(data, escape) {
-                    return  '<img style="margin-right: 16px; background-color: #DCDCDC" width="30" src="' + escape(data.img) + '">' + '<span class="title">' + escape(data.title) + '</span>';
-                }
-            }
-        });
-    </script>
-
-    <script>
-        new TomSelect('#select-font',{
-            valueField: 'font',
-            searchField: 'title',
-            maxOptions: 150,
-            options: [
-                    @foreach($allFontsInFolder as $font)
-                {id: {{$font->getInode()}}, title: '{{ stristr($font->getFilename(), '.', true)}}', font: '{{ stristr($font->getFilename(), '.', true) }}'},
-                @endforeach
-            ],
-            render: {
-                option: function(data, escape) {
-                    return  '<div>' +
-                        '<span style="font-size: 2.5rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</span>' +
-                        '</div>';
-                },
-                item: function(data, escape) {
-                    return  '<h4 style="font-size: 2.5rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</h4>';
-                }
-            }
-        });
-
-        //bg color
-        $( document ).ready(function() {
-            $("#switch-bg").click(function() {
-                var type = $(this).is(':checked');
-                if(type) {
-                    $("#matureBlock").removeClass('bg-white').addClass('bg-black');
-                    $("#matureBlockText").removeClass('text-black').addClass('text-white');
-                } else {
-                    $("#matureBlock").removeClass('bg-black').addClass('bg-white');
-                    $("#matureBlockText").removeClass('text-white').addClass('text-black');
-                }
-            })
-        });
-
-        //Avatar
-        document.getElementById('avatar').addEventListener('change', function() {
-            if (this.files && this.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    document.getElementById('avatar-user').style.opacity = 1;
-                    document.getElementById('avatar-user').setAttribute('src', e.target.result);
-                };
-                reader.readAsDataURL(this.files[0]);
-            }
-        });
-
-        //icon
-        function fun1() {
-            var icon = document.getElementById('select-beast-empty').value;
-            document.getElementById('avatar-user').style.opacity = 1;
-            document.getElementById('avatar-user').setAttribute('src', icon);
-        }
-
-        //Title
-        $('#title').keyup(function() {
-            var val = $('#title').val();
-            $('#title-text').html(val);
-        });
-
-        //text-color
-        function textColor() {
-            var textColor = document.getElementById('name_color').value;
-            document.getElementById('title-text').style.color = textColor;
-        }
-
-        //font
-        function font() {
-            var font = document.getElementById('select-font').value;
-            document.getElementById('title-text').style.fontFamily = font;
-        }
-
-        //font-size
-        function fontSize() {
-            var fontSize = document.getElementById('font-size').value;
-            document.getElementById('title-text').style.fontSize = fontSize + 'rem';
-        }
-
-        //bg-color
-        function backgroundColor() {
-            var bgColor = document.getElementById('bg-color').value;
-            var transparency = document.getElementById('bg-transparency').value;
-
-            let hex = bgColor.replace('#', '');
-            if (hex.length === 3) {
-                hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
-            }
-
-            const r = parseInt(hex.substring(0, 2), 16);
-            const g = parseInt(hex.substring(2, 4), 16);
-            const b = parseInt(hex.substring(4, 6), 16);
-
-            var rgb = 'rgb(' + r+',' + ' ' + g+',' + ' ' + b+',' + ' ' + Number(transparency) + ')';
-            document.getElementById('background').style.backgroundColor = rgb;
-        }
-
-        //text-shadow
-        function textShadow() {
-            var textShadowColor = document.getElementById('text-shadow-color').value;
-            var right = document.getElementById('text-shadow-color-right').value;
-            var bottom = document.getElementById('text-shadow-color-bottom').value;
-            var blur = document.getElementById('text-shadow-color-blur').value;
-
-            var textShadow = right+'px' + ' ' + bottom+'px' + ' ' + blur+'px' + ' ' + textShadowColor;
-            document.getElementById('title-text').style.textShadow = textShadow;
-        }
-
-        //link-shadow
-        function linkShadow() {
-            var shadowColor = document.getElementById('link-shadow-color').value;
-            var right = document.getElementById('link-shadow-color-right').value;
-            var bottom = document.getElementById('link-shadow-color-bottom').value;
-            var blur = document.getElementById('link-shadow-color-blur').value;
-
-            var shadow = right+'px' + ' ' + bottom+'px' + ' ' + blur+'px' + ' ' + shadowColor;
-            document.getElementById('background').style.boxShadow = shadow;
-        }
-
-        //border round
-        function borderRound() {
-            var borderRadius = document.getElementById('border-round').value;
-            document.getElementById('background').style.borderRadius = borderRadius + 'px';
-        }
-
-        //border
-        function borderBoth() {
-            var borderBoth = document.getElementById('border-both').value;
-            document.getElementById('background').className = borderBoth;
-        }
-
-        //border color
-        function borderColor() {
-            var borderColor = document.getElementById('border-color').value;
-            document.getElementById('background').style.borderColor = borderColor;
-        }
-
-        //animation
-        function animationLink() {
-            var animation = document.getElementById('animation').value;
-            document.getElementById('block').className = animation;
-        }
-
-        //animation speed
-        function animationSpeed() {
-            var animationSpeed = document.getElementById('animation_speed').value;
-            document.getElementById('block').style.animationDuration = animationSpeed + 's';
-        }
-
-        function fontBold() {
-            var bold = document.getElementById('dl-font-bold').value;
-            if(bold == 'bold') {
-                document.getElementById('title-text').style.fontWeight = 'bold';
-            } else {
-                document.getElementById('title-text').style.fontWeight = 'normal';
-            }
-        }
-    </script>
+    @include('scripts.edit-link')
 
 </x-app-layout>

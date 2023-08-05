@@ -3,7 +3,7 @@
     @include('fonts.fonts')
 
     <header aria-label="Page Header" class="header-block @if($user->dayVsNight == 1) bg-black @endif">
-        <div class="mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-screen-xl px-4 pt-4 sm:px-6 lg:px-8">
             <div class="flex items-center sm:justify-between sm:gap-4">
                 <div class="flex flex-1 items-center justify-between gap-8 ">
                     <a href="{{ route('getAllEventFollowers', ['user' => $user->id]) }}" type="button" class="text-indigo-900 border border-indigo-900 hover:bg-indigo-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-indigo-900 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-indigo-900 dark:text-indigo-900 dark:hover:text-white dark:focus:ring-indigo-900">
@@ -27,7 +27,7 @@
 
     @foreach($cities as $city)
         <section class="content-block text-white @if($user->dayVsNight == 1) bg-black @endif">
-            <div class="mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8">
+            <div class="mx-auto max-w-screen-xl mt-4 sm:px-6 lg:px-8">
                 <a href="{{ route('getAllCityFollowers', ['user' => $user->id, 'country' => $city->country_id, 'city' => $city->city_id]) }}" class="block w-full p-6 rounded-lg shadow @if($user->dayVsNight == 1) bg-[#0f0f0f] @else bg-gray-300 @endif">
                     <div class="flex flex-col items-center justify-center">
                         <h5 class="mb-2 text-3xl font-bold tracking-tight @if($user->dayVsNight == 1) text-white @else text-gray-800 @endif">{{$city->name}}</h5>

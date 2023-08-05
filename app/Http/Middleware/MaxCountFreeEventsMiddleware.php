@@ -6,8 +6,10 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class CheckCountEventsMiddleware
+class MaxCountFreeEventsMiddleware
 {
+    const MAX_FREE_EVENTS = 50;
+
     /**
      * Handle an incoming request.
      *
@@ -17,8 +19,10 @@ class CheckCountEventsMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if(count(Auth::user()->events) > 50) {
-            abort(403, 'К сожалению вы достигли лимита по добавлению мероприятий. На данный момент разрешено добавить не более 50 событий');
+        $currentUser = Auth::user();
+
+        if(count($currentUser->events) > self::MAX_FREE_EVENTS) {
+            return back()->with('error', 'Достигнут лимит на колличество мероприятий. Максимальное кол-во - 50 мероприятий');
         }
 
         return $next($request);

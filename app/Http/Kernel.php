@@ -74,5 +74,8 @@ class Kernel extends HttpKernel
         'update.category' => \App\Http\Middleware\UpdateProductCategoryMiddleware::class,
         'index.locale' => \App\Http\Middleware\IndexLocaleMiddleware::class,
         'check.email' => \App\Http\Middleware\IfEmailNullMiddleware::class,
+        'free.links' => \App\Http\Middleware\MaxCountFreeLinksMiddleware::class,
+        'free.events' => \App\Http\Middleware\MaxCountFreeEventsMiddleware::class,
+        'free.products' => \App\Http\Middleware\MaxCountFreeProductCardsMiddleware::class,
     ];
 }

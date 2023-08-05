@@ -20,8 +20,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Flowbite -->
-    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.5/dist/flowbite.min.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.0/flowbite.min.css" rel="stylesheet" />
 
     <!-- Flowbite DatePicker-->
     <script src="https://unpkg.com/flowbite@1.5.5/dist/datepicker.js"></script>
@@ -121,7 +120,7 @@
 {{--                        </div>--}}
                     @endif
                 @endif
-                <button type="button" data-drawer-backdrop="false" data-drawer-target="drawer-bottom-shared" data-drawer-show="drawer-bottom-shared" data-drawer-placement="bottom" aria-controls="drawer-bottom-shared" class="text-indigo-100 bg-white border border-white hover:bg-gray-100 hover:text-white focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-white dark:text-gray-100 dark:hover:text-white dark:focus:ring-gray-100">
+                <button type="button" data-drawer-target="drawer-bottom-shared" data-drawer-show="drawer-bottom-shared" data-drawer-placement="bottom" aria-controls="drawer-bottom-shared" class="text-indigo-100 bg-white border border-white hover:bg-gray-100 hover:text-white focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-white dark:text-gray-100 dark:hover:text-white dark:focus:ring-gray-100">
                     <svg class="w-4 h-4 text-gray-800 dark:text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 3">
                         <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"/>
                     </svg>
@@ -179,7 +178,7 @@
 
     <navigation>
         <div class="mx-auto max-w-screen-xl px-4 pb-4 sm:px-6 lg:px-8 text-center">
-            @if($user->settings->avatar_vs_logotype == 'Logotype')
+            @if($user->settings->avatar_vs_logotype == 'logotype')
                 <div class="flex justify-center mb-3 mt-3">
                     <img src="{{$user->settings->logotype}}" class="" width="{{$user->settings->logotype_size}}" style="
                         filter: drop-shadow({{$user->settings->logotype_shadow_right}}px {{$user->settings->logotype_shadow_bottom}}px {{$user->settings->logotype_shadow_round}}px {{$user->settings->logotype_shadow_color}});
@@ -200,7 +199,7 @@
                         @endif
                         @if($user->verify == 1)
                             @if($user->settings->verify_icon)
-                                <img src="{{$user->settings->verify_icon}}" class="rounded-full ml-2 mt-1" style="width: 20px; height: 20px">
+                                <img src="{{$user->settings->verify_icon}}" class="ml-2 mt-1" style="width: 20px; height: 20px">
                             @else
                                 <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="ml-2 mt-1 bi bi-patch-check-fill " viewBox="0 0 16 16" style="color: {{$user->settings->verify_color}}">
                                     <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
@@ -675,32 +674,47 @@
     @if($user->type == 'Events')
         @if($user->settings->event_followers == '1')
 
-{{--        <footer type="button" data-modal-toggle="popup-modal" class="{{$user->settings->follow_block_border_radius}} flex justify-center fixed bottom-0 left-0 z-20 w-full p-4 bg-white border-gray-200 shadow dark:border-gray-600" style="background-color: {{$user->settings->follow_block_bg_color}}; box-shadow: 0px -{{$user->settings->follow_btn_top_shadow_top}}px {{$user->settings->follow_btn_top_shadow_blur}}px 0px {{$user->settings->follow_btn_top_shadow_color}}">--}}
+{{--        <footer type="button" data-drawer-target="drawer-bottom-example" data-drawer-show="drawer-bottom-example" data-drawer-placement="bottom" aria-controls="drawer-bottom-example" class="{{$user->settings->follow_block_border_radius}} flex justify-center fixed bottom-0 left-0 z-20 w-full p-4 bg-white border-gray-200 shadow dark:border-gray-600" style="background-color: {{$user->settings->follow_block_bg_color}}; box-shadow: 0px -{{$user->settings->follow_btn_top_shadow_top}}px {{$user->settings->follow_btn_top_shadow_blur}}px 0px {{$user->settings->follow_btn_top_shadow_color}}">--}}
 {{--            <h1 style="--}}
-{{--                font-family: {{$user->settings->follow_block_font}};--}}
-{{--                color: {{$user->settings->follow_block_font_color}};--}}
-{{--                text-shadow:{{$user->settings->follow_block_font_shadow_right}}px {{$user->settings->follow_block_font_shadow_bottom}}px {{$user->settings->follow_block_font_shadow_blur}}px {{$user->settings->follow_block_font_shadow_color}};--}}
-{{--            " class="{{$user->settings->follow_block_text_size}}">{{$user->settings->follow_block_text}}</h1>--}}
+{{--                        font-family: {{$user->settings->follow_block_font}};--}}
+{{--                        color: {{$user->settings->follow_block_font_color}};--}}
+{{--                        text-shadow:{{$user->settings->follow_block_font_shadow_right}}px {{$user->settings->follow_block_font_shadow_bottom}}px {{$user->settings->follow_block_font_shadow_blur}}px {{$user->settings->follow_block_font_shadow_color}};--}}
+{{--                    " class="{{$user->settings->follow_block_text_size}}">{{$user->settings->follow_block_text}}</h1>--}}
 {{--        </footer>--}}
 
-        <footer type="button" data-drawer-backdrop="false" data-drawer-target="drawer-bottom-example" data-drawer-show="drawer-bottom-example" data-drawer-placement="bottom" aria-controls="drawer-bottom-example" class="{{$user->settings->follow_block_border_radius}} flex justify-center fixed bottom-0 left-0 z-20 w-full p-4 bg-white border-gray-200 shadow dark:border-gray-600" style="background-color: {{$user->settings->follow_block_bg_color}}; box-shadow: 0px -{{$user->settings->follow_btn_top_shadow_top}}px {{$user->settings->follow_btn_top_shadow_blur}}px 0px {{$user->settings->follow_btn_top_shadow_color}}">
-            <h1 style="
+        <div class="mx-auto max-w-screen-xl px-4 pb-4 sm:px-6 lg:px-8 text-center" data-modal-target="defaultModal" data-modal-toggle="defaultModal" type="button">
+            <div class="fixed z-50 w-full h-16 max-w-lg -translate-x-1/2 bottom-2 left-1/2 flex items-center">
+                <div class="{{$user->settings->follow_block_border_radius}} {{$user->settings->follow_border}} {{$user->settings->follow_border_animation}} w-full p-4 text-sm text-gray-800 bg-gray-50 dark:bg-gray-800 dark:text-gray-300 ml-4 mr-4 flex justify-center items-center" role="alert" style="
+                    background-color: {{$user->settings->follow_block_bg_color}};
+                    box-shadow: {{$user->settings->follow_btn_top_shadow_right}}px {{$user->settings->follow_btn_top_shadow_top}}px {{$user->settings->follow_btn_top_shadow_blur}}px {{$user->settings->follow_btn_top_shadow_color}};
+                    animation-duration: {{$user->settings->follow_border_animation_speed}}s;
+                    border-color: {{$user->settings->follow_border_color}};
+                    ">
+                    <h1 style="
                         font-family: {{$user->settings->follow_block_font}};
                         color: {{$user->settings->follow_block_font_color}};
                         text-shadow:{{$user->settings->follow_block_font_shadow_right}}px {{$user->settings->follow_block_font_shadow_bottom}}px {{$user->settings->follow_block_font_shadow_blur}}px {{$user->settings->follow_block_font_shadow_color}};
                     " class="{{$user->settings->follow_block_text_size}}">{{$user->settings->follow_block_text}}</h1>
-        </footer>
+                </div>
+            </div>
+        </div>
 
-        <div id="drawer-bottom-example" class="{{$user->settings->follow_block_border_radius}} text-center fixed bottom-0 left-0 right-0 z-40 w-full p-4 bg-white dark:bg-white overflow-y-auto transition-transform translate-y-full" tabindex="-1" aria-labelledby="drawer-bottom-label">
-            <h5 id="drawer-bottom-label" class="inline-flex items-center mb-4 text-base font-semibold text-gray-500 dark:text-black">Follow to</h5>
-            <button id="closeFollow" type="button" data-drawer-hide="drawer-bottom-example" aria-controls="drawer-bottom-example" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 right-2.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" >
-                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                <span class="sr-only">Close menu</span>
-            </button>
-            <div class="text-center">
-                <div class="gap-4">
-                    <div class="mx-auto max-w-screen-xl  sm:px-6 lg:px-8">
+        <div id="defaultModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="relative w-full max-w-2xl max-h-full">
+                <!-- Modal content -->
+                <div class="relative bg-white rounded-lg">
+                    <!-- Modal header -->
+                    <div class="flex items-start justify-between p-4 rounded-t dark:border-gray-600 text-center">
+                        <button id="closeFollowModal" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="defaultModal">
+                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="p-3">
                         <div class="mx-auto max-w-lg text-center">
+                            <h1 class="text-sm font-bold sm:text-3xl">Подписка на</h1>
                             <h1 class="text-2xl font-bold sm:text-3xl">{{$user->name}}</h1>
                             <p class="mt-4 text-gray-500 text-sm">
                                 Как только в вашем городе появится мероприятие с участием {{$user->name}}
@@ -765,10 +779,6 @@
                                 </div>
                             </div>
                             <div class="flex items-center justify-between">
-{{--                                <p class="text-sm text-gray-500">--}}
-{{--                                    No account?--}}
-{{--                                    <a class="underline" href="">Sign up</a>--}}
-{{--                                </p>--}}
                                 <button id="eventFollowBtn" type="submit" class="w-full inline-block rounded-lg bg-blue-500 px-5 py-3 text-sm font-medium text-white">
                                     Подписаться
                                 </button>
@@ -779,14 +789,14 @@
             </div>
         </div>
 
-        <button data-modal-backdrop="false" id="followModalBtn" style="display: none" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button" data-modal-toggle="authentication-modal">
+        <button id="followModalBtn" style="display: none" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button" data-modal-toggle="authentication-modal">
             Toggle login modal
         </button>
 
-        <div id="authentication-modal" aria-hidden="true" class="hidden overflow-x-hidden overflow-y-auto fixed h-modal md:h-full top-4 left-0 right-0 md:inset-0 z-50 justify-center items-center">
+        <div id="authentication-modal" aria-hidden="true" class="hidden overflow-x-hidden overflow-y-auto fixed h-modal md:h-full top-4 left-0 right-0 md:inset-0 z-50 justify-center items-center flex">
             <div class="relative w-full max-w-md px-4 h-full md:h-auto items-center flex">
                 <!-- Modal content -->
-                <div class="bg-white rounded-lg shadow relative dark:bg-gray-700 w-full">
+                <div class="bg-white rounded-lg shadow relative w-full">
                     <div class="flex justify-end p-2">
                         <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="authentication-modal">
                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
@@ -795,7 +805,7 @@
                     <div class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8" action="#">
                         <div class="text-center">
                             @if($user->settings->congratulation_on_off)
-                                <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+                                <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-black">
                                     {{$user->settings->congratulation_text}}
                                 </h1>
                                 @if($user->settings->congratulation_gif)
@@ -804,7 +814,7 @@
                                     </div>
                                 @endif
                             @else
-                                <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+                                <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-black">
                                     Подписка на @if($user->type == 'Events') мероприятия @endif
                                     <span class="text-blue-600 dark:text-blue-500">{{$user->name}}</span>
                                     успешно оформлена!
@@ -822,7 +832,7 @@
     @endif
 
     @if($user->settings->show_logo == true)
-        <footer class="sticky top-[100vh] footer-block mt-20 p-2  md:px-6 md:py-8 navbar-fixed-bottom @if($user->settings->event_followers == '1') mb-20 @else mb-4 @endif" >
+        <footer class="sticky top-[100vh] footer-block p-2 md:px-6 md:py-8 navbar-fixed-bottom @if($user->settings->event_followers == '1') mb-20 @else mb-4 @endif" >
             <div class="flex justify-center items-center">
                 <div class="flex justify-center items-center">
                     <a href="https://chrry.me/" class="flex items-center">
@@ -859,14 +869,14 @@
             $('#eventFollowBtn').click(function(e){
                 e.preventDefault();
 
-                let user = $('#user_id').val();
-                let name = $('#nameFollow').val();
-                let email = $('#emailFollow').val();
-                let city = $('#select-city').val();
-                let telephone = $('#telephoneFollow').val();
-                let telegram = $('#telegramFollow').val();
-                let page_type = $('#page_type').val();
-                let token = $("meta[name='csrf-token']").attr("content");
+                var user = $('#user_id').val();
+                var name = $('#nameFollow').val();
+                var email = $('#emailFollow').val();
+                var city = $('#select-city').val();
+                var telephone = $('#telephoneFollow').val();
+                var telegram = $('#telegramFollow').val();
+                var page_type = $('#page_type').val();
+                var token = $("meta[name='csrf-token']").attr("content");
 
                 $.ajax({
                     url: "{{ route('createFollow') }}",
@@ -874,24 +884,37 @@
                     data: {user_id:user, city_id:city, name:name, email:email, telephone:telephone, telegram:telegram, _token:token, page_type:page_type},
                     success: function(data) {
                         if(data.errors != null) {
-
-                            let newHTML = '';
-
+                            var newHTML = '';
                             $.each(data.errors, function(key, value){
                                 newHTML += `<p class="mt-1 text-base font-bold">${value}</p>`
                             });
-
                             $('.alert-danger').show();
                             $('.alert-danger').html(newHTML);
                         } else {
-                            $("#closeFollow").click();
+                            $("#closeFollowModal").click();
                             $('.alert-danger').hide();
                             $('.alert-danger').remove();
                             $("#followModalBtn").click();
                         }
                     },
-                    error: function(reject) {
-                        console.log('bad');
+                    error: function(jqXHR, exception) {
+                        var msg = '';
+                        if (jqXHR.status === 0) {
+                            msg = 'Not connect.\n Verify Network.';
+                        } else if (jqXHR.status == 404) {
+                            msg = 'Requested page not found. [404]';
+                        } else if (jqXHR.status == 500) {
+                            msg = 'Internal Server Error [500].';
+                        } else if (exception === 'parsererror') {
+                            msg = 'Requested JSON parse failed.';
+                        } else if (exception === 'timeout') {
+                            msg = 'Time out error.';
+                        } else if (exception === 'abort') {
+                            msg = 'Ajax request aborted.';
+                        } else {
+                            msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                        }
+                        console.log(msg)
                     },
                     complete: function() {
                         $('#user_id').val('');
@@ -1029,7 +1052,7 @@
         @endif
     @endif
 
-    <script src="https://unpkg.com/flowbite@1.5.5/dist/flowbite.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.0/flowbite.min.js"></script>
 </body>
 </html>
 

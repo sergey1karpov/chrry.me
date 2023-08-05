@@ -74,12 +74,18 @@ class UserSettings extends Model
         'follow_block_font_shadow_blur',
         'follow_btn_top_shadow_color',
         'follow_btn_top_shadow_top',
+        'follow_btn_top_shadow_right',
         'follow_btn_top_shadow_blur',
 
         'congratulation_gif',
         'congratulation_text',
         'congratulation_on_off',
-        'verify_icon'
+        'verify_icon',
+
+        'follow_border',
+        'follow_border_color',
+        'follow_border_animation',
+        'follow_border_animation_speed',
     ];
 
     protected $attributes = [
@@ -144,11 +150,17 @@ class UserSettings extends Model
         'follow_block_font_shadow_blur' => false,
         'follow_btn_top_shadow_color' => false,
         'follow_btn_top_shadow_top' => false,
+        'follow_btn_top_shadow_right' => false,
         'follow_btn_top_shadow_blur' => false,
 
         'congratulation_gif' => false,
         'congratulation_text' => false,
         'congratulation_on_off' => false,
-        'verify_icon' => false
+        'verify_icon' => false,
+
+        'follow_border' => null,
+        'follow_border_color' => null,
+        'follow_border_animation' => null,
+        'follow_border_animation_speed' => null,
     ];
 }

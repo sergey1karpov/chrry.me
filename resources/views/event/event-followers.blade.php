@@ -31,21 +31,21 @@
             <div class="flex items-center justify-between mb-5">
                 <h5 class="text-4xl font-bold leading-none text-gray-900 dark:text-white"><span class="text-blue-600 dark:text-blue-500">{{ $city->name }}</span></h5>
             </div>
-            <section class="flex justify-center mt-2 mb-4">
-                <form action="{{ route('sortFollowers', ['user' => $user->id, 'country' => $country->id, 'city' => $city->id]) }}" method="GET">
-                    <div date-rangepicker class="flex items-center">
-                        <div class="relative">
+            <section class="flex justify-center mt-2 mb-4 w-full">
+                <form class="w-full" action="{{ route('sortFollowers', ['user' => $user->id, 'country' => $country->id, 'city' => $city->id]) }}" method="GET">
+                    <div date-rangepicker class="w-full">
+                        <div class="relative w-full">
                             <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                                 <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
                             </div>
-                            <input id="from" name="from" type="text" class="bg-gray-50 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full pl-10 p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-white @endif dark:placeholder-gray-400 dark:focus:ring-blue-500" placeholder="{{ __('main.user_stat_from') }}">
+                            <input id="from" name="from" type="date" class="w-full bg-gray-50 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full pl-10 p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-white @endif dark:placeholder-gray-400 dark:focus:ring-blue-500" placeholder="{{ __('main.user_stat_from') }}">
                         </div>
-                        <span class="mx-4 text-gray-500">{{ __('main.user_stat_to') }}</span>
-                        <div class="relative">
+
+                        <div class="relative mt-4">
                             <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                                 <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
                             </div>
-                            <input id="to" name="to" type="text" class="bg-gray-50 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full pl-10 p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-white @endif dark:placeholder-gray-400 dark:focus:ring-blue-500" placeholder="{{ __('main.user_stat_end') }}">
+                            <input id="to" name="to" type="date" class="w-full bg-gray-50 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full pl-10 p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-white @endif dark:placeholder-gray-400 dark:focus:ring-blue-500" placeholder="{{ __('main.user_stat_end') }}">
                         </div>
                     </div>
                     <div class="mt-4">
@@ -66,7 +66,7 @@
                     <!-- Modal content -->
                     <div class="relative bg-white rounded-lg shadow dark:bg-gray-900">
                         <div class="p-2">
-                            <form class="mt-4" action="{{ route('exportType', ['user' => $user->id, 'type' => 'EventFollowers']) }}" method="GET">@csrf
+                            <form class="mt-4" action="{{ route('exportType', ['user' => $user->id, 'type' => 'EventFollowers']) }}" method="GET">
                                 <input type="hidden" value="{{$user->id}}" name="user">
                                 <input type="hidden" value="{{$country->id}}" name="country">
                                 <input type="hidden" value="{{$city->id}}" name="city">
@@ -79,19 +79,18 @@
                                     <option value="xls">XLS</option>
                                 </select>
                                 <label for="first_name" class="block mt-2 mb-2 text-sm font-medium text-gray-900 dark:text-white">За какой период нужны данные</label>
-                                <div date-rangepicker class="flex items-center">
+                                <div date-rangepicker class="">
                                     <div class="relative">
                                         <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                                             <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
                                         </div>
-                                        <input id="from" name="fromSort" type="text" class="bg-gray-50 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full pl-10 p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-white @endif dark:placeholder-gray-400 dark:focus:ring-blue-500" placeholder="{{ __('main.user_stat_from') }}">
+                                        <input id="from" name="fromSort" type="date" class="bg-gray-50 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full pl-10 p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-white @endif dark:placeholder-gray-400 dark:focus:ring-blue-500" placeholder="{{ __('main.user_stat_from') }}">
                                     </div>
-                                    <span class="mx-4 text-gray-500">{{ __('main.user_stat_to') }}</span>
-                                    <div class="relative">
+                                    <div class="relative mt-2">
                                         <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                                             <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
                                         </div>
-                                        <input id="to" name="toSort" type="text" class="bg-gray-50 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full pl-10 p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-white @endif dark:placeholder-gray-400 dark:focus:ring-blue-500" placeholder="{{ __('main.user_stat_end') }}">
+                                        <input id="to" name="toSort" type="date" class="bg-gray-50 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full pl-10 p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-white @endif dark:placeholder-gray-400 dark:focus:ring-blue-500" placeholder="{{ __('main.user_stat_end') }}">
                                     </div>
                                 </div>
                                 <label for="first_name" class="block mt-2 text-sm font-medium text-gray-900 dark:text-white">Какие поля включить в выборку</label>

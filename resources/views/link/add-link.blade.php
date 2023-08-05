@@ -48,9 +48,24 @@
         </div>
     @endif
 
-{{--    <div id="sticky-banner" tabindex="-1" class="fixed top-0 left-0 z-50 flex justify-between w-full p-4 border-b border-gray-200 bg-gray-50 dark:bg-gray-700 dark:border-gray-600">--}}
-{{--        --}}
-{{--    </div>--}}
+    @if ($message = Session::get('error'))
+        <div class="text-center flex justify-center">
+            <div class="w-full text-center">
+                <div class="mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8">
+                    <div id="alert-3" class="flex p-4 mb-4 text-red-700 bg-red-100 rounded-lg dark:bg-gray-800 dark:text-red-400" role="alert">
+                        <span class="sr-only">Info</span>
+                        <div class="ml-3 text-sm font-medium">
+                            <span class="font-medium">{{$message}}</span>
+                        </div>
+                        <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-red-100 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex h-8 w-8 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-gray-700" data-dismiss-target="#alert-3" aria-label="Close">
+                            <span class="sr-only">Close</span>
+                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
 
     <div class="w-full mx-auto max-w-screen-xl lg:px-8 sm:px-8 z-50" style="position: sticky; top: 0;">
         <div id="matureBlock" class="rounded-b-lg mt-1 bg-white mx-auto max-w-screen-xl px-4 pt-4 pb-4 sm:px-6 lg:px-8">
@@ -286,7 +301,7 @@
 
                     </div>
 
-                    <div class="mt-5">
+                    <div class="mt-5 ml-2 mr-2">
                         <button type="submit" class="mt-5 border border-indigo-600 w-full inline-block rounded-lg bg-indigo-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
                             {{ __('main.link_create') }}
                         </button>
@@ -297,201 +312,7 @@
         </div>
     <section>
 
-    <script>
-
-        //Copy last link design block
-        $( document ).ready(function(){
-            $('#check_last_link').on('change', function(){
-                if ($(this).is(':checked')) {
-                    switchStatus = $(this).is(':checked');
-                    $('#design').hide()
-                }
-                else {
-                    switchStatus = $(this).is(':checked');
-                    $('#design').show()
-                }
-            });
-        });
-
-        //Select icon
-        new TomSelect('#select-beast-empty',{
-            valueField: 'img',
-            searchField: 'title',
-            options: [
-                @foreach($allIconsInsideFolder as $icon)
-                    {id: {{$icon->getInode()}}, title: '{{substr($icon->getFilename(), 0, strrpos($icon->getFilename(),'.'))}}', img: '{{env('APP_URL') . '/public/images/social/'.$icon->getFilename()}}'},
-                @endforeach
-            ],
-            render: {
-                option: function(data, escape) {
-                    return  `
-                        <div style="display: inline-block;">
-                            <div><img style="background-color: #DCDCDC" width="90" src="${data.img}"></div>
-                        </div>
-                    `;
-                },
-                item: function(data, escape) {
-                    return  '<img style="margin-right: 16px; background-color: #DCDCDC" width="30" src="' + escape(data.img) + '">' + '<span class="title">' + escape(data.title) + '</span>';
-                }
-            }
-        });
-
-        //Select font
-        new TomSelect('#select-beast-empty-font',{
-            valueField: 'font',
-            searchField: 'title',
-            maxOptions: 150,
-            options: [
-                @foreach($allFontsInFolder as $font)
-                    {id: {{$font->getInode()}}, title: '{{ stristr($font->getFilename(), '.', true)}}', font: '{{ stristr($font->getFilename(), '.', true) }}'},
-                @endforeach
-            ],
-            render: {
-                option: function(data, escape) {
-                    return  '<div>' +
-                        '<span style="font-size: 2.5rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</span>' +
-                        '</div>';
-                },
-                item: function(data, escape) {
-                    return  '<h4 style="font-size: 2.5rem; font-family:' + escape(data.font) +'">' + escape(data.title) + '</h4>';
-                }
-            }
-        });
-
-        //Title
-        $('#title').keyup(function() {
-            var val = $('#title').val();
-            $('#title-text').html(val);
-        });
-
-        //Avatar
-        document.getElementById('avatar').addEventListener('change', function() {
-            if (this.files && this.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    document.getElementById('avatar-user').setAttribute('src', e.target.result);
-                };
-                reader.readAsDataURL(this.files[0]);
-            }
-        });
-
-        //icon
-        function fun1() {
-            var icon = document.getElementById('select-beast-empty').value;
-            document.getElementById('avatar-user').setAttribute('src', icon);
-        }
-
-        //font
-        function font() {
-            var font = document.getElementById('select-beast-empty-font').value;
-            document.getElementById('title-text').style.fontFamily = font;
-        }
-
-        //font-size
-        function fontSize() {
-            var fontSize = document.getElementById('font-size').value;
-            document.getElementById('title-text').style.fontSize = fontSize + 'rem';
-        }
-
-        //text-color
-        function textColor() {
-            var textColor = document.getElementById('name_color').value;
-            document.getElementById('title-text').style.color = textColor;
-        }
-
-        //text-shadow
-        function textShadow() {
-            var textShadowColor = document.getElementById('text-shadow-color').value;
-            var right = document.getElementById('text-shadow-color-right').value;
-            var bottom = document.getElementById('text-shadow-color-bottom').value;
-            var blur = document.getElementById('text-shadow-color-blur').value;
-
-            var textShadow = right+'px' + ' ' + bottom+'px' + ' ' + blur+'px' + ' ' + textShadowColor;
-            document.getElementById('title-text').style.textShadow = textShadow;
-        }
-
-        //bg-color
-        document.getElementById('background').style.backgroundColor = '#8e939c';
-        function backgroundColor() {
-            var bgColor = document.getElementById('bg-color').value;
-            var transparency = document.getElementById('bg-transparency').value;
-
-            let hex = bgColor.replace('#', '');
-            if (hex.length === 3) {
-                hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
-            }
-
-            const r = parseInt(hex.substring(0, 2), 16);
-            const g = parseInt(hex.substring(2, 4), 16);
-            const b = parseInt(hex.substring(4, 6), 16);
-
-            var rgb = 'rgb(' + r+',' + ' ' + g+',' + ' ' + b+',' + ' ' + Number(transparency) + ')';
-            document.getElementById('background').style.backgroundColor = rgb;
-        }
-
-        //link-shadow
-        function linkShadow() {
-            var shadowColor = document.getElementById('link-shadow-color').value;
-            var right = document.getElementById('link-shadow-color-right').value;
-            var bottom = document.getElementById('link-shadow-color-bottom').value;
-            var blur = document.getElementById('link-shadow-color-blur').value;
-
-            var shadow = right+'px' + ' ' + bottom+'px' + ' ' + blur+'px' + ' ' + shadowColor;
-            document.getElementById('background').style.boxShadow = shadow;
-        }
-
-        //border round
-        function borderRound() {
-            var borderRadius = document.getElementById('border-round').value;
-            document.getElementById('background').style.borderRadius = borderRadius + 'px';
-        }
-
-        //border
-        function borderBoth() {
-            var borderBoth = document.getElementById('border-both').value;
-            document.getElementById('background').className = borderBoth;
-        }
-
-        //border color
-        function borderColor() {
-            var borderColor = document.getElementById('border-color').value;
-            document.getElementById('background').style.borderColor = borderColor;
-        }
-
-        //animation
-        function animationLink() {
-            var animation = document.getElementById('animation').value;
-            document.getElementById('block').className = animation;
-        }
-
-        //animation speed
-        function animationSpeed() {
-            var animationSpeed = document.getElementById('animation_speed').value;
-            document.getElementById('block').style.animationDuration = animationSpeed + 's';
-        }
-
-        //bg color
-        $( document ).ready(function() {
-            $("#switch-bg").click(function() {
-                var type = $(this).is(':checked');
-                if(type) {
-                    $("#matureBlock").removeClass('bg-white').addClass('bg-black');
-                } else {
-                    $("#matureBlock").removeClass('bg-black').addClass('bg-white');
-                }
-            })
-        });
-
-        function fontBold() {
-            var bold = document.getElementById('dl-font-bold').value;
-            if(bold == 'bold') {
-                document.getElementById('title-text').style.fontWeight = 'bold';
-            } else {
-                document.getElementById('title-text').style.fontWeight = 'normal';
-            }
-        }
-
-    </script>
+    @include('scripts.add-link')
 
 </x-app-layout>
 

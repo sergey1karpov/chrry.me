@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Http\Request;
 
@@ -185,6 +186,29 @@ class User extends Authenticatable
     }
 
     /**
+     * Return 3 user events to demo page
+     *
+     * @return Collection
+     */
+    public function demoUserEvents(): Collection
+    {
+        return Event::where('user_id', Auth::user()->id)->take(3)->orderByDesc('id')->get();
+    }
+
+    /**
+     * Return 6 user links to demo page
+     *
+     * @param bool $pinned
+     * @return Collection
+     */
+    public function demoUserLinks(bool $pinned): Collection
+    {
+        return $pinned ?
+            Link::where('user_id', Auth::user()->id)->where('icon', null)->take(6)->orderByDesc('id')->get() :
+            Link::where('user_id', Auth::user()->id)->take(6)->orderByDesc('id')->get();
+    }
+
+    /**
      * @return Collection
      */
     public function userProducts(): Collection
@@ -197,7 +221,13 @@ class User extends Authenticatable
      */
     public function userLinksWithoutBar(): Collection
     {
-        return $this->links()->where('type', 'LINK')->where('user_id', $this->id)->where('icon', null)->where('pinned', false)->orderBy('position')->get();
+        return $this->links()
+            ->where('type', 'LINK')
+            ->where('user_id', $this->id)
+            ->where('icon', null)
+            ->where('pinned', false)
+            ->orderBy('position')
+            ->get();
     }
 
     /**
@@ -253,7 +283,8 @@ class User extends Authenticatable
                 'logotype_shadow_right'  => $request->logotype_shadow_right,
                 'logotype_shadow_bottom' => $request->logotype_shadow_bottom,
                 'logotype_shadow_round'  => $request->logotype_shadow_round,
-                'logotype_shadow_color'  => $request->logotype_shadow_color
+                'logotype_shadow_color'  => $request->logotype_shadow_color,
+                'avatar_vs_logotype'     => 'logotype'
             ]
         );
     }
@@ -328,9 +359,14 @@ class User extends Authenticatable
                 'follow_block_font_shadow_blur' => $request->follow_block_font_shadow_blur,
                 'follow_btn_top_shadow_color' => $request->follow_btn_top_shadow_color,
                 'follow_btn_top_shadow_top' => $request->follow_btn_top_shadow_top,
+                'follow_btn_top_shadow_right' => $request->follow_btn_top_shadow_right,
                 'follow_btn_top_shadow_blur' => $request->follow_btn_top_shadow_blur,
                 'congratulation_text' => $request->congratulation_text,
                 'congratulation_on_off' => $request->congratulation_on_off,
+                'follow_border' => $request->follow_border,
+                'follow_border_color' => $request->follow_border_color,
+                'follow_border_animation' => $request->follow_border_animation,
+                'follow_border_animation_speed' => $request->follow_border_animation_speed,
                 'congratulation_gif' => isset($request->congratulation_gif) ?
                     $uploadService->savePhoto(
                         photo: $request->congratulation_gif,
@@ -361,6 +397,7 @@ class User extends Authenticatable
                         imageType: UploadPhotoService::IMAGE_FOR_PROFILE,
                     ) :
                     $user->settings->$imgType,
+                'avatar_vs_logotype' => $request->image_type ? 'avatar' : $user->settings->avatar_vs_logotype
             ]
         );
     }

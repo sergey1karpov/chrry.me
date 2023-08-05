@@ -55,10 +55,10 @@
     @endif
 
     <section class="content-block text-white @if($user->dayVsNight == 1) bg-black @endif">
-        <div class="mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-screen-xl sm:px-6 lg:px-8">
             <div class="">
                 <div class="group block">
-                    <div class="card-block block rounded-xl @if($user->dayVsNight == 1) bg-[#0f0f0f] border-4 @endif border-[#0f0f0f] p-8 shadow-xl transition hover:border-red-600/50 hover:shadow-red-600/50 group-hover:-translate-x-1 group-hover:-translate-y-1 group-hover:shadow-red-600/50">
+                    <div class="card-block block rounded-xl @if($user->dayVsNight == 1) bg-[#0f0f0f] border-4 @endif border-[#0f0f0f] p-8 shadow-xl transition ">
                         <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl lg:text-6xl @if($user->dayVsNight == 1) text-gray-50 @else text-gray-900 @endif">{{ __('main.link_mass') }}</h1>
                         <p class="mb-6 text-lg font-normal text-gray-500 lg:text-xl  dark:text-gray-400">{{ __('main.link_mass_description') }}</p>
                         <a href="{{ route('editAllLinkForm', ['user' => $user->id]) }}" type="" class="inline-block rounded border border-indigo-900 bg-indigo-900 px-9 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
@@ -72,7 +72,7 @@
 
     @if(count($user->userLinks(true)) > 0)
         <section class="content-block text-white @if($user->dayVsNight == 1) bg-black @endif">
-            <div class="mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8">
+            <div class="mx-auto max-w-screen-xl py-4 sm:px-6 lg:px-8">
                 <div class="text-center mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
                     <label class="mt-1 text-sm font-medium leading-relaxed text-indigo-600" for="avatar">{{ __('main.link_mass_pin') }}</label>
                     <div class="group block">
@@ -166,7 +166,7 @@
 
     @if(count($user->userLinks(false)) > 0)
         <section class="content-block text-white @if($user->dayVsNight == 1) bg-black @endif">
-            <div class="mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8">
+            <div class="mx-auto max-w-screen-xl py-4 sm:px-6 lg:px-8">
                 <div class="text-center mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
                     <label class="mt-1 text-sm font-medium leading-relaxed text-indigo-600" for="avatar">{{ __('main.link_mass_no_pin') }}</label>
                     <div class="group block">

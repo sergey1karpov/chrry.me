@@ -6,8 +6,10 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class CheckCountEventsMiddleware
+class MaxCountFreeProductCardsMiddleware
 {
+    const MAX_FREE_PRODUCT_CARDS = 20;
+
     /**
      * Handle an incoming request.
      *
@@ -17,8 +19,10 @@ class CheckCountEventsMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if(count(Auth::user()->events) > 50) {
-            abort(403, 'К сожалению вы достигли лимита по добавлению мероприятий. На данный момент разрешено добавить не более 50 событий');
+        $currentUser = Auth::user();
+
+        if(count($currentUser->products) > self::MAX_FREE_PRODUCT_CARDS) {
+            return back()->with('error', 'Достигнут лимит на колличество карточек товара. Максимальное кол-во - 20 карточек');
         }
 
         return $next($request);
