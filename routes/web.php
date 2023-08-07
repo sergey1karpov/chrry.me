@@ -128,6 +128,8 @@ Route::middleware(['web', 'root', 'locale', 'check.email'])->group(function () {
             Route::get('/followers/all/{country}/{city}/sort', [FollowController::class, 'sortFollowers'])->name('sortFollowers');
             Route::get('/followers/create-mail', [EventController::class, 'createMailForm'])->name('createMailForm');
             Route::post('/followers/create-mail-post', [EventController::class, 'createMail'])->name('createMail');
+            Route::patch('/setting/cong-settings', [EventController::class, 'congSetting'])->name('congSetting');
+            Route::post('/delete/thanks-gif', [EventController::class, 'deleteEventFollowerGif'])->name('deleteEventFollowerGif');
         });
 
         Route::group(['prefix' => 'products'], function () {

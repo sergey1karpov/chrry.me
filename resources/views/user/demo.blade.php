@@ -11,28 +11,30 @@
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
             </button>
 
-            <div id="default-block">
-                @if($user->settings->avatar_vs_logotype == 'avatar')
-                    <div class="flex justify-center">
-                        <img src="{{'../' . $user->settings->avatar}}" class="rounded-full mt-10" style="width: 96px; height: 96px">
-                    </div>
-                @elseif($user->settings->avatar_vs_logotype == 'logotype')
-                    <div class="flex justify-center">
-                        <img id="logo" src="{{'../' . $user->settings->logotype}}" class="mt-20" width="{{$user->settings->logotype_size}}" style="
-                        filter: drop-shadow({{$user->settings->logotype_shadow_right}}px {{$user->settings->logotype_shadow_bottom}}px {{$user->settings->logotype_shadow_round}}px {{$user->settings->logotype_shadow_color}});
-                        @if($user->settings->logotype_shadow_right) margin-right:{{$user->settings->logotype_shadow_right}}px; @endif
-                    ">
-                    </div>
-                @else
+            <!-- -->
+            <!-- -->
+            <!-- -->
+            <!-- -->
+            <!-- -->
+            <!-- -->
 
-                @endif
-            </div>
+{{--            <div id="default-block">--}}
+{{--                <div class="flex justify-center" id="def-ava-block" style="display: none">--}}
+{{--                    <img id="ava" src="" class="rounded-full mt-10" style="width: 96px; height: 96px">--}}
+{{--                </div>--}}
+{{--                <div class="flex justify-center" id="def-logo-block" style="display: none">--}}
+{{--                    <img id="logo" src="" class="mt-20 mb-10" width="{{$user->settings->logotype_size}}" style="--}}
+{{--                    filter: drop-shadow({{$user->settings->logotype_shadow_right}}px {{$user->settings->logotype_shadow_bottom}}px {{$user->settings->logotype_shadow_round}}px {{$user->settings->logotype_shadow_color}});--}}
+{{--                    @if($user->settings->logotype_shadow_right) margin-right:{{$user->settings->logotype_shadow_right}}px; @endif--}}
+{{--                " alt="Логотип не загружен :((">--}}
+{{--                </div>--}}
+{{--            </div>--}}
 
             <div class="flex justify-center" id="def-ava" style="display:none;">
-                <img src="{{'../' . $user->settings->avatar}}" class="rounded-full mt-10" style="width: 96px; height: 96px">
+                <img id="def-ava-img" src="" class="rounded-full mt-10" style="width: 96px; height: 96px">
             </div>
             <div class="flex justify-center" id="def-logo" style="display:none;">
-                <img id="logo" src="{{'../' . $user->settings->logotype}}" class="mt-20" width="{{$user->settings->logotype_size}}" style="
+                <img id="def-logo-img" src="" class="mt-20 mb-10" width="{{$user->settings->logotype_size}}" style="
                         filter: drop-shadow({{$user->settings->logotype_shadow_right}}px {{$user->settings->logotype_shadow_bottom}}px {{$user->settings->logotype_shadow_round}}px {{$user->settings->logotype_shadow_color}});
                         @if($user->settings->logotype_shadow_right) margin-right:{{$user->settings->logotype_shadow_right}}px; @endif
                     ">
@@ -49,10 +51,13 @@
                     <img id="logo-img" class="mb-3 mt-20" width="{{$user->settings->logotype_size}}" style="
                         filter: drop-shadow({{$user->settings->logotype_shadow_right}}px {{$user->settings->logotype_shadow_bottom}}px {{$user->settings->logotype_shadow_round}}px {{$user->settings->logotype_shadow_color}});
                         @if($user->settings->logotype_shadow_right) margin-right:{{$user->settings->logotype_shadow_right}}px; @endif
-                    ">
+                    " alt="Логотип не загружен :((">
                 </div>
             </div>
 
+            <div class="flex justify-center" id="without-ava-logo-top" style="display: none">
+                <h2 id="" src="" class="rounded-full mt-10" style="margin-top: 80px"></h2>
+            </div>
             <h2 style="
                         font-family: {{ $user->settings->name_font ?? 'Rubik' }}, sans-serif;
                         text-shadow:{{$user->settings->name_font_shadow_right ?? 0}}px {{$user->settings->name_font_shadow_bottom ?? 0}}px {{$user->settings->name_font_shadow_blur ?? 0}}px {{$user->settings->name_font_shadow_color ?? '#464646'}} ;
@@ -63,7 +68,7 @@
                 {{ $user->name }}
                 <div id="verify-block" style="display: none">
                     <div id="verify-upload">
-                        <img id="verify" src="{{$user->settings->verify_icon}}" class="ml-2 mt-1" style="width: 20px; height: 20px">
+                        <img id="verify" src="" class="ml-2 mt-1" style="width: 20px; height: 20px">
                     </div>
                     <div id="verify-default">
                         <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="ml-2 mt-1 bi bi-patch-check-fill " viewBox="0 0 16 16" id="v-icon" style="color: {{$user->settings->verify_color}}">
@@ -80,11 +85,23 @@
                         text-shadow:{{$user->settings->description_font_shadow_right ?? 0}}px {{$user->settings->description_font_shadow_bottom ?? 0}}px {{$user->settings->description_font_shadow_blur ?? 0}}px {{$user->settings->description_font_shadow_color ?? '#464646'}} ;
                         font-size: {{ $user->settings->description_font_size ?? 0.9}}rem;
                         color: {{ $user->settings->description_color ?? '#464646'}};
-{{--                        @if($user->settings->description_font_shadow_right) margin-right: {{$user->settings->description_font_shadow_right}}px @endif--}}
+                        display: none;
                     ">
                     {{ $user->description }}
                 </h2>
             </div>
+
+            <div class="flex justify-center" id="without-ava-logo-bottom" style="display: none">
+                <h2 id="" src="" class="rounded-full mt-10"></h2>
+            </div>
+
+
+            <!-- -->
+            <!-- -->
+            <!-- -->
+            <!-- -->
+            <!-- -->
+            <!-- -->
 
             <div class="flex justify-evenly mb-5 mt-5" id="top-bar" style="display: none">
                 <nav class="navbar mt-2">
@@ -449,7 +466,7 @@
                                 </h1>
 
                                 <div id="cong-gif" class="flex justify-center" style="display: none">
-                                    <img id="gif-cong" class="w-full rounded mb-3" src="{{'../'.$user->settings->congratulation_gif }}">
+                                    <img id="gif-cong" class="w-full rounded mb-3" src="">
                                 </div>
 
                                 <h1 id="cong-text-def" class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-black" style="display: none">

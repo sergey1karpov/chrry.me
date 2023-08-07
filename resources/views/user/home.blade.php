@@ -120,7 +120,7 @@
 {{--                        </div>--}}
                     @endif
                 @endif
-                <button type="button" data-drawer-target="drawer-bottom-shared" data-drawer-show="drawer-bottom-shared" data-drawer-placement="bottom" aria-controls="drawer-bottom-shared" class="text-indigo-100 bg-white border border-white hover:bg-gray-100 hover:text-white focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-white dark:text-gray-100 dark:hover:text-white dark:focus:ring-gray-100">
+                <button type="button" data-modal-target="sharedModal" data-modal-toggle="sharedModal" class="text-indigo-100 bg-white border border-white hover:bg-gray-100 hover:text-white focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-white dark:text-gray-100 dark:hover:text-white dark:focus:ring-gray-100">
                     <svg class="w-4 h-4 text-gray-800 dark:text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 3">
                         <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"/>
                     </svg>
@@ -135,28 +135,48 @@
         </div>
     </header>
 
-    <div id="drawer-bottom-shared" class="rounded-t-lg fixed bottom-0 left-0 right-0 z-40 w-full p-4 bg-white dark:bg-white overflow-y-auto transition-transform translate-y-full" tabindex="-1" aria-labelledby="drawer-bottom-label">
-        <div class="flex justify-center">
-            <h5 id="drawer-bottom-label" class="inline-flex items-center mb-4 text-base font-semibold text-gray-500 dark:text-black">Поделитесь страницей</h5>
-        </div>
-        <button id="closeFollow" type="button" data-drawer-hide="drawer-bottom-shared" aria-controls="drawer-bottom-shared" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 right-2.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" >
-            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-            <span class="sr-only">Close menu</span>
-        </button>
-        <div class="text-center">
-            <div class="gap-4">
-                <div class="mx-auto max-w-screen-xl sm:px-6 lg:px-8">
-                    <div class=" py-2">
-                        <textarea type="button" id="text_for_copy" rows="1" readonly class="w-full rounded-lg border-gray-200 p-2 pe-12 text-sm shadow-sm">{{url()->full()}}</textarea>
-{{--                        <a href="http://vkontakte.ru/share.php?url={{url()->full()}}&title={{$user->name}}&description={{'Chrry.me: Засунь все свои ссылки в одно место...'}}&image={{ url()->full() . $user->settings->avatar }}" target="_blank" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">--}}
-{{--                            <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg>--}}
-{{--                            <span>VK Share</span>--}}
-{{--                        </a>--}}
+    <div id="sharedModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative w-full max-w-2xl max-h-full">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow">
+                <!-- Modal body -->
+                <div class="p-2 space-y-6">
+                    <div class="text-center">
+                        <div class="gap-4">
+                            <div class="mx-auto max-w-screen-xl sm:px-6 lg:px-8">
+                                <div class="py-2 w-full flex items-center">
+                                    <textarea type="button" id="text_for_copy" rows="1" readonly class="w-full rounded-lg border-gray-200 p-2 pe-12 text-sm shadow-sm">{{url()->full()}}</textarea>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+{{--    <div id="drawer-bottom-shared" class="rounded-t-lg fixed bottom-0 left-0 right-0 z-40 w-full p-4 bg-white dark:bg-white overflow-y-auto transition-transform translate-y-full" tabindex="-1" aria-labelledby="drawer-bottom-label">--}}
+{{--        <div class="flex justify-center">--}}
+{{--            <h5 id="drawer-bottom-label" class="inline-flex items-center mb-4 text-base font-semibold text-gray-500 dark:text-black">Поделитесь страницей</h5>--}}
+{{--        </div>--}}
+{{--        <button id="closeFollow" type="button" data-drawer-hide="drawer-bottom-shared" aria-controls="drawer-bottom-shared" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 right-2.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" >--}}
+{{--            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>--}}
+{{--            <span class="sr-only">Close menu</span>--}}
+{{--        </button>--}}
+{{--        <div class="text-center">--}}
+{{--            <div class="gap-4">--}}
+{{--                <div class="mx-auto max-w-screen-xl sm:px-6 lg:px-8">--}}
+{{--                    <div class=" py-2">--}}
+{{--                        <textarea type="button" id="text_for_copy" rows="1" readonly class="w-full rounded-lg border-gray-200 p-2 pe-12 text-sm shadow-sm">{{url()->full()}}</textarea>--}}
+{{--                        <a href="http://vkontakte.ru/share.php?url={{url()->full()}}&title={{$user->name}}&description={{'Chrry.me: Засунь все свои ссылки в одно место...'}}&image={{ url()->full() . $user->settings->avatar }}" target="_blank" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">--}}
+{{--                            <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg>--}}
+{{--                            <span>VK Share</span>--}}
+{{--                        </a>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
 
 {{--    <a id="vk" title="<?=$mytitle;?> Vk" href="http://vk.com/share.php?url=<?=$ssil;?>&title=<?=$titles;?>&description=&image=" target="_blank"></a>--}}
 

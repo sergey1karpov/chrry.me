@@ -49,38 +49,68 @@
     });
 
     //Загрузка аватара
+    // document.getElementById('avatar').addEventListener('change', function() {
+    //     if (this.files && this.files[0]) {
+    //         var reader = new FileReader();
+    //         reader.onload = function (e) {
+    //             document.getElementById('ava-img').setAttribute('src', e.target.result);
+    //             $('#default-block').hide();
+    //             $('#logo-block').hide();
+    //             $('#ava-block').show();
+    //
+    //             $('#def-logo').hide();
+    //             $('#def-ava').hide();
+    //
+    //             $('#user-name').show();
+    //         };
+    //         reader.readAsDataURL(this.files[0]);
+    //     }
+    // });
     document.getElementById('avatar').addEventListener('change', function() {
         if (this.files && this.files[0]) {
             var reader = new FileReader();
             reader.onload = function (e) {
-                document.getElementById('ava-img').setAttribute('src', e.target.result);
-                $('#default-block').hide();
-                $('#logo-block').hide();
-                $('#ava-block').show();
-
-                $('#def-logo').hide();
-                $('#def-ava').hide();
-
+                document.getElementById('def-ava-img').setAttribute('src', e.target.result);
+                $('#def-ava').show();
                 $('#user-name').show();
+                $('#user-description').show();
+                $('#def-logo').hide();
+                $('#without-ava-logo-top').hide();
             };
             reader.readAsDataURL(this.files[0]);
         }
     });
 
     //Загрузка логотипа
+    // document.getElementById('logotype-upload').addEventListener('change', function() {
+    //     if (this.files && this.files[0]) {
+    //         var reader = new FileReader();
+    //         reader.onload = function (e) {
+    //             document.getElementById('logo-img').setAttribute('src', e.target.result);
+    //             $('#default-block').hide();
+    //             $('#ava-block').hide();
+    //             $('#logo-block').show();
+    //
+    //             $('#def-ava').hide();
+    //             $('#def-logo').hide();
+    //
+    //             $('#user-name').hide();
+    //
+    //             $('#user-description').hide();
+    //         };
+    //         reader.readAsDataURL(this.files[0]);
+    //     }
+    // });
     document.getElementById('logotype-upload').addEventListener('change', function() {
         if (this.files && this.files[0]) {
             var reader = new FileReader();
             reader.onload = function (e) {
-                document.getElementById('logo-img').setAttribute('src', e.target.result);
-                $('#default-block').hide();
-                $('#ava-block').hide();
-                $('#logo-block').show();
-
+                document.getElementById('def-logo-img').setAttribute('src', e.target.result);
+                $('#def-logo').show();
                 $('#def-ava').hide();
-                $('#def-logo').hide();
-
                 $('#user-name').hide();
+                $('#user-description').hide();
+                $('#without-ava-logo-top').hide();
             };
             reader.readAsDataURL(this.files[0]);
         }
@@ -119,60 +149,199 @@
         document.getElementById('logo-img').style.setProperty("-webkit-filter", "drop-shadow(" + textShadow +")");
     }
 
-    //Отображение аватара или логотипа
+    var gifCong = '{{$user->settings->congratulation_gif}}';
+    if(gifCong) {
+        document.getElementById('gif-cong').setAttribute('src', '../' + gifCong);
+    }
+
+    {{--var ava = '{{$user->settings->avatar}}';--}}
+    {{--if(!ava) {--}}
+    {{--    $("#ava").hide();--}}
+    {{--} else {--}}
+    {{--    document.getElementById('ava').setAttribute('src', '../' + ava);--}}
+    {{--    document.getElementById('def-ava-img').setAttribute('src', '../' + ava);--}}
+    {{--}--}}
+
+    {{--var logo = '{{$user->settings->logotype}}';--}}
+    {{--if(!logo) {--}}
+    {{--    $("#user-description").show();--}}
+    {{--} else {--}}
+    {{--    document.getElementById('logo').setAttribute('src', '../' + logo);--}}
+    {{--    document.getElementById('def-logo-img').setAttribute('src', '../' + logo);--}}
+    {{--}--}}
+
+    {{--var pageType = '{{$user->settings->avatar_vs_logotype}}';--}}
+    {{--if(pageType == 'logotype') {--}}
+    {{--    $("#user-description").hide();--}}
+    {{--}--}}
+
+
+    {{--//Отображение аватара или логотипа--}}
+    {{--var defBlock = '{{$user->settings->avatar_vs_logotype}}';--}}
+    {{--if(defBlock == 'avatar') {--}}
+    {{--    $("#def-ava-block").show();--}}
+    {{--    $("#def-logo-block").hide();--}}
+    {{--} else {--}}
+    {{--    $("#def-ava-block").hide();--}}
+    {{--    $("#def-logo-block").show();--}}
+    {{--}--}}
+
+    var verify_icon = '{{$user->settings->verify_icon}}';
+    var isVerify = "{{$user->verify}}";
+
+    if(isVerify) {
+        if(verify_icon) {
+            $("#verify-block").show();
+            $("#verify-default").hide();
+            document.getElementById('verify').setAttribute('src', '../' + verify_icon);
+        } else {
+            $("#verify-block").show();
+            $("#verify-default").show();
+            $("#verify-upload").hide();
+        }
+    }
+
+
+
+    //Отображение иконки верификации
+    {{--var isVerify = "{{$user->verify}}"--}}
+    {{--if(isVerify == 1) {--}}
+    //     $("#verify-block").show();
+    //     $("#verify-default").show();
+    //     $("#verify-upload").hide();
+    {{--}--}}
+
+    var ava = '{{$user->settings->avatar}}';
+    var logo = '{{$user->settings->logotype}}';
+    var descr = '{{$user->description}}';
+    var typeImgProfile = '{{$user->settings->avatar_vs_logotype}}';
+
+    if(typeImgProfile == 'avatar') {
+        if(ava) {
+            document.getElementById('def-ava-img').setAttribute('src', '../' + ava);
+            $('#def-ava').show();
+            $('#user-name').show();
+            $('#user-description').show();
+            $('#def-logo').hide();
+        } else {
+            $('#def-ava').hide();
+            $('#user-name').show();
+            $('#user-description').show();
+            $('#without-ava-logo-top').show();
+            $('#without-ava-logo-bottom').show();
+            $('#def-logo').hide();
+        }
+    } else if (typeImgProfile == 'logotype') {
+        if(logo) {
+            document.getElementById('def-logo-img').setAttribute('src', '../' + logo);
+            $('#def-logo').show();
+            $('#def-ava').hide();
+            $('#user-name').hide();
+            $('#user-description').hide();
+        } else {
+            $('#def-ava').hide();
+            $('#user-name').show();
+            $('#user-description').show();
+            $('#without-ava-logo-top').show();
+            $('#without-ava-logo-bottom').show();
+            $('#def-logo').hide();
+        }
+    }
+
     function typeImg(type) {
-        if(type === 'avatar') {
-            var ava = $("#avatar").val();
+
+        var uploadAva = $("#avatar").val();
+
+        if(type == 'avatar') {
+
             if(ava) {
-                $('#default-block').hide();
-                $('#logo-block').hide();
-                $('#ava-block').show();
-                $('#def-logo').hide();
-                $('#def-ava').hide();
-                $('#user-name').show();
-            } else {
-                $('#default-block').hide();
-                $('#logo-block').hide();
-                $('#ava-block').hide();
-                $('#def-logo').hide();
+                document.getElementById('def-ava-img').setAttribute('src', '../' + ava);
                 $('#def-ava').show();
                 $('#user-name').show();
-            }
-        } else {
-            var logo = $("#logotype-upload").val();
-            if(logo) {
-                $('#default-block').hide();
-                $('#logo-block').show();
-                $('#ava-block').hide();
+                $('#user-description').show();
                 $('#def-logo').hide();
-                $('#def-ava').hide();
-                $('#user-name').hide();
+                $('#without-ava-logo-top').hide();
+                $('#without-ava-logo-bottom').hide();
             } else {
-                $('#default-block').hide();
-                $('#logo-block').hide();
-                $('#ava-block').hide();
+                $('#def-ava').hide();
+                $('#user-name').show();
+                $('#user-description').show();
+                $('#without-ava-logo-top').show();
+                $('#without-ava-logo-bottom').show();
+                $('#def-logo').hide();
+            }
+        } else if (type == 'logotype') {
+            if(logo) {
+                document.getElementById('def-logo-img').setAttribute('src', '../' + logo);
                 $('#def-logo').show();
                 $('#def-ava').hide();
                 $('#user-name').hide();
+                $('#user-description').hide();
+                $('#without-ava-logo-top').hide();
+                $('#without-ava-logo-bottom').hide();
+            } else {
+                $('#def-ava').hide();
+                $('#user-name').show();
+                $('#user-description').show();
+                $('#without-ava-logo-top').show();
+                $('#without-ava-logo-bottom').show();
+                $('#def-logo').hide();
             }
         }
     }
 
-    //Отображение имени юзера
-    var logo = "{{$user->settings->avatar_vs_logotype}}";
-    if(logo == 'avatar') {
-        $('#user-name').show();
-    } else {
-        $('#user-name').hide();
-    }
+    // function typeImg(type) {
+    //     if(type === 'avatar') {
+    //         var ava = $("#avatar").val();
+    //         if(ava) {
+    //             $('#default-block').hide();
+    //             $('#logo-block').hide();
+    //             $('#ava-block').show();
+    //             $('#def-logo').hide();
+    //             $('#def-ava').hide();
+    //             $('#user-name').show();
+    //         } else {
+    //             $('#default-block').hide();
+    //             $('#logo-block').hide();
+    //             $('#ava-block').hide();
+    //             $('#def-logo').hide();
+    //             $('#def-ava').show();
+    //             $('#user-name').show();
+    //
+    //             $('#def-ava-img').show();
+    //             $('#user-description').show();
+    //         }
+    //     } else {
+    //         var logo = $("#logotype-upload").val();
+    //         if(logo) {
+    //             $('#default-block').hide();
+    //             $('#logo-block').show();
+    //             $('#ava-block').hide();
+    //             $('#def-logo').hide();
+    //             $('#def-ava').hide();
+    //             $('#user-name').hide();
+    //             $('#user-description').hide();
+    //         } else {
+    //             $('#default-block').hide();
+    //             $('#logo-block').hide();
+    //             $('#ava-block').hide();
+    //             $('#def-logo').show();
+    //             $('#def-ava').hide();
+    //
+    //             $('#user-name').show();
+    //             $('#user-description').hide();
+    //
+    //         }
+    //     }
+    // }
 
-    //Отображение иконки верификации
-    var isVerify = "{{$user->verify}}"
-    if(isVerify == 1) {
-        $("#verify-block").show();
-        $("#verify-default").show();
-        $("#verify-upload").hide();
-    }
+    //Отображение имени юзера
+    {{--var logo = "{{$user->settings->avatar_vs_logotype}}";--}}
+    {{--if(logo == 'avatar') {--}}
+    {{--    $('#user-name').show();--}}
+    {{--} else {--}}
+    {{--    $('#user-name').hide();--}}
+    {{--}--}}
 
     //Загрузка иконки верификации
     document.getElementById('verify-icon').addEventListener('change', function() {
@@ -180,8 +349,8 @@
             var reader = new FileReader();
             reader.onload = function (e) {
                 document.getElementById('verify').setAttribute('src', e.target.result);
+                $("#verify-block").show();
                 $("#verify-default").hide();
-                $("#verify-upload").show();
             };
             reader.readAsDataURL(this.files[0]);
         }
@@ -619,7 +788,17 @@
 
         //Показывать кастомное спасибо или лефолтное
         var onOffDef = document.getElementById('show_logo_gif').value;
+
+        var gif = '{{$user->settings->congratulation_gif}}';
+
         if(onOffDef == 1) {
+
+            if(!gif) {
+                $('#cong-gif').hide();
+                $('#cong-gif').remove();
+                // document.getElementById('gif-cong').style.display = 'none';
+            }
+
             $("#cong-text").show();
             $('#cong-gif').show();
             $("#cong-text-def").hide();

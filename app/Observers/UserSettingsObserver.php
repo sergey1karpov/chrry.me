@@ -9,7 +9,7 @@ class UserSettingsObserver
     /**
      * Handle the UserSettings "created" event.
      *
-     * @param  \App\Models\UserSettings  $userSettings
+     * @param UserSettings $userSettings
      * @return void
      */
     public function creating(UserSettings $userSettings)
@@ -20,12 +20,13 @@ class UserSettingsObserver
         $userSettings->name_font_size = 1.4;
         $userSettings->navigation_color = '#ffffff';
         $userSettings->show_logo = true;
+        $userSettings->avatar_vs_logotype = 'avatar';
     }
 
     /**
      * Handle the UserSettings "updated" event.
      *
-     * @param  \App\Models\UserSettings  $userSettings
+     * @param UserSettings $userSettings
      * @return void
      */
     public function updated(UserSettings $userSettings)
@@ -36,7 +37,7 @@ class UserSettingsObserver
     /**
      * Handle the UserSettings "deleted" event.
      *
-     * @param  \App\Models\UserSettings  $userSettings
+     * @param UserSettings $userSettings
      * @return void
      */
     public function deleted(UserSettings $userSettings)
@@ -47,7 +48,7 @@ class UserSettingsObserver
     /**
      * Handle the UserSettings "restored" event.
      *
-     * @param  \App\Models\UserSettings  $userSettings
+     * @param UserSettings $userSettings
      * @return void
      */
     public function restored(UserSettings $userSettings)
@@ -58,7 +59,7 @@ class UserSettingsObserver
     /**
      * Handle the UserSettings "force deleted" event.
      *
-     * @param  \App\Models\UserSettings  $userSettings
+     * @param UserSettings $userSettings
      * @return void
      */
     public function forceDeleted(UserSettings $userSettings)

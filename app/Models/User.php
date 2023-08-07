@@ -361,21 +361,10 @@ class User extends Authenticatable
                 'follow_btn_top_shadow_top' => $request->follow_btn_top_shadow_top,
                 'follow_btn_top_shadow_right' => $request->follow_btn_top_shadow_right,
                 'follow_btn_top_shadow_blur' => $request->follow_btn_top_shadow_blur,
-                'congratulation_text' => $request->congratulation_text,
-                'congratulation_on_off' => $request->congratulation_on_off,
                 'follow_border' => $request->follow_border,
                 'follow_border_color' => $request->follow_border_color,
                 'follow_border_animation' => $request->follow_border_animation,
                 'follow_border_animation_speed' => $request->follow_border_animation_speed,
-                'congratulation_gif' => isset($request->congratulation_gif) ?
-                    $uploadService->savePhoto(
-                        photo: $request->congratulation_gif,
-                        path: $this->imgPath($user->id),
-                        size: 200,
-                        dropImagePath: $user->settings->congratulation_gif,
-                        imageType: UploadPhotoService::IMAGE_FOR_PROFILE,
-                    ) :
-                    $user->settings->congratulation_gif,
             ]
         );
     }
@@ -495,6 +484,27 @@ class User extends Authenticatable
         User::where('id', $user->id)->update([
             'two_factor_auth' => $request->two_factor_auth,
         ]);
+    }
+
+    public function congSetting(User $user, UserSettingsRequest $request, UploadPhotoService $uploadService)
+    {
+        UserSettings::updateOrCreate(
+            ['user_id' => $user->id],
+            [
+                'user_id' => $user->id,
+                'congratulation_text' => $request->congratulation_text,
+                'congratulation_on_off' => $request->congratulation_on_off,
+                'congratulation_gif' => isset($request->congratulation_gif) ?
+                    $uploadService->savePhoto(
+                        photo: $request->congratulation_gif,
+                        path: $this->imgPath($user->id),
+                        size: 200,
+                        dropImagePath: $user->settings->congratulation_gif,
+                        imageType: UploadPhotoService::IMAGE_FOR_PROFILE,
+                    ) :
+                    $user->settings->congratulation_gif,
+            ]
+        );
     }
 }
 

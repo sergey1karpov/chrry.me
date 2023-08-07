@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Requests\MassUpdateEventRequest;
 use App\Http\Requests\UpdateEventBannerRequest;
 use App\Http\Requests\UpdateEventRequest;
+use App\Http\Requests\UserSettingsRequest;
 use App\Jobs\EventEmailNotification;
 use App\Jobs\GetFollowersEmail;
 use App\Mail\EventNotification;
 use App\Models\EventSetting;
 use App\Models\Properties\EventProperties;
+use App\Models\UserSettings;
 use App\Providers\EmailEventSending;
 use App\Services\PropertiesService;
 use App\Services\UploadPhotoService;
@@ -225,5 +227,17 @@ class EventController extends Controller
             'events'           => $events,
             'allFontsInFolder' => $this->getFonts(),
         ]);
+    }
+
+    public function congSetting(User $user, UserSettingsRequest $request)
+    {
+        $user->congSetting($user, $request, $this->uploadService);
+
+        return redirect()->back()->with('success', 'Блок с благодарностью после подписки обновлен!');
+    }
+
+    public function deleteEventFollowerGif(User $user)
+    {
+
     }
 }

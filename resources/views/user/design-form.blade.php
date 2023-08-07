@@ -11,12 +11,6 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
                         </svg>
                     </a>
-                    <!-- drawer init and toggle -->
-{{--                    <div class="text-center">--}}
-{{--                        <button class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-xs px-5 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button" data-modal-toggle="popup-modal">--}}
-{{--                            Как выглядит страница--}}
-{{--                        </button>--}}
-{{--                    </div>--}}
                     <a type="button" class="group flex shrink-0 items-center rounded-lg transition" href="{{ route('userHomePage', ['user' => $user->slug]) }}">
                         <span class="sr-only">Menu</span>
                         @if($user->settings->avatar)
@@ -639,28 +633,6 @@
                                 <span id="drawer-text-btn-bl" class="ml-2 bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300"></span>
                                 <input onchange="drawerTextBtnShadow()" id="drawer-text-btn-shadow-blur" type="range" name="follow_block_font_shadow_blur" value="{{$user->settings->follow_block_font_shadow_blur}}" min="0" max="10" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer @if($user->dayVsNight == 1) dark:bg-gray-700 @endif">
                             </div>
-                            <div class="mb-6 text-center">
-                                <div class="mb-6 text-center">
-                                    <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Вкл\Выкл благодарность за подписку</label>
-                                    <select onchange="congDefOff()" name="congratulation_on_off" id="show_logo_gif" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
-                                        <option @if($user->settings->congratulation_on_off == 0) selected @endif value="{{false}}">Выключено</option>
-                                        <option @if($user->settings->congratulation_on_off == 1) selected @endif value="{{true}}">Включено</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="mb-6 text-center">
-                                <label for="name" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Текст благодарности после подписки</label>
-                                <textarea maxlength="150" style="border: none" id="cong-message" name="congratulation_text" rows="2" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">{{$user->settings->congratulation_text}}</textarea>
-                            </div>
-                            <div class="mb-6 text-center">
-                                <div class="flex justify-center">
-                                    @if($user->settings->congratulation_gif)
-                                        <img class="w-40 rounded mb-6" src="{{ '/'. $user->settings->congratulation_gif }}" alt="image description">
-                                    @endif
-                                </div>
-                                <label for="name" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Gif после подписки</label>
-                                <input name="congratulation_gif" class="mt-3 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400" aria-describedby="congratulation_gif" id="congratulation_gif" type="file">
-                            </div>
                         </div>
                     </div>
                 @endif
@@ -674,6 +646,53 @@
                     </div>
                 </div>
             </form>
+
+            <!-- UPD Cong gif -->
+            <div class="mb-10 mt-7 mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
+                <form action="{{ route('congSetting', ['user' => Auth::user()->id]) }}" method="post" enctype="multipart/form-data"> @csrf @method('PATCH')
+                    <div>
+                        <div class="mb-6 text-center">
+                            <div class="mb-6 text-center">
+                                <label for="pass" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Вкл\Выкл благодарность за подписку</label>
+                                <select onchange="congDefOff()" name="congratulation_on_off" id="show_logo_gif" style="border: none" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">
+                                    <option @if($user->settings->congratulation_on_off == 0) selected @endif value="{{false}}">Выключено</option>
+                                    <option @if($user->settings->congratulation_on_off == 1) selected @endif value="{{true}}">Включено</option>
+                                </select>
+                                <p class="mt-1 text-sm @if($user->dayVsNight == 1) text-gray-500 @else text-gray-500 @endif" id="avatar">Если блок будет отключен, то будет показано дефолтное окно после подписки</p>
+                            </div>
+                        </div>
+                        <div class="mb-6 text-center">
+                            <label for="name" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Текст благодарности после подписки</label>
+                            <textarea maxlength="150" style="border: none" id="cong-message" name="congratulation_text" rows="2" class="mt-1 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full p-2.5 @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400 ">{{$user->settings->congratulation_text}}</textarea>
+                        </div>
+                        <div class="mb-6 text-center">
+                            <div class="flex justify-center">
+                                @if($user->settings->congratulation_gif)
+                                    <img class="w-40 rounded mb-6" src="{{ '/'. $user->settings->congratulation_gif }}" alt="image description">
+                                @endif
+                            </div>
+                            <label for="name" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Gif после подписки</label>
+                            <input name="congratulation_gif" class="mt-3 bg-gray-50 text-gray-900 text-sm rounded-lg block w-full @if($user->dayVsNight == 1) bg-gray-900 dark:text-gray-400 @endif shadow-sm dark:placeholder-gray-400" aria-describedby="congratulation_gif" id="congratulation_gif" type="file">
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <button type="submit" class="mt-2 border border-indigo-600 w-full inline-block rounded-lg bg-indigo-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
+                            Загрузить гифку
+                        </button>
+                    </div>
+                </form>
+                @if($user->settings->congratulation_gif)
+                    <div class="mt-3">
+                        <form action="{{ route('delUserAvatar', ['user' => $user->id, 'type' => 'congratulation_gif']) }}" method="POST"> @csrf @method('PATCH')
+                            <input id="type-logotype" type="hidden" name="type" value="logotype">
+                            <button type="submit" class="border border-red-600 w-full inline-block rounded-lg bg-red-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-red-600 focus:outline-none focus:ring active:text-red-500">
+                                Удалить
+                            </button>
+                        </form>
+                    </div>
+                @endif
+            </div>
+            <!-- UPD Cong gif -->
         </div>
     <section>
 
