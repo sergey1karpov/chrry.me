@@ -122,8 +122,7 @@
     function logoSize() {
         var logoSizeValue = document.getElementById('logo-size').value;
         $("#logo-size-value").html(logoSizeValue);
-        document.getElementById('logo').style.width = logoSizeValue + 'px';
-        document.getElementById('logo-img').style.width = logoSizeValue + 'px';
+        document.getElementById('def-logo-img').style.width = logoSizeValue + 'px';
     }
 
     //Тень и цвет тени для логотипа
@@ -145,8 +144,7 @@
 
         var textShadow = right+'px' + ' ' + bottom+'px' + ' ' + blur+'px' + ' ' + textShadowColor;
 
-        document.getElementById('logo').style.setProperty("-webkit-filter", "drop-shadow(" + textShadow +")");
-        document.getElementById('logo-img').style.setProperty("-webkit-filter", "drop-shadow(" + textShadow +")");
+        document.getElementById('def-logo-img').style.setProperty("-webkit-filter", "drop-shadow(" + textShadow +")");
     }
 
     var gifCong = '{{$user->settings->congratulation_gif}}';
