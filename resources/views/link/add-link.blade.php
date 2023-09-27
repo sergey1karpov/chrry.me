@@ -75,7 +75,7 @@
                     <tr data-index="" data-position="">
                         <td>
                             <div id="block" class="justify-center text-center" data-index="" data-position="">
-                                <form method="POST" action="">
+                                <div >
                                     <div class="row card ms-1 me-1" id="background"
                                          style="
                                                     animation-duration: 2s;
@@ -118,7 +118,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </form>
+                                </div>
                             </div>
                         </td>
                     </tr>

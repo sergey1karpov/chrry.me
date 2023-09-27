@@ -88,6 +88,7 @@
         render: {
             option: function(data, escape) {
                 cityName = data.name;
+                console.log(cityName)
                 $('#city-field').html(cityName);
                 $('#open-city-field').html(cityName);
                 return  '<h4 class="font-medium" style="font-size: 1.5rem;">' + escape(data.name) + '</h4>';
@@ -132,6 +133,8 @@
     //font
     function city() {
         var cityId = document.getElementById('select-city').value;
+        // $('#open-city-field').html(cityId);
+        // $('#city-field').html(cityId);
     }
 
     //location open-location-field

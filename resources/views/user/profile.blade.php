@@ -38,7 +38,7 @@
             @if($user->verify == 0 || $user->verify == null)
                 <div class="mt-2">
                     <a href="{{ route('verify', ['user' => $user->id]) }}">
-                        <span class="bg-yellow-100 text-yellow-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-yellow-900 dark:text-yellow-300">Verification request</span>
+                        <span class="bg-yellow-100 text-yellow-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-yellow-900 dark:text-yellow-300">Запрос на верификацию</span>
                     </a>
                 </div>
             @endif
@@ -171,7 +171,7 @@
 
                 <a class="group block mt-1" href="{{ route('metrikaForm', ['user' => $user->id]) }}">
                     <div id="toast-simple" class="flex card-block block rounded-xl @if($user->dayVsNight == 1) bg-[#0f0f0f] border-4 @endif border-[#0f0f0f] pl-8 pt-2 pb-2 shadow-xl transition hover:border-red-700/50 hover:shadow-red-700/50 group-hover:-translate-x-1 group-hover:-translate-y-1 group-hover:shadow-red-700/50" role="alert">
-                        <img src="https://www.moysklad.ru/upload/iblock/a3e/gukrkdpt1a3ixy71fo4nlr1mcnnp386e/93a41d0e-6220-47d1-872f-a40bc2f11582.png" class="h-5 w-5">
+                        <img src="https://ps.w.org/wp-yandex-metrika/assets/icon-256x256.png?rev=2823004" class="h-5 w-5">
                         <div class="pl-4 text-sm font-bold @if($user->dayVsNight == 1) text-red-600 @else text-black @endif">Yandex Metrika</div>
                     </div>
                 </a>
