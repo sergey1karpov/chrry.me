@@ -68,7 +68,7 @@
                 <div class="mt-4">
                     <button type="submit"
                             class="g-recaptcha inline-block text-xl rounded-full bg-red-500 w-full py-2 text-sm font-bold text-white transition hover:scale-110 hover:shadow-xl focus:outline-none focus:ring active:bg-red-500"
-                            data-sitekey="6LdjE5siAAAAAFns6LrPthCLLu4niq3WG_coMFJA"
+                            data-sitekey="{{ env('GOOGLE_RE_SITE_KEY') }}"
                             data-callback='onSubmit'
                             data-action='submit'>
                         {{ __('main.reg_log') }}

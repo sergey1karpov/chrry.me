@@ -21,6 +21,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -38,8 +39,6 @@ class UserController extends Controller
     }
 
     /**
-     * Show user profile and count view stats
-     *
      * @param User $user
      * @return View
      */
@@ -47,7 +46,11 @@ class UserController extends Controller
     {
         $this->statistics->createStatistics($user, $_SERVER['REMOTE_ADDR']);
 
-        $cities = DB::select('SELECT * FROM city');
+        $cities = null;
+
+        if($user->getPageType() != 'Links') {
+            $cities = DB::select('SELECT * FROM city');
+        }
 
         return view('user.home', compact('user','cities'));
     }

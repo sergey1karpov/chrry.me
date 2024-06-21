@@ -506,6 +506,10 @@ class User extends Authenticatable
             ]
         );
     }
+
+    public function getPageType():string {
+        return $this->type;
+    }
 }
 
 
