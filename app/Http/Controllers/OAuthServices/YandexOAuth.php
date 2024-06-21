@@ -31,7 +31,7 @@ class YandexOAuth implements OAuthInterface
 
     public function OAuthCallback(): void
     {
-        if (!request()->get('code')) {
+        if (request()->get('code')) {
 
             $response = Http::asForm()->post('https://oauth.yandex.ru/token', [
                 'grant_type'    => 'authorization_code',
@@ -43,6 +43,7 @@ class YandexOAuth implements OAuthInterface
             $data = json_decode($response->body(), true);
 
             if (!empty($data['access_token'])) {
+
                 $response = Http::withHeaders([
                     'Authorization' => 'OAuth ' . $data['access_token']
                 ])
