@@ -4,25 +4,22 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
+/**
+ * @psalm-ignore
+ */
 class AddNewProperty extends Command
 {
     /**
-     * The name and signature of the console command.
-     *
      * @var string
      */
     protected $signature = 'property:add {model} {property*}';
 
     /**
-     * The console command description.
-     *
      * @var string
      */
     protected $description = 'Add new property or properties to model';
 
     /**
-     * Model namespace
-     *
      * @var string
      */
     private string $namespace = '\App\Models\\';
@@ -37,9 +34,9 @@ class AddNewProperty extends Command
     /**
      * Execute the console command.
      *
-     * @return int
+     * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         $model = $this->namespace . $this->argument('model');
 

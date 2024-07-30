@@ -4,24 +4,27 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\LogotypeRequest;
+use App\Http\Requests\FilterStatRequest;
+use App\Http\Requests\SetEmailRequest;
 use App\Http\Requests\UploadPhotoRequest;
 use App\Http\Requests\UserSettingsRequest;
 use App\Http\Requests\VerifyRequest;
+use App\Http\Requests\YaMetrikaRequest;
+use App\Jobs\ProfileViewJob;
 use App\Models\User;
-use App\Models\UserSettings;
-use App\Models\Verification;
+use App\Repositories\UserRepository;
+use App\Repositories\VerificationRepository;
+use App\Services\ProfileViewStatsService;
 use App\Services\UploadPhotoService;
-use App\Http\Requests\UpdateRegisteruserRequest;
-use App\Services\StatsService;
+use App\Http\Requests\UpdateRegisterUserRequest;
 use App\Services\CreateProfileViewStatistics;
+use App\Services\UserService;
 use App\Traits\IconsAndFonts;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Http;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -32,11 +35,13 @@ class UserController extends Controller
 
     public function __construct(
         private UploadPhotoService          $uploadService,
-        private StatsService                $statsService,
+        private ProfileViewStatsService     $profileViewStatsService,
         private CreateProfileViewStatistics $statistics,
         private User                        $user,
-    ) {
-    }
+        private UserRepository              $userRepository,
+        private UserService                 $userService,
+        private VerificationRepository      $verificationRepository,
+    ) {}
 
     /**
      * @param User $user
@@ -44,7 +49,8 @@ class UserController extends Controller
      */
     public function userHomePage(User $user): View
     {
-        $this->statistics->createStatistics($user, $_SERVER['REMOTE_ADDR']);
+//        $this->statistics->createStatistics($user, $_SERVER['REMOTE_ADDR']);
+        ProfileViewJob::dispatch($user, $_SERVER['REMOTE_ADDR'], $this->statistics);
 
         $cities = null;
 
@@ -61,9 +67,7 @@ class UserController extends Controller
      */
     public function editProfileForm(User $user): View
     {
-        return view('user.profile', [
-            'user' => $user,
-        ]);
+        return view('user.profile', ['user' => $user]);
     }
 
     /**
@@ -72,56 +76,31 @@ class UserController extends Controller
      */
     public function setEmailForm(User $user): View
     {
-        return view('auth.changeGenerateEmail', [
-            'user' => $user,
-        ]);
+        return view('auth.changeGenerateEmail', ['user' => $user]);
     }
 
     /**
      * @param User $user
-     * @param Request $request
+     * @param SetEmailRequest $request
      * @return RedirectResponse
      */
-    public function setEmail(User $user, Request $request): RedirectResponse
+    public function setEmail(User $user, SetEmailRequest $request): RedirectResponse
     {
-
-        $request->validate([
-            'email' => 'required|email',
-        ]);
-
-        User::where('id', $user->id)->update([
-            'email' => $request->email
-        ]);
+        $this->userRepository->setUserEmail($user, $request->email);
 
         return redirect()->route('editProfileForm', ['user' => $user->id]);
     }
 
     /**
-     * Update user profile
-     *
      * @param User $user
      * @param UpdateRegisteruserRequest $request
      * @return RedirectResponse
      */
-    public function editUserProfile(User $user, UpdateRegisteruserRequest $request): RedirectResponse
+    public function editUserProfile(User $user, UpdateRegisterUserRequest $request): RedirectResponse
     {
-        $user->editUserProfile($user, $request);
+        $this->userRepository->editUserProfile($user, $request);
 
         return redirect()->back()->with('success', 'Profile settings have been changed!');
-    }
-
-    /**
-     * Delete user avatar, banner and favicon from db and user folder
-     *
-     * @param User $user
-     * @param string $type
-     * @return RedirectResponse
-     */
-    public function delUserAvatar(User $user, string $type): RedirectResponse
-    {
-        $user->deleteUserImages($user, $type, $this->uploadService);
-
-        return redirect()->back();
     }
 
     /**
@@ -132,7 +111,7 @@ class UserController extends Controller
      */
     public function changeTheme(User $user): JsonResponse
     {
-        $user->changeUserTheme($user);
+        $this->userRepository->changeUserProfileThemeColor($user);
 
         return response()->json('changed');
     }
@@ -174,20 +153,13 @@ class UserController extends Controller
     }
 
     /**
-     * Filtered user profile view stats
-     *
      * @param User $user
-     * @param Request $request
+     * @param FilterStatRequest $request
      * @return View
      */
-    public function profileFilterStatistic(User $user, Request $request): View
+    public function profileFilterStatistic(User $user, FilterStatRequest $request): View
     {
-        $request->validate([
-            'from' => 'required',
-            'to'   => 'required',
-        ]);
-
-        $stats = $this->statsService->getProfileStatistic($user, $request);
+        $stats = $this->profileViewStatsService->getTotalStatistic($request);
 
         return view('statistic.user_profile', compact('user', 'stats'));
     }
@@ -201,7 +173,7 @@ class UserController extends Controller
      */
     public function updateLogotype(User $user, LogotypeRequest $request)
     {
-        $user->updateLogotype($user, $request, $this->uploadService);
+        $this->userRepository->updateProfileLogotype($user, $request);
 
         return redirect()->back()->with('success', 'Logotype updated successfully');
     }
@@ -215,7 +187,7 @@ class UserController extends Controller
      */
     public function updateAvatarVsLogotype(User $user, Request $request): RedirectResponse
     {
-        $user->updateAvatarVsLogotype($user, $request);
+        $this->userRepository->selectAvatarOrLogotype($user, $request->avatar_vs_logotype);
 
         return redirect()->back()->with('success', $request->avatar_vs_logotype . ' is publish');
     }
@@ -229,28 +201,24 @@ class UserController extends Controller
      */
     public function updateDesignSettings(User $user, UserSettingsRequest $request): RedirectResponse
     {
-        $user->updateDesignSettings($user, $request, $this->uploadService);
+        $this->userRepository->updateUserDesignSettings($user, $request);
 
         return redirect()->back()->with('success', 'Settings updated successfully');
     }
 
     /**
-     * Change user password
-     *
      * @param User $user
      * @param ChangePasswordRequest $request
      * @return RedirectResponse
      * @throws ValidationException
      */
-    public function updatePassword(User $user, ChangePasswordRequest $request)
+    public function updatePassword(User $user, ChangePasswordRequest $request): RedirectResponse
     {
-        if (Hash::check($request->old_password, $request->user()->password)) {
+        if ($this->userService->checkHashPassword($request->old_password, $request->user()->password)) {
 
-            User::where('id', $user->id)->update([
-                'password' => Hash::make($request->password)
-            ]);
+            $this->userRepository->updateUserPassword($user, $request);
 
-            return redirect()->back();
+            return redirect()->back()->with('success', 'Password updated successfully');
         }
 
         throw ValidationException::withMessages(['Old password' => 'Your old password is not correct']);
@@ -265,7 +233,7 @@ class UserController extends Controller
      */
     public function updateTwoFactorAuth(User $user, Request $request): RedirectResponse
     {
-        $user->updateTwoFactorAuth($user, $request);
+        $this->userRepository->onOrOffTwoFactorAuth($user, $request);
 
         return redirect()->back();
     }
@@ -288,23 +256,13 @@ class UserController extends Controller
      */
     public function verifyProfile(User $user, VerifyRequest $request): RedirectResponse
     {
-        $verifyRequest = Verification::where('user_id', $user->id)->first();
-
-        if ($verifyRequest) {
-            return redirect()->back()->with('success', 'You have already applied for verification. Wait for it to be reviewed.');
+        if ($this->verificationRepository->getVerifyRequestIfExists($user)) {
+            return redirect()
+                ->back()
+                ->with('success', 'You have already applied for verification. Wait for it to be reviewed');
         }
 
-        Verification::create([
-            'user_id'         => $user->id,
-            'profile_address' => 'chrry.me/' . $user->slug,
-            'description'     => $request->description,
-            'contacts'        => $request->contacts,
-            'photo'           => $this->uploadService->savePhoto(
-                photo: $request->photo,
-                path: $this->user->imgPath($user->id),
-                size: 1000
-            )
-        ]);
+        $this->verificationRepository->createVerifyRequest($user, $request, $this->user->imgPath($user->id));
 
         return redirect()->back()->with('success', 'Profile verification request sent');
     }
@@ -320,17 +278,12 @@ class UserController extends Controller
 
     /**
      * @param User $user
-     * @param Request $request
+     * @param YaMetrikaRequest $request
      * @return RedirectResponse
      */
-    public function setMetrikaId(User $user, Request $request)
+    public function setMetrikaId(User $user, YaMetrikaRequest $request)
     {
-        $request->validate(['yandex_metrika' => 'nullable|integer']);
-
-        User::updateOrCreate(
-            ['id' => $user->id],
-            ['yandex_metrika' => $request->yandex_metrika]
-        );
+        $this->userRepository->updateYandexMetrika($user, $request);
 
         return redirect()->back()->with('success', 'Yandex Metrika id updated');
     }
@@ -344,29 +297,26 @@ class UserController extends Controller
      */
     public function uploadImage(User $user, UploadPhotoRequest $request): RedirectResponse
     {
-        $user->uploadImage($user, $request, $this->uploadService);
+        $this->userRepository->uploadAnyUserImage($user, $request);
 
         return redirect()->back()->with('success', 'Профиль успешно обновлен!');
     }
 
     /**
-     * Method delete photo img|gif for avatar|bg image|favicon|verify icon
-     *
      * @param User $user
      * @param Request $request
      * @return RedirectResponse
      */
     public function deleteImage(User $user, Request $request): RedirectResponse
     {
-        $imageType = $request->image_type;
+        $imageType = $request->type;
 
         $imagePath = $user->settings->$imageType;
 
-        $this->uploadService->deletePhotoFromFolder($imagePath);
-
-        UserSettings::where('user_id', $user->id)->update([
-           $imageType => null,
-        ]);
+        DB::transaction(function () use ($user, $imageType, $imagePath) {
+            $this->uploadService->deletePhotoFromFolder($imagePath);
+            $this->userRepository->deletePhotoFromDB($user, $imageType);
+        });
 
         return redirect()->back()->with('success', 'Профиль успешно обновлен!');
     }

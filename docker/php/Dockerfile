@@ -21,7 +21,10 @@ RUN apt-get update && apt-get install -y \
     vim \
     unzip \
     git \
-    curl
+    curl \
+    libgd-dev
+
+RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg
 
 RUN apt-get install -y librabbitmq-dev libssl-dev
 RUN pecl install amqp

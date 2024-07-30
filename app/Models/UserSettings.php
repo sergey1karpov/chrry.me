@@ -156,7 +156,7 @@ class UserSettings extends Model
         'congratulation_gif' => false,
         'congratulation_text' => false,
         'congratulation_on_off' => false,
-        'verify_icon' => false,
+        'verify_icon' => null,
 
         'follow_border' => null,
         'follow_border_color' => null,

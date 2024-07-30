@@ -70,7 +70,6 @@ Route::middleware(['web', 'root', 'locale', 'check.email'])->group(function () {
             Route::patch('/updateDesignSettings', [UserController::class, 'updateDesignSettings'])->name('updateDesignSettings');
             Route::patch('/updatePassword', [UserController::class, 'updatePassword'])->name('updatePassword');
             Route::patch('/updateTwoFactorAuth', [UserController::class, 'updateTwoFactorAuth'])->name('updateTwoFactorAuth');
-            Route::patch('/{type}/del', [UserController::class, 'delUserAvatar'])->name('delUserAvatar');
             Route::patch('/change-theme', [UserController::class, 'changeTheme'])->name('changeTheme');
             Route::get('/statistic', [UserController::class, 'getStats'])->name('getStats');
             Route::get('/statistic/filter-stat', [UserController::class, 'profileFilterStatistic'])->name('profileFilterStatistic');

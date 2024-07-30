@@ -14,5 +14,7 @@ yarn-error.log
 /public/images
 /laravel
 .env
+.env.testing
+.env.example
 googleConfig.json
 

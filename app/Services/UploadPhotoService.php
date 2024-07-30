@@ -22,7 +22,11 @@ class UploadPhotoService
      * @param string|null $dropImagePath
      * @return string
      */
-    public function saveUserLogotype(UploadedFile $photo, int $size, string $path, string $dropImagePath = null): string
+    public function saveUserLogotype(
+        UploadedFile $photo,
+        int $size,
+        string $path,
+        string $dropImagePath = null): string
     {
         if($dropImagePath != null) {
             $this->deletePhotoFromFolder($dropImagePath);
@@ -49,7 +53,11 @@ class UploadPhotoService
      * @param string|null $dropImagePath
      * @return string
      */
-    public function savePhotoArray(array $photos, string $path, int $size, string $dropImagePath = null): string
+    public function savePhotoArray(
+        array $photos,
+        string $path,
+        int $size,
+        string $dropImagePath = null): string
     {
 
         if($dropImagePath != null) {
@@ -79,7 +87,12 @@ class UploadPhotoService
      * @param string|null $imageType
      * @return string
      */
-    public function savePhoto(UploadedFile $photo, string $path, int $size, string $dropImagePath = null, string $imageType = null): string
+    public function savePhoto(
+        UploadedFile $photo,
+        string $path,
+        int $size,
+        string $dropImagePath = null,
+        string $imageType = null): string
     {
         if($photo->getClientOriginalExtension() == 'gif') {
             return $this->saveGif($photo, $imageType, $dropImagePath);
@@ -106,7 +119,10 @@ class UploadPhotoService
      * @param string|null $dropImagePath
      * @return string
      */
-    public function saveGif(UploadedFile $photo, string $imageType, string $dropImagePath = null): string
+    public function saveGif(
+        UploadedFile $photo,
+        string $imageType,
+        string $dropImagePath = null): string
     {
         if($dropImagePath) {
             $this->deletePhotoFromFolder($dropImagePath);

@@ -30,6 +30,19 @@ return [
 
     'connections' => [
 
+        'rabbitmq' => [
+            'driver' => 'rabbitmq',
+            'hosts' => [
+                [
+                    'host' => env('RABBITMQ_HOST', 'rabbit'),
+                    'port' => env('RABBITMQ_PORT', 5672),
+                    'user' => env('RABBITMQ_USER', 'rabbitmq'),
+                    'password' => env('RABBITMQ_PASSWORD', 'rabbitmq'),
+                    'vhost' => env('RABBITMQ_VHOST', '/'),
+                ],
+            ],
+        ],
+
         'sync' => [
             'driver' => 'sync',
         ],

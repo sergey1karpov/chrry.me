@@ -114,7 +114,7 @@
         <div class="mx-auto max-w-[43rem]">
             <div class="text-start">
                 <p class="flex justify-start">
-                    <img src="https://i.ibb.co/bPydGXN/3.png" class="img ml-5" width="150">
+                    <img src="{{ asset('public/images/logo.jpg') }}" class="img ml-5" width="150">
                 </p>
                 <h1 class="mt-3 ml-5 mr-5 text-[48px] font-bold leading-[4rem] tracking-tight text-white"
                     style="line-height: 1.05; letter-spacing: -0.02em; font-family: 'Open Sans', sans-serif;">

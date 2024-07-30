@@ -16,33 +16,29 @@ use Tests\TestCase;
 
 class UserControllerTest extends TestCase
 {
-    use DatabaseTransactions, Authenticatable;
+    use RefreshDatabase, Authenticatable;
 
     /**
-     * Show registration form
      * @return void
      */
-    public function test_see_register_form()
+    public function test_see_register_form(): void
     {
         $response = $this->get(route('register'));
-
         $response->assertSuccessful();
-
         $response->assertViewIs('auth.register');
     }
 
     /**
-     * Registration new user
      * @return void
      */
-    public function test_success_registration_to_web()
+    public function test_success_registration_to_web(): void
     {
-        $response = $this->post(route('create.register'), [
+        $response = $this->post(route('register'), [
             'name' => 'Sergey Karpov',
             'slug' => 'karpov',
             'email' => 'karpov@mail.ru',
             'password' => 'q1w2e3r4',
-            'password_confirmation' => 'q1w2e3r4'
+            'password_confirmation' => 'q1w2e3r4',
         ]);
 
         $this->assertDatabaseHas('users', [
@@ -60,7 +56,7 @@ class UserControllerTest extends TestCase
      * Failed registration. If user already register in our site(uniq email)
      * @return void
      */
-    public function test_failed_registration_to_web()
+    public function test_failed_registration_to_web(): void
     {
         User::factory(['email' => 'karpov@mail.ru'])->create();
 
@@ -79,16 +75,20 @@ class UserControllerTest extends TestCase
         ]);
     }
 
-    public function test_see_login_form()
+    /**
+     * @return void
+     */
+    public function test_see_login_form(): void
     {
         $response = $this->get(route('login'));
-
         $response->assertSuccessful();
-
         $response->assertViewIs('auth.login');
     }
 
-    public function test_success_login_to_web_without_two_factor_auth()
+    /**
+     * @return void
+     */
+    public function test_success_login_to_web_without_two_factor_auth(): void
     {
         $this->post(route('create.register'), [
             'name' => 'Sergey Karpov',
@@ -110,7 +110,10 @@ class UserControllerTest extends TestCase
         $response->assertRedirect(route('editProfileForm', ['user' => $user->id]));
     }
 
-    public function test_failed_login_to_web()
+    /**
+     * @return void
+     */
+    public function test_failed_login_to_web(): void
     {
         User::factory(['email' => 'karpov@mail.ru', 'password' => 'q1w2e3r4'])->create();
 
@@ -123,7 +126,10 @@ class UserControllerTest extends TestCase
         $response->assertStatus(302);
     }
 
-    public function test_success_login_to_web_with_two_factor_auth_and_send_mail_with_token()
+    /**
+     * @return void
+     */
+    public function test_success_login_to_web_with_two_factor_auth_and_send_mail_with_token(): void
     {
         User::factory(['email' => 'karpov@mail.ru', 'password' => 'q1w2e3r4', 'two_factor_auth' => true])->create();
 
@@ -145,7 +151,10 @@ class UserControllerTest extends TestCase
         $response->assertRedirectToSignedRoute('twoFactorForm');
     }
 
-    public function test_success_two_factor_auth()
+    /**
+     * @return void
+     */
+    public function test_success_two_factor_auth(): void
     {
         User::factory(['email' => 'karpov@mail.ru', 'password' => 'q1w2e3r4', 'two_factor_auth' => true])->create();
         $user = User::where('email', 'karpov@mail.ru')->first();
@@ -159,7 +168,10 @@ class UserControllerTest extends TestCase
         $response->assertRedirect(route('editProfileForm', ['user' => $user->id]));
     }
 
-    public function test_failed_two_factor_auth()
+    /**
+     * @return void
+     */
+    public function test_failed_two_factor_auth(): void
     {
         User::factory(['email' => 'karpov@mail.ru', 'password' => 'q1w2e3r4', 'two_factor_auth' => true])->create();
         $user = User::where('email', 'karpov@mail.ru')->first();
@@ -172,7 +184,10 @@ class UserControllerTest extends TestCase
         $response->assertSessionHas('bad_code', 'Your code not valid');
     }
 
-    public function test_editProfileForm()
+    /**
+     * @return void
+     */
+    public function test_editProfileForm(): void
     {
         $user = User::factory([
             'email' => 'karpov@mail.ru',

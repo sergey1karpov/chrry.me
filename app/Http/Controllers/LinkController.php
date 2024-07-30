@@ -8,6 +8,7 @@ use App\Http\Requests\UpdatePhotoRequest;
 use App\Models\Link;
 use App\Models\LinkStat;
 use App\Models\User;
+use App\Repositories\LinkRepository;
 use App\Services\CreateClickLinkStatistics;
 use App\Services\PropertiesService;
 use App\Services\StatsService;
@@ -29,8 +30,9 @@ class LinkController extends Controller
     public function __construct(
         private UploadPhotoService $uploadService,
         private StatsService       $statsService,
-        public PropertiesService   $propertiesService,
-        public Link                $link
+        private PropertiesService  $propertiesService,
+        private Link               $link,
+        private LinkRepository     $linkRepository,
     ) {}
 
     /**
@@ -67,13 +69,13 @@ class LinkController extends Controller
      * Create new link
      *
      * @param User $user
-     * @param Link $link
      * @param LinkRequest $request
      * @return RedirectResponse
      */
-    public function addLink(User $user, Link $link, LinkRequest $request): RedirectResponse
+    public function addLink(User $user, LinkRequest $request): RedirectResponse
     {
-        $link->addLink($user, $request, $this->uploadService, $this->propertiesService);
+//        $link->addLink($user, $request, $this->uploadService, $this->propertiesService);
+        $this->linkRepository->addLink($user, $request);
 
         return redirect()->back()->with('success', 'Мультиссылка добавлена!');
     }

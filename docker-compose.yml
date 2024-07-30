@@ -90,6 +90,21 @@ services:
         networks:
             - postgres
 
+    #Redis
+    redis:
+        image: redis:latest
+        restart: always
+        ports:
+            - "6379:6379"
+        volumes:
+            - ./data:/data
+        environment:
+            - REDIS_PASSWORD=pass
+            - REDIS_PORT=6379
+            - REDIS_DATABASES=1
+        networks:
+            - postgres
+
 networks:
     postgres:
 

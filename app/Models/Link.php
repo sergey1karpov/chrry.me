@@ -49,30 +49,30 @@ class Link extends Model
         ];
     }
 
-    /**
-     * @field_prefix dl_
-     * @param UpdateLinkRequest|LinkRequest|Request $request
-     * @param PropertiesService $propertiesService
-     * @return void
-     */
-    public function setDesignLinkProperties(UpdateLinkRequest|LinkRequest|Request $request, PropertiesService $propertiesService): void
-    {
-        $designProductFields = preg_grep("/^" . EntityPropertiesPrefix::Link ."/", array_keys($request->all()));
-        foreach ($designProductFields as $field) {
-            $propertiesService->addProperty($field, $request->$field);
-        }
-    }
-
-    /**
-     * @param User $user
-     * @return string|null
-     */
-    public function getLastLinkDesignFields(User $user): ?string
-    {
-        $event = Link::where('user_id', $user->id)->orderBy('created_at', 'desc')->first();
-
-        return $event->properties;
-    }
+//    /**
+//     * @field_prefix dl_
+//     * @param UpdateLinkRequest|LinkRequest|Request $request
+//     * @param PropertiesService $propertiesService
+//     * @return void
+//     */
+//    public function setDesignLinkProperties(UpdateLinkRequest|LinkRequest|Request $request, PropertiesService $propertiesService): void
+//    {
+//        $designProductFields = preg_grep("/^" . EntityPropertiesPrefix::Link ."/", array_keys($request->all()));
+//        foreach ($designProductFields as $field) {
+//            $propertiesService->addProperty($field, $request->$field);
+//        }
+//    }
+//
+//    /**
+//     * @param User $user
+//     * @return string|null
+//     */
+//    public function getLastLinkDesignFields(User $user): ?string
+//    {
+//        $event = Link::where('user_id', $user->id)->orderBy('created_at', 'desc')->first();
+//
+//        return $event->properties;
+//    }
 
     /**
      * Path to save photo for link
@@ -85,38 +85,38 @@ class Link extends Model
         return '../storage/app/public/' . $id . '/links/';
     }
 
-    /**
-     * Create new link
-     *
-     * @param User $user
-     * @param LinkRequest $request
-     * @param UploadPhotoService $uploadService
-     * @param PropertiesService $propertiesService
-     * @return void
-     */
-    public function addLink(User $user, LinkRequest $request, UploadPhotoService $uploadService, PropertiesService $propertiesService): void
-    {
-        $this->setDesignLinkProperties($request, $propertiesService);
-
-        Link::create([
-            'type'      => 'LINK',
-            'user_id'   => Auth::user()->id,
-            'title'     => $request->title,
-            'link'      => $request->link,
-            'icon'      => $request->icon,
-            'photo'     => isset($request->photo) ?
-                $uploadService->savePhoto(
-                    photo: $request->photo,
-                    path: $this->imgPath($user->id),
-                    size: 200,
-                    imageType: 'link'
-                ) : null,
-            'pinned' => isset($request->pinned) ? 1:0,
-            'animation' => $request->animation,
-            'animation_speed' => $request->animation_speed,
-            'properties' => isset($request->check_last_link) ? $this->getLastLinkDesignFields($user) : serialize($propertiesService->getProperties()),
-        ]);
-    }
+//    /**
+//     * Create new link
+//     *
+//     * @param User $user
+//     * @param LinkRequest $request
+//     * @param UploadPhotoService $uploadService
+//     * @param PropertiesService $propertiesService
+//     * @return void
+//     */
+//    public function addLink(User $user, LinkRequest $request, UploadPhotoService $uploadService, PropertiesService $propertiesService): void
+//    {
+//        $this->setDesignLinkProperties($request, $propertiesService);
+//
+//        Link::create([
+//            'type'      => 'LINK',
+//            'user_id'   => Auth::user()->id,
+//            'title'     => $request->title,
+//            'link'      => $request->link,
+//            'icon'      => $request->icon,
+//            'photo'     => isset($request->photo) ?
+//                $uploadService->savePhoto(
+//                    photo: $request->photo,
+//                    path: $this->imgPath($user->id),
+//                    size: 200,
+//                    imageType: 'link'
+//                ) : null,
+//            'pinned' => isset($request->pinned) ? 1:0,
+//            'animation' => $request->animation,
+//            'animation_speed' => $request->animation_speed,
+//            'properties' => isset($request->check_last_link) ? $this->getLastLinkDesignFields($user) : serialize($propertiesService->getProperties()),
+//        ]);
+//    }
 
     /**
      * Update link

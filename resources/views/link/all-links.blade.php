@@ -25,7 +25,7 @@
                     <a type="button" class="group flex shrink-0 items-center rounded-lg transition" href="{{ route('userHomePage', ['user' => $user->slug]) }}">
                         <span class="sr-only">Menu</span>
                         @if($user->settings->avatar)
-                            <img alt="Man" src="{{ '/'.$user->settings->avatar }}" class="h-10 w-10 rounded-full object-cover"/>
+                            <img alt="Man" src="{{ Storage::url(str_replace("../storage/app/public/", "", $user->settings->avatar)) }}" class="h-10 w-10 rounded-full object-cover"/>
                         @else
                             <img alt="Man" src="https://camo.githubusercontent.com/eb6a385e0a1f0f787d72c0b0e0275bc4516a261b96a749f1cd1aa4cb8736daba/68747470733a2f2f612e736c61636b2d656467652e636f6d2f64663130642f696d672f617661746172732f6176615f303032322d3531322e706e67" class="h-10 w-10 rounded-full object-cover"/>
                         @endif
@@ -195,7 +195,7 @@
                                                         @if($link->icon)
                                                             <img class="mt-1 mb-1" src="{{$link->icon}}" style="width:50px; border-radius: {{$properties['dl_rounded']}}px;">
                                                         @elseif($link->icon == false && $link->photo == true)
-                                                            <img class="mt-1 mb-1" src="{{$link->photo}}" style="width:50px; border-radius: {{$properties['dl_rounded']}}px;">
+                                                            <img class="mt-1 mb-1" src="{{Storage::url(str_replace("../storage/app/public/", "", $link->photo))}}" style="width:50px; border-radius: {{$properties['dl_rounded']}}px;">
                                                         @else
                                                             <img class="mt-1 mb-1" src="https://emoji.discadia.com/emojis/914c0e06-428c-4c1d-bf2c-3393dc14987f.PNG" style="width:50px; height: 50px; border-radius: {{$properties['dl_rounded']}}px; opacity: 0;">
                                                         @endif

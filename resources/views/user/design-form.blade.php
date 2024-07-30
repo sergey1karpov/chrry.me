@@ -14,7 +14,7 @@
                     <a type="button" class="group flex shrink-0 items-center rounded-lg transition" href="{{ route('userHomePage', ['user' => $user->slug]) }}">
                         <span class="sr-only">Menu</span>
                         @if($user->settings->avatar)
-                            <img alt="Man" src="{{ '/'.$user->settings->avatar }}" class="h-10 w-10 rounded-full object-cover"/>
+                            <img alt="Man" src="{{ Storage::url(str_replace("../storage/app/public/", "", $user->settings->avatar))}}" class="h-10 w-10 rounded-full object-cover"/>
                         @else
                             <img alt="Man" src="https://camo.githubusercontent.com/eb6a385e0a1f0f787d72c0b0e0275bc4516a261b96a749f1cd1aa4cb8736daba/68747470733a2f2f612e736c61636b2d656467652e636f6d2f64663130642f696d672f617661746172732f6176615f303032322d3531322e706e67" class="h-10 w-10 rounded-full object-cover"/>
                         @endif
@@ -73,7 +73,8 @@
                 @if($user->settings->avatar)
                     <div class="flex justify-center">
                         <figure class="max-w-lg">
-                            <img class="w-full rounded-full mb-3" src="{{ '/'. $user->settings->avatar }}" alt="image description">
+{{--                            <img class="w-full rounded-full mb-3" src="{{ '/'.$user->settings->avatar }}">--}}
+                            <img class="w-full rounded-full mb-3" src="{{ Storage::url(str_replace("../storage/app/public/", "", $user->settings->avatar)) }}">
                         </figure>
                     </div>
                 @endif
@@ -96,7 +97,7 @@
                 @if($user->settings->avatar)
                     <div class="mt-3">
                         <form action="{{ route('deleteImage', ['user' => $user->id]) }}" method="POST"> @csrf @method('PATCH')
-                            <input type="hidden" name="image_type" value="avatar">
+                            <input type="hidden" name="type" value="avatar">
                             <button type="submit" class="border border-red-600 w-full inline-block rounded-lg bg-red-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-red-600 focus:outline-none focus:ring active:text-red-500">
                                 {{ __('main.link_delete') }}
                             </button>
@@ -110,7 +111,7 @@
             <div class="mt-7 mx-auto max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8 shadow-lg rounded-lg @if($user->dayVsNight == 1) bg-[#0f0f0f] @endif">
                 @if($user->settings->logotype)
                     <div class="flex justify-center">
-                        <img src="{{'/'.$user->settings->logotype}}" class="pl-2 pr-2 mt-5 mb-8" width="{{$user->settings->logotype_size}}" style="filter: drop-shadow({{$user->settings->logotype_shadow_right}}px {{$user->settings->logotype_shadow_bottom}}px {{$user->settings->logotype_shadow_round}}px {{$user->settings->logotype_shadow_color}}); @if($user->settings->logotype_shadow_right) margin-right:{{$user->settings->logotype_shadow_right}}px; @endif">
+                        <img src="{{ Storage::url(str_replace("../storage/app/public/", "", $user->settings->logotype)) }}" class="pl-2 pr-2 mt-5 mb-8" width="{{$user->settings->logotype_size}}" style="filter: drop-shadow({{$user->settings->logotype_shadow_right}}px {{$user->settings->logotype_shadow_bottom}}px {{$user->settings->logotype_shadow_round}}px {{$user->settings->logotype_shadow_color}}); @if($user->settings->logotype_shadow_right) margin-right:{{$user->settings->logotype_shadow_right}}px; @endif">
                     </div>
                 @endif
                 <form action="{{ route('updateLogotype', ['user' => Auth::user()->id]) }}" method="post" enctype="multipart/form-data"> @csrf @method('PATCH')
@@ -155,7 +156,9 @@
                 </form>
                 @if($user->settings->logotype)
                     <div class="mt-3">
-                        <form action="{{ route('delUserAvatar', ['user' => $user->id, 'type' => 'logotype']) }}" method="POST"> @csrf @method('PATCH')
+{{--                        <form action="{{ route('delUserAvatar', ['user' => $user->id, 'type' => 'logotype']) }}" method="POST"> @csrf @method('PATCH')--}}
+                        <form action="{{ route('deleteImage', ['user' => $user->id]) }}" method="POST"> @csrf @method('PATCH')
+{{--                            <input id="type-logotype" type="hidden" name="type" value="logotype">--}}
                             <input id="type-logotype" type="hidden" name="type" value="logotype">
                             <button type="submit" class="border border-red-600 w-full inline-block rounded-lg bg-red-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-red-600 focus:outline-none focus:ring active:text-red-500">
                                 {{ __('main.link_delete') }}
@@ -174,7 +177,7 @@
                             <div class="items-center mr-4">
                                 <figure class="max-w-lg">
                                     @if($user->settings->avatar)
-                                        <img class="w-32 rounded-full mb-6" src="{{ '/'. $user->settings->avatar }}" alt="image description">
+                                        <img class="w-32 rounded-full mb-6" src="{{ Storage::url(str_replace("../storage/app/public/", "", $user->settings->avatar)) }}">
                                     @else
                                         <label class="mt-1 text-sm font-medium leading-relaxed text-indigo-600" for="avatar">{{ __('main.user_no_ava') }}</label>
                                     @endif
@@ -185,7 +188,7 @@
                             <div class="items-center mr-4">
                                 <figure class="max-w-lg">
                                     @if($user->settings->logotype)
-                                        <img id="logo" class="w-32 mb-6 h-auto max-w-full" src="{{ '/'. $user->settings->logotype }}" width="{{$user->settings->logotype_size}}" alt="image description">
+                                        <img id="logo" class="w-32 mb-6 h-auto max-w-full" src="{{ Storage::url(str_replace("../storage/app/public/", "", $user->settings->logotype)) }}" width="{{$user->settings->logotype_size}}">
                                     @else
                                         <label class="mt-1 text-sm font-medium leading-relaxed text-indigo-600" for="avatar">{{ __('main.user_no_logo') }}</label>
                                     @endif
@@ -208,7 +211,7 @@
                 @if($user->settings->banner)
                     <div class="flex justify-center">
                         <figure class="max-w-lg">
-                            <img class="w-full rounded-lg mb-6" src="{{ '/'. $user->settings->banner }}" alt="image description">
+                            <img class="w-full rounded-lg mb-6" src="{{ Storage::url(str_replace("../storage/app/public/", "", $user->settings->banner)) }}">
                         </figure>
                     </div>
                 @endif
@@ -231,7 +234,7 @@
                 @if($user->settings->banner)
                     <div class="mt-3">
                         <form action="{{ route('deleteImage', ['user' => $user->id]) }}" method="POST"> @csrf @method('PATCH')
-                            <input type="hidden" name="image_type" value="banner">
+                            <input type="hidden" name="type" value="banner">
                             <button type="submit" class="border border-red-600 w-full inline-block rounded-lg bg-red-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-red-600 focus:outline-none focus:ring active:text-red-500">
                                 {{ __('main.link_delete') }}
                             </button>
@@ -246,7 +249,7 @@
                 @if($user->settings->favicon)
                     <div class="flex justify-center">
                         <figure class="max-w-lg">
-                            <img class="w-full rounded-lg mb-6" src="{{ '/'. $user->settings->favicon }}" alt="image description">
+                            <img class="w-full rounded-lg mb-6" src="{{ Storage::url(str_replace("../storage/app/public/", "", $user->settings->favicon)) }}">
                         </figure>
                     </div>
                 @endif
@@ -269,7 +272,7 @@
                 @if($user->settings->favicon)
                     <div class="mt-3">
                         <form action="{{ route('deleteImage', ['user' => $user->id]) }}" method="POST"> @csrf @method('PATCH')
-                            <input type="hidden" name="image_type" value="favicon">
+                            <input type="hidden" name="type" value="favicon">
                             <button type="submit" class="border border-red-600 w-full inline-block rounded-lg bg-red-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-red-600 focus:outline-none focus:ring active:text-red-500">
                                 {{ __('main.link_delete') }}
                             </button>
@@ -285,7 +288,7 @@
                     <div class="mb-6 text-center">
                         <div class="flex justify-center">
                             @if($user->settings->verify_icon)
-                                <img class="w-40 rounded mb-6" src="{{ '/'. $user->settings->verify_icon }}" alt="image description">
+                                <img class="w-40 rounded mb-6" src="{{ Storage::url(str_replace("../storage/app/public/", "", $user->settings->verify_icon)) }}">
                             @endif
                         </div>
                         <label for="steps-range" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Лого значка верификации</label>
@@ -303,7 +306,7 @@
                 @if($user->settings->verify_icon)
                     <div class="mt-3">
                         <form action="{{ route('deleteImage', ['user' => $user->id]) }}" method="POST"> @csrf @method('PATCH')
-                            <input type="hidden" name="image_type" value="verify_icon">
+                            <input type="hidden" name="type" value="verify_icon">
                             <button type="submit" class="border border-red-600 w-full inline-block rounded-lg bg-red-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-red-600 focus:outline-none focus:ring active:text-red-500">
                                 Удалить значек
                             </button>
@@ -668,7 +671,7 @@
                         <div class="mb-6 text-center">
                             <div class="flex justify-center">
                                 @if($user->settings->congratulation_gif)
-                                    <img class="w-40 rounded mb-6" src="{{ '/'. $user->settings->congratulation_gif }}" alt="image description">
+                                    <img class="w-40 rounded mb-6" src="{{ Storage::url(str_replace("../storage/app/public/", "", $user->settings->congratulation_gif)) }}">
                                 @endif
                             </div>
                             <label for="name" class="mt-1 text-sm font-medium leading-relaxed text-indigo-600">Gif после подписки</label>
@@ -683,8 +686,10 @@
                 </form>
                 @if($user->settings->congratulation_gif)
                     <div class="mt-3">
-                        <form action="{{ route('delUserAvatar', ['user' => $user->id, 'type' => 'congratulation_gif']) }}" method="POST"> @csrf @method('PATCH')
-                            <input id="type-logotype" type="hidden" name="type" value="logotype">
+{{--                        <form action="{{ route('delUserAvatar', ['user' => $user->id, 'type' => 'congratulation_gif']) }}" method="POST"> @csrf @method('PATCH')--}}
+                        <form action="{{ route('deleteImage', ['user' => $user->id]) }}" method="POST"> @csrf @method('PATCH')
+{{--                            <input id="type-logotype" type="hidden" name="type" value="logotype">--}}
+                            <input id="type-logotype" type="hidden" name="type" value="congratulation_gif">
                             <button type="submit" class="border border-red-600 w-full inline-block rounded-lg bg-red-900 px-12 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-red-600 focus:outline-none focus:ring active:text-red-500">
                                 Удалить
                             </button>
